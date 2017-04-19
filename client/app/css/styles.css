@@ -1,0 +1,119 @@
+table {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+}
+
+tr:nth-child(2n + 3) {
+    background-color: whitesmoke;
+}
+
+th {
+    border: 1px solid #cccccc;
+    background-color: #e4e4e4;
+    text-align: center;
+}
+
+th:first-child {
+    width: 55%;
+}
+
+th:nth-child(2) {
+    color: orange;
+    width: 15%;
+}
+
+th:nth-child(3) {
+    color: green;
+    width: 10%;
+}
+
+th:nth-child(4) {
+    color: red;
+    width: 10%;
+}
+
+th:nth-child(5) {
+    color: blue;
+    width: 10%;
+}
+
+td {
+    border: 1px solid #cccccc;
+    padding: 10px;
+}
+
+td:first-child {
+    border-left: none;
+    text-align: left;
+    width: 55%;
+}
+
+td:nth-child(2) {
+    color: orange;
+    width: 15%;
+}
+
+td:nth-child(3) {
+    color: green;
+    width: 10%;
+}
+
+td:nth-child(4) {
+    color: red;
+    width: 10%;
+}
+
+td:nth-child(5) {
+    color: blue;
+    width: 10%;
+}
+
+
+.food-selection {
+    padding: 20px;
+    background: whitesmoke;
+    border-radius: 3px;
+    border: 1px solid whitesmoke;
+    box-shadow: 1px 2px 3px #c9c9c9;
+}
+
+.search-pane {
+    /*padding: 10px 0;
+    border: 1px solid #c9c9c9;
+    border-radius: 3px;
+    background: whitesmoke;*/
+    margin-bottom: 20px;
+}
+
+.search-input {
+    height: 35px;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #c9c9c9;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.food-list {
+    height: 600px;
+    /*overflow-y: scroll;*/
+}
+
+.food-table-headings {
+    width: calc(100% - 17px);
+}
+
+.food-table-content-wrapper {
+    height: 550px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.food-table {
+    height: 600px;
+    border: 1px solid #c9c9c9;
+    border-radius: 3px;
+    background: white;
+}

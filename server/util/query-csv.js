@@ -1,36 +1,14 @@
 var fs = require('fs');
-/*
-var foods = fs.readFileSync('ruuat.csv', 'utf8').split('\n');
-var nutritionValues = fs.readFileSync('ravintoarvot.csv', 'utf8').split('\n');
 
-
-var foodIds = [];
-for(var i = 1; i < foods.length; i++) {
-    var foodId = foods[i].split(';')[0];
-    foodIds.push(foodId);
-}
-
-var foodNames = [];
-for(var i = 1; i < foods.length; i++) {
-    var foodName = foods[i].split(';')[1];
-    foodNames.push(foodName);
-}
-*/
-var foodList = fs.readFileSync('test.json', 'utf8');
+var foodList = fs.readFileSync('./server/test.json', 'utf8');
 foodList = JSON.parse(foodList);
-
 
 function findMatchingFoodsFromCSV(input) {
     input = input.toLowerCase().trim();
     var matchingFoods = [];
-    var i = 0;
+
     for(foodId in foodList) {
-        //i++;
-        //if(i > 100) break;
-        // console.log(foodList[i].name);
         var foodName = foodList[foodId].name.toLowerCase();
-        //
-        //
         if(foodName.startsWith(input)) {
             var kcals = Number(foodList[foodId].ENERC.split(',')[0]) / 4.186;
             kcals = round(kcals.toString());
@@ -51,12 +29,6 @@ function findMatchingFoodsFromCSV(input) {
     }
     return matchingFoods.sort();
 }
-
-
-
-
-
-//console.log(parsedFoodList[2]);
 
 
 function getNutritionValues(foodId) {
