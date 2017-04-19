@@ -1,0 +1,16 @@
+{
+  "name": "calorie_calculator",
+  "version": "1.0.0",
+  "description": "Calorie calculator using Fineli's open data",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Tatu Putto",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "nodemon": "^1.11.0"
+  }
+}
