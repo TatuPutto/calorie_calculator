@@ -8,6 +8,7 @@ tr:nth-child(2n + 3) {
     background-color: whitesmoke;
 }
 
+
 th {
     border: 1px solid #cccccc;
     background-color: #e4e4e4;
@@ -69,6 +70,9 @@ td:nth-child(5) {
     width: 10%;
 }
 
+td:last-child {
+    border-bottom: none;
+}
 
 .food-selection {
     padding: 20px;
@@ -105,9 +109,10 @@ td:nth-child(5) {
 }
 
 .food-table-content-wrapper {
-    height: 550px;
+    height: 580px;
     overflow-y: auto;
     overflow-x: hidden;
+    border-bottom: 1px solid #c9c9c9;
 }
 
 
