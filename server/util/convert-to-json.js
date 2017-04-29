@@ -1,4 +1,22 @@
-/*
+var foods = fs.readFileSync('./server/ruuat.csv', 'utf8').split('\n');
+var foodNames = [];
+for(var i = 1; i < foods.length; i++) {
+    var name = foods[i].split(';')[1];
+   foodNames.push(name);
+}
+
+
+var nutritionValues = fs.readFileSync('./server/ravintoarvot.csv', 'utf8').split('\n');
+
+
+function getFoodName(id) {
+    for(var i = 1; i < foods.length; i++) {
+        if(foods[i].split(';')[0] == id) {
+            return foods[i].split(';')[1];
+        }
+    }
+}
+
 function convertToJson() {
     var json = {};
     var breakI = 1;
@@ -10,17 +28,14 @@ function convertToJson() {
         breakI = asdf[1];
 
         if(Object.keys(asdf[0]).length > 0) {
-            json[i] = asdf[0];
+            obj['name'] = getFoodName(i);
+            json[i] = obj;
         }
 
     }
 
-
-    fs.writeFileSync('ruuat.json', JSON.stringify(json), 'utf8');
-    return asd();
-
+    fs.writeFileSync('foods_dot.json', JSON.stringify(json), 'utf8');
 }
-
 
 function asd(num, breakI) {
     var all = {};
@@ -31,7 +46,7 @@ function asd(num, breakI) {
             if(nutritionValues[i].split(';')[0] == num && prop == 'ENERC' ||
                 prop == 'CHOAVL' || prop == 'FAT' || prop == 'PROT') {
                 //prop
-                all[nutritionValues[i].split(';')[1]] = nutritionValues[i].split(';')[2]
+                all[nutritionValues[i].split(';')[1]] = nutritionValues[i].split(';')[2].replace(',', '.')
             }
         } else {
             breakI = i;
@@ -40,4 +55,3 @@ function asd(num, breakI) {
     }
     return [all, breakI];
 }
-*/
