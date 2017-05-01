@@ -1,137 +1,173 @@
-table {
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    color: blue;
-}
-
-tr:nth-child(2n + 0) {
-    /*background-color: whitesmoke;*/
+body {
+    background: whitesmoke;
+    overflow-y: scroll;
 }
 
 th {
-    border: 1px solid #cccccc;
-    background-color: #e4e4e4;
-    text-align: center;
+    padding-bottom: 5px;
+    padding: 2px;
 }
 
-th:first-child {
-    width: 55%;
-}
-
-th:nth-child(2) {
-    color: orange;
-    width: 15%;
-}
-
-th:nth-child(3) {
-    color: green;
-    width: 10%;
-}
-
-th:nth-child(4) {
-    color: red;
-    width: 10%;
-}
-
-th:nth-child(5) {
-    color: blue;
-    width: 10%;
+tr:hover {
+    background: #aec2e3;
+    cursor: pointer;
 }
 
 td {
-    border: 1px solid #cccccc;
-    padding: 10px;
+    padding: 2px;
 }
-
+/*
 td:first-child {
-    border-left: none;
-    text-align: left;
-    width: 55%;
+    padding-right: 10px;
+}
+*/
+
+.container-fluid {
+    padding: 0;
 }
 
-td:nth-child(2) {
-    color: orange;
+
+.daily-goal {
     width: 15%;
+    float: left;
+    margin-left: 8%;
+    margin-right: 20px;
+    margin-top: 20px;
+    border: 1px solid #c3cfff;
+    text-align: left;
+    padding: 1%;
+    padding-bottom: 1.5%;
 }
 
-td:nth-child(3) {
-    color: green;
-    width: 10%;
+.daily-goal h4 {
+    display: inline;
+    position: relative;
+    top: 3px;
 }
 
-td:nth-child(4) {
-    color: red;
-    width: 10%;
-}
-
-td:nth-child(5) {
-    color: blue;
-    width: 10%;
-}
-
-td:last-child {
-    border-bottom: none;
+.configure-daily-goals {
+    float: right;
+    font-size: 18px;
+    background: transparent;
+    border: none;
 }
 
 
-
-
-.food-list ul {
+.matching-foods ul {
     -webkit-padding-start: 0px;
     list-style-type: none;
-    border: 1px solid #c3cfff;
+    /*border: 1px solid #c3cfff;*/
 }
+
+
+.matching-foods ul li {
+    overflow-y: hidden;
+}
+
+.matching-foods ul li:last-child {
+    /*border-bottom: 1px solid #c3cfff;*/
+}
+
 
 
 .single-food {
-    border: 1px solid #c3cfff;
-    border-bottom: none;
+    /*border: 1px solid #c3cfff;
+    border-bottom: none;*/
 }
 
-.add-to-consumed-foods-list {
-    background: wheat;
-    height: 200px;
-    border: 1px solid #cccccc;
-    border-top: none;
-    border-bottom: none;
+.single-food:hover {
+    background: whitesmoke;
 }
+
+
+.add-to-consumed-foods-list {
+    background: #fcfcfc;
+    height: 200px;
+    border-top: 0 solid transparent;
+    overflow-y: hidden;
+    max-height: 0;
+    transition: all 0.2s ease-out;
+    text-align: left;
+}
+
+.add-to-consumed-foods-list.open {
+    border-top: 1px solid #c3cfff;
+    border-color: ;
+    max-height: 200px;
+}
+
+.add-to-consumed-foods-list.closed {
+    border-top: 0 solid transparent;
+    max-height: 0;
+}
+
+.add-panel-wrapper {
+    padding: 15px;
+}
+
+.portion-sizes a {
+    padding: 2px;
+    border-radius: 2px;
+}
+
+.portion-sizes a:hover {
+    background: #aec2e3;
+    text-decoration: none;
+}
+
+.add-custom-amount {
+    margin-top: 15px;
+}
+
+.add-custom-amount input {
+    position: relative;
+    top: 1px;
+    height: 34px;
+    border: 1px solid #c3cfff;
+    border-radius: 4px;
+    margin-right: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+
 
 span {
     /*border: 1px solid #cccccc;*/
     display: inline-block;
-    padding: 10px;
+    padding: 6px;
 }
 
 span:first-child {
     border-left: none;
     text-align: left;
-    width: 70%;
-    border-right: 1px solid #c3cfff;
+    width: 64%;
+    /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(2) {
-    color: orange;
     width: 15%;
-    border-right: 1px solid #c3cfff;
+    /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(3) {
+    background: #93f093;
     color: green;
-    width: 5%;
-    border-right: 1px solid #c3cfff;
+    width: 7%;
+    /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(4) {
-    color: red;
-    width: 5%;
-    border-right: 1px solid #c3cfff;
+    background: #c1c1ff;
+    color: blue;
+    width: 7%;
+    /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(5) {
-    color: blue;
-    width: 5%;
+    background: #fcc6b4;
+    color: red;
+    width: 7%;
 }
 
 
@@ -163,10 +199,11 @@ span:nth-child(5) {
 }
 
 .search-input {
+    margin-bottom: 20px;
     height: 35px;
     width: calc(100% - 80px);
     border-radius: 3px;
-    border: 1px solid #1caaef;
+    border: 1px solid #c3cfff;
     padding-left: 5px;
     padding-right: 5px;
     margin-right: 5px;
@@ -179,7 +216,7 @@ span:nth-child(5) {
     border-style: solid;
     border-width: 1px;
     border-radius: 3px;
-    border: 1px solid #1caaef;
+    border: 1px solid #c3cfff;
     font-size: 16px;
 }
 
@@ -187,6 +224,53 @@ span:nth-child(5) {
     border-color: #0291d7;
 }
 
+
+
+
+.search-type {
+    background: whitesmoke;
+    border-bottom: 1px solid #c3cfff;
+}
+
+.search-type button {
+    background: transparent;
+    border: none;
+}
+
+.search-type button:focus {
+    outline: none;
+}
+
+
+.search-type .active {
+    border-style: solid;
+    margin-right: 6px;
+
+    border-color: aliceblue;
+    border: 1px solid #c3cfff;
+    border-top: 4px solid #c3cfff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: none;
+    position: relative;
+    top: 1px;
+    padding: 6px 25px;
+    background: white;
+}
+
+.heading-wrapper {
+    border-bottom: 1px solid #c3cfff;
+    /*padding-right: 17px;*/
+}
+
+.food-selection {
+    float: left;
+    width: 100%;
+    text-align: center;
+    background: white;
+    margin-top: 40px;
+    border-bottom: 1px solid #c3cfff;
+}
 
 .food-list {
     /*padding: 20px;
@@ -196,11 +280,28 @@ span:nth-child(5) {
     box-shadow: 1px 2px 3px #c9c9c9;
 
     margin-bottom: 20px;*/
+    background: white;
+    margin-top: 40px;
     text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    color: blue;
+    font-size: 13px;
+    /*color: #207eff;*/
 }
+
+.matching-foods {
+    float: left;
+    width: 60%;
+    min-height: 780px;
+    margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-bottom: 20px;
+}
+
+.matching-foods ul {
+    /*height: 600px;
+    overflow-y: scroll;*/
+}
+
 
 .food-table-headings {
     /*width: calc(100% - 17px);*/
@@ -219,4 +320,16 @@ span:nth-child(5) {
     border: 1px solid #c9c9c9;
     border-radius: 3px;
     background: white;
+}
+
+.protein-dominant {
+    color: #0fb70f;
+}
+
+.carb-dominant {
+    color: #207eff;
+}
+
+.fat-dominant {
+    color: #fa6b6b;
 }

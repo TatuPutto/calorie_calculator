@@ -1,3 +1,6 @@
+var fs = require('fs');
+var round = require('./round-to-one-decimal');
+
 var foods = fs.readFileSync('./server/ruuat.csv', 'utf8').split('\n');
 var foodNames = [];
 for(var i = 1; i < foods.length; i++) {
@@ -17,7 +20,7 @@ function getFoodName(id) {
     }
 }
 
-function convertToJson() {
+module.exports = function convertToJson() {
     var json = {};
     var breakI = 1;
     //34306
@@ -34,7 +37,7 @@ function convertToJson() {
 
     }
 
-    fs.writeFileSync('foods_dot.json', JSON.stringify(json), 'utf8');
+    fs.writeFileSync('foods.json', JSON.stringify(json), 'utf8');
 }
 
 function asd(num, breakI) {
@@ -45,8 +48,27 @@ function asd(num, breakI) {
             var prop = nutritionValues[i].split(';')[1];
             if(nutritionValues[i].split(';')[0] == num && prop == 'ENERC' ||
                 prop == 'CHOAVL' || prop == 'FAT' || prop == 'PROT') {
-                //prop
-                all[nutritionValues[i].split(';')[1]] = nutritionValues[i].split(';')[2].replace(',', '.')
+
+                var type;
+                var value;
+                if(prop == 'ENERC') type = 'energy';
+
+
+
+                if(prop == 'CHOAVL') type = 'carbohydrates';
+                if(prop == 'PROT') type = 'protein';
+                if(prop == 'FAT') type = 'fat';
+
+
+                if(type == 'energy') {
+                    value = nutritionValues[i].split(';')[2].replace(',', '.');
+                    value = Math.round(value / 4.184);
+                } else {
+                    value = nutritionValues[i].split(';')[2].replace(',', '.');
+                    value = round(value);
+                }
+
+                all[type] = value;
             }
         } else {
             breakI = i;

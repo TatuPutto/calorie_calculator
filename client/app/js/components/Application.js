@@ -39,6 +39,7 @@ class Application extends React.Component {
             totalConsumption: null,
             selectedFoodId: null,
             selectedFood: null,
+            selectedFoodAmount: null,
             isFetchingMatchingFoods: true,
             isFetchingConsumedFoods: true,
             searchTerm: null
@@ -47,6 +48,7 @@ class Application extends React.Component {
         this.doSearch = this.doSearch.bind(this);
         this.getMatchingFoods = this.getMatchingFoods.bind(this);
         this.selectFood = this.selectFood.bind(this);
+        this.setSelectedFoodAmount = this.setSelectedFoodAmount.bind(this);
         this.addToFoodDiary = this.addToFoodDiary.bind(this);
     }
 
@@ -83,6 +85,7 @@ class Application extends React.Component {
             foods: [],
             selectedFoodId: null,
             selectedFood: null,
+            selectedFoodAmount: null,
             isFetchingMatchingFoods: true
         });
 
@@ -101,7 +104,6 @@ class Application extends React.Component {
         fetch('http://localhost:3000/daily-intake')
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 this.setState({
                 consumedFoods: data.nutritionValuesPerItem,
                 totalConsumption: data.nutritionValuesInTotal,
@@ -123,49 +125,57 @@ class Application extends React.Component {
         //storeFoodToCookie(foodId, '200g');
     }
 
-    addToFoodDiary(foodId, amount) {
+    setSelectedFoodAmount(event) {
+        console.log(event.currentTarget.value);
+        this.setState({selectedFoodAmount: event.currentTarget.value});
+    }
+
+    addToFoodDiary(foodId, foodAmount) {
         var params = {
-            method: 'GET',
-            body: JSON.stringify({foodId, amount}),
+            method: 'POST',
+            body: JSON.stringify({foodId, foodAmount}),
             headers: {
                 'Content-Type': 'application/json'
             }
         }
-        fetch('http://localhost:3000/daily-intake/'/*, params*/)
-            .then((res) => res.json())
-            .then((json) => console.log(json))
+        fetch('http://localhost:3000/daily-intake', params)
+            .then(() => this.getConsumedFoods())
             .catch((err) => console.error(err));
-
     }
 
 
     render() {
         return (
             <div className='container-fluid'>
-                <div className='food-selection col-lg-8 col-lg-offset-2'>
-                    <SearchPane
-                        searchTerm={this.state.searchTerm}
-                        changeSearchTerm={this.changeSearchTerm}
-                        doSearch={this.doSearch}
-                    />
-                    <FoodList
-                        foods={this.state.foods}
-                        selectedFoodId={this.state.selectedFoodId}
-                        isFetchingMatchingFoods={this.state.isFetchingMatchingFoods}
-                        selectFood={this.selectFood}
-                        addToFoodDiary={this.addToFoodDiary}
-                    />
-                    <ConsumedFoodsList
-                        consumedFoods={this.state.consumedFoods}
-                        totalConsumption={this.state.totalConsumption}
-                        isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
-                    />
-                    <TotalConsumption
-                        totalConsumption={this.state.totalConsumption}
-                        isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
-                    />
-                </div>
+
+                {/*}<SearchPane
+                    searchTerm={this.state.searchTerm}
+                    changeSearchTerm={this.changeSearchTerm}
+                    doSearch={this.doSearch}
+                />*/}
+                <FoodList
+                    searchTerm={this.state.searchTerm}
+                    changeSearchTerm={this.changeSearchTerm}
+                    doSearch={this.doSearch}
+                    foods={this.state.foods}
+                    selectedFoodId={this.state.selectedFoodId}
+                    selectedFoodAmount={this.state.selectedFoodAmount}
+                    setSelectedFoodAmount={this.setSelectedFoodAmount}
+                    isFetchingMatchingFoods={this.state.isFetchingMatchingFoods}
+                    selectFood={this.selectFood}
+                    addToFoodDiary={this.addToFoodDiary}
+                />
+                {/*}<ConsumedFoodsList
+                    consumedFoods={this.state.consumedFoods}
+                    totalConsumption={this.state.totalConsumption}
+                    isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
+                />
+                <TotalConsumption
+                    totalConsumption={this.state.totalConsumption}
+                    isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
+                />*/}
             </div>
+
         );
     }
 }
@@ -191,69 +201,161 @@ function SearchPane(props) {
 
 function FoodList(props) {
     return (
-        <div className='food-list'>
-            {props.isFetchingMatchingFoods &&
-                <i style={{}} className='fa fa-refresh fa-spin fa-3x' />
-            }
-            {props.foods.length === 0 && !props.isFetchingMatchingFoods &&
-                <p>Syötettä vastaavia elintarvikkeita ei löytynyt</p>
-            }
-            {props.foods.length > 0 && !props.isFetchingMatchingFoods &&
+        <div className='food-selection'>
+            <div className='search-type'>
+                <button className='active'>Haku</button>
+                <button>Suosikit</button>
+                <button>Viimeisimmät</button>
+            </div>
+
+            <div className='daily-goal'>
+                <h4>Päivä tavoite</h4>
+                    <button className='configure-daily-goals'>
+                        <i className='fa fa-cog' />
+                    </button>
+                <hr/>
+                Energia: 1650 kcal / 2500 kcal<hr/>
+                Proteiinia: 128 g / 220 g<hr/>
+                Hiilihydraatteja: 200 g / 350 g<br/><hr/>
+                Rasvaa: 53 g / 80 g
+            </div>
+
+            <div className='matching-foods'>
+                <input
+                    type='text'
+                    className='search-input'
+                    placeholder='Hae ruokaa tai raaka-ainetta'
+                    defaultValue={props.searchTerm}
+                    onKeyUp={props.changeSearchTerm}
+                />
+                <button className='do-search' onClick={props.doSearch}>
+                    <i className='fa fa-search' />
+                </button>
 
 
-                <ul>
-                    <li style={{border: '1px solid #c3cfff', background: 'wheat'}}>
-                        <span>Ruoka</span>
-                        <span>Kcal / 100g</span>
-                        <span>PP</span>
-                        <span>RR</span>
-                        <span>HH</span>
-                    </li>
-                    {props.foods.map(function (food) {
-                        return (
-                            <li>
-                                <div
-                                    key={food.id}
-                                    className='single-food'
-                                    onClick={() => props.selectFood(food.id, food.name)}
-                                >
 
-                                    <span>
-                                        <i className={props.selectedFoodId == food.id ?
-                                                'fa fa-chevron-down' : 'fa fa-chevron-right'} />
-                                            {food.name}
-                                    </span>
-                                    <span>{food.energy}</span>
-                                    <span>{food.protein}</span>
-                                    <span>{food.fat}</span>
-                                    <span>{food.carbs}</span>
+                {props.isFetchingMatchingFoods &&
+                    <i style={{}} className='fa fa-refresh fa-spin fa-3x' />
+                }
+                {props.foods.length === 0 && !props.isFetchingMatchingFoods &&
+                    <p>Syötettä vastaavia elintarvikkeita ei löytynyt</p>
+                }
+                {props.foods.length > 0 && !props.isFetchingMatchingFoods &&
+                    <div>
+                        <div className='heading-wrapper'>
+                            <span>Ravintoainelista</span>
+                            <span>kcal / 100</span>
+                            <span style={{background: 'white'}}>P</span>
+                            <span style={{background: 'white'}}>H</span>
+                            <span style={{background: 'white'}}>R</span>
+                        </div>
+                        <ul>
+                            {props.foods.slice(0, 20).map(function (food) {
+                                return (
+                                    <SingleFood
+                                        food={food}
+                                        selectedFoodId={props.selectedFoodId}
+                                        selectFood={props.selectFood}
+                                        selectedFoodAmount={props.selectedFoodAmount}
+                                        setSelectedFoodAmount={props.setSelectedFoodAmount}
+                                        addToFoodDiary={props.addToFoodDiary}
+                                    />
+                                );
+                            })}
+                        </ul>
+                        {props.foods.length > 20 &&
+                            <button className='btn btn-default' style={{marginTop: '20px'}}>
+                                Näytä lisää tuloksia
+                            </button>
+                        }
+                    </div>
+                }
+            </div>
 
-                                </div>
-
-                                {props.selectedFoodId == food.id &&
-                                    <div className='add-to-consumed-foods-list'>
-                                        <input type='text' placeholder='amount' />
-                                        <button
-                                            className='btn btn-primary'
-                                            onClick={() => props.addToFoodDiary(food.id, '200g')}
-                                        >
-                                            Lisää
-                                        </button>
-                                    </div>
-                                }
-                            </li>
-
-                        );
-                    })}
-                </ul>
-
-            }
         </div>
     );
 }
 
+function SingleFood(props) {
+    var food = props.food;
+    var protein = food.protein;
+    var carbs = food.carbs;
+    var fat = food.fat;
+    var macroDominant;
+
+    if(+protein > +carbs) {
+        if(+protein > +fat) {
+            macroDominant = 'protein-dominant';
+        } else {
+            macroDominant = 'fat-dominant';
+        }
+    } else {
+        if(+carbs > +fat) {
+            macroDominant = 'carb-dominant';
+        } else {
+            macroDominant = 'fat-dominant';
+        }
+    }
+
+
+    return (
+        <li>
+            <div
+                key={food.id}
+                className='single-food'
+                onClick={() => props.selectFood(food.id, food.name)}
+            >
+                <span className={macroDominant}>
+                    <i className={props.selectedFoodId == food.id ?
+                            'fa fa-chevron-down' : 'fa fa-chevron-right'} />
+                        &nbsp;&nbsp;{food.name}
+                </span>
+                <span>{food.energy} kcal</span>
+                <span>{food.protein} g</span>
+                <span>{food.carbs} g</span>
+                <span>{food.fat} g</span>
+            </div>
+
+            {/*}{props.selectedFoodId == food.id &&*/}
+                <div className={props.selectedFoodId == food.id ? 'add-to-consumed-foods-list open' : 'add-to-consumed-foods-list closed'}>
+                    <div className='add-panel-wrapper'>
+                        <table className='portion-sizes'>
+                            <th>Annoskoot</th>
+                            <tr>
+                                <td>5 g</td>
+                                <td>Teelusikka</td>
+                            </tr>
+                            <tr>
+                                <td>15 g</td>
+                                <td>Ruokalusikka</td>
+                            </tr>
+                            <tr>
+                                <td>100 g</td>
+                                <td>Pieni annos</td>
+                            </tr>
+                        </table>
+
+                        <div className='add-custom-amount'>
+                            <input
+                                type='text'
+                                placeholder='Määrä...'
+                                defaultValue={props.selectedFoodAmount}
+                                onChange={props.setSelectedFoodAmount}
+                            />
+                            <button className='btn btn-info'
+                                    onClick={() => props.addToFoodDiary(food.id, props.selectedFoodAmount)}>
+                                Lisää
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {/*}}*/}
+        </li>
+    );
+}
+
+
 function ConsumedFoodsList(props) {
-    console.log(props);
     var total = props.totalConsumption;
     return (
         <div className='consumed-foods'>
@@ -291,6 +393,14 @@ function ConsumedFoodsList(props) {
                                     </tr>
                                 );
                             })}
+                            <tr>
+                                <td>Yhteensä</td>
+                                <td>-</td>
+                                <td>{total.energy}</td>
+                                <td>{total.protein}</td>
+                                <td>{total.fat}</td>
+                                <td>{total.carbs}</td>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -303,7 +413,7 @@ function ConsumedFoodsList(props) {
 
 function TotalConsumption(props) {
     var totalConsumption = props.totalConsumption;
-    if(!props.isFetchingConsumedFoods) {
+    /*if(!props.isFetchingConsumedFoods) {
         setTimeout(() => {
             generateMacronutrientSplitChart(
                 totalConsumption.protein,
@@ -312,7 +422,7 @@ function TotalConsumption(props) {
             );
         }, 100);
 
-    }
+    }*/
 
     return (
         <div className='total-consumption'>

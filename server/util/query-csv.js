@@ -1,6 +1,7 @@
+var round = require('./round-to-one-decimal');
 var fs = require('fs');
 
-var foodList = fs.readFileSync('./server/foods_dot.json', 'utf8');
+var foodList = fs.readFileSync('foods.json', 'utf8');
 foodList = JSON.parse(foodList);
 
 function findMatchingFoodsFromCSV(input) {
@@ -11,17 +12,14 @@ function findMatchingFoodsFromCSV(input) {
         var foodName = foodList[foodId].name.toLowerCase();
         var matchAt = foodName.indexOf(input);
         if(matchAt !== -1) {
-            var kcals = Number(foodList[foodId].ENERC.split(',')[0]) / 4.186;
-            kcals = round(kcals.toString());
-
             matchingFoods.push({
                 matchAt: matchAt,
                 id: foodId,
                 name: foodName,
-                energy: kcals,
-                protein: round(foodList[foodId].PROT),
-                fat: round(foodList[foodId].FAT),
-                carbs: round(foodList[foodId].CHOAVL)
+                energy: foodList[foodId].energy,
+                protein: foodList[foodId].protein,
+                fat: foodList[foodId].fat,
+                carbs: foodList[foodId].carbohydrates
             });
         }
     }
@@ -42,7 +40,7 @@ function sortAlphabeticallyAndByRelevance(matchingFoods) {
             return 0;
         }
     });
-    return matchingFoods.slice(0, 20);
+    return matchingFoods;
 }
 
 
@@ -53,13 +51,13 @@ function calculateNutritionValues(consumedFoods) {
         var food = consumedFoods[i];
         var foodName = foodList[food.id].name;
         var foodToCalc = foodList[food.id];
-        var erergyIn100Grams = foodToCalc.ENERC;
-        var proteinIn100Grams = foodToCalc.PROT;
-        var fatIn100Grams = foodToCalc.FAT;
-        var carbsIn100Grams = foodToCalc.CHOAVL;
+        var erergyIn100Grams = foodToCalc.energy;
+        var proteinIn100Grams = foodToCalc.protein;
+        var fatIn100Grams = foodToCalc.fat;
+        var carbsIn100Grams = foodToCalc.carbohydrates;
 
         // calculate nutrition values in amount
-        var energyInAmount = round((erergyIn100Grams / 4.184 / 100) * food.amount);
+        var energyInAmount = Math.round((erergyIn100Grams / 100) * food.amount);
         var proteinInAmount = round((proteinIn100Grams / 100) * food.amount);
         var fatnInAmount = round((fatIn100Grams / 100) * food.amount);
         var carbohydratesInAmount = round((carbsIn100Grams / 100) * food.amount);
@@ -92,16 +90,11 @@ function calcTotalNutritionValues(nutritionValuesPerItem) {
     }
 
     return {
-        energy: round(energyInTotal),
+        energy: Math.round(energyInTotal),
         protein: round(proteinInTotal),
         fat: round(fatInTotal),
         carbs: round(carbsInTotal)
     };
-}
-
-function round(num) {
-    var rounded = Math.round(num * 10) / 10;
-    return rounded.toFixed(1);
 }
 
 module.exports.getMatchingFoods = findMatchingFoodsFromCSV;

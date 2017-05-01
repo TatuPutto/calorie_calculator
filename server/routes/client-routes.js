@@ -11,8 +11,8 @@ router.get('/', function (req, res) {
 router.get('/:file', function (req, res) {
     var ext = req.params.file.split('.')[1];
     ext = (ext == 'js') ? 'js/components' : ext;
-    console.log(path.join(__dirname, '../../client/app/', ext, '/', req.params.file));
-    res.sendFile(path.join(__dirname, '../../client/app/', ext, '/', req.params.file));
+    res.sendFile(path.join(
+            __dirname, '../../client/app/', ext, '/', req.params.file));
 });
 
 module.exports = router;
