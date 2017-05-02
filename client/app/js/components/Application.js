@@ -8,6 +8,7 @@ export default class Application extends React.Component {
     constructor(props) {
         super();
         this.state = {
+            dailyGoal: null,
             foods: [],
             showResultsOffset: 0,
             consumedFoods: [],
@@ -15,34 +16,59 @@ export default class Application extends React.Component {
             selectedFoodId: null,
             selectedFood: null,
             selectedFoodAmount: null,
-            isFetchingMatchingFoods: true,
+            isFetchingDailyGoal: true,
             isFetchingConsumedFoods: true,
+            isFetchingMatchingFoods: true,
             searchTerm: null
         };
+
+        this.getDailyGoal = this.getDailyGoal.bind(this);
+        this.getConsumedFoods = this.getConsumedFoods.bind(this);
+        this.getMatchingFoods = this.getMatchingFoods.bind(this);
         this.changeSearchTerm = this.changeSearchTerm.bind(this);
         this.doSearch = this.doSearch.bind(this);
-        this.getMatchingFoods = this.getMatchingFoods.bind(this);
         this.showMoreResults = this.showMoreResults.bind(this);
         this.selectFood = this.selectFood.bind(this);
         this.setSelectedFoodAmount = this.setSelectedFoodAmount.bind(this);
-        this.addToFoodDiary = this.addToFoodDiary.bind(this);
+        this.addToDiary = this.addToDiary.bind(this);
+        this.removeFromDiary = this.removeFromDiary.bind(this);
     }
 
     componentDidMount() {
-        this.getMatchingFoods('maitorahka');
+        this.getDailyGoal();
         this.getConsumedFoods();
+        this.getMatchingFoods('maitorahka');
     }
 
-    changeSearchTerm(event) {
-        if(event.key == 'Enter') {
-            this.doSearch();
-        } else {
-            this.setState({searchTerm: event.currentTarget.value});
-        }
+    getDailyGoal() {
+        fetch('http://localhost:3000/daily-goal')
+            .then((res) => res.json())
+            .then((data) => {console.log(data);
+                this.setState({
+                    dailyGoal: data,
+                    isFetchingDailyGoal: false
+
+                })
+            }).catch((err) => console.error(err));
     }
 
-    doSearch() {
-        this.getMatchingFoods(this.state.searchTerm);
+    getConsumedFoods() {
+        this.setState({
+            selectedFoodId: null,
+            selectFood: null,
+            selectedFoodAmount: null,
+            isFetchingConsumedFoods: true
+        });
+
+        fetch('http://localhost:3000/daily-intake')
+            .then((res) => res.json())
+            .then((data) => {
+                this.setState({
+                    consumedFoods: data.nutritionValuesPerItem,
+                    totalConsumption: data.nutritionValuesInTotal,
+                    isFetchingConsumedFoods: false
+                })
+            }).catch((err) => console.error(err));
     }
 
     getMatchingFoods(searchTerm) {
@@ -62,31 +88,23 @@ export default class Application extends React.Component {
             .then((data) => this.setState({
                 foods: data,
                 isFetchingMatchingFoods: false
-            }))
-            .catch((err) => console.error(err));
+            })).catch((err) => console.error(err));
+    }
+
+    changeSearchTerm(event) {
+        if(event.key == 'Enter') {
+            this.doSearch();
+        } else {
+            this.setState({searchTerm: event.currentTarget.value});
+        }
+    }
+
+    doSearch() {
+        this.getMatchingFoods(this.state.searchTerm);
     }
 
     showMoreResults() {
         this.setState({showResultsOffset: (+this.state.showResultsOffset + 20)});
-    }
-
-    getConsumedFoods() {
-        this.setState({
-            selectedFoodId: null,
-            selectFood: null,
-            selectedFoodAmount: null,
-            isFetchingConsumedFoods: true
-        });
-
-        fetch('http://localhost:3000/daily-intake')
-            .then((res) => res.json())
-            .then((data) => {
-                this.setState({
-                consumedFoods: data.nutritionValuesPerItem,
-                totalConsumption: data.nutritionValuesInTotal,
-                isFetchingConsumedFoods: false
-            })})
-            .catch((err) => console.error(err));
     }
 
     selectFood(foodId) {
@@ -104,17 +122,27 @@ export default class Application extends React.Component {
         this.setState({selectedFoodAmount: event.currentTarget.value});
     }
 
-    addToFoodDiary(foodId, foodAmount) {
+    addToDiary(foodId, foodAmount) {
         var params = {
             method: 'POST',
             body: JSON.stringify({foodId, foodAmount}),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
+            headers: {'Content-Type': 'application/json'}
+        };
+
         fetch('http://localhost:3000/daily-intake', params)
             .then(() => this.getConsumedFoods())
             .catch((err) => console.error(err));
+    }
+
+    removeFromDiary(consumptionId) {
+        if(window.confirm('Haluatko varmasti poistää tämän rivin?')) {
+            var url = `http://localhost:3000/daily-intake?` +
+                    `consumptionId=${consumptionId}`;
+
+            fetch(url, {method: 'DELETE'})
+                .then(() => this.getConsumedFoods())
+                .catch((err) => console.error(err));
+        }
     }
 
     render() {
@@ -130,15 +158,18 @@ export default class Application extends React.Component {
                     setSelectedFoodAmount={this.setSelectedFoodAmount}
                     isFetchingMatchingFoods={this.state.isFetchingMatchingFoods}
                     selectFood={this.selectFood}
-                    addToFoodDiary={this.addToFoodDiary}
+                    addToDiary={this.addToDiary}
                     showMoreResults={this.showMoreResults}
                     showResultsOffset={this.state.showResultsOffset}
                     totalConsumption={this.state.totalConsumption}
+                    dailyGoal={this.state.dailyGoal}
+                    isFetchingDailyGoal={this.state.isFetchingDailyGoal}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
                 <ConsumedFoods
                     consumedFoods={this.state.consumedFoods}
                     totalConsumption={this.state.totalConsumption}
+                    removeFromDiary={this.removeFromDiary}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
                 {/*}<TotalConsumption

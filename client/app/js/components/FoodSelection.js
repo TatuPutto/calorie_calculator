@@ -15,7 +15,9 @@ export default function FoodSelection(props) {
             </div>
 
             <DailyGoal
+                dailyGoal={props.dailyGoal}
                 totalConsumption={props.totalConsumption}
+                isFetchingDailyGoal={props.isFetchingDailyGoal}
                 isFetchingConsumedFoods={props.isFetchingConsumedFoods}
             />
 
@@ -58,7 +60,7 @@ export default function FoodSelection(props) {
                                         selectFood={props.selectFood}
                                         selectedFoodAmount={props.selectedFoodAmount}
                                         setSelectedFoodAmount={props.setSelectedFoodAmount}
-                                        addToFoodDiary={props.addToFoodDiary}
+                                        addToDiary={props.addToDiary}
                                     />
                                 );
                             })}

@@ -1,11 +1,10 @@
 import React from 'react';
 
-export default function ConsumedFoodsList(props) {
+export default function ConsumedFoods(props) {
     var total = props.totalConsumption;
-
+    console.log(props.consumedFoods);
     return (
         <div className='consumed-foods'>
-        <div className='food-list'>
             {props.isFetchingConsumedFoods &&
                 <i className='fa fa-refresh fa-spin fa-3x' />
             }
@@ -13,45 +12,59 @@ export default function ConsumedFoodsList(props) {
                 <p>Et ole syönyt tänään mitään</p>
             }
             {props.consumedFoods.length > 0 &&
-                <div>
-                    <table className='food-table-headings'>
-                        <tr>
-                            <th>Ravintoaine</th>
-                            <th>Määrä</th>
-                            <th>Energia</th>
-                            <th>P</th>
-                            <th>R</th>
-                            <th>HH</th>
-                        </tr>
-                    </table>
-                    <div className='food-table-content-wrapper'>
-                        <table className='food-table'>
-                            {props.consumedFoods.map((food) => {
+                <div className='consumed-foods-table-wrapper'>
+                    <table className='consumed-foods-table'>
+                        <thead>
+                            <tr>
+                                <th>Poista</th>
+                                <th>Ravintoaine</th>
+                                <th>Määrä</th>
+                                <th>Energia</th>
+                                <th style={{background: 'white'}}>P</th>
+                                <th style={{background: 'white'}}>H</th>
+                                <th style={{background: 'white'}}>R</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {props.consumedFoods.map((food, i) => {
                                 return (
-                                    <tr key={food.id + new Date().getTime()}>
+                                    <tr key={food.timeOfConsumption}>
+                                        <td>
+                                            <button
+                                                className='btn btn-default'
+                                                onClick={() => props.removeFromDiary(food.consumptionId)}
+                                            >
+                                                <i className='fa fa-remove' />
+                                            </button>
+                                        </td>
                                         <td>{food.name}</td>
                                         <td>{food.amount} g</td>
                                         <td>{food.energy} kcal</td>
                                         <td>{food.protein} g</td>
-                                        <td>{food.fat} g</td>
                                         <td>{food.carbs} g</td>
+                                        <td>{food.fat} g</td>
                                     </tr>
                                 );
                             })}
-                            <tr>
-                                <td>Yhteensä</td>
-                                <td>-</td>
-                                <td>{total.energy}</td>
-                                <td>{total.protein}</td>
-                                <td>{total.fat}</td>
-                                <td>{total.carbs}</td>
+                            <tr style={{borderTop: '3px solid #c3cfff'}}>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{total.energy} kcal</td>
+                                <td style={{background: 'white'}}>
+                                    {total.protein} g
+                                </td>
+                                <td style={{background: 'white'}}>
+                                    {total.fat} g
+                                </td>
+                                <td style={{background: 'white'}}>
+                                    {total.carbs} g
+                                </td>
                             </tr>
-                        </table>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             }
-        </div>
-
         </div>
     );
 }

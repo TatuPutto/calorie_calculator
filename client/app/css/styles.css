@@ -16,6 +16,11 @@ tr:hover {
 td {
     padding: 2px;
 }
+
+i {
+    color: #919191;
+}
+
 /*
 td:first-child {
     padding-right: 10px;
@@ -34,6 +39,7 @@ td:first-child {
     margin-right: 20px;
     margin-top: 20px;
     border: 1px solid #c3cfff;
+    border-radius: 3px;
     text-align: left;
     padding: 1%;
     padding-bottom: 1.5%;
@@ -52,23 +58,32 @@ td:first-child {
     border: none;
 }
 
+.macronutrient-progress {
+    text-align: center;
+}
 
 .chart-bar-protein {
-    width: 25% !important;
+    width: 20% !important;
     margin-right: 10px;
     height: 60px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
 }
 
 .chart-bar-carbs {
-    width: 25% !important;
+    width: 20% !important;
     margin-right: 10px;
     height: 60px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
 }
 
 .chart-bar-fat {
-    width: 25% !important;
+    width: 20% !important;
     margin-right: 10px;
     height: 60px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
 }
 
 
@@ -355,4 +370,76 @@ span:nth-child(5) {
 
 .fat-dominant {
     color: #fa6b6b;
+}
+
+.consumed-foods {
+    float: left;
+    width: 100%;
+    background: white;
+    padding: 40px 0;
+}
+
+
+.consumed-foods-table-wrapper {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.consumed-foods-table {
+    text-align: center;
+    font-size: 13px;
+    width: 100%;
+}
+
+.consumed-foods-table th {
+        text-align: center;
+    font-size: 14px;
+    font-weight: normal;
+    border-bottom: 1px solid #c3cfff;
+}
+
+.consumed-foods-table th, td {
+    /*border: 1px solid #cccccc;*/
+    padding: 6px;
+}
+
+.consumed-foods-table th:first-child, td:first-child {
+    width: 4%;
+}
+
+.consumed-foods-table th:nth-child(2), td:nth-child(2) {
+    text-align: left;
+    width: 52%;
+    /*border-right: 1px solid #c3cfff;*/
+}
+
+.consumed-foods-table th:nth-child(3), td:nth-child(3) {
+    width: 8%;
+    /*border-right: 1px solid #c3cfff;*/
+}
+
+.consumed-foods-table th:nth-child(4), td:nth-child(4) {
+    width: 15%;
+    /*border-right: 1px solid #c3cfff;*/
+}
+
+.consumed-foods-table th:nth-child(5), td:nth-child(5) {
+    background: #93f093;
+    color: green;
+    width: 7%;
+    /*border-right: 1px solid #c3cfff;*/
+}
+
+.consumed-foods-table th:nth-child(6), td:nth-child(6) {
+    background: #c1c1ff;
+    color: blue;
+    width: 7%;
+    /*border-right: 1px solid #c3cfff;*/
+}
+
+.consumed-foods-table th:nth-child(7), td:nth-child(7) {
+    background: #fcc6b4;
+    color: red;
+    width: 7%;
 }

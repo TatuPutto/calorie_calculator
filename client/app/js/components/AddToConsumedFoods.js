@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import PortionSizes from './PortionSizes';
 
@@ -8,8 +9,8 @@ export default function AddToConsumedFoods(props) {
         selectedFoodId,
         selectedFoodAmount,
         setSelectedFoodAmount,
-        addToFoodDiary
-    } = props
+        addToDiary
+    } = props;
     var cName = 'add-to-consumed-foods-list ';
     cName += (selectedFoodId == foodId) ? 'open' : 'closed';
 
@@ -26,7 +27,7 @@ export default function AddToConsumedFoods(props) {
                     />
                     <button
                         className='btn btn-info'
-                        onClick={() => addToFoodDiary(foodId, selectedFoodAmount)}
+                        onClick={() => addToDiary(foodId, selectedFoodAmount)}
                     >
                         Lisää
                     </button>
@@ -35,3 +36,11 @@ export default function AddToConsumedFoods(props) {
         </div>
     );
 }
+
+AddToConsumedFoods.propTypes = {
+    foodId: PropTypes.string.isRequired,
+    selectedFoodId: PropTypes.string,
+    selectedFoodAmount: PropTypes.string,
+    setSelectedFoodAmount: PropTypes.func.isRequired,
+    addToDiary: PropTypes.func.isRequired
+};

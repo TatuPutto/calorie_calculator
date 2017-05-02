@@ -50,6 +50,7 @@ function calculateNutritionValues(consumedFoods) {
     for(var i = 0; i < consumedFoods.length; i++) {
         var food = consumedFoods[i];
         var foodName = foodList[food.id].name;
+        var timeOfConsumption = food.timeOfConsumption;
         var foodToCalc = foodList[food.id];
         var erergyIn100Grams = foodToCalc.energy;
         var proteinIn100Grams = foodToCalc.protein;
@@ -63,7 +64,9 @@ function calculateNutritionValues(consumedFoods) {
         var carbohydratesInAmount = round((carbsIn100Grams / 100) * food.amount);
 
         nutritionValues.push({
+            consumptionId: food.consumptionId,
             amount: food.amount,
+            timeOfConsumption: '' + food.timeOfConsumption,
             id: food.id,
             name: foodName,
             energy: energyInAmount,

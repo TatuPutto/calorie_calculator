@@ -33,7 +33,7 @@ export default function SingleFood(props) {
                 selectedFoodId={props.selectedFoodId}
                 selectedFoodAmount={props.selectedFoodAmount}
                 setSelectedFoodAmount={props.setSelectedFoodAmount}
-                addToFoodDiary={props.addToFoodDiary}
+                addToDiary={props.addToDiary}
             />
         </li>
     );
