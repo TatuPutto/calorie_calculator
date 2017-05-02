@@ -4,7 +4,7 @@ var router = express.Router();
 
 // serve index.html on request to root
 router.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../../client/app/static', 'index.html'));
+    res.sendFile(path.join(__dirname, '../../client/app/', 'index.html'));
 });
 
 // serve other static assets

@@ -53,6 +53,31 @@ td:first-child {
 }
 
 
+.chart-bar-protein {
+    width: 25% !important;
+    margin-right: 10px;
+    height: 60px;
+}
+
+.chart-bar-carbs {
+    width: 25% !important;
+    margin-right: 10px;
+    height: 60px;
+}
+
+.chart-bar-fat {
+    width: 25% !important;
+    margin-right: 10px;
+    height: 60px;
+}
+
+
+
+
+
+
+
+
 .matching-foods ul {
     -webkit-padding-start: 0px;
     list-style-type: none;
@@ -280,9 +305,7 @@ span:nth-child(5) {
     box-shadow: 1px 2px 3px #c9c9c9;
 
     margin-bottom: 20px;*/
-    background: white;
-    margin-top: 40px;
-    text-align: center;
+
     font-size: 13px;
     /*color: #207eff;*/
 }

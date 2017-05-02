@@ -52,7 +52,15 @@ router.use(bodyParser.json());
 
 // add food and amount to list of consumed foods
 router.post('/', function (req, res) {
-    console.log('Otetaan vastaan:' + req.body);
+    var foodId = req.body.foodId;
+    var foodAmount = req.body.foodAmount;
+    if(!foodId || !foodAmount) {
+        res.status(422);
+        res.end();
+    }
+
+    console.log('Otetaan vastaan ruoka:' + req.body.foodId);
+    console.log('Otetaan vastaan määrä:' + req.body.foodAmount);
     var mysql = require('mysql');
     var connection = mysql.createConnection({
       host: 'localhost',
@@ -64,8 +72,6 @@ router.post('/', function (req, res) {
     connection.connect();
 
 
-    var foodId = req.body.foodId;
-    var foodAmount = req.body.foodAmount;
 
     var promise = new Promise(function (resolve, reject) {
         connection.query(`INSERT INTO consumed_foods (user_id, food_id, food_amount) VALUES (123, ${foodId}, ${foodAmount})`, function (err, results, fields) {

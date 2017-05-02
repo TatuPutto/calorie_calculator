@@ -5,17 +5,18 @@ var path = require('path');
 module.exports = {
     context: path.join(__dirname, "/client/app"),
     devtool: debug ? "inline-sourcemap" : null,
-    entry: {
+    /*entry: {
         javascript: "./js/bundle.js",
-        html: "./static/index.html",
-    },
+        html: './static/index.html'
+    },*/
+    entry: "./js/bundle.js",
     module: {
         loaders: [{
             test: /\.jsx?$/,
             exclude: /(node_modules|bower_components)/,
             loader: 'babel-loader',
                 query: {
-                	presets: ['react', 'es2015'],
+                	presets: ['react', 'es2015', 'stage-0'],
                     plugins: [
                         'react-html-attrs',
                         'transform-class-properties',
@@ -25,19 +26,16 @@ module.exports = {
         },
         {
     	    test: /\.html$/,
-            loader: "file?name=[name].[ext]"
+            loader: "file-loader?name=[name].[ext]"
         },
         {
         	test: /\.css$/,
             loader: "style-loader!css-loader"
-        },
-        {
-    		test: /\.json$/,
-    		loader: 'json'
         }]
     },
     output: {
-    	path: __dirname + "client/app/js",
+        path: path.join(__dirname, "/client/app/js"),
+    	//path: __dirname + "client/app/js",
     	filename: "bundle.min.js"
     },
     plugins: debug ? [] : [
