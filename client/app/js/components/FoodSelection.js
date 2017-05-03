@@ -5,13 +5,23 @@ import SingleFood from './SingleFood';
 
 export default function FoodSelection(props) {
     var offset = props.showResultsOffset;
+    var fetchMethod = props.fetchMethod;
 
     return (
         <div className='food-selection'>
             <div className='search-type'>
-                <button className='active'>Haku</button>
-                <button>Suosikit</button>
-                <button>Viimeisimmät</button>
+                <button className={fetchMethod == 'search' ? 'active' : ''}
+                        onClick={() => props.changeFetchMethod('search')}>
+                    Haku
+                </button>
+                <button className={fetchMethod == 'favorites' ? 'active' : ''}
+                        onClick={() => props.changeFetchMethod('favorites')}>
+                    Suosikit
+                </button>
+                <button className={fetchMethod == 'latest' ? 'active' : ''}
+                        onClick={() => props.changeFetchMethod('latest')}>
+                    Viimeisimmät
+                </button>
             </div>
 
             <DailyGoal
@@ -22,18 +32,21 @@ export default function FoodSelection(props) {
             />
 
             <div className='matching-foods'>
-                <input
-                    type='text'
-                    className='search-input'
-                    placeholder='Hae ruokaa tai raaka-ainetta'
-                    defaultValue={props.searchTerm}
-                    onKeyUp={props.changeSearchTerm}
-                />
-                <button className='do-search' onClick={props.doSearch}>
-                    <i className='fa fa-search' />
-                </button>
 
-
+                {props.fetchMethod == 'search' &&
+                    <div className='search'>
+                        <input
+                            type='text'
+                            className='search-input'
+                            placeholder='Hae ruokaa tai raaka-ainetta'
+                            defaultValue={props.searchTerm}
+                            onKeyUp={props.changeSearchTerm}
+                        />
+                        <button className='do-search' onClick={props.doSearch}>
+                            <i className='fa fa-search' />
+                        </button>
+                    </div>
+                }
 
                 {props.isFetchingMatchingFoods &&
                     <i style={{}} className='fa fa-refresh fa-spin fa-3x' />

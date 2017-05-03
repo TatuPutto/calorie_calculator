@@ -311,7 +311,7 @@ span:nth-child(5) {
 .search-type .active {
     border-style: solid;
     margin-right: 6px;
-
+    margin-left: 6px;
     border-color: aliceblue;
     border: 1px solid #c3cfff;
     border-top: 4px solid #c3cfff;

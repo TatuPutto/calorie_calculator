@@ -4,30 +4,53 @@ var fs = require('fs');
 var foodList = fs.readFileSync('foods-with-portion-sizes.json', 'utf8');
 foodList = JSON.parse(foodList);
 
-function findMatchingFoodsFromCSV(input) {
+function findMatchingFoodsByName(input) {
     input = input.toLowerCase().trim();
     var matchingFoods = [];
 
     for(foodId in foodList) {
-        var foodName = foodList[foodId].name.toLowerCase();
-        var matchAt = foodName.indexOf(input);
+        var food = foodList[foodId];
+        var name = food.name.toLowerCase();
+        var matchAt = name.indexOf(input);
+
         if(matchAt !== -1) {
             matchingFoods.push({
                 matchAt: matchAt,
                 favorite: false,
                 id: foodId,
-                name: foodName,
-                energy: foodList[foodId].energy,
-                protein: foodList[foodId].protein,
-                fat: foodList[foodId].fat,
-                carbs: foodList[foodId].carbohydrates,
-                portionSizes: foodList[foodId].portionSizes
+                name: name,
+                energy: food.energy,
+                protein: food.protein,
+                fat: food.fat,
+                carbs: food.carbohydrates,
+                portionSizes: food.portionSizes
             });
         }
     }
     return sortAlphabeticallyAndByRelevance(matchingFoods);
 }
 
+function findMatchingFoodsByIds(ids) {
+    var matchingFoods = [];
+
+    for(var i = 0; i < ids.length; i++) {
+        var id = ids[i];
+        var food = foodList[id];
+
+        matchingFoods.push({
+            favorite: true,
+            id: id,
+            name: food.name,
+            energy: food.energy,
+            protein: food.protein,
+            fat: food.fat,
+            carbs: food.carbohydrates,
+            portionSizes: food.portionSizes
+        });
+    }
+    console.log(matchingFoods);
+    return matchingFoods.sort();
+}
 
 function sortAlphabeticallyAndByRelevance(matchingFoods) {
     // sort alphabetically
@@ -65,8 +88,6 @@ function calculateNutritionValues(consumedFoods) {
         var fatnInAmount = round((fatIn100Grams / 100) * food.amount);
         var carbohydratesInAmount = round((carbsIn100Grams / 100) * food.amount);
 
-
-        //console.log('jee');
         nutritionValues.push({
             consumptionId: food.consumptionId,
             amount: food.amount,
@@ -78,10 +99,7 @@ function calculateNutritionValues(consumedFoods) {
             fat: fatnInAmount,
             carbs: carbohydratesInAmount
         });
-
-        //console.log(nutritionValues[i]);
     }
-    //console.log('nutritionValuesPerItem:' + nutritionValues);
     return nutritionValues;
 }
 
@@ -107,6 +125,7 @@ function calcTotalNutritionValues(nutritionValuesPerItem) {
     };
 }
 
-module.exports.getMatchingFoods = findMatchingFoodsFromCSV;
+module.exports.findMatchingFoodsByName = findMatchingFoodsByName;
+module.exports.findMatchingFoodsByIds = findMatchingFoodsByIds;
 module.exports.calculateNutritionValues = calculateNutritionValues;
 module.exports.calcTotalNutritionValues = calcTotalNutritionValues;

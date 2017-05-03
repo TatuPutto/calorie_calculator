@@ -19,12 +19,15 @@ export default class Application extends React.Component {
             isFetchingDailyGoal: true,
             isFetchingConsumedFoods: true,
             isFetchingMatchingFoods: true,
-            searchTerm: null
+            searchTerm: null,
+            fetchMethod: 'search'
         };
 
         this.getDailyGoal = this.getDailyGoal.bind(this);
         this.getConsumedFoods = this.getConsumedFoods.bind(this);
         this.getMatchingFoods = this.getMatchingFoods.bind(this);
+        this.getFavoriteFoods = this.getFavoriteFoods.bind(this);
+        this.fetchFoods = this.fetchFoods.bind(this);
         this.changeSearchTerm = this.changeSearchTerm.bind(this);
         this.doSearch = this.doSearch.bind(this);
         this.showMoreResults = this.showMoreResults.bind(this);
@@ -35,6 +38,7 @@ export default class Application extends React.Component {
         this.addToFavorites = this.addToFavorites.bind(this);
         this.removeFromFavorites = this.removeFromFavorites.bind(this);
         this.toggleFavoriteIcon = this.toggleFavoriteIcon.bind(this);
+        this.changeFetchMethod = this.changeFetchMethod.bind(this);
     }
 
     componentDidMount() {
@@ -82,6 +86,15 @@ export default class Application extends React.Component {
     getMatchingFoods(searchTerm) {
         searchTerm = searchTerm.trim();
         if(!searchTerm) return;
+        this.fetchFoods(`http://localhost:3000/matching-foods/${searchTerm}`);
+    }
+
+    getFavoriteFoods() {
+        console.log('favroites');
+        this.fetchFoods('http://localhost:3000/favorites');
+    }
+
+    fetchFoods(url) {
         this.setState({
             foods: [],
             selectedFoodId: null,
@@ -91,7 +104,7 @@ export default class Application extends React.Component {
             showResultsOffset: 0
         });
 
-        fetch(`http://localhost:3000/matching-foods/${searchTerm}`)
+        fetch(url)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -198,6 +211,17 @@ export default class Application extends React.Component {
         this.setState({foods});
     }
 
+    changeFetchMethod(fetchMethod) {
+        this.setState({fetchMethod});
+        if(fetchMethod == 'search') {
+            this.getMatchingFoods('maitorahka');
+        } else if(fetchMethod == 'favorites') {
+            this.getFavoriteFoods();
+        } else {
+            // latest
+        }
+    }
+
     render() {
         return (
             <div className='container-fluid'>
@@ -220,6 +244,8 @@ export default class Application extends React.Component {
                     dailyGoal={this.state.dailyGoal}
                     isFetchingDailyGoal={this.state.isFetchingDailyGoal}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
+                    changeFetchMethod={this.changeFetchMethod}
+                    fetchMethod={this.state.fetchMethod}
                 />
                 <ConsumedFoods
                     consumedFoods={this.state.consumedFoods}
