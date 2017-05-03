@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ConsumedFoods(props) {
     var total = props.totalConsumption;
-    console.log(props.consumedFoods);
+
     return (
         <div className='consumed-foods'>
             {props.isFetchingConsumedFoods &&
@@ -55,10 +55,10 @@ export default function ConsumedFoods(props) {
                                     {total.protein} g
                                 </td>
                                 <td style={{background: 'white'}}>
-                                    {total.fat} g
+                                    {total.carbs} g
                                 </td>
                                 <td style={{background: 'white'}}>
-                                    {total.carbs} g
+                                    {total.fat} g
                                 </td>
                             </tr>
                         </tbody>

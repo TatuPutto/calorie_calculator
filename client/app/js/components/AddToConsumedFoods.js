@@ -9,7 +9,8 @@ export default function AddToConsumedFoods(props) {
         selectedFoodId,
         selectedFoodAmount,
         setSelectedFoodAmount,
-        addToDiary
+        addToDiary,
+        portionSizes
     } = props;
     var cName = 'add-to-consumed-foods-list ';
     cName += (selectedFoodId == foodId) ? 'open' : 'closed';
@@ -17,7 +18,11 @@ export default function AddToConsumedFoods(props) {
     return (
         <div className={cName}>
             <div className='add-panel-wrapper'>
-                <PortionSizes />
+                <PortionSizes
+                    portionSizes={portionSizes}
+                    foodId={foodId}
+                    addToDiary={addToDiary}
+                />
                 <div className='add-custom-amount'>
                     <input
                         type='text'

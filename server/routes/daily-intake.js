@@ -24,7 +24,7 @@ router.get('/', function (req, res) {
 
     // handle successfull query response
     dbQuery.then(function (data) {
-
+        //console.log(data);
         var consumedFoods = data.map(function (item) {
             //console.log(item.timeOfConsumption);
             return {
@@ -40,7 +40,6 @@ router.get('/', function (req, res) {
         var nutritionValuesPerItem = calcNutritionValues(consumedFoods);
         // calc sum of nutrition values across all consumed items
         var nutritionValuesInTotal = calcTotalNutritionValues(nutritionValuesPerItem);
-        //console.log(nutritionValuesPerItem);
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({nutritionValuesPerItem, nutritionValuesInTotal}));
     });

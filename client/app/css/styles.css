@@ -120,10 +120,29 @@ td:first-child {
 }
 
 
+.add-to-favorites {
+    float: right;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 7px;
+    line-height: 15px;
+    background: none;
+    border: none;
+}
+
+.add-to-favorites:focus {
+    outline: none;
+}
+
+.add-to-favorites i {
+    color: orange;
+}
+
+
+
 .add-to-consumed-foods-list {
     background: #fcfcfc;
-    height: 200px;
-    border-top: 0 solid transparent;
+    border: 0 solid transparent;
     overflow-y: hidden;
     max-height: 0;
     transition: all 0.2s ease-out;
@@ -131,18 +150,23 @@ td:first-child {
 }
 
 .add-to-consumed-foods-list.open {
-    border-top: 1px solid #c3cfff;
+    border: 1px solid #c3cfff;
     border-color: ;
-    max-height: 200px;
+    max-height: 250px;
 }
 
 .add-to-consumed-foods-list.closed {
-    border-top: 0 solid transparent;
+    border: 0 solid transparent;
     max-height: 0;
 }
 
 .add-panel-wrapper {
     padding: 15px;
+    padding-bottom: 25px;
+}
+
+.portion-sizes li {
+    margin-bottom: 6px;
 }
 
 .portion-sizes a {
@@ -153,6 +177,7 @@ td:first-child {
 .portion-sizes a:hover {
     background: #aec2e3;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .add-custom-amount {
@@ -175,39 +200,40 @@ td:first-child {
 span {
     /*border: 1px solid #cccccc;*/
     display: inline-block;
-    padding: 6px;
+    /*padding: 6px;*/
+    line-height: 30px;
 }
 
 span:first-child {
     border-left: none;
     text-align: left;
-    width: 64%;
+    width: 66%;
     /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(2) {
-    width: 15%;
+    width: 10%;
     /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(3) {
     background: #93f093;
     color: green;
-    width: 7%;
+    width: 8%;
     /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(4) {
     background: #c1c1ff;
     color: blue;
-    width: 7%;
+    width: 8%;
     /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(5) {
     background: #fcc6b4;
     color: red;
-    width: 7%;
+    width: 8%;
 }
 
 

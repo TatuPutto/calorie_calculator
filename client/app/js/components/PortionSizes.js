@@ -1,27 +1,25 @@
 import React from 'react';
 
 export default function PortionSizes(props) {
+    var portionSizes = props.portionSizes;
+    var foodId = props.foodId;
+
+    var portions = Object.keys(portionSizes).map((portion) => {
+        var portionAmount = portionSizes[portion];
+
+        return (
+            <li
+                key={portion}
+                onClick={() => props.addToDiary(foodId, portionAmount)}
+            >
+                <a>{portion} ({portionAmount} g)</a>
+            </li>
+        );
+    });
+
     return (
-        <table className='portion-sizes'>
-            <thead>
-                <tr>
-                    <th>Annoskoot</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>5 g</td>
-                    <td>Teelusikka</td>
-                </tr>
-                <tr>
-                    <td>15 g</td>
-                    <td>Ruokalusikka</td>
-                </tr>
-                <tr>
-                    <td>100 g</td>
-                    <td>Pieni annos</td>
-                </tr>
-            </tbody>
-        </table>
+        <ul className='portion-sizes'>
+            {portions}
+        </ul>
     );
 }

@@ -1,7 +1,7 @@
 var round = require('./round-to-one-decimal');
 var fs = require('fs');
 
-var foodList = fs.readFileSync('foods.json', 'utf8');
+var foodList = fs.readFileSync('foods-with-portion-sizes.json', 'utf8');
 foodList = JSON.parse(foodList);
 
 function findMatchingFoodsFromCSV(input) {
@@ -14,12 +14,14 @@ function findMatchingFoodsFromCSV(input) {
         if(matchAt !== -1) {
             matchingFoods.push({
                 matchAt: matchAt,
+                favorite: false,
                 id: foodId,
                 name: foodName,
                 energy: foodList[foodId].energy,
                 protein: foodList[foodId].protein,
                 fat: foodList[foodId].fat,
-                carbs: foodList[foodId].carbohydrates
+                carbs: foodList[foodId].carbohydrates,
+                portionSizes: foodList[foodId].portionSizes
             });
         }
     }
@@ -63,6 +65,8 @@ function calculateNutritionValues(consumedFoods) {
         var fatnInAmount = round((fatIn100Grams / 100) * food.amount);
         var carbohydratesInAmount = round((carbsIn100Grams / 100) * food.amount);
 
+
+        //console.log('jee');
         nutritionValues.push({
             consumptionId: food.consumptionId,
             amount: food.amount,
@@ -74,7 +78,10 @@ function calculateNutritionValues(consumedFoods) {
             fat: fatnInAmount,
             carbs: carbohydratesInAmount
         });
+
+        //console.log(nutritionValues[i]);
     }
+    //console.log('nutritionValuesPerItem:' + nutritionValues);
     return nutritionValues;
 }
 

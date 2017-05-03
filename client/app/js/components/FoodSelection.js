@@ -61,6 +61,8 @@ export default function FoodSelection(props) {
                                         selectedFoodAmount={props.selectedFoodAmount}
                                         setSelectedFoodAmount={props.setSelectedFoodAmount}
                                         addToDiary={props.addToDiary}
+                                        addToFavorites={props.addToFavorites}
+                                        removeFromFavorites={props.removeFromFavorites}
                                     />
                                 );
                             })}

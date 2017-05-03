@@ -8,8 +8,9 @@ for(var i = 1; i < foods.length; i++) {
    foodNames.push(name);
 }
 
-
 var nutritionValues = fs.readFileSync('./server/ravintoarvot.csv', 'utf8').split('\n');
+
+var portionSizes = fs.readFileSync('./server/foodaddunit.csv', 'utf8').split('\n');
 
 
 function getFoodName(id) {
@@ -23,21 +24,59 @@ function getFoodName(id) {
 module.exports = function convertToJson() {
     var json = {};
     var breakI = 1;
+    var breakP = 1;
     //34306
     for(var i = 1; i <= 34306; i++) {
-        var asdf = asd(i, breakI);
+    //for(var i = 1; i <= 1000; i++) {
+        var nutritionVal = asd(i, breakI);
+        var portions = portion(i, breakP);
+        console.log(portions);
+        obj = nutritionVal[0];
 
-        obj = asdf[0];
-        breakI = asdf[1];
 
-        if(Object.keys(asdf[0]).length > 0) {
+        breakI = nutritionVal[1];
+        breakP = portions[1];
+
+        if(Object.keys(nutritionVal[0]).length > 0) {
             obj['name'] = getFoodName(i);
+            obj['portionSizes'] = portions[0];
+            console.log(obj);
             json[i] = obj;
         }
 
     }
 
-    fs.writeFileSync('foods.json', JSON.stringify(json), 'utf8');
+    fs.writeFileSync('foods-with-portion-sizes.json', JSON.stringify(json), 'utf8');
+}
+
+function portion(num, breakP) {
+    var portions = {};
+
+    for(var i = breakP; i < portionSizes.length; i++) {
+        if(portionSizes[i].split(';')[0] == num) {
+            console.log('täällä');
+            var prop = portionSizes[i].split(';')[1];
+            console.log(prop);
+            var propReal;
+            if(prop == 'PORTS') propReal = 'pieni annos';
+            if(prop == 'PORTM') propReal = 'keskikokoinen annos';
+            if(prop == 'PORTL') propReal = 'iso annos';
+
+            if(prop == 'KPL_S') propReal = 'pieni kpl';
+            if(prop == 'KPL_M') propReal = 'keskikokoinen kpl';
+            if(prop == 'KPL_L') propReal = 'iso kpl';
+
+            if(prop == 'DL') propReal = 'dl';
+            if(prop == 'RKL') propReal = 'rkl';
+            if(prop == 'TL') propReal = 'tl';
+
+            portions[propReal] = Math.round(portionSizes[i].split(';')[2].replace(',', '.'));
+        } else {
+            breakP = i;
+            break;
+        }
+    }
+    return [portions, breakP];
 }
 
 function asd(num, breakI) {

@@ -32,6 +32,9 @@ export default class Application extends React.Component {
         this.setSelectedFoodAmount = this.setSelectedFoodAmount.bind(this);
         this.addToDiary = this.addToDiary.bind(this);
         this.removeFromDiary = this.removeFromDiary.bind(this);
+        this.addToFavorites = this.addToFavorites.bind(this);
+        this.removeFromFavorites = this.removeFromFavorites.bind(this);
+        this.toggleFavoriteIcon = this.toggleFavoriteIcon.bind(this);
     }
 
     componentDidMount() {
@@ -43,13 +46,15 @@ export default class Application extends React.Component {
     getDailyGoal() {
         fetch('http://localhost:3000/daily-goal')
             .then((res) => res.json())
-            .then((data) => {console.log(data);
+            .then((data) => {
                 this.setState({
                     dailyGoal: data,
                     isFetchingDailyGoal: false
-
-                })
-            }).catch((err) => console.error(err));
+                });
+            }).catch((err) => {
+                console.error(err);
+                this.setState({isFetchingDailyGoal: false});
+            });
     }
 
     getConsumedFoods() {
@@ -60,15 +65,18 @@ export default class Application extends React.Component {
             isFetchingConsumedFoods: true
         });
 
-        fetch('http://localhost:3000/daily-intake')
+        fetch('http://localhost:3000/daily-intake', {method: 'GET'})
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
                     consumedFoods: data.nutritionValuesPerItem,
                     totalConsumption: data.nutritionValuesInTotal,
                     isFetchingConsumedFoods: false
-                })
-            }).catch((err) => console.error(err));
+                });
+            }).catch((err) => {
+                this.setState({isFetchingConsumedFoods: false});
+                console.error(err);
+            });
     }
 
     getMatchingFoods(searchTerm) {
@@ -85,10 +93,15 @@ export default class Application extends React.Component {
 
         fetch(`http://localhost:3000/matching-foods/${searchTerm}`)
             .then((res) => res.json())
-            .then((data) => this.setState({
-                foods: data,
-                isFetchingMatchingFoods: false
-            })).catch((err) => console.error(err));
+            .then((data) => {
+                this.setState({
+                    foods: data,
+                    isFetchingMatchingFoods: false
+                });
+            }).catch((err) => {
+                console.error(err);
+                this.setState({isFetchingMatchingFoods: false});
+            });
     }
 
     changeSearchTerm(event) {
@@ -109,11 +122,16 @@ export default class Application extends React.Component {
 
     selectFood(foodId) {
         if(this.state.selectedFoodId == foodId) {
-            this.setState({selectedFoodId: null, selectedFood: null});
+            this.setState({
+                selectedFoodId: null,
+                selectedFood: null,
+                selectedFoodAmount: null
+            });
         } else {
             this.setState({
                 selectedFoodId: foodId,
-                selectedFood: this.state.foods.filter((food) => food.id == foodId)[0]
+                selectedFood: this.state.foods.filter((food) => food.id == foodId)[0],
+                selectedFoodAmount: null
             });
         }
     }
@@ -126,7 +144,10 @@ export default class Application extends React.Component {
         var params = {
             method: 'POST',
             body: JSON.stringify({foodId, foodAmount}),
-            headers: {'Content-Type': 'application/json'}
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': body.length
+            }
         };
 
         fetch('http://localhost:3000/daily-intake', params)
@@ -145,6 +166,38 @@ export default class Application extends React.Component {
         }
     }
 
+    addToFavorites(foodId) {
+        this.toggleFavoriteIcon(foodId, true);
+
+        var url = `http://localhost:3000/favorites/${foodId}`
+        var params = {
+            method: 'PUT',
+            body: '',
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': 0
+            }
+        };
+
+        fetch(url, params)
+            .catch((err) => console.error(err));
+    }
+
+    removeFromFavorites(foodId) {
+        this.toggleFavoriteIcon(foodId, false);
+
+        var url = `http://localhost:3000/favorites/${foodId}`
+        fetch(url, {method: 'DELETE'})
+            .catch((err) => console.error(err));
+    }
+
+    toggleFavoriteIcon(foodId, favorite) {
+        var foods = JSON.parse(JSON.stringify(this.state.foods));
+        var index = foods.findIndex((food) => food.id == foodId);
+        foods[index]['favorite'] = favorite;
+        this.setState({foods});
+    }
+
     render() {
         return (
             <div className='container-fluid'>
@@ -159,6 +212,8 @@ export default class Application extends React.Component {
                     isFetchingMatchingFoods={this.state.isFetchingMatchingFoods}
                     selectFood={this.selectFood}
                     addToDiary={this.addToDiary}
+                    addToFavorites={this.addToFavorites}
+                    removeFromFavorites={this.removeFromFavorites}
                     showMoreResults={this.showMoreResults}
                     showResultsOffset={this.state.showResultsOffset}
                     totalConsumption={this.state.totalConsumption}
