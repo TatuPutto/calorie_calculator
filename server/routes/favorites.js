@@ -5,15 +5,26 @@ var removeFoodFromFavorites = require('../database/remove-food-from-favorites');
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function (req, res) {console.log('täällä');
-    getFavoriteFoods()
+// allow using favorites only when logged in
+router.use(function (req, res, next) {
+    if(req.session.user) {
+        next();
+    } else {
+        res.writeHead(403, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify('Kirjaudu sisään käyttääksesi suosikkeja'));
+    }
+});
+
+router.get('/', function (req, res) {
+    getFavoriteFoods(req.session.user.id)
         .then(function (favorites) {
             var matchingFoods = findMatchingFoodsByIds(favorites);
-            console.log(matchingFoods);
+            matchingFoods.forEach(function (food) {
+                return food['favorite'] = true;
+            });
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(matchingFoods));
         })
-
         .catch(function (err) {
             res.end(JSON.stringify(err));
         });
@@ -21,7 +32,7 @@ router.get('/', function (req, res) {console.log('täällä');
 
 
 router.put('/:foodId', function (req, res) {
-    addFoodToFavorites(req.params.foodId)
+    addFoodToFavorites(req.session.user.id, req.params.foodId)
         .then(function () {
             res.status(200);
             res.end();
@@ -31,7 +42,7 @@ router.put('/:foodId', function (req, res) {
 });
 
 router.delete('/:foodId', function (req, res) {
-    removeFoodFromFavorites(req.params.foodId)
+    removeFoodFromFavorites(req.session.user.id, req.params.foodId)
         .then(function () {
             res.status(200);
             res.end();
@@ -39,6 +50,5 @@ router.delete('/:foodId', function (req, res) {
             res.end(err);
         });
 });
-
 
 module.exports = router;

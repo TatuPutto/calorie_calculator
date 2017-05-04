@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '../../client/app/', 'index.html'));
 });
-
+/*
 // serve other static assets
 router.get('/:file', function (req, res) {
     var ext = req.params.file.split('.')[1];
@@ -14,5 +14,5 @@ router.get('/:file', function (req, res) {
     res.sendFile(path.join(
             __dirname, '../../client/app/', ext, '/', req.params.file));
 });
-
+*/
 module.exports = router;

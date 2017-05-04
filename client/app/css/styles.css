@@ -1,5 +1,5 @@
 body {
-    background: whitesmoke;
+    background: #fcfcfc;
     overflow-y: scroll;
 }
 
@@ -32,20 +32,49 @@ td:first-child {
 }
 
 
+.header {
+    color: white;
+    height: 50px;
+    background: #74a2ff;
+    border-bottom: 3px solid #3e3eff;
+}
+
+.header-content {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.header ul {
+    float: left;
+}
+
+.header ul li {
+    line-height: 48px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.user-info {
+    float: right;
+    line-height: 48px;
+}
+
+
+
 .daily-goal {
     width: 15%;
     float: left;
-    margin-left: 8%;
+    margin-left: 10%;
     margin-right: 20px;
     margin-top: 20px;
     border: 1px solid #c3cfff;
     border-radius: 3px;
-    text-align: left;
     padding: 1%;
-    padding-bottom: 1.5%;
 }
 
 .daily-goal h4 {
+    text-align: left;
     display: inline;
     position: relative;
     top: 3px;
@@ -86,12 +115,17 @@ td:first-child {
     border-top-left-radius: 3px;
 }
 
+.daily-goal p:nth-child(2) {
+    color: green;
+}
 
+.daily-goal p:nth-child(3) {
+    color: blue;
+}
 
-
-
-
-
+.daily-goal p:nth-child(4) {
+    color: red;
+}
 
 .matching-foods ul {
     -webkit-padding-start: 0px;
@@ -104,8 +138,8 @@ td:first-child {
     overflow-y: hidden;
 }
 
-.matching-foods ul li:last-child {
-    /*border-bottom: 1px solid #c3cfff;*/
+.matching-foods ul li:first-child {
+    border-top: 1px solid #d6dcf8;
 }
 
 
@@ -198,9 +232,10 @@ td:first-child {
 
 
 span {
-    /*border: 1px solid #cccccc;*/
+    border-bottom: 1px solid #d6dcf8;
     display: inline-block;
     /*padding: 6px;*/
+    padding-left: 5px;
     line-height: 30px;
 }
 
@@ -237,33 +272,6 @@ span:nth-child(5) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-.food-selection {
-    /*padding: 20px;
-    background: whitesmoke;
-    border-radius: 3px;
-    border: 1px solid whitesmoke;
-    box-shadow: 1px 2px 3px #c9c9c9;*/
-}
-
-.search-pane {
-    /*padding: 10px 0;
-    border: 1px solid #c9c9c9;
-    border-radius: 3px;
-    background: whitesmoke;*/
-    margin-top: 40px;
-    margin-bottom: 20px;
-}
-
 .search-input {
     margin-bottom: 20px;
     height: 35px;
@@ -290,11 +298,8 @@ span:nth-child(5) {
     border-color: #0291d7;
 }
 
-
-
-
 .search-type {
-    background: whitesmoke;
+    background: #fcfcfc;
     border-bottom: 1px solid #c3cfff;
 }
 
@@ -326,7 +331,7 @@ span:nth-child(5) {
 
 .heading-wrapper {
     border-bottom: 1px solid #c3cfff;
-    /*padding-right: 17px;*/
+    padding-right: 17px;
 }
 
 .food-selection {
@@ -334,42 +339,32 @@ span:nth-child(5) {
     width: 100%;
     text-align: center;
     background: white;
-    margin-top: 40px;
+    margin-top: 20px;
     border-bottom: 1px solid #c3cfff;
 }
 
+.food-selection-wrapper {
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .food-list {
-    /*padding: 20px;
-    background: whitesmoke;
-    border-radius: 3px;
-    border: 1px solid whitesmoke;
-    box-shadow: 1px 2px 3px #c9c9c9;
-
-    margin-bottom: 20px;*/
-
     font-size: 13px;
-    /*color: #207eff;*/
+    height: 600px;
+    overflow-y: auto;
 }
 
 .matching-foods {
     float: left;
     width: 60%;
-    min-height: 780px;
+    min-height: 750px;
     margin-top: 20px;
     margin-right: auto;
     margin-left: auto;
     padding-bottom: 20px;
 }
 
-.matching-foods ul {
-    /*height: 600px;
-    overflow-y: scroll;*/
-}
-
-
-.food-table-headings {
-    /*width: calc(100% - 17px);*/
-}
 
 .food-table-content-wrapper {
     /*height: 580px;*/
@@ -404,7 +399,6 @@ span:nth-child(5) {
     background: white;
     padding: 40px 0;
 }
-
 
 .consumed-foods-table-wrapper {
     width: 70%;
@@ -468,4 +462,8 @@ span:nth-child(5) {
     background: #fcc6b4;
     color: red;
     width: 7%;
+}
+
+.remove-food {
+    padding: 2px 8px;
 }

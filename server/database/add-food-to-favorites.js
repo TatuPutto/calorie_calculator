@@ -1,7 +1,8 @@
 var createConnection = require('../database/create-connection');
 
-module.exports = function addFoodToFavorites(foodId) {
-    var query = `INSERT INTO favorites (userId, foodId) VALUES (123, ${foodId})`;
+module.exports = function addFoodToFavorites(userId, foodId) {
+    var query = `INSERT INTO favorites (userId, foodId) ` +
+            `VALUES (${userId}, ${foodId})`;
     var connection = createConnection();
 
     return new Promise(function (resolve, reject) {

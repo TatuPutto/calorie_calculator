@@ -1,7 +1,8 @@
 var createConnection = require('../database/create-connection');
 
-module.exports = function getFavoriteFoods(userId) {
-    var query = `SELECT foodId FROM favorites WHERE userId=${userId}`;
+module.exports = function getLatestConsumedFoods(userId) {
+    var query = `SELECT foodId FROM consumedfoods WHERE userId=${userId} ` +
+            `ORDER BY timeOfConsumption DESC LIMIT 20`;
     var connection = createConnection();
 
     return new Promise(function (resolve, reject) {

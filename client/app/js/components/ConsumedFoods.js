@@ -31,7 +31,7 @@ export default function ConsumedFoods(props) {
                                     <tr key={food.timeOfConsumption}>
                                         <td>
                                             <button
-                                                className='btn btn-default'
+                                                className='remove-food btn btn-default'
                                                 onClick={() => props.removeFromDiary(food.consumptionId)}
                                             >
                                                 <i className='fa fa-remove' />

@@ -27,7 +27,7 @@ function findMatchingFoodsByName(input) {
             });
         }
     }
-    return sortAlphabeticallyAndByRelevance(matchingFoods);
+    return sortAlphabeticallyAndByRelevance(matchingFoods).slice(0, 100);
 }
 
 function findMatchingFoodsByIds(ids) {
@@ -38,7 +38,7 @@ function findMatchingFoodsByIds(ids) {
         var food = foodList[id];
 
         matchingFoods.push({
-            favorite: true,
+            favorite: false,
             id: id,
             name: food.name,
             energy: food.energy,
@@ -48,7 +48,6 @@ function findMatchingFoodsByIds(ids) {
             portionSizes: food.portionSizes
         });
     }
-    console.log(matchingFoods);
     return matchingFoods.sort();
 }
 

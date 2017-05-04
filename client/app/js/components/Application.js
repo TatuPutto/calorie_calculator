@@ -20,13 +20,15 @@ export default class Application extends React.Component {
             isFetchingConsumedFoods: true,
             isFetchingMatchingFoods: true,
             searchTerm: null,
-            fetchMethod: 'search'
+            fetchMethod: 'search',
+            fetchError: null
         };
 
         this.getDailyGoal = this.getDailyGoal.bind(this);
         this.getConsumedFoods = this.getConsumedFoods.bind(this);
         this.getMatchingFoods = this.getMatchingFoods.bind(this);
         this.getFavoriteFoods = this.getFavoriteFoods.bind(this);
+        this.getLatestConsumedFoods = this.getLatestConsumedFoods.bind(this);
         this.fetchFoods = this.fetchFoods.bind(this);
         this.changeSearchTerm = this.changeSearchTerm.bind(this);
         this.doSearch = this.doSearch.bind(this);
@@ -69,7 +71,7 @@ export default class Application extends React.Component {
             isFetchingConsumedFoods: true
         });
 
-        fetch('http://localhost:3000/daily-intake', {method: 'GET'})
+        fetch('http://localhost:3000/daily-intake', {method: 'GET', credentials: 'same-origin'})
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -90,8 +92,11 @@ export default class Application extends React.Component {
     }
 
     getFavoriteFoods() {
-        console.log('favroites');
         this.fetchFoods('http://localhost:3000/favorites');
+    }
+
+    getLatestConsumedFoods() {
+        this.fetchFoods('http://localhost:3000/latest');
     }
 
     fetchFoods(url) {
@@ -104,16 +109,20 @@ export default class Application extends React.Component {
             showResultsOffset: 0
         });
 
-        fetch(url)
+        fetch(url, {credentials: 'same-origin'})
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
                     foods: data,
-                    isFetchingMatchingFoods: false
+                    isFetchingMatchingFoods: false,
+                    fetchError: null
                 });
             }).catch((err) => {
                 console.error(err);
-                this.setState({isFetchingMatchingFoods: false});
+                this.setState({
+                    fetchError: 'Kirjaudu sisään käyttääksesi suosikkeja.',
+                    isFetchingMatchingFoods: false,
+                });
             });
     }
 
@@ -154,12 +163,14 @@ export default class Application extends React.Component {
     }
 
     addToDiary(foodId, foodAmount) {
+        var content = {foodId, foodAmount};
         var params = {
             method: 'POST',
-            body: JSON.stringify({foodId, foodAmount}),
+            body: JSON.stringify(content),
+            credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json',
-                'Content-Length': body.length
+                'Content-Length': content.length
             }
         };
 
@@ -173,19 +184,18 @@ export default class Application extends React.Component {
             var url = `http://localhost:3000/daily-intake?` +
                     `consumptionId=${consumptionId}`;
 
-            fetch(url, {method: 'DELETE'})
+            fetch(url, {method: 'DELETE', credentials: 'same-origin'})
                 .then(() => this.getConsumedFoods())
                 .catch((err) => console.error(err));
         }
     }
 
     addToFavorites(foodId) {
-        this.toggleFavoriteIcon(foodId, true);
-
         var url = `http://localhost:3000/favorites/${foodId}`
         var params = {
             method: 'PUT',
             body: '',
+            credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json',
                 'Content-Length': 0
@@ -193,15 +203,28 @@ export default class Application extends React.Component {
         };
 
         fetch(url, params)
+            .then((res) => {
+                if(res.status === 200) {
+                    this.toggleFavoriteIcon(foodId, true);
+                } else {
+                    alert('Kirjaudu sisään käyttääksesi suosikkeja');
+                    throw new Error('Kirjaudu sisään käyttääksesi suosikkeja.');
+                }
+            })
             .catch((err) => console.error(err));
     }
 
     removeFromFavorites(foodId) {
-        this.toggleFavoriteIcon(foodId, false);
-
         var url = `http://localhost:3000/favorites/${foodId}`
-        fetch(url, {method: 'DELETE'})
-            .catch((err) => console.error(err));
+        fetch(url, {method: 'DELETE', credentials: 'same-origin'})
+        .then((res) => {
+            if(res.status === 200) {
+                this.toggleFavoriteIcon(foodId, false);
+            } else {
+                alert('Kirjaudu sisään käyttääksesi suosikkeja');
+                throw new Error('Kirjaudu sisään käyttääksesi suosikkeja.');
+            }
+        })
     }
 
     toggleFavoriteIcon(foodId, favorite) {
@@ -218,13 +241,13 @@ export default class Application extends React.Component {
         } else if(fetchMethod == 'favorites') {
             this.getFavoriteFoods();
         } else {
-            // latest
+            this.getLatestConsumedFoods()
         }
     }
 
     render() {
         return (
-            <div className='container-fluid'>
+            <div className='daily-intake'>
                 <FoodSelection
                     searchTerm={this.state.searchTerm}
                     changeSearchTerm={this.changeSearchTerm}
@@ -246,6 +269,7 @@ export default class Application extends React.Component {
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                     changeFetchMethod={this.changeFetchMethod}
                     fetchMethod={this.state.fetchMethod}
+                    fetchError={this.state.fetchError}
                 />
                 <ConsumedFoods
                     consumedFoods={this.state.consumedFoods}

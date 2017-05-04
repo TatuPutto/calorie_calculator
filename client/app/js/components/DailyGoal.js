@@ -33,6 +33,7 @@ export default function DailyGoal(props) {
         };
         var fatGradient = {
             height: fatChartBarHeight,
+            marginRight: '0px',
             background: `linear-gradient(0deg, red ${fatPercentage}%, ` +
                     `#fcc6b4 ${fatPercentage}%)`
         };
@@ -55,15 +56,22 @@ export default function DailyGoal(props) {
                     </span>
                 </div>
 
-
                 <hr />
-                Energia: {totalConsumption.energy} kcal / {dailyGoal.energy} kcal
+                <p>
+                    {totalConsumption.energy} kcal / {dailyGoal.energy} kcal
+                </p>
                 <hr />
-                Proteiinia: {totalConsumption.protein} g / {dailyGoal.protein} g
+                <p style={{color: 'green'}}>
+                    {totalConsumption.protein} g / {dailyGoal.protein} g
+                </p>
                 <hr />
-                Hiilihydraatteja: {totalConsumption.carbs} g / {dailyGoal.carbs} g
+                <p  style={{color: 'blue'}}>
+                    {totalConsumption.carbs} g / {dailyGoal.carbs} g
+                </p>
                 <hr />
-                Rasvaa: {totalConsumption.fat} g / {dailyGoal.fat} g
+                <p style={{color: 'red'}}>
+                    {totalConsumption.fat} g / {dailyGoal.fat} g
+                </p>
             </div>
         );
 
