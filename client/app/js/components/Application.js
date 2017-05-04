@@ -191,7 +191,7 @@ export default class Application extends React.Component {
     }
 
     addToFavorites(foodId) {
-        var url = `http://localhost:3000/favorites/${foodId}`
+        var url = `http://localhost:3000/favorites/${foodId}`;
         var params = {
             method: 'PUT',
             body: '',
@@ -210,12 +210,11 @@ export default class Application extends React.Component {
                     alert('Kirjaudu sisään käyttääksesi suosikkeja');
                     throw new Error('Kirjaudu sisään käyttääksesi suosikkeja.');
                 }
-            })
-            .catch((err) => console.error(err));
+            }).catch((err) => console.error(err));
     }
 
     removeFromFavorites(foodId) {
-        var url = `http://localhost:3000/favorites/${foodId}`
+        var url = `http://localhost:3000/favorites/${foodId}`;
         fetch(url, {method: 'DELETE', credentials: 'same-origin'})
         .then((res) => {
             if(res.status === 200) {
@@ -224,7 +223,7 @@ export default class Application extends React.Component {
                 alert('Kirjaudu sisään käyttääksesi suosikkeja');
                 throw new Error('Kirjaudu sisään käyttääksesi suosikkeja.');
             }
-        })
+        }).catch((err) => console.error(err));
     }
 
     toggleFavoriteIcon(foodId, favorite) {

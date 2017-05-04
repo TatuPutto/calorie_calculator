@@ -9,6 +9,7 @@ module.exports = function addFoodToFavorites(userId, foodId) {
         connection.connect();
         connection.query(query, function (err) {
             if(err) reject(err);
+            resolve();
         });
         connection.end();
     })
