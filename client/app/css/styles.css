@@ -40,12 +40,13 @@ td:first-child {
 }
 
 .header-content {
-    width: 80%;
+    width: 76%;
     margin: 0 auto;
 }
 
 .header ul {
     float: left;
+    -webkit-padding-start: 0;
 }
 
 .header ul li {
@@ -65,8 +66,8 @@ td:first-child {
 .daily-goal {
     width: 15%;
     float: left;
-    margin-left: 10%;
-    margin-right: 20px;
+    margin-left: 12%;
+    margin-right: 1%;
     margin-top: 20px;
     border: 1px solid #c3cfff;
     border-radius: 3px;

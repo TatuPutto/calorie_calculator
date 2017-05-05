@@ -8,13 +8,40 @@ import Login from './components/Login';
 
 require('../css/styles.css');
 
+var Wrapper = (props) => {
+    var pathname = props.location.pathname;
+    var search = props.location.search;
+    var fetchMethod;
+
+    // resolve fetchMethod from pathname
+    if(pathname == '/') {
+        fetchMethod = 'haku';
+    } else {
+        fetchMethod = pathname.match(/haku|suosikit|viimeisimmat/g)[0];
+    }
+
+    // set which food item is to be searched for
+    // defaults to maitorahka if no query params are present
+    if(!search) {
+        search = 'maitorahka';
+    } else {
+        search = search.split('=')[1];
+    }
+
+    return (
+        <Application fetchMethod={fetchMethod} search={search} />
+    );
+}
+
+
 render(
     <BrowserRouter>
         <div>
             <Header />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/' component={Application} />
-
+            <Route exact path='/' render={Wrapper} />
+            <Route path='/haku' render={Wrapper} />
+            <Route exact path='/suosikit' render={Wrapper} />
+            <Route exact path='/viimeisimmat' render={Wrapper} />
         </div>
     </BrowserRouter>,
     document.getElementById('app')

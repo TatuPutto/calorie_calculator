@@ -6,7 +6,7 @@ import SingleFood from './SingleFood';
 
 export default function FoodSelection(props) {
     var offset = props.showResultsOffset;
-    console.log(props.fetchError);
+
     return (
         <div className='food-selection'>
             <SearchTypes
@@ -23,7 +23,7 @@ export default function FoodSelection(props) {
                 />
 
                 <div className='matching-foods'>
-                    {props.fetchMethod == 'search' &&
+                    {props.fetchMethod == 'haku' &&
                         <div className='search'>
                             <input
                                 type='text'

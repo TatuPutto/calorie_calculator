@@ -5,16 +5,16 @@ export default function SearchTypes(props) {
 
     return (
         <div className='search-type'>
-            <button className={fetchMethod == 'search' ? 'active' : ''}
-                    onClick={() => props.changeFetchMethod('search')}>
+            <button className={fetchMethod == 'haku' ? 'active' : ''}
+                    onClick={() => props.changeFetchMethod('haku')}>
                 Haku
             </button>
-            <button className={fetchMethod == 'favorites' ? 'active' : ''}
-                    onClick={() => props.changeFetchMethod('favorites')}>
+            <button className={fetchMethod == 'suosikit' ? 'active' : ''}
+                    onClick={() => props.changeFetchMethod('suosikit')}>
                 Suosikit
             </button>
-            <button className={fetchMethod == 'latest' ? 'active' : ''}
-                    onClick={() => props.changeFetchMethod('latest')}>
+            <button className={fetchMethod == 'viimeisimmat' ? 'active' : ''}
+                    onClick={() => props.changeFetchMethod('viimeisimmat')}>
                 Viimeisimmät
             </button>
         </div>

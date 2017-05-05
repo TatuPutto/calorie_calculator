@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import FoodSelection from './FoodSelection';
 import ConsumedFoods from './ConsumedFoods';
@@ -9,9 +10,8 @@ export default class Application extends React.Component {
         super();
         this.state = {
             dailyGoal: null,
-            foods: [],
-            showResultsOffset: 0,
             consumedFoods: [],
+            foods: [],
             totalConsumption: null,
             selectedFoodId: null,
             selectedFood: null,
@@ -20,7 +20,7 @@ export default class Application extends React.Component {
             isFetchingConsumedFoods: true,
             isFetchingMatchingFoods: true,
             searchTerm: null,
-            fetchMethod: 'search',
+            fetchMethod: 'haku',
             fetchError: null
         };
 
@@ -30,9 +30,9 @@ export default class Application extends React.Component {
         this.getFavoriteFoods = this.getFavoriteFoods.bind(this);
         this.getLatestConsumedFoods = this.getLatestConsumedFoods.bind(this);
         this.fetchFoods = this.fetchFoods.bind(this);
+        this.changeFetchMethod = this.changeFetchMethod.bind(this);
         this.changeSearchTerm = this.changeSearchTerm.bind(this);
         this.doSearch = this.doSearch.bind(this);
-        this.showMoreResults = this.showMoreResults.bind(this);
         this.selectFood = this.selectFood.bind(this);
         this.setSelectedFoodAmount = this.setSelectedFoodAmount.bind(this);
         this.addToDiary = this.addToDiary.bind(this);
@@ -40,13 +40,25 @@ export default class Application extends React.Component {
         this.addToFavorites = this.addToFavorites.bind(this);
         this.removeFromFavorites = this.removeFromFavorites.bind(this);
         this.toggleFavoriteIcon = this.toggleFavoriteIcon.bind(this);
-        this.changeFetchMethod = this.changeFetchMethod.bind(this);
     }
 
     componentDidMount() {
+        this.setState({fetchMethod: this.props.fetchMethod});
         this.getDailyGoal();
         this.getConsumedFoods();
-        this.getMatchingFoods('maitorahka');
+
+        if(this.props.fetchMethod == 'haku') {
+            this.getMatchingFoods(this.props.search);
+        } else if(this.props.fetchMethod == 'suosikit') {
+            this.getFavoriteFoods();
+        } else {
+            this.getLatestConsumedFoods()
+        }
+    }
+
+    // get matching foods when new query params are pushed
+    componentWillReceiveProps(nextProps) {
+        this.getMatchingFoods(nextProps.search);
     }
 
     getDailyGoal() {
@@ -126,6 +138,10 @@ export default class Application extends React.Component {
             });
     }
 
+    changeFetchMethod(fetchMethod) {
+        this.context.router.history.push('/' + fetchMethod);
+    }
+
     changeSearchTerm(event) {
         if(event.key == 'Enter') {
             this.doSearch();
@@ -135,7 +151,8 @@ export default class Application extends React.Component {
     }
 
     doSearch() {
-        this.getMatchingFoods(this.state.searchTerm);
+        this.context.router.history.push(
+                `?ravintoaine=${this.state.searchTerm}`);
     }
 
     showMoreResults() {
@@ -180,14 +197,12 @@ export default class Application extends React.Component {
     }
 
     removeFromDiary(consumptionId) {
-        if(window.confirm('Haluatko varmasti poistää tämän rivin?')) {
-            var url = `http://localhost:3000/daily-intake?` +
-                    `consumptionId=${consumptionId}`;
+        var url = `http://localhost:3000/daily-intake?` +
+                `consumptionId=${consumptionId}`;
 
-            fetch(url, {method: 'DELETE', credentials: 'same-origin'})
-                .then(() => this.getConsumedFoods())
-                .catch((err) => console.error(err));
-        }
+        fetch(url, {method: 'DELETE', credentials: 'same-origin'})
+            .then(() => this.getConsumedFoods())
+            .catch((err) => console.error(err));
     }
 
     addToFavorites(foodId) {
@@ -233,17 +248,6 @@ export default class Application extends React.Component {
         this.setState({foods});
     }
 
-    changeFetchMethod(fetchMethod) {
-        this.setState({fetchMethod});
-        if(fetchMethod == 'search') {
-            this.getMatchingFoods('maitorahka');
-        } else if(fetchMethod == 'favorites') {
-            this.getFavoriteFoods();
-        } else {
-            this.getLatestConsumedFoods()
-        }
-    }
-
     render() {
         return (
             <div className='daily-intake'>
@@ -260,8 +264,6 @@ export default class Application extends React.Component {
                     addToDiary={this.addToDiary}
                     addToFavorites={this.addToFavorites}
                     removeFromFavorites={this.removeFromFavorites}
-                    showMoreResults={this.showMoreResults}
-                    showResultsOffset={this.state.showResultsOffset}
                     totalConsumption={this.state.totalConsumption}
                     dailyGoal={this.state.dailyGoal}
                     isFetchingDailyGoal={this.state.isFetchingDailyGoal}
@@ -285,3 +287,7 @@ export default class Application extends React.Component {
         );
     }
 }
+
+Application.contextTypes = {
+    router: PropTypes.object.isRequired
+};
