@@ -9,7 +9,7 @@ router.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '../login.html'));
 });
 
-router.use(bodyParser.urlencoded(false));
+router.use(bodyParser.urlencoded({extended: false}));
 
 router.post('/', (req, res) => {
     if(!req.body.username || !req.body.password) {
@@ -20,13 +20,11 @@ router.post('/', (req, res) => {
     checkLogin(req.body.username, req.body.password)
         .then((userInfo) => {
             req.session.user = userInfo;
-            console.log('sessiossa');
-            console.log(req.session.user);
             res.redirect('/');
         })
         .catch((err) => {
             console.log(err);
-            res.end('Login failed');
+            res.end('Kirjautuminen epäonnistui.');
         })
 });
 

@@ -1,61 +1,31 @@
 var createConnection = require('../database/create-connection');
-var calcNutritionValues = require('../util/query-csv').calculateNutritionValues;
-var calcTotalNutritionValues = require('../util/query-csv').calcTotalNutritionValues;
+var getConsumedFoods = require('../database/get-consumed-foods');
+var addFoodToConsumedFoods = require('../database/add-food-to-consumed-foods');
+var removeFoodFromConsumedFoods = require('../database/remove-food-from-consumed-foods');
+var dailyIntakeWithCookies = require('./daily-intake-cookie-fallback');
 var bodyParser = require('body-parser');
 var express = require('express');
 var router = express.Router();
 
+router.use(function (req, res, next) {
+    if(req.session.user) {
+        next();
+    } else {
+        // use cookies to store consumed foods if user isn't logged in
+        dailyIntakeWithCookies(req, res);
+    }
+});
 
 // return list of consumed foods for today
 router.get('/', function (req, res) {
-    if(req.session.user) {
-        var userId = req.session.user.id;
-        var query = `SELECT consumptionId, foodId, foodAmount, timeOfConsumption ` +
-                `FROM consumedfoods WHERE userId=${userId} AND active = 1`;
-        var connection = createConnection();
-
-        // execute query
-        var dbQuery = new Promise(function (resolve, reject) {
-            connection.connect();
-            connection.query(query, function (err, results) {
-              if(err) reject(err);
-              resolve(results);
-            });
-            connection.end();
-        });
-
-        // handle successfull query response
-        dbQuery.then(function (data) {
-            var consumedFoods = data.map(function (item) {
-                return {
-                    consumptionId: item.consumptionId,
-                    id: item.foodId,
-                    amount: item.foodAmount,
-                    timeOfConsumption: item.timeOfConsumption
-                };
-            });
-
-            // get nutrition values per item
-            var nutritionValuesPerItem = calcNutritionValues(consumedFoods);
-            // calc sum of nutrition values across all consumed items
-            var nutritionValuesInTotal = calcTotalNutritionValues(nutritionValuesPerItem);
+    getConsumedFoods(req.session.user.id)
+        .then(function (consumedFoods) {
             res.writeHead(200, {'Content-Type': 'application/json'});
-            res.end(JSON.stringify({nutritionValuesPerItem, nutritionValuesInTotal}));
+            res.end(JSON.stringify(consumedFoods));
+        }).catch(function (err) {
+            res.status(400);
+            res.end(err);
         });
-
-        // handle failed query
-        dbQuery.catch(function (err) {
-            res.end(JSON.stringify(err));
-        });
-    } else {
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({nutritionValuesPerItem: [], nutritionValuesInTotal: {
-            energy: 0,
-            protein: 0,
-            carbs: 0,
-            fat: 0
-        }}));
-    }
 });
 
 router.use(bodyParser.json());
@@ -71,41 +41,29 @@ router.post('/', function (req, res) {
         res.end();
     }
 
-    var query = `INSERT INTO consumedfoods (userId, foodId, foodAmount) ` +
-            `VALUES (${userId}, ${foodId}, ${foodAmount})`;
-    var connection = createConnection();
-
-    var dbQuery = new Promise(function (resolve, reject) {
-        connection.query(query, function (err, results) {
-          if(err) reject(err);
-          resolve(results);
+    addFoodToConsumedFoods(userId, foodId, foodAmount)
+        .then(function () {
+            res.status(200);
+            res.end();
+        }).catch(function (err) {
+            res.status(400);
+            res.end(err);
         });
-
-        connection.end();
-    });
-
-    dbQuery.then(function (data) {
-        res.end();
-    });
-
-    dbQuery.catch(function (err) {
-        res.end(JSON.stringify(err));
-    });
 });
 
 // remove item from list
 router.delete('/', function (req, res) {
+    var userId = req.session.user.id;
     var consumptionId = req.query.consumptionId;
-    var query = `UPDATE consumedfoods SET active = 0 ` +
-            `WHERE consumptionId = ${consumptionId}`;
-    var connection = createConnection();
 
-    connection.query(query, function (err, results) {
-      if(err) throw err;
-    });
-
-    connection.end();
-    res.end();
+    removeFoodFromConsumedFoods(userId, consumptionId)
+        .then(function () {
+            res.status(200);
+            res.end();
+        }).catch(function (err) {
+            res.status(400);
+            res.end(err);
+        });
 });
 
 module.exports = router;

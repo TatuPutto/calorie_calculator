@@ -15,9 +15,8 @@ var app = express();
 
 app.use(session({
     cookieName: 'session',
-    secret: 'random_string_goes_here',
-    duration: 30 * 60 * 1000,
-    activeDuration: 5 * 60 * 1000
+    secret: 'gjkrejtGSDFGertjksfdv<JLfjdsalfsadtjwekWRAsdf',
+    duration: (7 * 24 * 60 * 60 * 1000)
 }));
 
 app.use('/login', login);

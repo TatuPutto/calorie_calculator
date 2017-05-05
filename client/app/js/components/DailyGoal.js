@@ -57,10 +57,6 @@ export default function DailyGoal(props) {
                 </div>
 
                 <hr />
-                <p>
-                    {totalConsumption.energy} kcal / {dailyGoal.energy} kcal
-                </p>
-                <hr />
                 <p style={{color: 'green'}}>
                     {totalConsumption.protein} g / {dailyGoal.protein} g
                 </p>
@@ -71,6 +67,10 @@ export default function DailyGoal(props) {
                 <hr />
                 <p style={{color: 'red'}}>
                     {totalConsumption.fat} g / {dailyGoal.fat} g
+                </p>
+                <hr />
+                <p>
+                    {totalConsumption.energy} kcal / {dailyGoal.energy} kcal
                 </p>
             </div>
         );

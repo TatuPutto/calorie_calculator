@@ -28,26 +28,28 @@ export default class Header extends React.Component {
     render() {
         return (
             <div className='header'>
-                <div className='header-content'>
-                    <ul className='nav-menu'>
-                        <li>Daily intake</li>
-                        <li>History</li>
-                    </ul>
-                    <div className='user-info'>
-                        {this.state.isFetchingUserInfo ?
-                            <i className='fa fa-refresh fa-spin fa-2x' />
-                            :
-                            <div>
-                                {this.state.loggedIn ?
-                                    <ul>
-                                        <li>{this.state.username}</li>
-                                        <li><a href='/logout'>Kirjaudu ulos</a></li>
-                                    </ul>
-                                    :
-                                    <a href='/login'>Kirjaudu sisään</a>
-                                }
-                            </div>
-                        }
+                <div className='header-content-wrapper'>
+                    <div className='header-content'>
+                        <ul className='nav-menu'>
+                            <li>Daily intake</li>
+                            <li>History</li>
+                        </ul>
+                        <div className='user-info'>
+                            {this.state.isFetchingUserInfo ?
+                                <i className='fa fa-refresh fa-spin fa-2x' />
+                                :
+                                <div>
+                                    {this.state.loggedIn ?
+                                        <ul>
+                                            <li>{this.state.username}</li>
+                                            <li><a href='/logout'>Kirjaudu ulos</a></li>
+                                        </ul>
+                                        :
+                                        <a href='/login'>Kirjaudu sisään</a>
+                                    }
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

@@ -8,9 +8,24 @@ th {
     padding: 2px;
 }
 
+tr {
+    border-bottom: 1px solid #d6dcf8;
+}
+
 tr:hover {
     background: #aec2e3;
     cursor: pointer;
+}
+
+tr:first-child {
+    border-top: 1px solid #d6dcf8;
+}
+
+tr:last-child {
+    border-top: 3px solid rgb(195, 207, 255);
+    border-bottom: none;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 td {
@@ -34,9 +49,15 @@ td:first-child {
 
 .header {
     color: white;
-    height: 50px;
+    height: 35px;
     background: #74a2ff;
-    border-bottom: 3px solid #3e3eff;
+    border-bottom: 2px solid #3e3eff;
+}
+
+.header-content-wrapper {
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .header-content {
@@ -50,7 +71,7 @@ td:first-child {
 }
 
 .header ul li {
-    line-height: 48px;
+    line-height: 34px;
     display: inline-block;
     vertical-align: middle;
     margin-right: 10px;
@@ -58,7 +79,6 @@ td:first-child {
 
 .user-info {
     float: right;
-    line-height: 48px;
 }
 
 
@@ -197,12 +217,17 @@ td:first-child {
 
 .add-panel-wrapper {
     padding: 15px;
-    padding-bottom: 25px;
+    padding-bottom: 20px;
 }
 
 .portion-sizes li {
     margin-bottom: 6px;
 }
+
+.portion-sizes li:first-child {
+    border-top: none !important;
+}
+
 
 .portion-sizes a {
     padding: 2px;
@@ -340,7 +365,7 @@ span:nth-child(5) {
     width: 100%;
     text-align: center;
     background: white;
-    margin-top: 20px;
+    margin-top: 10px;
     border-bottom: 1px solid #c3cfff;
 }
 
@@ -359,7 +384,7 @@ span:nth-child(5) {
 .matching-foods {
     float: left;
     width: 60%;
-    min-height: 750px;
+    min-height: 700px;
     margin-top: 20px;
     margin-right: auto;
     margin-left: auto;
@@ -372,6 +397,7 @@ span:nth-child(5) {
     overflow-y: auto;
     overflow-x: hidden;
     border-bottom: 1px solid #c9c9c9;
+    max-width: 1600px;
 }
 
 
@@ -402,15 +428,17 @@ span:nth-child(5) {
 }
 
 .consumed-foods-table-wrapper {
-    width: 70%;
     margin-left: auto;
     margin-right: auto;
+    max-width: 1600px;
 }
 
 .consumed-foods-table {
     text-align: center;
     font-size: 13px;
-    width: 100%;
+    width: 76%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .consumed-foods-table th {

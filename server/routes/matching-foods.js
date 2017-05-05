@@ -1,5 +1,6 @@
 var findMatchingFoodsByName = require('../util/query-csv').findMatchingFoodsByName;
 var getFavoriteFoods = require('../database/get-favorite-foods');
+var findIndexOfObjectId = require('../util/find-index-of-object-id');
 var express = require('express');
 
 var router = express.Router();
@@ -13,9 +14,10 @@ router.get('/:food', function (req, res) {
         getFavoriteFoods(req.session.user.id)
             .then(function(favoriteFoods) {
                 for(var i = 0; i < favoriteFoods.length; i++) {
-                    var index = matchingFoods.findIndex(function (food) {
-                        return food.id == favoriteFoods[i];
-                    });
+                    var index = findIndexOfObjectId(
+                        favoriteFoods[i],
+                        matchingFoods
+                    );
                     if(index !== -1) {
                         matchingFoods[index]['favorite'] = true;
 

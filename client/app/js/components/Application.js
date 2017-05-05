@@ -58,7 +58,9 @@ export default class Application extends React.Component {
 
     // get matching foods when new query params are pushed
     componentWillReceiveProps(nextProps) {
-        this.getMatchingFoods(nextProps.search);
+        if(nextProps.fetchMethod == 'haku') {
+            this.getMatchingFoods(nextProps.search);
+        }
     }
 
     getDailyGoal() {
@@ -132,7 +134,7 @@ export default class Application extends React.Component {
             }).catch((err) => {
                 console.error(err);
                 this.setState({
-                    fetchError: 'Kirjaudu sisään käyttääksesi suosikkeja.',
+                    fetchError: `Haussa tapahtui virhe ${err}`,
                     isFetchingMatchingFoods: false,
                 });
             });
@@ -153,10 +155,6 @@ export default class Application extends React.Component {
     doSearch() {
         this.context.router.history.push(
                 `?ravintoaine=${this.state.searchTerm}`);
-    }
-
-    showMoreResults() {
-        this.setState({showResultsOffset: (+this.state.showResultsOffset + 20)});
     }
 
     selectFood(foodId) {

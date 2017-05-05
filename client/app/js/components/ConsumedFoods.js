@@ -14,7 +14,7 @@ export default function ConsumedFoods(props) {
             {props.consumedFoods.length > 0 &&
                 <div className='consumed-foods-table-wrapper'>
                     <table className='consumed-foods-table'>
-                        <thead>
+                        {/*}<thead>
                             <tr>
                                 <th>Poista</th>
                                 <th>Ravintoaine</th>
@@ -24,7 +24,7 @@ export default function ConsumedFoods(props) {
                                 <th style={{background: 'white'}}>H</th>
                                 <th style={{background: 'white'}}>R</th>
                             </tr>
-                        </thead>
+                        </thead>*/}
                         <tbody>
                             {props.consumedFoods.map((food, i) => {
                                 return (
@@ -46,18 +46,18 @@ export default function ConsumedFoods(props) {
                                     </tr>
                                 );
                             })}
-                            <tr style={{borderTop: '3px solid #c3cfff'}}>
+                            <tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>{total.energy} kcal</td>
-                                <td style={{background: 'white'}}>
+                                <td style={{background: 'white', paddingLeft: '10px'}}>
                                     {total.protein} g
                                 </td>
-                                <td style={{background: 'white'}}>
+                                <td style={{background: 'white', paddingLeft: '10px'}}>
                                     {total.carbs} g
                                 </td>
-                                <td style={{background: 'white'}}>
+                                <td style={{background: 'white', paddingLeft: '10px'}}>
                                     {total.fat} g
                                 </td>
                             </tr>

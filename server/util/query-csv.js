@@ -1,4 +1,5 @@
 var round = require('./round-to-one-decimal');
+var findIndexOfObjectId = require('./find-index-of-object-id');
 var fs = require('fs');
 
 var foodList = fs.readFileSync('foods-with-portion-sizes.json', 'utf8');
@@ -30,27 +31,6 @@ function findMatchingFoodsByName(input) {
     return sortAlphabeticallyAndByRelevance(matchingFoods).slice(0, 100);
 }
 
-function findMatchingFoodsByIds(ids) {
-    var matchingFoods = [];
-
-    for(var i = 0; i < ids.length; i++) {
-        var id = ids[i];
-        var food = foodList[id];
-
-        matchingFoods.push({
-            favorite: false,
-            id: id,
-            name: food.name,
-            energy: food.energy,
-            protein: food.protein,
-            fat: food.fat,
-            carbs: food.carbohydrates,
-            portionSizes: food.portionSizes
-        });
-    }
-    return matchingFoods.sort();
-}
-
 function sortAlphabeticallyAndByRelevance(matchingFoods) {
     // sort alphabetically
     matchingFoods.sort();
@@ -67,6 +47,28 @@ function sortAlphabeticallyAndByRelevance(matchingFoods) {
     return matchingFoods;
 }
 
+function findMatchingFoodsByIds(ids) {
+    var matchingFoods = [];
+
+    for(var i = 0; i < ids.length; i++) {
+        var id = ids[i];
+        var food = foodList[id];
+
+        if(findIndexOfObjectId(id, matchingFoods) === -1) {
+            matchingFoods.push({
+                favorite: false,
+                id: id,
+                name: food.name,
+                energy: food.energy,
+                protein: food.protein,
+                fat: food.fat,
+                carbs: food.carbohydrates,
+                portionSizes: food.portionSizes
+            });
+        }
+    }
+    return matchingFoods.sort();
+}
 
 function calculateNutritionValues(consumedFoods) {
     var nutritionValues = [];

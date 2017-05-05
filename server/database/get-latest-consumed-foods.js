@@ -12,11 +12,11 @@ module.exports = function getLatestConsumedFoods(userId) {
             resolve(result);
         });
         connection.end();
-    })
-    .then(function (data) {
+    }).then(function (data) {
+        //console.log(data);
         return data.map((item) => item.foodId);
-    })
-    .catch(function (err) {
+    }).catch(function (err) {
+        console.log(err);
         throw err;
     });
 }
