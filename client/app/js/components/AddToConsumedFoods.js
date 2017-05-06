@@ -18,25 +18,26 @@ export default function AddToConsumedFoods(props) {
     return (
         <div className={cName}>
             <div className='add-panel-wrapper'>
+            <div className='add-custom-amount'>
+                <input
+                    type='text'
+                    placeholder='Määrä...'
+                    value={selectedFoodAmount || ''}
+                    onChange={setSelectedFoodAmount}
+                />
+                <button
+                    className='btn btn-info'
+                    onClick={() => addToDiary(foodId, selectedFoodAmount)}
+                >
+                    Lisää
+                </button>
+            </div>
                 <PortionSizes
                     portionSizes={portionSizes}
                     foodId={foodId}
                     addToDiary={addToDiary}
                 />
-                <div className='add-custom-amount'>
-                    <input
-                        type='text'
-                        placeholder='Määrä...'
-                        value={selectedFoodAmount || ''}
-                        onChange={setSelectedFoodAmount}
-                    />
-                    <button
-                        className='btn btn-info'
-                        onClick={() => addToDiary(foodId, selectedFoodAmount)}
-                    >
-                        Lisää
-                    </button>
-                </div>
+
             </div>
         </div>
     );

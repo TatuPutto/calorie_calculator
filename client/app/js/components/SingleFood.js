@@ -19,17 +19,12 @@ export default function SingleFood(props) {
                 onClick={() => props.selectFood(food.id, food.name)}
             >
                 <span className={dominantMacro}>
-                    <i className={props.selectedFoodId == food.id ?
-                            'fa fa-chevron-down' : 'fa fa-chevron-right'} />
+                    <i className={props.selectedFoodId == food.id ? 'fa fa-chevron-down' : 'fa fa-chevron-right'} />
                         &nbsp;&nbsp;{food.name}
                     <button
                         className='add-to-favorites'
-                        onClick={food.favorite ?
-                                () => props.removeFromFavorites(food.id) :
-                                () => props.addToFavorites(food.id)}
-                    >
-                        <i className={food.favorite ?
-                                'fa fa-star' : 'fa fa-star-o'} />
+                        onClick={food.favorite ? () => props.removeFromFavorites(food.id) : () => props.addToFavorites(food.id)}>
+                        <i className={food.favorite ? 'fa fa-star' : 'fa fa-star-o'} />
                     </button>
                 </span>
                 <span>{food.energy} kcal</span>

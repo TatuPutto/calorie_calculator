@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import $ from 'jquery';
 import FoodSelection from './FoodSelection';
 import ConsumedFoods from './ConsumedFoods';
 import TotalConsumption from './TotalConsumption';
-
+import SearchTypes from './SearchTypes';
 export default class Application extends React.Component {
     constructor(props) {
         super();
@@ -249,6 +249,10 @@ export default class Application extends React.Component {
     render() {
         return (
             <div className='daily-intake'>
+                <SearchTypes
+                    fetchMethod={this.state.fetchMethod}
+                    changeFetchMethod={this.changeFetchMethod}
+                />
                 <FoodSelection
                     searchTerm={this.state.searchTerm}
                     changeSearchTerm={this.changeSearchTerm}
@@ -266,7 +270,6 @@ export default class Application extends React.Component {
                     dailyGoal={this.state.dailyGoal}
                     isFetchingDailyGoal={this.state.isFetchingDailyGoal}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
-                    changeFetchMethod={this.changeFetchMethod}
                     fetchMethod={this.state.fetchMethod}
                     fetchError={this.state.fetchError}
                 />

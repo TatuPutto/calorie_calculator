@@ -3,6 +3,12 @@ body {
     overflow-y: scroll;
 }
 
+ul {
+    -webkit-padding-start: 0px;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+}
+
 th {
     padding-bottom: 5px;
     padding: 2px;
@@ -84,11 +90,11 @@ td:first-child {
 
 
 .daily-goal {
-    width: 15%;
-    float: left;
-    margin-left: 12%;
-    margin-right: 1%;
-    margin-top: 20px;
+    /*width: 15%;*/
+    /*float: left;*/
+    /*margin-left: 12%;*/
+    /*margin-right: 1%;*/
+    /*margin-top: 20px;*/
     border: 1px solid #c3cfff;
     border-radius: 3px;
     padding: 1%;
@@ -165,7 +171,7 @@ td:first-child {
 
 
 
-.single-food {
+.a {
     /*border: 1px solid #c3cfff;
     border-bottom: none;*/
 }
@@ -206,7 +212,6 @@ td:first-child {
 
 .add-to-consumed-foods-list.open {
     border: 1px solid #c3cfff;
-    border-color: ;
     max-height: 250px;
 }
 
@@ -216,18 +221,27 @@ td:first-child {
 }
 
 .add-panel-wrapper {
+    float: left;
     padding: 15px;
     padding-bottom: 20px;
 }
 
-.portion-sizes li {
+.portion-sizes {
+    float: left;
+    width: 100%;
+}
+
+.portion-sizes ul {
+    float: left;
+}
+
+.portion-sizes ul li {
     margin-bottom: 6px;
 }
 
 .portion-sizes li:first-child {
     border-top: none !important;
 }
-
 
 .portion-sizes a {
     padding: 2px;
@@ -241,7 +255,8 @@ td:first-child {
 }
 
 .add-custom-amount {
-    margin-top: 15px;
+    float: left;
+    margin-top: 5px;
 }
 
 .add-custom-amount input {
@@ -324,22 +339,24 @@ span:nth-child(5) {
     border-color: #0291d7;
 }
 
-.search-type {
+.search-types {
     background: #fcfcfc;
     border-bottom: 1px solid #c3cfff;
+    text-align: center;
+    margin-top: 10px;
 }
 
-.search-type button {
+.search-types button {
     background: transparent;
     border: none;
 }
 
-.search-type button:focus {
+.search-types button:focus {
     outline: none;
 }
 
 
-.search-type .active {
+.search-types .active {
     border-style: solid;
     margin-right: 6px;
     margin-left: 6px;
@@ -365,8 +382,9 @@ span:nth-child(5) {
     width: 100%;
     text-align: center;
     background: white;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
     border-bottom: 1px solid #c3cfff;
+    padding-bottom: 40px;
 }
 
 .food-selection-wrapper {
@@ -377,18 +395,18 @@ span:nth-child(5) {
 
 .food-list {
     font-size: 13px;
-    height: 600px;
+    max-height: 500px;
     overflow-y: auto;
 }
 
 .matching-foods {
     float: left;
     width: 60%;
-    min-height: 700px;
+    /*min-height: 700px;*/
     margin-top: 20px;
     margin-right: auto;
     margin-left: auto;
-    padding-bottom: 20px;
+    /*padding-bottom: 20px;*/
 }
 
 

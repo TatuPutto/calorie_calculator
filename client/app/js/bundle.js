@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Application from './components/Application';
 import Login from './components/Login';
 
-require('../css/styles.css');
+require('../css/styles.less');
 
 var Wrapper = (props) => {
     var pathname = props.location.pathname;
@@ -36,7 +36,7 @@ var Wrapper = (props) => {
 
 render(
     <BrowserRouter>
-        <div>
+        <div className='container-fluid'>
             <Header />
             <Route exact path='/' render={Wrapper} />
             <Route path='/haku' render={Wrapper} />

@@ -18,8 +18,10 @@ export default function PortionSizes(props) {
     });
 
     return (
-        <ul className='portion-sizes'>
-            {portions}
-        </ul>
+        <div className='portion-sizes'>
+            <ul>
+                {portions}
+            </ul>
+        </div>
     );
 }

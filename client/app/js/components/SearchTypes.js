@@ -4,7 +4,7 @@ export default function SearchTypes(props) {
     var fetchMethod = props.fetchMethod;
 
     return (
-        <div className='search-type'>
+        <div className='search-types'>
             <button className={fetchMethod == 'haku' ? 'active' : ''}
                     onClick={() => props.changeFetchMethod('haku')}>
                 Haku

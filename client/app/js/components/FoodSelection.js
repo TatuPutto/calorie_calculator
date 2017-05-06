@@ -8,13 +8,10 @@ export default function FoodSelection(props) {
     var offset = props.showResultsOffset;
 
     return (
-        <div className='food-selection'>
-            <SearchTypes
-                fetchMethod={props.fetchMethod}
-                changeFetchMethod={props.changeFetchMethod}
-            />
+        <div className='food-selection row'>
 
-            <div className='food-selection-wrapper'>
+
+            <div className='food-selection-wrapper col-sm-10 col-sm-offset-1'>
                 <DailyGoal
                     dailyGoal={props.dailyGoal}
                     totalConsumption={props.totalConsumption}
@@ -22,7 +19,7 @@ export default function FoodSelection(props) {
                     isFetchingConsumedFoods={props.isFetchingConsumedFoods}
                 />
 
-                <div className='matching-foods'>
+                <div className='matching-foods col-sm-10'>
                     {props.fetchMethod == 'haku' &&
                         <div className='search'>
                             <input

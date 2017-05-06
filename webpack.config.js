@@ -1,3 +1,5 @@
+'use strict';
+
 var debug = process.env.NODE_ENV !== "production";
 var webpack = require('webpack');
 var path = require('path');
@@ -31,6 +33,10 @@ module.exports = {
         {
         	test: /\.css$/,
             loader: "style-loader!css-loader"
+        },
+        {
+            test: /\.less$/,
+            loader: 'style-loader!css-loader!less-loader',
         }]
     },
     output: {
