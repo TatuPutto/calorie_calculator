@@ -54,14 +54,17 @@ export default function SingleFood(props) {
                 </div>
             }
             </div>
-            <AddToConsumedFoods
-                foodId={food.id}
-                portionSizes={food.portionSizes}
-                selectedFoodId={props.selectedFoodId}
-                selectedFoodAmount={props.selectedFoodAmount}
-                setSelectedFoodAmount={props.setSelectedFoodAmount}
-                addToDiary={props.addToDiary}
-            />
+            {props.selectedFoodId == food.id &&
+                <AddToConsumedFoods
+                    foodId={food.id}
+                    portionSizes={food.portionSizes}
+                    selectedFoodId={props.selectedFoodId}
+                    selectedFoodAmount={props.selectedFoodAmount}
+                    setSelectedFoodAmount={props.setSelectedFoodAmount}
+                    addToDiary={props.addToDiary}
+                />
+            }
+
         </li>
     );
 }
