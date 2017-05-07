@@ -1,6 +1,17 @@
+@import './responsiveness.less';
+
+.default-border(@width: 1px, @style: solid, @color: #c3cfff) {
+    border: @width @style @color;
+}
+
 body {
     background: #fcfcfc;
     overflow-y: scroll;
+}
+
+input[type="text"] {
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 ul {
@@ -40,6 +51,11 @@ td {
 
 i {
     color: #919191;
+}
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
 }
 
 /*
@@ -88,6 +104,138 @@ td:first-child {
 }
 
 
+.new-goals {
+    height: 200px;
+    margin-top: 20px;
+    background: white;
+    .default-border();
+}
+
+.charts {
+    text-align: center;
+}
+
+.charts h4 {
+    display: inline;
+}
+
+
+.macronutrient-bar {
+    margin-top: 20px;
+}
+
+.calories-consumed {
+    width: 100%;
+    height: 10px;
+    text-shadow: teal;
+    background: linear-gradient(to right, orange 70%, #ffdab7 70%);
+    border-radius: 3px;
+}
+
+
+.protein-consumed {
+    background-color: lightgreen;
+    width: 35%;
+    height: 10px;
+    text-align: 2px 2px black;
+    text-shadow: teal;
+    /* text-shadow: -1px -2px #1fb03e; */
+    color: #168116;
+    background: linear-gradient(to right, green, lightgreen),
+    -webkit-gradient(linear, left top, left bottom, from(#21c50e), to(#289551));
+    background: -webkit-gradient(linear, left top, left bottom, from(#22ce0e), to(#30af60));
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    background: linear-gradient(to right, green 32.3333%, rgb(147, 240, 147) 32.3333%);
+}
+
+.protein-goal {
+    background-color: lightgreen;
+    width: 100px;
+    height: 35px;
+    text-align: 2px 2px black;
+    text-shadow: teal;
+    /* text-shadow: -1px -2px #1fb03e; */
+    color: #168116;
+    background: -webkit-gradient(linear, left top, left bottom, from(#d8e6db), to(#9cd390));
+}
+
+
+.carbs-consumed {
+    background-color: lightgreen;
+    width: 50%;
+    height: 10px;
+    text-align: 2px 2px black;
+    text-shadow: teal;
+    /* text-shadow: -1px -2px #1fb03e; */
+    color: #168116;
+    background: -webkit-gradient(linear, left top, left bottom, from(lightblue), to(blue));
+    background: linear-gradient(to right, blue 17.12%, rgb(193, 193, 255) 17.12%);
+}
+
+.carb-goal {
+    background-color: lightgreen;
+    width: 150px;
+    height: 12px;
+    text-align: 2px 2px black;
+    text-shadow: teal;
+    /* text-shadow: -1px -2px #1fb03e; */
+    color: #168116;
+    background: -webkit-gradient(linear, left top, left bottom, from(#d8e6db), to(#9cd390));
+    background: linear-gradient(to right, blue 17.12%, rgb(193, 193, 255) 17.12%);
+}
+
+
+.fat-consumed {
+    background-color: lightgreen;
+    width: 15%;
+    height: 10px;
+    text-align: 2px 2px black;
+    text-shadow: teal;
+    /* text-shadow: -1px -2px #1fb03e; */
+    color: #168116;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f58a9b), to(#db2929));
+    background: linear-gradient(to right, red 82.125%, rgb(252, 198, 180) 82.125%);
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.fat-goal {
+    background-color: lightgreen;
+    width: 150px;
+    height: 10px;
+    text-align: 2px 2px black;
+    text-shadow: teal;
+    /* text-shadow: -1px -2px #1fb03e; */
+    color: #168116;
+    background: -webkit-gradient(linear, left top, left bottom, from(#c8dafd), to(#a2b5d2));
+    background: linear-gradient(to right, red 82.125%, rgb(252, 198, 180) 82.125%);
+}
+
+p {
+    display: inline;
+}
+/*
+.new-goals p:first-child {
+    position: absolute;
+    top: 27px;
+    left: 75px;
+    color: #b8ffad;
+    font-size: 16px;
+    text-shadow: -1px -1px #81839e;
+}
+
+.new-goals p:nth-child(2) {
+    position: absolute;
+    top: 27px;
+    left: 425px;
+    color: white;
+    text-align: 2px 2px black;
+    text-shadow: -1px -1px #81839e;
+    font-size: 16px;
+}
+
+*/
 
 .daily-goal {
     /*width: 15%;*/
@@ -163,6 +311,7 @@ td:first-child {
 
 .matching-foods ul li {
     overflow-y: hidden;
+    border-bottom: 1px solid #d6dcf8;
 }
 
 .matching-foods ul li:first-child {
@@ -182,13 +331,14 @@ td:first-child {
 
 
 .add-to-favorites {
-    float: right;
     font-size: 16px;
     cursor: pointer;
-    padding: 7px;
-    line-height: 15px;
+    padding: 0;
+    line-height: 26px;
     background: none;
     border: none;
+    position: relative;
+    top: 2px;
 }
 
 .add-to-favorites:focus {
@@ -206,7 +356,7 @@ td:first-child {
     border: 0 solid transparent;
     overflow-y: hidden;
     max-height: 0;
-    transition: all 0.2s ease-out;
+    transition: all 150ms;
     text-align: left;
 }
 
@@ -266,44 +416,37 @@ td:first-child {
     border: 1px solid #c3cfff;
     border-radius: 4px;
     margin-right: 6px;
-    padding-left: 6px;
-    padding-right: 6px;
 }
-
 
 
 span {
-    border-bottom: 1px solid #d6dcf8;
+
     display: inline-block;
     /*padding: 6px;*/
-    padding-left: 5px;
+    //padding-left: 5px;
     line-height: 30px;
 }
-
+/*
 span:first-child {
     border-left: none;
     text-align: left;
     width: 66%;
-    /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(2) {
     width: 10%;
-    /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(3) {
     background: #93f093;
     color: green;
     width: 8%;
-    /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(4) {
     background: #c1c1ff;
     color: blue;
     width: 8%;
-    /*border-right: 1px solid #c3cfff;*/
 }
 
 span:nth-child(5) {
@@ -311,16 +454,130 @@ span:nth-child(5) {
     color: red;
     width: 8%;
 }
+*/
 
+.food-selected-indicator-container {
+    width: 20px;
+
+}
+
+.food-selected-indicator {
+    font-size: 12px;
+    position: relative;
+    transition: all 0.1s;
+}
+
+.food-selected-indicator.open {
+    //right: 1px;
+    transform: rotate(90deg);
+}
+
+.food-selected-indicator.closed {
+    //right: 0;
+    transform: rotate(0deg);
+}
+
+
+@media (min-width: 768px) {
+
+
+
+
+.food-name {
+    text-align: left;
+    width: ~'calc(66% - 53px)';
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 19px;
+    text-overflow: ellipsis;
+    position: relative;
+    top: 5px;
+}
+
+.favorites {
+    width: 33px;
+}
+
+.energy-amount {
+    width: 10%;
+}
+
+.protein-amount {
+    background: #93f093;
+    color: green;
+    width: 8%;
+}
+
+.carb-amount {
+    background: #c1c1ff;
+    color: blue;
+    width: 8%;
+}
+
+.fat-amount {
+    background: #fcc6b4;
+    color: red;
+    width: 8%;
+}
+}
+
+/*
+.matching-foods span:first-child {
+    width: 10px;
+}
+//33 + 10
+
+.matching-foods span:nth-child(2) {
+    border-left: none;
+    text-align: left;
+    width: ~'calc(66% - 43px)';
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 20px;
+    text-overflow: ellipsis;
+    position: relative;
+    top: 6px;
+}
+
+.matching-foods span:nth-child(3) {
+    width: 33px;
+}
+
+.matching-foods span:nth-child(4) {
+    width: 10%;
+}
+
+.matching-foods span:nth-child(5) {
+    background: #93f093;
+    color: green;
+    width: 8%;
+}
+
+.matching-foods span:nth-child(6) {
+    background: #c1c1ff;
+    color: blue;
+    width: 8%;
+}
+
+.matching-foods span:nth-child(7) {
+    background: #fcc6b4;
+    color: red;
+    width: 8%;
+}
+*/
+
+
+.search {
+    margin-bottom: 20px;
+}
 
 .search-input {
-    margin-bottom: 20px;
     height: 35px;
-    width: calc(100% - 80px);
+    width: ~"calc(100% - 80px)";
     border-radius: 3px;
     border: 1px solid #c3cfff;
-    padding-left: 5px;
-    padding-right: 5px;
+    //padding-left: 5px;
+    //padding-right: 5px;
     margin-right: 5px;
 }
 
@@ -382,16 +639,27 @@ span:nth-child(5) {
     width: 100%;
     text-align: center;
     background: white;
-    /*margin-top: 10px;*/
+    padding-top: 20px;
     border-bottom: 1px solid #c3cfff;
     padding-bottom: 40px;
 }
 
 .food-selection-wrapper {
-    max-width: 1600px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 1100px;
+    float: none;
+    margin: auto;
 }
+
+.matching-foods {
+    //float: left;
+    //width: 60%;
+    /*min-height: 700px;*/
+    //margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    /*padding-bottom: 20px;*/
+}
+
 
 .food-list {
     font-size: 13px;
@@ -399,32 +667,6 @@ span:nth-child(5) {
     overflow-y: auto;
 }
 
-.matching-foods {
-    float: left;
-    width: 60%;
-    /*min-height: 700px;*/
-    margin-top: 20px;
-    margin-right: auto;
-    margin-left: auto;
-    /*padding-bottom: 20px;*/
-}
-
-
-.food-table-content-wrapper {
-    /*height: 580px;*/
-    overflow-y: auto;
-    overflow-x: hidden;
-    border-bottom: 1px solid #c9c9c9;
-    max-width: 1600px;
-}
-
-
-.food-table {
-    /*height: 600px;*/
-    border: 1px solid #c9c9c9;
-    border-radius: 3px;
-    background: white;
-}
 
 .protein-dominant {
     color: #0fb70f;
@@ -448,19 +690,20 @@ span:nth-child(5) {
 .consumed-foods-table-wrapper {
     margin-left: auto;
     margin-right: auto;
-    max-width: 1600px;
+    max-width: 1100px;
+    float: none;
 }
 
 .consumed-foods-table {
     text-align: center;
     font-size: 13px;
-    width: 76%;
+    //width: 76%;
     margin-left: auto;
     margin-right: auto;
 }
 
 .consumed-foods-table th {
-        text-align: center;
+    text-align: center;
     font-size: 14px;
     font-weight: normal;
     border-bottom: 1px solid #c3cfff;
@@ -477,7 +720,7 @@ span:nth-child(5) {
 
 .consumed-foods-table th:nth-child(2), td:nth-child(2) {
     text-align: left;
-    width: 52%;
+    width: 54%;
     /*border-right: 1px solid #c3cfff;*/
 }
 
@@ -487,28 +730,28 @@ span:nth-child(5) {
 }
 
 .consumed-foods-table th:nth-child(4), td:nth-child(4) {
-    width: 15%;
+    width: 10%;
     /*border-right: 1px solid #c3cfff;*/
 }
 
 .consumed-foods-table th:nth-child(5), td:nth-child(5) {
     background: #93f093;
     color: green;
-    width: 7%;
+    width: 8%;
     /*border-right: 1px solid #c3cfff;*/
 }
 
 .consumed-foods-table th:nth-child(6), td:nth-child(6) {
     background: #c1c1ff;
     color: blue;
-    width: 7%;
+    width: 8%;
     /*border-right: 1px solid #c3cfff;*/
 }
 
 .consumed-foods-table th:nth-child(7), td:nth-child(7) {
     background: #fcc6b4;
     color: red;
-    width: 7%;
+    width: 8%;
 }
 
 .remove-food {

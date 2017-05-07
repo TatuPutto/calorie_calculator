@@ -5,21 +5,33 @@ import DailyGoal from './DailyGoal';
 import SingleFood from './SingleFood';
 
 export default function FoodSelection(props) {
-    var offset = props.showResultsOffset;
+    var viewportWidth = Math.max(
+        document.documentElement.clientWidth,
+        window.innerWidth || 0
+    );
+    var offset = props.offset;
+    var foods = [];
 
+    if(viewportWidth < 768) {
+        foods = props.foods.slice(0, (offset + 10));
+    } else {
+        foods = props.foods;
+    }
+
+    console.log(foods);
     return (
         <div className='food-selection row'>
 
 
-            <div className='food-selection-wrapper col-sm-10 col-sm-offset-1'>
-                <DailyGoal
+            <div className='food-selection-wrapper col-lg-10 col-md-10 col-sm-12 col-md-offset-1 col-lg-offset-1'>
+                {/*}<DailyGoal
                     dailyGoal={props.dailyGoal}
                     totalConsumption={props.totalConsumption}
                     isFetchingDailyGoal={props.isFetchingDailyGoal}
                     isFetchingConsumedFoods={props.isFetchingConsumedFoods}
-                />
+                />*/}
 
-                <div className='matching-foods col-sm-10'>
+                <div className='matching-foods'>
                     {props.fetchMethod == 'haku' &&
                         <div className='search'>
                             <input
@@ -38,6 +50,9 @@ export default function FoodSelection(props) {
                     {props.fetchError &&
                         <p>{props.fetchError}</p>
                     }
+                    {props.isFetchingMatchingFoods &&
+                        <i className='fa fa-spinner fa-3x fa-spin' />
+                    }
                     {props.foods.length === 0 && !props.isFetchingMatchingFoods && !props.fetchError &&
                         <p>Syötettä vastaavia elintarvikkeita ei löytynyt</p>
                     }
@@ -51,10 +66,11 @@ export default function FoodSelection(props) {
                                 <span style={{background: 'white'}}>R</span>
                             </div>*/}
                             <ul className='food-list'>
-                                {props.foods.map(function (food) {
+                                {foods.map(function (food) {
                                     return (
                                         <SingleFood
                                             key={food.id}
+                                            viewportWidth={viewportWidth}
                                             food={food}
                                             selectedFoodId={props.selectedFoodId}
                                             selectFood={props.selectFood}
@@ -67,15 +83,15 @@ export default function FoodSelection(props) {
                                     );
                                 })}
                             </ul>
-                            {/*}{props.foods.length > 20 && props.foods.length > (offset + 20) &&
+                            {props.foods.length > 10 && props.foods.length > (offset + 10) && viewportWidth < 768 &&
                                 <button
                                     className='btn btn-default'
                                     style={{marginTop: '20px'}}
                                     onClick={props.showMoreResults}
                                 >
-                                    Näytä lisää tuloksia ({((offset + 20) + ' / ' + props.foods.length)})
+                                    Näytä lisää tuloksia ({((offset + 10) + ' / ' + props.foods.length)})
                                 </button>
-                            }*/}
+                            }
                         </div>
                     }
                 </div>

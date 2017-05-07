@@ -42,6 +42,7 @@ module.exports = {
     output: {
         path: path.join(__dirname, "/client/app/js"),
     	//path: __dirname + "client/app/js",
+        publicPath: '/',
     	filename: "bundle.min.js"
     },
     plugins: debug ? [] : [

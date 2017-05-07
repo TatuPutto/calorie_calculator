@@ -12,6 +12,7 @@ export default class Application extends React.Component {
             dailyGoal: null,
             consumedFoods: [],
             foods: [],
+            shownResultsOffset: 0,
             totalConsumption: null,
             selectedFoodId: null,
             selectedFood: null,
@@ -33,6 +34,7 @@ export default class Application extends React.Component {
         this.changeFetchMethod = this.changeFetchMethod.bind(this);
         this.changeSearchTerm = this.changeSearchTerm.bind(this);
         this.doSearch = this.doSearch.bind(this);
+        this.showMoreResults = this.showMoreResults.bind(this);
         this.selectFood = this.selectFood.bind(this);
         this.setSelectedFoodAmount = this.setSelectedFoodAmount.bind(this);
         this.addToDiary = this.addToDiary.bind(this);
@@ -126,11 +128,14 @@ export default class Application extends React.Component {
         fetch(url, {credentials: 'same-origin'})
             .then((res) => res.json())
             .then((data) => {
-                this.setState({
-                    foods: data,
-                    isFetchingMatchingFoods: false,
-                    fetchError: null
-                });
+                setTimeout(() => {
+                    this.setState({
+                        foods: data,
+                        isFetchingMatchingFoods: false,
+                        fetchError: null
+                    });
+                }, 500);
+
             }).catch((err) => {
                 console.error(err);
                 this.setState({
@@ -153,8 +158,11 @@ export default class Application extends React.Component {
     }
 
     doSearch() {
-        this.context.router.history.push(
-                `?ravintoaine=${this.state.searchTerm}`);
+        this.context.router.history.push(`?ravintoaine=${this.state.searchTerm}`);
+    }
+
+    showMoreResults() {
+        this.setState({shownResultsOffset: this.state.shownResultsOffset + 10});
     }
 
     selectFood(foodId) {
@@ -249,6 +257,34 @@ export default class Application extends React.Component {
     render() {
         return (
             <div className='daily-intake'>
+
+                {/*}<div className='new-goals'>
+                    <div className='charts col-sm-8 col-sm-offset-2'>
+                        <h4>Päivä tavoite</h4>
+                        <i className='fa fa-cog' />
+                        <div className='macronutrient-bar'>
+                            <p>kcal: 1900 kcal / 2500 kcal</p>
+                            <p>100 g / 180 g</p>
+                            <p>150 g / 280 g</p>
+                            <p>50 g / 80 g</p>
+                            <span className='calories-consumed'>
+                            </span>
+
+                            <span className='protein-consumed'>
+                            </span>
+
+
+                            <span className='carbs-consumed'>
+                            </span>
+
+                            <span className='fat-consumed'>
+                            </span>
+
+                        </div>
+
+                    </div>
+                </div>*/}
+
                 <SearchTypes
                     fetchMethod={this.state.fetchMethod}
                     changeFetchMethod={this.changeFetchMethod}
@@ -258,6 +294,8 @@ export default class Application extends React.Component {
                     changeSearchTerm={this.changeSearchTerm}
                     doSearch={this.doSearch}
                     foods={this.state.foods}
+                    offset={this.state.shownResultsOffset}
+                    showMoreResults={this.showMoreResults}
                     selectedFoodId={this.state.selectedFoodId}
                     selectedFoodAmount={this.state.selectedFoodAmount}
                     setSelectedFoodAmount={this.setSelectedFoodAmount}

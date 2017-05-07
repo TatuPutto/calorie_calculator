@@ -12,7 +12,7 @@ export default function ConsumedFoods(props) {
                 <p>Et ole syönyt tänään mitään</p>
             }
             {props.consumedFoods.length > 0 &&
-                <div className='consumed-foods-table-wrapper'>
+                <div className='consumed-foods-table-wrapper col-lg-10 col-md-10 col-sm-12'>
                     <table className='consumed-foods-table'>
                         {/*}<thead>
                             <tr>

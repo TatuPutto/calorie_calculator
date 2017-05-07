@@ -18,19 +18,41 @@ export default function SingleFood(props) {
                 className='single-food'
                 onClick={() => props.selectFood(food.id, food.name)}
             >
-                <span className={dominantMacro}>
-                    <i className={props.selectedFoodId == food.id ? 'fa fa-chevron-down' : 'fa fa-chevron-right'} />
-                        &nbsp;&nbsp;{food.name}
-                    <button
-                        className='add-to-favorites'
-                        onClick={food.favorite ? () => props.removeFromFavorites(food.id) : () => props.addToFavorites(food.id)}>
-                        <i className={food.favorite ? 'fa fa-star' : 'fa fa-star-o'} />
-                    </button>
-                </span>
-                <span>{food.energy} kcal</span>
-                <span>{food.protein} g</span>
-                <span>{food.carbs} g</span>
-                <span>{food.fat} g</span>
+
+            {props.viewportWidth < 768 &&
+                <div style={{display: 'inline'}}>
+                    <span className='energy-amount'>{food.energy} kcal</span>
+                    <span className='protein-amount'>{food.protein} g</span>
+                    <span className='carb-amount'>{food.carbs} g</span>
+                    <span className='fat-amount'>{food.fat} g</span>
+                    <br />
+                </div>
+            }
+
+            <span className='food-selected-indicator-container'>
+                <i className={props.selectedFoodId == food.id ?
+                        'food-selected-indicator fa fa-chevron-right open' : 'food-selected-indicator fa fa-chevron-right closed'} />
+            </span>
+
+            <span className={'food-name ' + dominantMacro}>
+                {food.name}
+            </span>
+            <span className='favorites'>
+                <button
+                    className='add-to-favorites'
+                    onClick={food.favorite ? () => props.removeFromFavorites(food.id) : () => props.addToFavorites(food.id)}>
+                    <i className={food.favorite ? 'fa fa-star' : 'fa fa-star-o'} />
+                </button>
+            </span>
+
+            {props.viewportWidth > 768 &&
+                <div style={{display: 'inline'}}>
+                    <span className='energy-amount'>{food.energy} kcal</span>
+                    <span className='protein-amount'>{food.protein} g</span>
+                    <span className='carb-amount'>{food.carbs} g</span>
+                    <span className='fat-amount'>{food.fat} g</span>
+                </div>
+            }
             </div>
             <AddToConsumedFoods
                 foodId={food.id}

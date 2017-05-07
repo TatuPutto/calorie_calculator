@@ -40,7 +40,7 @@ export default function DailyGoal(props) {
 
 
         return (
-            <div className='daily-goal col-sm-2'>
+            <div className='daily-goal col-lg-2 col-sm-12'>
                 <h4>Päivä tavoite</h4>
                 <button className='configure-daily-goals'>
                     <i className='fa fa-cog' />
