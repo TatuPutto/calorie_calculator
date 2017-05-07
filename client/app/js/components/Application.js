@@ -66,7 +66,7 @@ export default class Application extends React.Component {
     }
 
     getDailyGoal() {
-        fetch('http://localhost:3000/daily-goal')
+        fetch('/daily-goal')
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -87,7 +87,7 @@ export default class Application extends React.Component {
             isFetchingConsumedFoods: true
         });
 
-        fetch('http://localhost:3000/daily-intake', {method: 'GET', credentials: 'same-origin'})
+        fetch('/daily-intake', {method: 'GET', credentials: 'same-origin'})
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -104,15 +104,15 @@ export default class Application extends React.Component {
     getMatchingFoods(searchTerm) {
         searchTerm = searchTerm.trim();
         if(!searchTerm) return;
-        this.fetchFoods(`http://localhost:3000/matching-foods/${searchTerm}`);
+        this.fetchFoods(`/matching-foods/${searchTerm}`);
     }
 
     getFavoriteFoods() {
-        this.fetchFoods('http://localhost:3000/favorites');
+        this.fetchFoods('/favorites');
     }
 
     getLatestConsumedFoods() {
-        this.fetchFoods('http://localhost:3000/latest');
+        this.fetchFoods('/latest');
     }
 
     fetchFoods(url) {
@@ -197,13 +197,13 @@ export default class Application extends React.Component {
             }
         };
 
-        fetch('http://localhost:3000/daily-intake', params)
+        fetch('/daily-intake', params)
             .then(() => this.getConsumedFoods())
             .catch((err) => console.error(err));
     }
 
     removeFromDiary(consumptionId) {
-        var url = `http://localhost:3000/daily-intake?` +
+        var url = `/daily-intake?` +
                 `consumptionId=${consumptionId}`;
 
         fetch(url, {method: 'DELETE', credentials: 'same-origin'})
@@ -212,7 +212,7 @@ export default class Application extends React.Component {
     }
 
     addToFavorites(foodId) {
-        var url = `http://localhost:3000/favorites/${foodId}`;
+        var url = `/favorites/${foodId}`;
         var params = {
             method: 'PUT',
             body: '',
@@ -235,7 +235,7 @@ export default class Application extends React.Component {
     }
 
     removeFromFavorites(foodId) {
-        var url = `http://localhost:3000/favorites/${foodId}`;
+        var url = `/favorites/${foodId}`;
         fetch(url, {method: 'DELETE', credentials: 'same-origin'})
         .then((res) => {
             if(res.status === 200) {
