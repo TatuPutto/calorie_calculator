@@ -1,14 +1,16 @@
 import React from 'react';
 
 export default function ConsumedFoods(props) {
+    var viewportWidth = Math.max(
+        document.documentElement.clientWidth,
+        window.innerWidth || 0
+    );
     var total = props.totalConsumption;
-
-
 
     var tableRows = props.consumedFoods.map((food, i) => {
         var row;
 
-        if(500 < 768) {
+        if(viewportWidth < 768) {
             row = <tr key={food.timeOfConsumption}>
                 <td className='food-amount'>{food.amount} g</td>
                 <td className='energy-amount'>{food.energy} kcal</td>
@@ -27,7 +29,7 @@ export default function ConsumedFoods(props) {
             </tr>
         } else {
             row = <tr key={food.timeOfConsumption}>
-                <td>
+                <td className='remove-button-container'>
                     <button
                         className='remove-food btn btn-default'
                         onClick={() => props.removeFromDiary(food.consumptionId)}
@@ -35,12 +37,12 @@ export default function ConsumedFoods(props) {
                         <i className='fa fa-remove' />
                     </button>
                 </td>
-                <td>{food.name}</td>
-                <td>{food.amount} g</td>
-                <td>{food.energy} kcal</td>
-                <td>{food.protein} g</td>
-                <td>{food.carbs} g</td>
-                <td>{food.fat} g</td>
+                <td className='food-name'>{food.name}</td>
+                <td className='food-amount'>{food.amount} g</td>
+                <td className='energy-amount'>{food.energy} kcal</td>
+                <td className='protein-amount'>{food.protein} g</td>
+                <td className='carb-amount'>{food.carbs} g</td>
+                <td className='fat-amount'>{food.fat} g</td>
             </tr>
         }
 
