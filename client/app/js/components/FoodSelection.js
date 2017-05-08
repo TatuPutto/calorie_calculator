@@ -18,7 +18,6 @@ export default function FoodSelection(props) {
         foods = props.foods;
     }
 
-    console.log(foods);
     return (
         <div className='food-selection row'>
 

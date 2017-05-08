@@ -1,10 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import $ from 'jquery';
+
 import FoodSelection from './FoodSelection';
 import ConsumedFoods from './ConsumedFoods';
 import TotalConsumption from './TotalConsumption';
 import SearchTypes from './SearchTypes';
+
+var fetchParams = {
+    credentials: 'same-origin',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }
+};
+
 export default class Application extends React.Component {
     constructor(props) {
         super();
@@ -66,7 +76,7 @@ export default class Application extends React.Component {
     }
 
     getDailyGoal() {
-        fetch('/daily-goal')
+        fetch('/daily-goal', fetchParams)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -87,7 +97,7 @@ export default class Application extends React.Component {
             isFetchingConsumedFoods: true
         });
 
-        fetch('/daily-intake', {method: 'GET', credentials: 'same-origin'})
+        fetch('/daily-intake', fetchParams)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -125,17 +135,14 @@ export default class Application extends React.Component {
             showResultsOffset: 0
         });
 
-        fetch(url, {credentials: 'same-origin'})
+        fetch(url, fetchParams)
             .then((res) => res.json())
             .then((data) => {
-                setTimeout(() => {
-                    this.setState({
-                        foods: data,
-                        isFetchingMatchingFoods: false,
-                        fetchError: null
-                    });
-                }, 500);
-
+                this.setState({
+                    foods: data,
+                    isFetchingMatchingFoods: false,
+                    fetchError: null
+                });
             }).catch((err) => {
                 console.error(err);
                 this.setState({
@@ -188,14 +195,14 @@ export default class Application extends React.Component {
     addToDiary(foodId, foodAmount) {
         var content = {foodId, foodAmount};
         var params = {
+            credentials: 'same-origin',
             method: 'POST',
             body: JSON.stringify(content),
-            credentials: 'same-origin',
             headers: {
-                'Content-Type': 'application/json',
+                ...fetchParams.headers,
                 'Content-Length': content.length
             }
-        };
+        }
 
         fetch('/daily-intake', params)
             .then(() => this.getConsumedFoods())
@@ -205,8 +212,12 @@ export default class Application extends React.Component {
     removeFromDiary(consumptionId) {
         var url = `/daily-intake?` +
                 `consumptionId=${consumptionId}`;
+        var params = {
+            ...fetchParams,
+            method: 'DELETE'
+        };
 
-        fetch(url, {method: 'DELETE', credentials: 'same-origin'})
+        fetch(url, params)
             .then(() => this.getConsumedFoods())
             .catch((err) => console.error(err));
     }
@@ -214,11 +225,11 @@ export default class Application extends React.Component {
     addToFavorites(foodId) {
         var url = `/favorites/${foodId}`;
         var params = {
+            credentials: 'same-origin',
             method: 'PUT',
             body: '',
-            credentials: 'same-origin',
             headers: {
-                'Content-Type': 'application/json',
+                ...fetchParams.headers,
                 'Content-Length': 0
             }
         };
@@ -236,7 +247,12 @@ export default class Application extends React.Component {
 
     removeFromFavorites(foodId) {
         var url = `/favorites/${foodId}`;
-        fetch(url, {method: 'DELETE', credentials: 'same-origin'})
+        var params = {
+            ...fetchParams,
+            method: 'DELETE'
+        };
+
+        fetch(url, params)
         .then((res) => {
             if(res.status === 200) {
                 this.toggleFavoriteIcon(foodId, false);
