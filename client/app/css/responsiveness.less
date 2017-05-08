@@ -45,6 +45,11 @@ span:nth-child(5) {
         line-height: 20px !important;
     }
 
+    .food-selection {
+        border-bottom: 2px solid #c3cfff !important;
+        padding-bottom: 30px !important;
+    }
+
     .matching-foods {
         padding: 0;
     }
@@ -85,33 +90,44 @@ span:nth-child(5) {
 
     .energy-amount {
         width: 24%;
-        color: #af810b;
+        color: #8f6907;
+        color: white;
         background: #fed17e;
         border-top-left-radius: 3px;
         border-bottom-left-radius: 3px;
+        background: linear-gradient(to bottom, #fed17e, #fcb93d);
+        //background: linear-gradient(to bottom, #fcb93d, #fed17e);
     }
 
     .protein-amount {
-        background: #93f093;
         color: green;
+        color: white;
         width: 24%;
+        //background: linear-gradient(to bottom, #7fe07f, #93f093);
+        background: linear-gradient(to bottom, #93f093, #7fe07f);
     }
 
     .carb-amount {
         background: #c5d4ed;
-        color: #7171eb;
+        color: #4b4bdd;
+        color: white;
         width: 24%;
+        background: linear-gradient(to bottom, #aeccff, #8bb6ff);
     }
 
     .fat-amount {
         background: #fcc6b4;
-       color: red;
-       width: 24%;
-       border-top-right-radius: 3px;
-       border-bottom-right-radius: 3px;
+        color: #ac2f2f;
+        color: white;
+        width: 24%;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        background: linear-gradient(to bottom, #ffb8a1, #ff834f);
     }
 
-
+    .consumed-foods {
+        padding: 30px 0 !important;
+    }
 
     .consumed-foods-table-wrapper {
         padding: 0;
@@ -134,40 +150,50 @@ span:nth-child(5) {
         background: #d3b2d1;
         border-top-left-radius: 3px;
         border-bottom-left-radius: 3px;
+        background: linear-gradient(to bottom, #d3b2d1, #c68dc2);
+        color: white;
     }
 
     .consumed-foods .energy-amount {
         width: 19%;
         color: #af810b;
+        color: white;
         background: #fed17e;
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
+        background: linear-gradient(to bottom, #fed17e, #fcb93d);
+        border-radius: 0;
     }
 
     .consumed-foods .protein-amount {
         background: #93f093;
         color: green;
+        color: white;
         width: 19%;
+        background: linear-gradient(to bottom, #93f093, #7fe07f);
     }
 
     .consumed-foods .carb-amount {
         background: #c5d4ed;
         color: #7171eb;
+        color: white;
         width: 19%;
+        background: linear-gradient(to bottom, #aeccff, #8bb6ff);
     }
 
     .consumed-foods .fat-amount {
         background: #fcc6b4;
         color: red;
+        color: white;
         width: 19%;
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
+        background: linear-gradient(to bottom, #ffb8a1, #ff834f);
     }
 
     .consumed-foods .food-name {
         text-align: center;
         margin-top: 0;
         margin-bottom: 5px;
+        width: 96%;
     }
 
     .consumed-foods .remove-button-container {
