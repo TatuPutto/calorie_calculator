@@ -15,9 +15,9 @@ router.get('/', function (req, res) {
         var consumedFoodsMapped = consumedFoods.map(function (item, i) {
             return {
                 consumptionId: item.consumptionId,
-                id: item.foodId,
-                amount: item.foodAmount,
-                timeOfConsumption: item.foodAmount,
+                id: item.id,
+                amount: item.amount,
+                timeOfConsumption: item.timeOfConsumption,
             };
         });
 
@@ -52,8 +52,8 @@ router.post('/', function (req, res) {
 
     consumedFoods.push({
         consumptionId: (consumedFoods.length + 1),
-        foodId: foodId,
-        foodAmount: foodAmount,
+        id: foodId,
+        amount: foodAmount,
         timeOfConsumption: new Date().getTime()
     });
 
@@ -65,7 +65,10 @@ router.delete('/', function (req, res) {
     var consumedFoods = req.cookies['consumedFoods']
     if(consumedFoods) {
         consumedFoods = JSON.parse(consumedFoods);
-        var index = findIndexOfObjectId(req.query.consumptionId, consumedFoods);
+        var index = consumedFoods.findIndex(function (food) {
+            return food.consumptionId == req.query.consumptionId;
+        });
+
         consumedFoods.splice(index, 1);
 
         res.cookie('consumedFoods', JSON.stringify(consumedFoods));

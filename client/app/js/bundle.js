@@ -9,6 +9,10 @@ import Login from './components/Login';
 require('../css/styles.less');
 
 var Wrapper = (props) => {
+    var viewportWidth = Math.max(
+        document.documentElement.clientWidth,
+        window.innerWidth || 0
+    );
     var pathname = props.location.pathname;
     var search = props.location.search;
     var fetchMethod;
@@ -29,7 +33,11 @@ var Wrapper = (props) => {
     }
 
     return (
-        <Application fetchMethod={fetchMethod} search={search} />
+        <Application
+            viewportWidth={viewportWidth}
+            fetchMethod={fetchMethod}
+            search={search}
+        />
     );
 }
 

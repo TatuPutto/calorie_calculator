@@ -6,6 +6,9 @@ import FoodSelection from './FoodSelection';
 import ConsumedFoods from './ConsumedFoods';
 import TotalConsumption from './TotalConsumption';
 import SearchTypes from './SearchTypes';
+import DailyGoalNew from './DailyGoalNew';
+console.log(DailyGoalNew);
+
 
 var fetchParams = {
     credentials: 'same-origin',
@@ -273,39 +276,12 @@ export default class Application extends React.Component {
     render() {
         return (
             <div className='daily-intake'>
-
-                {/*}<div className='new-goals'>
-                    <div className='charts col-sm-8 col-sm-offset-2'>
-                        <h4>Päivä tavoite</h4>
-                        <i className='fa fa-cog' />
-                        <div className='macronutrient-bar'>
-                            <p>kcal: 1900 kcal / 2500 kcal</p>
-                            <p>100 g / 180 g</p>
-                            <p>150 g / 280 g</p>
-                            <p>50 g / 80 g</p>
-                            <span className='calories-consumed'>
-                            </span>
-
-                            <span className='protein-consumed'>
-                            </span>
-
-
-                            <span className='carbs-consumed'>
-                            </span>
-
-                            <span className='fat-consumed'>
-                            </span>
-
-                        </div>
-
-                    </div>
-                </div>*/}
-
                 <SearchTypes
                     fetchMethod={this.state.fetchMethod}
                     changeFetchMethod={this.changeFetchMethod}
                 />
                 <FoodSelection
+                    viewportWidth={this.props.viewportWidth}
                     searchTerm={this.state.searchTerm}
                     changeSearchTerm={this.changeSearchTerm}
                     doSearch={this.doSearch}
@@ -320,19 +296,24 @@ export default class Application extends React.Component {
                     addToDiary={this.addToDiary}
                     addToFavorites={this.addToFavorites}
                     removeFromFavorites={this.removeFromFavorites}
-                    totalConsumption={this.state.totalConsumption}
-                    dailyGoal={this.state.dailyGoal}
-                    isFetchingDailyGoal={this.state.isFetchingDailyGoal}
-                    isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                     fetchMethod={this.state.fetchMethod}
                     fetchError={this.state.fetchError}
                 />
                 <ConsumedFoods
+                    viewportWidth={this.props.viewportWidth}
                     consumedFoods={this.state.consumedFoods}
                     totalConsumption={this.state.totalConsumption}
                     removeFromDiary={this.removeFromDiary}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
+
+                <DailyGoalNew
+                    dailyGoal={this.state.dailyGoal}
+                    totalConsumption={this.state.totalConsumption}
+                    isFetchingDailyGoal={this.state.isFetchingDailyGoal}
+                    isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
+                />
+
                 {/*}<TotalConsumption
                     totalConsumption={this.state.totalConsumption}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
@@ -343,6 +324,11 @@ export default class Application extends React.Component {
     }
 }
 
-Application.contextTypes = {
-    router: PropTypes.object.isRequired
+
+Application.contextTypes = {router: PropTypes.object.isRequired};
+
+Application.propTypes = {
+    viewportWidth: PropTypes.number.isRequired,
+    fetchMethod: PropTypes.string.isRequired,
+    search:  PropTypes.string
 };

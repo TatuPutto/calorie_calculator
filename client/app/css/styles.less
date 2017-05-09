@@ -26,7 +26,7 @@ th {
 }
 
 tr {
-    border-bottom: 1px solid #d6dcf8;
+    border: 1px solid #d6dcf8;
 }
 
 tr:hover {
@@ -113,10 +113,16 @@ td:first-child {
 
 .charts {
     text-align: center;
+    height: 400px;
 }
 
 .charts h4 {
     display: inline;
+}
+
+#chart {
+    height: 300px;
+    width: 300px;
 }
 
 
@@ -311,7 +317,8 @@ p {
 
 .matching-foods ul li {
     overflow-y: hidden;
-    border-bottom: 1px solid #d6dcf8;
+    border: 1px solid #d6dcf8;
+    border-top: none;
 }
 
 .matching-foods ul li:first-child {
@@ -353,21 +360,8 @@ p {
 
 .add-to-consumed-foods-list {
     background: #fcfcfc;
-    border: 0 solid transparent;
-    overflow-y: hidden;
-    max-height: 0;
-    transition: all 150ms;
+    border-top: 1px solid #d6dcf8;
     text-align: left;
-}
-
-.add-to-consumed-foods-list.open {
-    border: 1px solid #c3cfff;
-    max-height: 250px;
-}
-
-.add-to-consumed-foods-list.closed {
-    border: 0 solid transparent;
-    max-height: 0;
 }
 
 .add-panel-wrapper {
@@ -725,11 +719,17 @@ span:nth-child(5) {
     color: #fa6b6b;
 }
 
+.show-more-results {
+    margin-top: 20px;
+}
+
+
 .consumed-foods {
     float: left;
     width: 100%;
     background: white;
     padding: 40px 0;
+    text-align: center;
 }
 
 .consumed-foods-table-wrapper {

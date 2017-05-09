@@ -12,11 +12,9 @@ export default function AddToConsumedFoods(props) {
         addToDiary,
         portionSizes
     } = props;
-    var cName = 'add-to-consumed-foods-list ';
-    cName += (selectedFoodId == foodId) ? 'open' : 'closed';
 
     return (
-        <div className={cName}>
+        <div className='add-to-consumed-foods-list'>
             <div className='add-panel-wrapper'>
                 <PortionSizes
                     portionSizes={portionSizes}
