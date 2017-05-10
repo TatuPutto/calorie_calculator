@@ -8,7 +8,8 @@ export default function FoodList(props) {
     if(props.viewportWidth < 768) {
         foods = props.foods.slice(0, (props.offset + 10));
     } else {
-        foods = props.foods;
+        //foods = props.foods;
+        foods = props.foods.slice(props.offset, (props.offset + 10));
     }
 
     return (

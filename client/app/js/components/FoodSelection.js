@@ -58,6 +58,20 @@ export default function FoodSelection(props) {
                             </button>
                         </div>
                     }
+                    <div className='text-right' style={{marginBottom: '5px'}}>
+                        {(props.offset + 1) + ' - ' + (props.offset + 10) + ' / ' + props.foods.length}
+                        {(props.offset - 10) > 0 && props.foods.length > 10 &&        
+                            <button className='btn btn-default' style={{padding: '7px 11px', marginLeft: '5px', border: 'none', fontSize: '10px', cursor: 'not-allowed'}}>
+                                <i className='fa fa-chevron-left'  style={{color: '#d0c6c6', verticalAlign: 'middle'}} />
+                            </button>
+                        }
+                        {(props.offset + 10) < props.foods.length && props.foods.length > 10 &&
+
+                            <button className='btn btn-default' onClick={props.showMoreResults} style={{padding: '7px 11px', fontSize: '10px'}}>
+                                <i className='fa fa-chevron-right' style={{verticalAlign: 'middle'}} />
+                            </button>
+                        }
+                    </div>
                     {matchingFoodsOutput}
                 </div>
             </div>

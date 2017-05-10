@@ -8,6 +8,7 @@
 body {
     background: #fcfcfc;
     overflow-y: scroll;
+    font-family: 'Roboto', sans-serif;
 }
 
 input[type="text"] {
@@ -492,35 +493,38 @@ span:nth-child(5) {
         width: ~'calc(66% - 53px)';
         white-space: nowrap;
         overflow: hidden;
-        line-height: 19px;
         text-overflow: ellipsis;
-        position: relative;
-        top: 5px;
+        vertical-align: middle;
     }
 
     .favorites {
         width: 33px;
+        border-right: 1px solid #d6dcf8;
     }
 
     .energy-amount {
         width: 10%;
+        color: #f6a000;
+        border-right: 1px solid #d6dcf8;
     }
 
     .protein-amount {
-        background: #93f093;
-        color: green;
+        //background: #93f093;
+        color: #0fb70f;
         width: 8%;
+        border-right: 1px solid #d6dcf8;
     }
 
     .carb-amount {
-        background: #c5d4ed;
-        color: #7171eb;
+        //background: #c5d4ed;
+        color: #207eff;
         width: 8%;
+        border-right: 1px solid #d6dcf8;
     }
 
     .fat-amount {
-        background: #fcc6b4;
-        color: red;
+        //background: #fcc6b4;
+        color: #fa6b6b;
         width: 8%;
     }
 
@@ -540,12 +544,12 @@ span:nth-child(5) {
     .consumed-foods-table th:nth-child(2), td:nth-child(2) {
         text-align: left;
         width: 54%;
-
+        border-right: 1px solid #d6dcf8;
     }
 
     .consumed-foods-table th:nth-child(3), td:nth-child(3) {
         width: 8%;
-
+        border-right: 1px solid #d6dcf8;
     }
 
     .consumed-foods-table th:nth-child(4), td:nth-child(4) {
@@ -554,21 +558,21 @@ span:nth-child(5) {
     }
 
     .consumed-foods-table th:nth-child(5), td:nth-child(5) {
-        background: #93f093;
-        color: green;
+        //background: #93f093;
+        //color: green;
         width: 8%;
     }
 
     .consumed-foods-table th:nth-child(6), td:nth-child(6) {
-        background: #c1c1ff;
-        color: blue;
+        //background: #c1c1ff;
+        //color: blue;
         width: 8%;
 
     }
 
     .consumed-foods-table th:nth-child(7), td:nth-child(7) {
-        background: #fcc6b4;
-        color: red;
+        //background: #fcc6b4;
+        //color: red;
         width: 8%;
     }
 
@@ -683,6 +687,8 @@ span:nth-child(5) {
 .search-types button {
     background: transparent;
     border: none;
+    margin-right: 4px;
+    margin-left: 4px;
 }
 
 .search-types button:focus {
@@ -692,17 +698,15 @@ span:nth-child(5) {
 
 .search-types .active {
     border-style: solid;
-    margin-right: 6px;
-    margin-left: 6px;
     border-color: aliceblue;
-    border: 1px solid #c3cfff;
-    border-top: 4px solid #c3cfff;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border: 1px solid #dfe2ed;
+    border-top: 4px solid #74a2ff;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
     border-bottom: none;
     position: relative;
     top: 1px;
-    padding: 6px 25px;
+    padding: 6px 15px;
     background: white;
 }
 
@@ -739,11 +743,12 @@ span:nth-child(5) {
 
 
 .food-list {
-    font-size: 13px;
+    font-size: 14px;
     max-height: 500px;
     overflow-y: auto;
     border: 1px solid #d6dcf8;
     border-radius: 3px;
+    line-height: 30px;
 }
 
 
@@ -782,7 +787,7 @@ span:nth-child(5) {
 
 .consumed-foods-table {
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     //width: 76%;
     margin-left: auto;
     margin-right: auto;
