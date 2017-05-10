@@ -1,6 +1,17 @@
 var createConnection = require('../database/create-connection');
+var setDailyGoal = require('../database/set-daily-goal');
+var bodyParser = require('body-parser');
 var express = require('express');
 var router = express.Router();
+
+router.use(function (req, res, next) {
+    if(req.session.user) {
+        next();
+    } else {
+        res.status(403)
+        res.end();
+    }
+});
 
 // return list of consumed foods for today
 router.get('/', function (req, res) {
@@ -36,6 +47,19 @@ router.get('/', function (req, res) {
         console.log(err);
         res.end(JSON.stringify(err));
     });
+});
+
+router.use(bodyParser.urlencoded({extended: false}));
+
+router.post('/', function (req, res) {
+    var energy = req.body.energy;
+    var protein = req.body.protein;
+    var carbs = req.body.carbs;
+    var fat = req.body.fat;
+
+    setDailyGoal(123, energy, protein, carbs, fat)
+        .then(() => res.redirect('/'))
+        .catch((err) => res.end(err));
 });
 
 module.exports = router;

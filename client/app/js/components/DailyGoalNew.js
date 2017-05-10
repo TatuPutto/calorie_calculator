@@ -1,7 +1,132 @@
+import React from 'react';
+
+export default class DailyGoalNew extends React.Component {
+    shouldComponentUpdate(nextProps) {
+        if(this.props.totalConsumption !== nextProps.totalConsumption) {
+            return true;
+        }
+        return false;
+    }
+
+
+    componentDidUpdate() {
+        if(!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal) {
+            window.requestAnimationFrame(() => createChart(this.props.totalConsumption, this.props.dailyGoal));
+        }
+    }
+
+    render() {
+        var {totalConsumption: total, dailyGoal: goal} = this.props;
+        var dailyGoalOutput;
+
+
+        if(!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal) {
+            var energyConsumed = Math.round(total.energy / goal.energy * 100) + '%';
+            var proteinConsumed = Math.round(total.protein / goal.protein * 100) + '%';
+            var carbsConsumed = Math.round(total.carbs / goal.carbs * 100) + '%';
+            var fatConsumed = Math.round(total.fat / goal.fat * 100) + '%';
+
+            dailyGoalOutput = (
+                <div className='macronutrient-bar'>
+                    <div className='row'>
+                        <div className='energy-chart-container col-md-3 col-sm-4 col-xs-6 col-md-offset-0 col-sm-offset-2'>
+                            <p style={{position: 'relative', top: '35px'}}>Energia</p>
+                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                    {energyConsumed}
+                                </p>
+                                <canvas id='energy-goal' />
+                            </div>
+                            <p>{Math.round(total.energy)} kcal / {goal.energy} kcal</p>
+                        </div>
+                        <div className='protein-chart-container col-md-3 col-sm-4 col-xs-6'>
+                            <p style={{position: 'relative', top: '35px'}}>Proteiini</p>
+                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                    {proteinConsumed}
+                                </p>
+                                <canvas id='protein-goal' />
+                            </div>
+                            <p>{Math.round(total.protein)} g / {goal.protein} g</p>
+                        </div>
+                        <div className='carb-chart-container col-md-3 col-sm-4 col-xs-6 col-md-offset-0 col-sm-offset-2'>
+                            <p style={{position: 'relative', top: '35px'}}>Hiilihydraatit</p>
+                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                    {carbsConsumed}
+                                </p>
+                                <canvas id='carb-goal' />
+                            </div>
+                            <p>{Math.round(total.carbs)} g / {goal.carbs} g</p>
+                        </div>
+                        <div className='fat-chart-container col-md-3 col-sm-4 col-xs-6'>
+                            <p style={{position: 'relative', top: '35px'}}>Rasva</p>
+                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                    {fatConsumed}
+                                </p>
+                                <canvas id='fat-goal' />
+                            </div>
+                            <p>{Math.round(total.fat)} g / {goal.fat} g</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        } else {
+            dailyGoalOutput = <i className='fa fa-spinner fa-3x fa-spin' />;
+        }
+
+        return (
+            <div className='daily-goal'>
+                <div className='charts col-md-10 col-md-offset-1'>
+                    <h3>Päivä tavoite</h3>
+                    <i className='configure-daily-goals fa fa-cog' data-toggle="modal" data-target="#myModal"/>
+
+
+                    <div className="modal fade" id="myModal" role="dialog">
+                        <div className="modal-dialog">
+                            <form action='/daily-goal' method='POST' encType='application/x-www-form-urlencoded'>
+
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <button className="close" data-dismiss="modal">&times;</button>
+                                        <h4 className="modal-title">Määritä päivä tavoite</h4>
+                                    </div>
+                                    <div className="modal-body">
+                                        <label>Energia</label>
+                                        <input type='text' name='energy' /><br />
+                                        <label>Proteiini</label>
+                                        <input type='text' name='protein' /><br />
+                                        <label>Hiilihydraatit</label>
+                                        <input type='text' name='carbs' /><br />
+                                        <label>Rasva</label>
+                                        <input type='text' name='fat' />
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="submit" className="btn btn-primary">Aseta</button>
+                                        <button type="button" className="btn btn-default" data-dismiss="modal">Sulje</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    {dailyGoalOutput}
+                </div>
+            </div>
+        );
+    }
+}
+
 function createChart(total, goal) {
-    console.log(total);
-    var ctx1 = document.querySelector('#energy-goal');
-    var data = {
+    var options = {
+        cutoutPercentage: 85,
+        tooltips: {
+            enabled: false
+        }
+    };
+
+    var energyChartData = {
         datasets: [{
             data: [total.energy, (goal.energy - total.energy)],
             borderWidth: 0,
@@ -16,22 +141,14 @@ function createChart(total, goal) {
         }]
     };
 
-    var options: {
-        cutoutPercentage: 80,
-
-    };
-
-    var myDoughnutChart = new Chart(ctx1, {
+    new Chart(document.getElementById('energy-goal'), {
         type: 'doughnut',
-        data: data,
-        options: {
-            cutoutPercentage: 80,
-        }
+        data: energyChartData,
+        options: options
     });
 
 
-    var ctx2 = document.querySelector('#protein-goal');
-    var data2 = {
+    var proteinChartData = {
         datasets: [{
             data: [total.protein, (goal.protein - total.protein)],
             borderWidth: 0,
@@ -46,24 +163,13 @@ function createChart(total, goal) {
         }]
     };
 
-    var options2: {
-        cutoutPercentage: 80,
-        animation: {
-            animateScale: false
-        }
-    };
-
-    var myDoughnutChart2 = new Chart(ctx2, {
+    new Chart(document.getElementById('protein-goal'), {
         type: 'doughnut',
-        data: data2,
-        options: {
-            responsive: true,
-            cutoutPercentage: 80
-        }
+        data: proteinChartData,
+        options: options
     });
 
-    var ctx3 = document.querySelector('#carb-goal');
-    var data3 = {
+    var carbChartData = {
         datasets: [{
             data: [total.carbs, (goal.carbs - total.carbs)],
             borderWidth: 0,
@@ -78,25 +184,14 @@ function createChart(total, goal) {
         }]
     };
 
-    var options3: {
-        cutoutPercentage: 80,
-        animation: {
-            animateScale: false
-        }
-    };
-
-    var myDoughnutChart3 = new Chart(ctx3, {
+    new Chart(document.getElementById('carb-goal'), {
         type: 'doughnut',
-        data: data3,
-        options: {
-            responsive: true,
-            cutoutPercentage: 80
-        }
+        data: carbChartData,
+        options: options
     });
 
 
-    var ctx4 = document.querySelector('#fat-goal');
-    var data4 = {
+    var fatChartData = {
         datasets: [{
             data: [total.fat, (goal.fat - total.fat)],
             borderWidth: 0,
@@ -111,101 +206,9 @@ function createChart(total, goal) {
         }]
     };
 
-    var myDoughnutChart4 = new Chart(ctx4, {
+    new Chart(document.getElementById('fat-goal'), {
         type: 'doughnut',
-        data: data4,
-        options: {
-            responsive: true,
-            cutoutPercentage: 80
-        }
+        data: fatChartData,
+        options: options
     });
-}
-
-
-import React from 'react';
-
-export default class DailyGoalNew extends React.Component {
-    shouldComponentUpdate(nextProps) {
-        if(this.props.totalConsumption !== nextProps.totalConsumption) {
-            console.log('Re-rendering!');
-            return true;
-        }
-        return false;
-    }
-
-
-    componentDidUpdate() {
-        console.log(this.props.isFetchingConsumedFoods);
-        console.log(this.props.isFetchingDailyGoal + '\n\n-----------------');
-        if(!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal) {
-            window.requestAnimationFrame(() => createChart(this.props.totalConsumption, this.props.dailyGoal));
-        }
-    }
-
-    render() {
-        var {totalConsumption: total, dailyGoal: goal} = this.props;
-
-        return (
-            <div className='new-goals'>
-                <div className='charts col-sm-10 col-sm-offset-1'>
-                    <h4>Päivä tavoite</h4>
-                    <i className='fa fa-cog' />
-
-                    {!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal ?
-
-                    <div className='macronutrient-bar'>
-
-                        <div className='row'>
-                            <div style={{position: 'relative', color: 'orange', width: '25%', minWidth: '180px', float: 'left'}}>
-                                <p style={{fontSize: '18px'}}>Energia</p>
-                                <div style={{position: 'relative', width: '120px', margin: '0 auto'}}>
-                                    <p style={{position: 'absolute', top: '39%', left: '33%', fontSize: '24px'}}>
-                                        {Math.round(total.energy / goal.energy * 100)}%
-                                    </p>
-                                    <canvas id='energy-goal' />
-                                </div>
-                                <p style={{fontSize: '18px'}}>{Math.round(total.energy)} kcal / {goal.energy} kcal</p>
-                            </div>
-
-
-                            <div style={{position: 'relative', color: 'green', width: '25%', minWidth: '180px', float: 'left'}}>
-                                <p style={{fontSize: '18px'}}>Proteiini</p>
-                                <div style={{position: 'relative', width: '120px', margin: '0 auto'}}>
-                                    <p style={{position: 'absolute', top: '39%', left: '33%', fontSize: '24px'}}>
-                                        {Math.round(total.protein / goal.protein * 100)}%
-                                    </p>
-                                    <canvas id='protein-goal' />
-                                </div>
-                                <p style={{fontSize: '18px'}}>{Math.round(total.protein)} g / {goal.protein} g</p>
-                            </div>
-                            <div style={{position: 'relative', color: 'blue', width: '25%', minWidth: '180px', float: 'left'}}>
-                                <p style={{fontSize: '18px'}}>Hiilihydraatit</p>
-                                <div style={{position: 'relative', width: '120px', margin: '0 auto'}}>
-                                    <p style={{position: 'absolute', top: '39%', left: '33%', fontSize: '24px'}}>
-                                        {Math.round(total.carbs / goal.carbs * 100)}%
-                                    </p>
-                                    <canvas id='carb-goal' />
-                                </div>
-                                <p style={{fontSize: '18px'}}>{Math.round(total.carbs)} g / {goal.carbs} g</p>
-                            </div>
-                            <div style={{position: 'relative', color: 'red', width: '25%', minWidth: '180px', float: 'left'}}>
-
-                                <p style={{fontSize: '18px'}}>Rasva</p>
-                                <div style={{position: 'relative', width: '120px', margin: '0 auto'}}>
-                                    <p style={{position: 'absolute', top: '39%', left: '33%', fontSize: '24px'}}>
-                                        {Math.round(total.fat / goal.fat * 100)}%
-                                    </p>
-                                    <canvas id='fat-goal' />
-                                </div>
-                                <p style={{fontSize: '18px'}}>{Math.round(total.fat)} g / {goal.fat} g</p>
-                            </div>
-                        </div>
-                    </div>
-                :
-                    <i className='fa fa-spinner fa-3x fa-spin' />
-                }
-                </div>
-            </div>
-        );
-    }
 }

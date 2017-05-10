@@ -6,7 +6,6 @@ import FoodList from './FoodList';
 import ShowMoreResultsButton from './ShowMoreResultsButton';
 
 export default function FoodSelection(props) {
-    console.log(typeof props.selectedFoodId);
     var {
         viewportWidth,
         fetchMethod,

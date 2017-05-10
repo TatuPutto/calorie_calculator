@@ -1,7 +1,8 @@
 @import './responsiveness.less';
 
-.default-border(@width: 1px, @style: solid, @color: #c3cfff) {
+.default-border(@width: 1px, @style: solid, @color: #c3cfff, @border-radius: 3px) {
     border: @width @style @color;
+    border-radius: @border-radius;
 }
 
 body {
@@ -20,6 +21,10 @@ ul {
     -webkit-margin-after: 0;
 }
 
+table {
+    .default-border();
+}
+
 th {
     padding-bottom: 5px;
     padding: 2px;
@@ -35,7 +40,7 @@ tr:hover {
 }
 
 tr:first-child {
-    border-top: 1px solid #d6dcf8;
+    //border-top: 1px solid #d6dcf8;
 }
 /*
 tr:last-child {
@@ -104,31 +109,7 @@ td:first-child {
 }
 
 
-.new-goals {
-    height: 200px;
-    margin-top: 20px;
-    background: white;
-    .default-border();
-}
 
-.charts {
-    text-align: center;
-    height: 400px;
-}
-
-.charts h4 {
-    display: inline;
-}
-
-#chart {
-    height: 300px;
-    width: 300px;
-}
-
-
-.macronutrient-bar {
-    margin-top: 20px;
-}
 
 .calories-consumed {
     width: 100%;
@@ -244,34 +225,63 @@ p {
 */
 
 .daily-goal {
-    /*width: 15%;*/
-    /*float: left;*/
-    /*margin-left: 12%;*/
-    /*margin-right: 1%;*/
-    /*margin-top: 20px;*/
-    border: 1px solid #c3cfff;
-    border-radius: 3px;
-    padding: 1%;
+    margin-top: 40px;
+    padding-bottom: 60px;
+    text-align: center;
 }
 
-.daily-goal h4 {
-    text-align: left;
+.daily-goal h3 {
     display: inline;
-    position: relative;
-    top: 3px;
 }
 
 .configure-daily-goals {
-    float: right;
     font-size: 18px;
     background: transparent;
     border: none;
+    margin-left: 10px;
 }
 
 .macronutrient-progress {
     text-align: center;
 }
 
+.new-goals {
+    height: 200px;
+    margin-top: 20px;
+    background: white;
+    .default-border();
+}
+
+.charts {
+    float: none;
+    padding: 0;
+}
+
+.charts h4 {
+    display: inline;
+}
+
+.charts .col-xs-6 {
+    padding: 0;
+}
+
+#chart {
+    height: 300px;
+    width: 300px;
+}
+
+.macronutrient-bar {
+    //margin-top: 30px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+
+
+/*
 .chart-bar-protein {
     width: 20% !important;
     margin-right: 10px;
@@ -306,7 +316,7 @@ p {
 
 .daily-goal p:nth-child(4) {
     color: red;
-}
+}*/
 
 .matching-foods ul {
     -webkit-padding-start: 0px;
@@ -317,12 +327,15 @@ p {
 
 .matching-foods ul li {
     overflow-y: hidden;
-    border: 1px solid #d6dcf8;
-    border-top: none;
+    border-bottom: 1px solid #d6dcf8;
 }
 
 .matching-foods ul li:first-child {
-    border-top: 1px solid #d6dcf8;
+    //border-top: 1px solid #d6dcf8;
+}
+
+.food-list li:last-child {
+    border-bottom: none;
 }
 
 
@@ -558,6 +571,31 @@ span:nth-child(5) {
         color: red;
         width: 8%;
     }
+
+
+    .energy-chart-container {
+        min-width: 150px;
+        color: #fcb93d;
+        font-size: 18px;
+    }
+
+    .protein-chart-container {
+        min-width: 150px;
+        color: rgb(99, 158, 99);
+        font-size: 18px;
+    }
+
+    .carb-chart-container {
+        min-width: 150px;
+        color: #8bb6ff;
+        font-size: 18px;
+    }
+
+    .fat-chart-container {
+        min-width: 150px;
+        color: #ff834f;
+        font-size: 18px;
+    }
 }
 
 /*
@@ -674,8 +712,8 @@ span:nth-child(5) {
 }
 
 .food-selection {
-    float: left;
-    width: 100%;
+    //float: left;
+    //width: 100%;
     text-align: center;
     background: white;
     padding-top: 20px;
@@ -704,6 +742,8 @@ span:nth-child(5) {
     font-size: 13px;
     max-height: 500px;
     overflow-y: auto;
+    border: 1px solid #d6dcf8;
+    border-radius: 3px;
 }
 
 
@@ -725,11 +765,12 @@ span:nth-child(5) {
 
 
 .consumed-foods {
-    float: left;
-    width: 100%;
+    //float: left;
+    //width: 100%;
     background: white;
     padding: 40px 0;
     text-align: center;
+    border-bottom: 1px solid #c3cfff;
 }
 
 .consumed-foods-table-wrapper {

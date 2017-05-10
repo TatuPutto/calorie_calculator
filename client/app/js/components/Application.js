@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
 
 import FoodSelection from './FoodSelection';
 import ConsumedFoods from './ConsumedFoods';
 import TotalConsumption from './TotalConsumption';
 import SearchTypes from './SearchTypes';
 import DailyGoalNew from './DailyGoalNew';
-console.log(DailyGoalNew);
-
 
 var fetchParams = {
     credentials: 'same-origin',
@@ -60,7 +57,6 @@ export default class Application extends React.Component {
     componentDidMount() {
         this.setState({fetchMethod: this.props.fetchMethod});
         this.getDailyGoal();
-        this.getConsumedFoods();
 
         if(this.props.fetchMethod == 'haku') {
             this.getMatchingFoods(this.props.search);
@@ -80,12 +76,20 @@ export default class Application extends React.Component {
 
     getDailyGoal() {
         fetch('/daily-goal', fetchParams)
+            .then((res) => {
+                if(res.status === 200) {
+                    return Promise.resolve(res);
+                } else {
+                    throw new Error('Ei kirjautumattomille käyttäjille!');
+                }
+            })
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
                     dailyGoal: data,
                     isFetchingDailyGoal: false
                 });
+                this.getConsumedFoods();
             }).catch((err) => {
                 console.error(err);
                 this.setState({isFetchingDailyGoal: false});
@@ -213,8 +217,7 @@ export default class Application extends React.Component {
     }
 
     removeFromDiary(consumptionId) {
-        var url = `/daily-intake?` +
-                `consumptionId=${consumptionId}`;
+        var url = `/daily-intake?consumptionId=${consumptionId}`;
         var params = {
             ...fetchParams,
             method: 'DELETE'
@@ -306,13 +309,14 @@ export default class Application extends React.Component {
                     removeFromDiary={this.removeFromDiary}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
-
                 <DailyGoalNew
                     dailyGoal={this.state.dailyGoal}
                     totalConsumption={this.state.totalConsumption}
                     isFetchingDailyGoal={this.state.isFetchingDailyGoal}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
+
+
 
                 {/*}<TotalConsumption
                     totalConsumption={this.state.totalConsumption}

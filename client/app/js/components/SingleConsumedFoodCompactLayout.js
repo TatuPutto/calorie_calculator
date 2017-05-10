@@ -9,12 +9,12 @@ export default function SingleConsumedFoodCompactLayout(props) {
 
     return (
         <tr>
-            <td className={'food-name ' + dominantMacro}>{food.amount} g</td>
+            <td className='food-amount'>{food.amount} g</td>
             <td className='energy-amount'>{food.energy} kcal</td>
             <td className='protein-amount'>{food.protein} g</td>
             <td className='carb-amount'>{food.carbs} g</td>
             <td className='fat-amount'>{food.fat} g</td>
-            <td className='food-name'>{food.name}</td>
+            <td className={'food-name ' + dominantMacro}>{food.name}</td>
             <td className='remove-button-container'>
                 <button
                     className='remove-food btn btn-default'
