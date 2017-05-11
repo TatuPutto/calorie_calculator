@@ -1,16 +1,19 @@
-var createConnection = require('../database/create-connection');
+var getConnection = require('../database/create-connection');
 
 module.exports = function addFoodToConsumedFoods(userId, foodId, foodAmount) {
-    var query = `INSERT INTO consumedfoods (userId, foodId, foodAmount) ` +
-            `VALUES (${userId}, ${foodId}, ${foodAmount})`;
-    var connection = createConnection();
+    var query = `INSERT INTO consumedfoods ` +
+            `(userId, foodId, foodAmount, timeOfConsumption) ` +
+            `VALUES (${userId}, ${foodId}, ${foodAmount}, NOW())`;
 
     return new Promise(function (resolve, reject) {
-        connection.query(query, function (err) {
-          if(err) reject(err);
-          resolve();
+        getConnection(function (err, connection) {
+            if(err) reject(err);
+            connection.query(query, function (err, results) {
+              if(err) reject(err);
+              resolve();
+            });
+            connection.release();
         });
-        connection.end();
     }).catch(function (err) {
         throw err;
     });

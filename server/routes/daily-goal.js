@@ -13,6 +13,25 @@ router.use(function (req, res, next) {
     }
 });
 
+
+var getConnection = require('../database/create-connection');
+
+router.get('/test', (req, res) => {
+    getConnection((err, connection) => {
+        if(err) console.log(err);
+        connection.query('SELECT * FROM consumedFoods WHERE userId = 123', (err, result) => {
+            if(err) console.log(err);
+            console.log(result);
+        });
+        connection.release();
+    })
+
+
+
+
+});
+
+
 // return list of consumed foods for today
 router.get('/', function (req, res) {
     var query = 'SELECT energy, protein, carbohydrates, fat ' +

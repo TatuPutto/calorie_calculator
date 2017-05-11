@@ -56,7 +56,7 @@ export default class Application extends React.Component {
 
     componentDidMount() {
         this.setState({fetchMethod: this.props.fetchMethod});
-        this.getDailyGoal();
+        //this.getDailyGoal();
         this.getConsumedFoods();
 
         if(this.props.fetchMethod == 'haku') {

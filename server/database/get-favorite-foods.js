@@ -1,16 +1,17 @@
-var createConnection = require('../database/create-connection');
+var getConnection = require('../database/create-connection');
 
 module.exports = function getFavoriteFoods(userId) {
     var query = `SELECT foodId FROM favorites WHERE userId=${userId}`;
-    var connection = createConnection();
 
     return new Promise(function (resolve, reject) {
-        connection.connect();
-        connection.query(query, function (err, result) {
+        getConnection(function (err, connection) {
             if(err) reject(err);
-            resolve(result);
+            connection.query(query, function (err, results) {
+              if(err) reject(err);
+              resolve(results);
+            });
+            connection.release();
         });
-        connection.end();
     })
     .then(function (data) {
         return data.map((item) => item.foodId);
