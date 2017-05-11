@@ -72,6 +72,8 @@ export default class DailyGoalNew extends React.Component {
                     </div>
                 </div>
             );
+        } else if(!this.props.isFetchingDailyGoal) {
+            dailyGoalOutput = <a>Aseta päivä tavoite.</a>;
         } else {
             dailyGoalOutput = <i className='fa fa-spinner fa-3x fa-spin' />;
         }

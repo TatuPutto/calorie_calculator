@@ -23,8 +23,18 @@ router.get('/', function (req, res) {
     var dbQuery = new Promise(function (resolve, reject) {
         connection.connect();
         connection.query(query, function (err, results) {
-          if(err) reject(err);
-          resolve(results);
+            if(err) reject(err);
+            if(results.length > 0) {
+                resolve(results[0]);
+            } else {
+                // resolve({
+                //     energy: 2500,
+                //     protein: 180,
+                //     carbs: 250,
+                //     fat: 80
+                // });
+                reject();
+            }
         });
         connection.end();
     });
@@ -32,10 +42,10 @@ router.get('/', function (req, res) {
     // handle successfull query response
     dbQuery.then(function (data) {
         var dailyGoal = {
-            energy: data[0].energy,
-            protein: data[0].protein,
-            carbs: data[0].carbohydrates,
-            fat: data[0].fat
+            energy: data.energy,
+            protein: data.protein,
+            carbs: data.carbohydrates,
+            fat: data.fat
         }
 
         res.writeHead(200, {'Content-Type': 'application/json'});
@@ -45,6 +55,7 @@ router.get('/', function (req, res) {
     // handle failed query
     dbQuery.catch(function (err) {
         console.log(err);
+        res.status(400);
         res.end(JSON.stringify(err));
     });
 });

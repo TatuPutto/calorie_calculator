@@ -57,6 +57,7 @@ export default class Application extends React.Component {
     componentDidMount() {
         this.setState({fetchMethod: this.props.fetchMethod});
         this.getDailyGoal();
+        this.getConsumedFoods();
 
         if(this.props.fetchMethod == 'haku') {
             this.getMatchingFoods(this.props.search);
@@ -89,7 +90,6 @@ export default class Application extends React.Component {
                     dailyGoal: data,
                     isFetchingDailyGoal: false
                 });
-                this.getConsumedFoods();
             }).catch((err) => {
                 console.error(err);
                 this.setState({isFetchingDailyGoal: false});
@@ -309,13 +309,14 @@ export default class Application extends React.Component {
                     removeFromDiary={this.removeFromDiary}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
-                <DailyGoalNew
-                    dailyGoal={this.state.dailyGoal}
-                    totalConsumption={this.state.totalConsumption}
-                    isFetchingDailyGoal={this.state.isFetchingDailyGoal}
-                    isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
-                />
-
+                {!this.state.isFetchingDailyGoal && !this.state.isFetchingConsumedFoods && this.state.dailyGoal != null &&
+                    <DailyGoalNew
+                        dailyGoal={this.state.dailyGoal}
+                        totalConsumption={this.state.totalConsumption}
+                        isFetchingDailyGoal={this.state.isFetchingDailyGoal}
+                        isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
+                    />
+                }
 
 
                 {/*}<TotalConsumption
