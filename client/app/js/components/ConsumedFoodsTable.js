@@ -10,7 +10,7 @@ export default function ConsumedFoodsTable(props) {
         if(props.viewportWidth > 768) {
             row = (
                 <SingleConsumedFood
-                    key={food.timeOfConsumption}
+                    key={food.consumptionId}
                     food={food}
                     removeFromDiary={props.removeFromDiary}
                 />
@@ -18,7 +18,7 @@ export default function ConsumedFoodsTable(props) {
         } else {
             row = (
                 <SingleConsumedFoodCompactLayout
-                    key={food.timeOfConsumption}
+                    key={food.consumptionId}
                     food={food}
                     removeFromDiary={props.removeFromDiary}
                 />

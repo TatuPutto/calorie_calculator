@@ -8,7 +8,7 @@ export default function SingleConsumedFood(props) {
     var dominantMacro = calcDominantMacro(food.protein, food.carbs, food.fat);
 
     return (
-        <tr key={food.timeOfConsumption}>
+        <tr key={food.consumptionId}>
             <td className='remove-button-container'>
                 <button
                     className='remove-food btn btn-default'
