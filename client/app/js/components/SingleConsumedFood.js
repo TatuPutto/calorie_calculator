@@ -9,13 +9,14 @@ export default function SingleConsumedFood(props) {
 
     return (
         <tr key={food.consumptionId}>
-            <td className='remove-button-container'>
-                <button
+            <td className='remove-consumed-food' onClick={() => props.removeFromDiary(food.consumptionId)}>
+                <i className='fa fa-trash' />
+                {/*}<button
                     className='remove-food btn btn-default'
                     onClick={() => props.removeFromDiary(food.consumptionId)}
                 >
                     <i className='fa fa-remove' />
-                </button>
+                </button>*/}
             </td>
             <td className={'food-name ' + dominantMacro}>{food.name}</td>
             <td className='food-amount'>{food.amount} g</td>

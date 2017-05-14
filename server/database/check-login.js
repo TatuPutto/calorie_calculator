@@ -1,4 +1,4 @@
-var getConnection = require('../database/create-connection');
+var getConnection = require('./create-connection');
 
 module.exports = function checkLogin(username, password) {
     var query = `SELECT * FROM users WHERE username="${username}" ` +

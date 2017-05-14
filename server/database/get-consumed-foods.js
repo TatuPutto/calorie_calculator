@@ -1,4 +1,4 @@
-var getConnection = require('../database/create-connection');
+var getConnection = require('./create-connection');
 var calcNutritionValues = require('../util/query-csv').calculateNutritionValues;
 var calcTotalNutritionValues = require('../util/query-csv').calcTotalNutritionValues;
 

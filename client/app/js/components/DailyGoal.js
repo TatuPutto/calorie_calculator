@@ -1,86 +1,299 @@
 import React from 'react';
 
-export default function DailyGoal(props) {
-    if(!props.isFetchingDailyGoal && !props.isFetchingConsumedFoods) {
-        var dailyGoal = props.dailyGoal;
-        var totalConsumption = props.totalConsumption;
-        var protein = +dailyGoal.protein;
-        var carbs = +dailyGoal.carbs;
-        var fat = +dailyGoal.fat;
-
-        var total = protein + carbs + fat;
-        var pp = protein / total * 100;
-        var cp = carbs / total * 100;
-        var fp = fat / total * 100;
-
-        var proteinChartBarHeight = pp / 100 * 150;
-        var carbChartBarHeight = cp / 100 * 150;
-        var fatChartBarHeight = fp / 100 * 150;
-
-        var proteinPercentage = totalConsumption.protein / protein * 100;
-        var carbPercentage = totalConsumption.carbs / carbs * 100;
-        var fatPercentage = totalConsumption.fat / fat * 100;
-
-        var proteinGradient = {
-            height: proteinChartBarHeight,
-            background: `linear-gradient(0deg, green ${proteinPercentage}%, ` +
-                    `#93f093 ${proteinPercentage}%)`
-        };
-        var carbGradient = {
-            height: carbChartBarHeight,
-            background: `linear-gradient(0deg, blue ${carbPercentage}%, ` +
-                    `#c1c1ff ${carbPercentage}%)`
-        };
-        var fatGradient = {
-            height: fatChartBarHeight,
-            marginRight: '0px',
-            background: `linear-gradient(0deg, red ${fatPercentage}%, ` +
-                    `#fcc6b4 ${fatPercentage}%)`
-        };
+export default class DailyGoal extends React.Component {
+    shouldComponentUpdate(nextProps) {
+        if(this.props.totalConsumption !== nextProps.totalConsumption) {
+            return true;
+        }
+        return false;
+    }
 
 
-        return (
-            <div className='daily-goal col-lg-2 col-sm-12'>
-                <h4>Päivä tavoite</h4>
-                <button className='configure-daily-goals'>
-                    <i className='fa fa-cog' />
-                </button>
-                <hr />
+    componentDidUpdate() {
+        if(!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal) {
+            window.requestAnimationFrame(() => createChart(this.props.totalConsumption, this.props.dailyGoal));
+        }
+    }
 
-                <div className='macronutrient-progress'>
-                    <span className='chart-bar-protein' style={proteinGradient}>
-                    </span>
-                    <span className='chart-bar-carbs' style={carbGradient}>
-                    </span>
-                    <span className='chart-bar-fat' style={fatGradient}>
-                    </span>
+    render() {
+        var {totalConsumption: total, dailyGoal: goal} = this.props;
+        var dailyGoalOutput;
+
+        if(!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal) {
+            var energyConsumed = Math.round(total.energy / goal.energy * 100) + '%';
+            var proteinConsumed = Math.round(total.protein / goal.protein * 100) + '%';
+            var carbsConsumed = Math.round(total.carbs / goal.carbohydrates * 100) + '%';
+            var fatConsumed = Math.round(total.fat / goal.fat * 100) + '%';
+
+            dailyGoalOutput = (
+                <div className='macronutrient-bar'>
+                    <div className='row'>
+                        <div className='energy-chart-container col-md-3 col-sm-4 col-xs-6 col-md-offset-0 col-sm-offset-2'>
+                            <p style={{position: 'relative', top: '35px'}}>Energia</p>
+                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                    {energyConsumed}
+                                </p>
+                                <canvas id='energy-goal' />
+                            </div>
+                            <p>{Math.round(total.energy)} kcal / {goal.energy} kcal</p>
+                        </div>
+                        <div className='protein-chart-container col-md-3 col-sm-4 col-xs-6'>
+                            <p style={{position: 'relative', top: '35px'}}>Proteiini</p>
+                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                    {proteinConsumed}
+                                </p>
+                                <canvas id='protein-goal' />
+                            </div>
+                            <p>{Math.round(total.protein)} g / {goal.protein} g</p>
+                        </div>
+                        <div className='carb-chart-container col-md-3 col-sm-4 col-xs-6 col-md-offset-0 col-sm-offset-2'>
+                            <p style={{position: 'relative', top: '35px'}}>Hiilihydraatit</p>
+                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                    {carbsConsumed}
+                                </p>
+                                <canvas id='carb-goal' />
+                            </div>
+                            <p>{Math.round(total.carbs)} g / {goal.carbohydrates} g</p>
+                        </div>
+                        <div className='fat-chart-container col-md-3 col-sm-4 col-xs-6'>
+                            <p style={{position: 'relative', top: '35px'}}>Rasva</p>
+                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                    {fatConsumed}
+                                </p>
+                                <canvas id='fat-goal' />
+                            </div>
+                            <p>{Math.round(total.fat)} g / {goal.fat} g</p>
+                        </div>
+                    </div>
                 </div>
+            );
+        } else if(!this.props.isFetchingDailyGoal) {
+            dailyGoalOutput = <a>Aseta päivä tavoite.</a>;
+        } else {
+            dailyGoalOutput = <i className='fa fa-spinner fa-3x fa-spin' />;
+        }
 
-                <hr />
-                <p style={{color: 'green'}}>
-                    {totalConsumption.protein} g / {dailyGoal.protein} g
-                </p>
-                <hr />
-                <p  style={{color: 'blue'}}>
-                    {totalConsumption.carbs} g / {dailyGoal.carbs} g
-                </p>
-                <hr />
-                <p style={{color: 'red'}}>
-                    {totalConsumption.fat} g / {dailyGoal.fat} g
-                </p>
-                <hr />
-                <p>
-                    {totalConsumption.energy} kcal / {dailyGoal.energy} kcal
-                </p>
-            </div>
-        );
-
-    } else {
         return (
             <div className='daily-goal'>
-                <i className='fa fa-refresh fa-3x fa-spin' />
+                <div className='charts col-md-10 col-md-offset-1'>
+                    <h3>Päivä tavoite</h3>
+                    <i className='configure-daily-goals fa fa-cog' data-toggle='modal' data-target='#myModal'/>
+
+
+                    <div className='modal fade' id='myModal' role='dialog'>
+                        <div className='modal-dialog'>
+                            <form action='/daily-goal' method='POST' encType='application/x-www-form-urlencoded'>
+
+                                <div className='modal-content'>
+                                    <div className='modal-header'>
+                                        <button className='close' data-dismiss='modal'>&times;</button>
+                                        <h4 className='modal-title'>Määritä päivä tavoite</h4>
+                                    </div>
+                                    <div className='modal-body'>
+                                        <label>Energia</label>
+                                        <input type='text' name='energy' /><br />
+                                        <label>Proteiini</label>
+                                        <input type='text' name='protein' /><br />
+                                        <label>Hiilihydraatit</label>
+                                        <input type='text' name='carbs' /><br />
+                                        <label>Rasva</label>
+                                        <input type='text' name='fat' />
+                                    </div>
+                                    <div className='modal-footer'>
+                                        <button type='submit' className='btn btn-primary'>Aseta</button>
+                                        <button type='button' className='btn btn-default' data-dismiss='modal'>Sulje</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    {dailyGoalOutput}
+                </div>
             </div>
         );
     }
+}
 
+function createChart(total, goal) {
+    var options = {
+        cutoutPercentage: 85,
+        tooltips: {
+            enabled: false
+        }
+    };
+
+    var energyChartData;
+    if((goal.energy - total.energy) < 0) {
+        var overByPercent = total.energy - goal.energy;
+
+        energyChartData  = {
+            datasets: [{
+                data: [overByPercent, goal.energy],
+                borderWidth: 0,
+                backgroundColor: [
+                    'black',
+                    'orange'
+                ],
+                hoverBackgroundColor: [
+                    'black',
+                    'orange'
+                ]
+            }]
+        };
+
+    } else {
+        energyChartData = {
+            datasets: [{
+                data: [total.energy, (goal.energy - total.energy)],
+                borderWidth: 0,
+                backgroundColor: [
+                    'orange',
+                    '#ffdab7'
+                ],
+                hoverBackgroundColor: [
+                    'orange',
+                    '#ffdab7'
+                ]
+            }]
+        };
+    }
+
+    new Chart(document.getElementById('energy-goal'), {
+        type: 'doughnut',
+        data: energyChartData,
+        options: options
+    });
+
+
+    var proteinChartData;
+    if((goal.protein - total.protein) < 0) {
+        var overByPercent = total.protein - goal.protein;
+
+        proteinChartData  = {
+            datasets: [{
+                data: [overByPercent, goal.protein],
+                borderWidth: 0,
+                backgroundColor: [
+                    'black',
+                    'green'
+                ],
+                hoverBackgroundColor: [
+                    'black',
+                    'green'
+                ]
+            }]
+        };
+
+    } else {
+        proteinChartData = {
+            datasets: [{
+                data: [total.protein, (goal.protein - total.protein)],
+                borderWidth: 0,
+                backgroundColor: [
+                    'green',
+                    '#93f093'
+                ],
+                hoverBackgroundColor: [
+                    'green',
+                    '#93f093'
+                ]
+            }]
+        };
+    }
+
+    new Chart(document.getElementById('protein-goal'), {
+        type: 'doughnut',
+        data: proteinChartData,
+        options: options
+    });
+
+
+    var carbChartData;
+    if((goal.carbohydrates - total.carbs) < 0) {
+        var overByPercent = total.carbs - goal.carbohydrates;
+
+        carbChartData  = {
+            datasets: [{
+                data: [overByPercent, goal.carbohydrates],
+                borderWidth: 0,
+                backgroundColor: [
+                    'black',
+                    'blue'
+                ],
+                hoverBackgroundColor: [
+                    'black',
+                    'blue'
+                ]
+            }]
+        };
+    } else {
+        carbChartData = {
+            datasets: [{
+                data: [total.carbs, (goal.carbohydrates - total.carbs)],
+                borderWidth: 0,
+                backgroundColor: [
+                    'blue',
+                    '#c5d4ed'
+                ],
+                hoverBackgroundColor: [
+                    'blue',
+                    '#c5d4ed'
+                ]
+            }]
+        };
+    }
+
+    new Chart(document.getElementById('carb-goal'), {
+        type: 'doughnut',
+        data: carbChartData,
+        options: options
+    });
+
+    var fatChartData;
+    if((goal.fat - total.fat) < 0) {
+        var overByPercent = total.fat - goal.fat;
+
+        fatChartData  = {
+            datasets: [{
+                data: [overByPercent, goal.fat],
+                borderWidth: 0,
+                backgroundColor: [
+                    'black',
+                    'red'
+                ],
+                hoverBackgroundColor: [
+                    'black',
+                    'red'
+                ]
+            }]
+        };
+
+    } else {
+        fatChartData  = {
+            datasets: [{
+                data: [total.fat, (goal.fat - total.fat)],
+                borderWidth: 0,
+                backgroundColor: [
+                    'red',
+                    '#fcc6b4'
+                ],
+                hoverBackgroundColor: [
+                    'red',
+                    '#fcc6b4'
+                ]
+            }]
+        };
+    }
+
+
+    new Chart(document.getElementById('fat-goal'), {
+        type: 'doughnut',
+        data: fatChartData,
+        options: options
+    });
 }

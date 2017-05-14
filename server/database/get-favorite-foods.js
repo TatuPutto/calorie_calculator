@@ -1,4 +1,4 @@
-var getConnection = require('../database/create-connection');
+var getConnection = require('./create-connection');
 
 module.exports = function getFavoriteFoods(userId) {
     var query = `SELECT foodId FROM favorites WHERE userId=${userId}`;

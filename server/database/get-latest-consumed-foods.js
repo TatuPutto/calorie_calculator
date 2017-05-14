@@ -1,4 +1,4 @@
-var getConnection = require('../database/create-connection');
+var getConnection = require('./create-connection');
 
 module.exports = function getLatestConsumedFoods(userId) {
     var query = `SELECT foodId FROM consumedfoods WHERE userId=${userId} ` +

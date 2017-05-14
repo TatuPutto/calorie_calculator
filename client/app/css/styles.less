@@ -5,8 +5,13 @@
     border-radius: @border-radius;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    background: #fcfcfc;
+    //background: #fcfcfc;
     overflow-y: scroll;
     font-family: 'Roboto', sans-serif;
 }
@@ -17,9 +22,8 @@ input[type="text"] {
 }
 
 ul {
-    -webkit-padding-start: 0px;
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
+    margin: 0;
+    padding: 0;
 }
 
 table {
@@ -35,22 +39,6 @@ tr {
     border: 1px solid #d6dcf8;
 }
 
-tr:hover {
-    //background: #aec2e3;
-    background: whitesmoke;
-}
-
-tr:first-child {
-    //border-top: 1px solid #d6dcf8;
-}
-/*
-tr:last-child {
-    border-top: 3px solid rgb(195, 207, 255);
-    border-bottom: none;
-    font-size: 14px;
-    font-weight: bold;
-}*/
-
 td {
     padding: 6px;
 }
@@ -63,12 +51,6 @@ i {
     margin-right: 0;
     margin-left: 0;
 }
-
-/*
-td:first-child {
-    padding-right: 10px;
-}
-*/
 
 .container-fluid {
     padding: 0;
@@ -394,7 +376,6 @@ p {
 }
 
 .portion-sizes ul li {
-    margin-bottom: 6px;
     border: none;
 }
 
@@ -591,13 +572,13 @@ span:nth-child(5) {
 
     .carb-chart-container {
         min-width: 150px;
-        color: #8bb6ff;
+        color: #207eff;
         font-size: 18px;
     }
 
     .fat-chart-container {
         min-width: 150px;
-        color: #ff834f;
+        color: #fa6b6b;
         font-size: 18px;
     }
 }
@@ -681,14 +662,14 @@ span:nth-child(5) {
     background: #fcfcfc;
     border-bottom: 1px solid #c3cfff;
     text-align: center;
-    margin-top: 10px;
+    padding-top: 10px;
 }
 
 .search-types button {
     background: transparent;
     border: none;
-    margin-right: 4px;
-    margin-left: 4px;
+    margin-right: 8px;
+    margin-left: 8px;
 }
 
 .search-types button:focus {
@@ -697,12 +678,12 @@ span:nth-child(5) {
 
 
 .search-types .active {
-    border-style: solid;
-    border-color: aliceblue;
-    border: 1px solid #dfe2ed;
+    .default-border();
     border-top: 4px solid #74a2ff;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
     border-bottom: none;
     position: relative;
     top: 1px;
@@ -850,6 +831,15 @@ table {
     width: 8%;
 }
 */
-.remove-food {
-    padding: 2px 8px;
+
+.remove-consumed-food {
+    border-right: 1px solid #d6dcf8;
+}
+
+.remove-consumed-food:hover {
+    cursor: pointer;
+}
+
+.remove-consumed-food:hover i {
+    color: red;
 }

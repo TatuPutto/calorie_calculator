@@ -1,4 +1,4 @@
-var getConnection = require('../database/create-connection');
+var getConnection = require('./create-connection');
 
 module.exports = function addFoodToConsumedFoods(userId, consumptionId) {
     var query = `UPDATE consumedfoods SET active=0 ` +

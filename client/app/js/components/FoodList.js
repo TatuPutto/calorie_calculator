@@ -8,8 +8,7 @@ export default function FoodList(props) {
     if(props.viewportWidth < 768) {
         foods = props.foods.slice(0, (props.offset + 10));
     } else {
-        //foods = props.foods;
-        foods = props.foods.slice(props.offset, (props.offset + 10));
+        foods = props.foods;
     }
 
     return (
@@ -42,6 +41,6 @@ FoodList.propTypes = {
     removeFromFavorites: PropTypes.func.isRequired,
     selectFood: PropTypes.func.isRequired,
     setSelectedFoodAmount: PropTypes.func.isRequired,
-    selectedFoodId: PropTypes.string,
+    selectedFoodId: PropTypes.number,
     selectedFoodAmount: PropTypes.string
 };

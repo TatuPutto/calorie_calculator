@@ -1,6 +1,6 @@
-var getConnection = require('../database/create-connection');
+var getConnection = require('./create-connection');
 
-module.exports = function removeFoodFromFavorites(userId, energy, protein, carbs, fat) {
+module.exports = function setDailyGoal(userId, energy, protein, carbs, fat) {
     var query = `UPDATE dailygoals SET energy=${energy}, protein=${protein}, ` +
             `carbohydrates=${carbs}, fat=${fat} WHERE userId=123`;
 

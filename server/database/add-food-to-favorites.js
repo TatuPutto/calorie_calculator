@@ -1,4 +1,4 @@
-var getConnection = require('../database/create-connection');
+var getConnection = require('./create-connection');
 
 module.exports = function addFoodToFavorites(userId, foodId) {
     var query = `INSERT INTO favorites (userId, foodId) ` +

@@ -1,8 +1,8 @@
-var getConnection = require('../database/create-connection');
+var getConnection = require('./create-connection');
 
 module.exports = function removeFoodFromFavorites(userId, foodId) {
     var query = `DELETE FROM favorites WHERE userId=${userId} AND foodId=${foodId}`;
-    
+
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
             if(err) reject(err);

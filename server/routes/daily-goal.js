@@ -1,9 +1,10 @@
-var createConnection = require('../database/create-connection');
+var getConnection = require('../database/create-connection');
 var setDailyGoal = require('../database/set-daily-goal');
+var getDailyGoal = require('../database/get-daily-goal');
 var bodyParser = require('body-parser');
 var express = require('express');
 var router = express.Router();
-
+/*
 router.use(function (req, res, next) {
     if(req.session.user) {
         next();
@@ -11,7 +12,7 @@ router.use(function (req, res, next) {
         res.status(403)
         res.end();
     }
-});
+});*/
 
 
 var getConnection = require('../database/create-connection');
@@ -34,49 +35,14 @@ router.get('/test', (req, res) => {
 
 // return list of consumed foods for today
 router.get('/', function (req, res) {
-    var query = 'SELECT energy, protein, carbohydrates, fat ' +
-            'FROM dailygoals WHERE userId = 123';
-    var connection = createConnection();
-
-    // execute query
-    var dbQuery = new Promise(function (resolve, reject) {
-        connection.connect();
-        connection.query(query, function (err, results) {
-            if(err) reject(err);
-            if(results.length > 0) {
-                resolve(results[0]);
-            } else {
-                // resolve({
-                //     energy: 2500,
-                //     protein: 180,
-                //     carbs: 250,
-                //     fat: 80
-                // });
-                reject();
-            }
+    getDailyGoal()
+        .then(function (dailyGoal) {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(dailyGoal));
+        }).catch(function (err) {
+            res.status(400);
+            res.end();
         });
-        connection.end();
-    });
-
-    // handle successfull query response
-    dbQuery.then(function (data) {
-        var dailyGoal = {
-            energy: data.energy,
-            protein: data.protein,
-            carbs: data.carbohydrates,
-            fat: data.fat
-        }
-
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify(dailyGoal));
-    });
-
-    // handle failed query
-    dbQuery.catch(function (err) {
-        console.log(err);
-        res.status(400);
-        res.end(JSON.stringify(err));
-    });
 });
 
 router.use(bodyParser.urlencoded({extended: false}));

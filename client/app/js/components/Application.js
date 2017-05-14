@@ -5,7 +5,7 @@ import FoodSelection from './FoodSelection';
 import ConsumedFoods from './ConsumedFoods';
 import TotalConsumption from './TotalConsumption';
 import SearchTypes from './SearchTypes';
-import DailyGoalNew from './DailyGoalNew';
+import DailyGoal from './DailyGoal';
 
 var fetchParams = {
     credentials: 'same-origin',
@@ -56,7 +56,7 @@ export default class Application extends React.Component {
 
     componentDidMount() {
         this.setState({fetchMethod: this.props.fetchMethod});
-        //this.getDailyGoal();
+        this.getDailyGoal();
         this.getConsumedFoods();
 
         if(this.props.fetchMethod == 'haku') {
@@ -309,22 +309,13 @@ export default class Application extends React.Component {
                     removeFromDiary={this.removeFromDiary}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
-                {!this.state.isFetchingDailyGoal && !this.state.isFetchingConsumedFoods && this.state.dailyGoal != null &&
-                    <DailyGoalNew
-                        dailyGoal={this.state.dailyGoal}
-                        totalConsumption={this.state.totalConsumption}
-                        isFetchingDailyGoal={this.state.isFetchingDailyGoal}
-                        isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
-                    />
-                }
-
-
-                {/*}<TotalConsumption
+                <DailyGoal
+                    dailyGoal={this.state.dailyGoal}
                     totalConsumption={this.state.totalConsumption}
+                    isFetchingDailyGoal={this.state.isFetchingDailyGoal}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
-                />*/}
+                />
             </div>
-
         );
     }
 }
