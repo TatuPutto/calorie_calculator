@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import SingleConsumedFood from './SingleConsumedFood';
 import SingleConsumedFoodCompactLayout from './SingleConsumedFoodCompactLayout';
+import TotalConsumption from './TotalConsumption';
 
 export default function ConsumedFoodsTable(props) {
-    var tableRows = props.consumedFoods.map((food) => {
+    var consumedFoodsRows = props.consumedFoods.map((food) => {
         var row;
         if(props.viewportWidth > 768) {
             row = (
@@ -31,7 +32,8 @@ export default function ConsumedFoodsTable(props) {
     return (
         <table className='consumed-foods-table'>
             <tbody>
-                {tableRows}
+                {consumedFoodsRows}
+                <TotalConsumption totalConsumption={props.totalConsumption} />
             </tbody>
         </table>
     );

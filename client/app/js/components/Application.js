@@ -86,6 +86,7 @@ export default class Application extends React.Component {
             })
             .then((res) => res.json())
             .then((data) => {
+                console.log(data);
                 this.setState({
                     dailyGoal: data,
                     isFetchingDailyGoal: false

@@ -1,8 +1,8 @@
 var getConnection = require('./create-connection');
 
-module.exports = function getDailyGoal() {
-    var query = 'SELECT energy, protein, carbohydrates, fat ' +
-            'FROM dailygoals WHERE userId = 123 LIMIT 1';
+module.exports = function getDailyGoal(userId) {
+    var query = `SELECT energy, protein, carbohydrates, fat ` +
+            `FROM dailygoals WHERE userId=${userId} LIMIT 1`;
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
@@ -12,12 +12,7 @@ module.exports = function getDailyGoal() {
                 if(result.length > 0) {
                     resolve(result[0]);
                 } else {
-                    resolve({
-                        energy: 2500,
-                        protein: 180,
-                        carbs: 250,
-                        fat: 80
-                    });
+                    resolve(null);
                 }
             });
         })

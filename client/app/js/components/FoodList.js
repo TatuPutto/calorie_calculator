@@ -41,6 +41,6 @@ FoodList.propTypes = {
     removeFromFavorites: PropTypes.func.isRequired,
     selectFood: PropTypes.func.isRequired,
     setSelectedFoodAmount: PropTypes.func.isRequired,
-    selectedFoodId: PropTypes.number,
+    selectedFoodId: PropTypes.string,
     selectedFoodAmount: PropTypes.string
 };

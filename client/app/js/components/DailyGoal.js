@@ -8,71 +8,76 @@ export default class DailyGoal extends React.Component {
         return false;
     }
 
-
     componentDidUpdate() {
-        if(!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal) {
+        console.log('update');
+        console.log(!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal && this.props.dailyGoal);
+        if(!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal && this.props.dailyGoal) {
             window.requestAnimationFrame(() => createChart(this.props.totalConsumption, this.props.dailyGoal));
         }
     }
 
     render() {
-        var {totalConsumption: total, dailyGoal: goal} = this.props;
+        var {
+            isFetchingConsumedFoods,
+            isFetchingDailyGoal,
+            totalConsumption: total,
+            dailyGoal: goal
+        } = this.props;
         var dailyGoalOutput;
 
-        if(!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal) {
+        console.log(!isFetchingConsumedFoods && !isFetchingDailyGoal && !goal);
+        if(!isFetchingConsumedFoods && !isFetchingDailyGoal && !goal) {
+            <p data-toggle='modal' data-target='#myModal'>Aseta päivä tavoite</p>
+        } else if(!isFetchingConsumedFoods && !isFetchingDailyGoal && goal) {
             var energyConsumed = Math.round(total.energy / goal.energy * 100) + '%';
             var proteinConsumed = Math.round(total.protein / goal.protein * 100) + '%';
             var carbsConsumed = Math.round(total.carbs / goal.carbohydrates * 100) + '%';
             var fatConsumed = Math.round(total.fat / goal.fat * 100) + '%';
 
             dailyGoalOutput = (
-                <div className='macronutrient-bar'>
-                    <div className='row'>
-                        <div className='energy-chart-container col-md-3 col-sm-4 col-xs-6 col-md-offset-0 col-sm-offset-2'>
-                            <p style={{position: 'relative', top: '35px'}}>Energia</p>
-                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
-                                    {energyConsumed}
-                                </p>
-                                <canvas id='energy-goal' />
-                            </div>
-                            <p>{Math.round(total.energy)} kcal / {goal.energy} kcal</p>
+                <div className='goal-progress'>
+                    <div className='energy-chart-container'>
+                        <p style={{position: 'relative', top: '35px'}}>Energia</p>
+                        <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                            <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                {energyConsumed}
+                            </p>
+                            <canvas id='energy-goal' />
                         </div>
-                        <div className='protein-chart-container col-md-3 col-sm-4 col-xs-6'>
-                            <p style={{position: 'relative', top: '35px'}}>Proteiini</p>
-                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
-                                    {proteinConsumed}
-                                </p>
-                                <canvas id='protein-goal' />
-                            </div>
-                            <p>{Math.round(total.protein)} g / {goal.protein} g</p>
+                        <p>{Math.round(total.energy)} kcal / {goal.energy} kcal</p>
+                    </div>
+                    <div className='protein-chart-container'>
+                        <p style={{position: 'relative', top: '35px'}}>Proteiini</p>
+                        <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                            <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                {proteinConsumed}
+                            </p>
+                            <canvas id='protein-goal' />
                         </div>
-                        <div className='carb-chart-container col-md-3 col-sm-4 col-xs-6 col-md-offset-0 col-sm-offset-2'>
-                            <p style={{position: 'relative', top: '35px'}}>Hiilihydraatit</p>
-                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
-                                    {carbsConsumed}
-                                </p>
-                                <canvas id='carb-goal' />
-                            </div>
-                            <p>{Math.round(total.carbs)} g / {goal.carbohydrates} g</p>
+                        <p>{Math.round(total.protein)} g / {goal.protein} g</p>
+                    </div>
+                    <div className='carb-chart-container'>
+                        <p style={{position: 'relative', top: '35px'}}>Hiilihydraatit</p>
+                        <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                            <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                {carbsConsumed}
+                            </p>
+                            <canvas id='carb-goal' />
                         </div>
-                        <div className='fat-chart-container col-md-3 col-sm-4 col-xs-6'>
-                            <p style={{position: 'relative', top: '35px'}}>Rasva</p>
-                            <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                                <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
-                                    {fatConsumed}
-                                </p>
-                                <canvas id='fat-goal' />
-                            </div>
-                            <p>{Math.round(total.fat)} g / {goal.fat} g</p>
+                        <p>{Math.round(total.carbs)} g / {goal.carbohydrates} g</p>
+                    </div>
+                    <div className='fat-chart-container'>
+                        <p style={{position: 'relative', top: '35px'}}>Rasva</p>
+                        <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
+                            <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                                {fatConsumed}
+                            </p>
+                            <canvas id='fat-goal' />
                         </div>
+                        <p>{Math.round(total.fat)} g / {goal.fat} g</p>
                     </div>
                 </div>
             );
-        } else if(!this.props.isFetchingDailyGoal) {
-            dailyGoalOutput = <a>Aseta päivä tavoite.</a>;
         } else {
             dailyGoalOutput = <i className='fa fa-spinner fa-3x fa-spin' />;
         }
@@ -81,7 +86,7 @@ export default class DailyGoal extends React.Component {
             <div className='daily-goal'>
                 <div className='charts col-md-10 col-md-offset-1'>
                     <h3>Päivä tavoite</h3>
-                    <i className='configure-daily-goals fa fa-cog' data-toggle='modal' data-target='#myModal'/>
+                    <i className='configure-daily-goals fa fa-cog' data-toggle='modal' data-target='#myModal' />
 
 
                     <div className='modal fade' id='myModal' role='dialog'>
