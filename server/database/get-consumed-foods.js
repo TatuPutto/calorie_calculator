@@ -12,10 +12,10 @@ module.exports = function getConsumedFoods(userId) {
         getConnection(function (err, connection) {
             if(err) reject(err);
             connection.query(query, function (err, results) {
-              if(err) reject(err);
-              resolve(results);
+                connection.release();
+                if(err) reject(err);
+                resolve(results);
             });
-            connection.release();
         });
     }).then(function (data) {
         var consumedFoods = data.map(function (item) {

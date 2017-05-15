@@ -54,10 +54,7 @@ export default class Application extends React.Component {
         this.toggleFavoriteIcon = this.toggleFavoriteIcon.bind(this);
     }
 
-
-
-
-    componentDidMount() {
+    componentWillMount() {
         this.setState({fetchMethod: this.props.fetchMethod});
         if(this.props.fetchMethod == 'haku') {
             this.getMatchingFoods(this.props.search);
@@ -66,10 +63,8 @@ export default class Application extends React.Component {
         } else {
             this.getLatestConsumedFoods()
         }
-        this.getDailyGoal();
         this.getConsumedFoods();
-
-
+        //this.getDailyGoal();
     }
 
     // get matching foods when new query params are pushed
@@ -90,7 +85,7 @@ export default class Application extends React.Component {
             })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
+
                 this.setState({
                     dailyGoal: data,
                     isFetchingDailyGoal: false
@@ -158,7 +153,7 @@ export default class Application extends React.Component {
             }).catch((err) => {
                 console.error(err);
                 this.setState({
-                    fetchError: `Haussa tapahtui virhe ${err}`,
+                    fetchError: `Haussa tapahtui virhe`,
                     isFetchingMatchingFoods: false,
                 });
             });
@@ -236,13 +231,8 @@ export default class Application extends React.Component {
     addToFavorites(foodId) {
         var url = `/favorites/${foodId}`;
         var params = {
-            credentials: 'same-origin',
-            method: 'PUT',
-            body: '',
-            headers: {
-                ...fetchParams.headers,
-                'Content-Length': 0
-            }
+            ...fetchParams,
+            method: 'PUT'
         };
 
         fetch(url, params)
@@ -314,12 +304,14 @@ export default class Application extends React.Component {
                     removeFromDiary={this.removeFromDiary}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
-                <DailyGoal
-                    dailyGoal={this.state.dailyGoal}
-                    totalConsumption={this.state.totalConsumption}
-                    isFetchingDailyGoal={this.state.isFetchingDailyGoal}
-                    isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
-                />
+                {!this.state.isFetchingConsumedFoods && !this.state.isFetchingDailyGoal &&
+                    <DailyGoal
+                        dailyGoal={this.state.dailyGoal}
+                        totalConsumption={this.state.totalConsumption}
+                        isFetchingDailyGoal={this.state.isFetchingDailyGoal}
+                        isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
+                    />
+                }
             </div>
         );
     }

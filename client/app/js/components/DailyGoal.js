@@ -4,19 +4,26 @@ import SetDailyGoal from './SetDailyGoal';
 import DailyGoalProgress from './DailyGoalProgress';
 
 export default class DailyGoal extends React.Component {
+    // only redraw charts if total consumption has actually changed
     shouldComponentUpdate(nextProps) {
-        if(this.props.totalConsumption !== nextProps.totalConsumption) {
+        if(this.props.totalConsumption != nextProps.totalConsumption) {
             return true;
         }
         return false;
     }
 
-    componentDidUpdate() {
-        console.log('update');
-        console.log(!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal && this.props.dailyGoal);
-        if(!this.props.isFetchingConsumedFoods && !this.props.isFetchingDailyGoal && this.props.dailyGoal) {
-            window.requestAnimationFrame(() => createChart(this.props.totalConsumption, this.props.dailyGoal));
+    componentDidMount() {
+        if(this.props.dailyGoal) {
+            window.requestAnimationFrame(() => {
+                createChart(this.props.totalConsumption, this.props.dailyGoal)
+            });
         }
+    }
+
+    componentDidUpdate() {
+        window.requestAnimationFrame(() => {
+            createChart(this.props.totalConsumption, this.props.dailyGoal)
+        });
     }
 
     render() {
@@ -27,18 +34,15 @@ export default class DailyGoal extends React.Component {
             dailyGoal: goal
         } = this.props;
         var dailyGoalOutput;
-        //console.log(goal);
-        //console.log(!isFetchingConsumedFoods && !isFetchingDailyGoal && !goal);
-        if(!isFetchingConsumedFoods && !isFetchingDailyGoal && !goal) {
+
+        if(goal) {
+            dailyGoalOutput = <DailyGoalProgress total={total} goal={goal} />;
+        } else {
             dailyGoalOutput = (
                 <p data-toggle='modal' data-target='#myModal'>
                     Aseta päivä tavoite
                 </p>
             );
-        } else if(!isFetchingConsumedFoods && !isFetchingDailyGoal && goal) {
-            dailyGoalOutput = <DailyGoalProgress total={total} goal={goal} />
-        } else {
-            dailyGoalOutput = <i className='fa fa-spinner fa-3x fa-spin' />;
         }
 
         return (

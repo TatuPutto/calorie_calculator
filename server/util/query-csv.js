@@ -32,15 +32,19 @@ function findMatchingFoodsByName(input) {
 }
 
 function sortAlphabeticallyAndByRelevance(matchingFoods) {
-    // sort alphabetically
-    matchingFoods.sort();
     // sort by "relevance"
     matchingFoods.sort(function (foodA, foodB) {
-        if(foodA.matchAt < foodB.matchAt) {
-            return -1;
-        } else if(foodA.matchAt > foodB.matchAt) {
+        if(foodA.matchAt > foodB.matchAt) {
             return 1;
+        } else if(foodA.matchAt < foodB.matchAt) {
+            return -1;
         } else {
+            // sort alphabetically
+            if(foodA > foodB) {
+                return 1;
+            } else {
+                return -1;
+            }
             return 0;
         }
     });

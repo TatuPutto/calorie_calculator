@@ -6,12 +6,12 @@ module.exports = function setDailyGoal(userId, energy, protein, carbs, fat) {
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
+            connection.release();
             if(err) reject(err);
             connection.query(query, function (err, results) {
               if(err) reject(err);
               resolve();
             });
-            connection.release();
         });
     }).catch(function (err) {
         console.log(err);

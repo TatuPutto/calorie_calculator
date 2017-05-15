@@ -8,6 +8,7 @@ module.exports = function getDailyGoal(userId) {
         getConnection(function (err, connection) {
             if(err) reject(err);
             connection.query(query, function (err, result) {
+                connection.release();
                 if(err) reject(err);
                 if(result.length > 0) {
                     resolve(result[0]);

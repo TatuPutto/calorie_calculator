@@ -6,12 +6,12 @@ module.exports = function addFoodToFavorites(userId, foodId) {
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
+            connection.release();
             if(err) reject(err);
             connection.query(query, function (err) {
                 if(err) reject(err);
                 resolve();
             });
-            connection.release();
         });
     }).catch(function (err) {
         throw err;

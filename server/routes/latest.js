@@ -1,7 +1,5 @@
-var findMatchingFoodsByIds = require('../util/query-csv').findMatchingFoodsByIds;
 var getLatestConsumedFoods = require('../database/get-latest-consumed-foods');
-var getFavoriteFoods = require('../database/get-favorite-foods');
-var findIndexOfObjectId = require('../util/find-index-of-object-id');
+var getFavoriteFoodIds = require('../database/get-favorite-food-ids');
 var express = require('express');
 var router = express.Router();
 
@@ -9,23 +7,21 @@ router.get('/', function (req, res) {
     if(req.session.user) {
         getLatestConsumedFoods(req.session.user.id)
             .then(function (latestConsumedFoods) {
-                var matchingFoods = findMatchingFoodsByIds(latestConsumedFoods);
 
                 // determine which of the foods are in users favorites
-                getFavoriteFoods(req.session.user.id)
+                getFavoriteFoodIds(req.session.user.id)
                     .then(function(favoriteFoods) {
                         for(var i = 0; i < favoriteFoods.length; i++) {
-                            var index = findIndexOfObjectId(
-                                favoriteFoods[i],
-                                matchingFoods
-                            );
+                            var index = latestConsumedFoods.findIndex(function (food) {
+                                return food.foodId == favoriteFoods[i].foodId;
+                            });
                             if(index !== -1) {
-                                matchingFoods[index]['favorite'] = true;
+                                latestConsumedFoods[index]['favorite'] = true;
                             }
                         }
 
                         res.writeHead(200, {'Content-Type': 'application/json'});
-                        res.end(JSON.stringify(matchingFoods));
+                        res.end(JSON.stringify(latestConsumedFoods));
                     }).catch(function(err) {
                         console.log(err);
                         res.end(err);

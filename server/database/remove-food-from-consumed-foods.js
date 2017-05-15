@@ -8,10 +8,10 @@ module.exports = function addFoodToConsumedFoods(userId, consumptionId) {
         getConnection(function (err, connection) {
             if(err) reject(err);
             connection.query(query, function (err) {
+                connection.release();
                 if(err) reject(err);
                 resolve();
             });
-            connection.release();
         });
     }).catch(function (err) {
         throw err;

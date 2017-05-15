@@ -8,6 +8,7 @@ module.exports = function checkLogin(username, password) {
         getConnection(function (err, connection) {
             if(err) reject(err);
             connection.query(query, function (err, results) {
+                connection.release();
                 if(err) reject(err);
                 if(results.length > 0) {
                     resolve({
@@ -19,7 +20,6 @@ module.exports = function checkLogin(username, password) {
                     reject('No matches');
                 }
             });
-            connection.release();
         });
     }).catch(function (err) {
         console.log(err);
