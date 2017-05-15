@@ -29,10 +29,13 @@ export default function SingleFood(props) {
                     </div>
                 }
 
-                <span className='food-selected-indicator-container'>
-                    <i className={props.selectedFoodId == food.id ?
-                            'food-selected-indicator fa fa-chevron-right open' : 'food-selected-indicator fa fa-chevron-right closed'} />
-                </span>
+                {props.viewportWidth > 768 &&
+                    <span className='food-selected-indicator-container'>
+                        <i className={props.selectedFoodId == food.id ?
+                                'food-selected-indicator fa fa-chevron-right open' :
+                                'food-selected-indicator fa fa-chevron-right closed'} />
+                    </span>
+                }
 
                 <span className={'food-name ' + dominantMacro}>
                     {food.name}

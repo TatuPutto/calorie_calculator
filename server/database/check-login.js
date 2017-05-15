@@ -21,8 +21,7 @@ module.exports = function checkLogin(username, password) {
             });
             connection.release();
         });
-    })
-    .catch(function (err) {
+    }).catch(function (err) {
         console.log(err);
         throw err;
     });

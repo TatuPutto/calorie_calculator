@@ -54,11 +54,11 @@ export default class Application extends React.Component {
         this.toggleFavoriteIcon = this.toggleFavoriteIcon.bind(this);
     }
 
+
+
+
     componentDidMount() {
         this.setState({fetchMethod: this.props.fetchMethod});
-        this.getDailyGoal();
-        this.getConsumedFoods();
-
         if(this.props.fetchMethod == 'haku') {
             this.getMatchingFoods(this.props.search);
         } else if(this.props.fetchMethod == 'suosikit') {
@@ -66,6 +66,10 @@ export default class Application extends React.Component {
         } else {
             this.getLatestConsumedFoods()
         }
+        this.getDailyGoal();
+        this.getConsumedFoods();
+
+
     }
 
     // get matching foods when new query params are pushed

@@ -8,11 +8,12 @@ import Login from './components/Login';
 
 require('../css/styles.less');
 
+var viewportWidth = Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth || 0
+);
+
 var Wrapper = (props) => {
-    var viewportWidth = Math.max(
-        document.documentElement.clientWidth,
-        window.innerWidth || 0
-    );
     var pathname = props.location.pathname;
     var search = props.location.search;
     var fetchMethod;
@@ -45,7 +46,7 @@ var Wrapper = (props) => {
 render(
     <BrowserRouter>
         <div className='container-fluid'>
-            <Header />
+            <Header viewportWidth={viewportWidth} />
             <Route exact path='/' render={Wrapper} />
             <Route path='/haku' render={Wrapper} />
             <Route exact path='/suosikit' render={Wrapper} />

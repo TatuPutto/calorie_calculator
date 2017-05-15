@@ -33,7 +33,9 @@ export default function ConsumedFoodsTable(props) {
         <table className='consumed-foods-table'>
             <tbody>
                 {consumedFoodsRows}
-                <TotalConsumption totalConsumption={props.totalConsumption} />
+                {props.consumedFoods.length > 1 &&
+                    <TotalConsumption totalConsumption={props.totalConsumption} />
+                }
             </tbody>
         </table>
     );

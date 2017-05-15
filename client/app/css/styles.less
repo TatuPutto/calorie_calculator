@@ -1,4 +1,4 @@
-@import './responsiveness.less';
+
 
 .default-border(@width: 1px, @style: solid, @color: #c3cfff, @border-radius: 3px) {
     border: @width @style @color;
@@ -65,13 +65,14 @@ i {
 }
 
 .header-content-wrapper {
-    max-width: 1600px;
+    max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .header-content {
-    width: 76%;
+    //width: 76%;
+    width: 96%;
     margin: 0 auto;
 }
 
@@ -82,7 +83,7 @@ i {
 
 .header ul li {
     line-height: 34px;
-    display: inline-block;
+    display: inline;
     vertical-align: middle;
     margin-right: 10px;
 }
@@ -91,6 +92,14 @@ i {
     float: right;
 }
 
+.header button {
+    background: none;
+    padding: 2px 8px;
+    margin-top: 4px;
+    color: white;
+    border: 1px solid white;
+    border-radius: 3px;
+}
 
 
 
@@ -631,6 +640,14 @@ span:nth-child(5) {
     margin-left: 8px;
 }
 
+.search-types button:first-child {
+    margin-left: 0;
+}
+
+.search-types button:last-child {
+    margin-right: 0;
+}
+
 .search-types button:focus {
     outline: none;
 }
@@ -748,3 +765,5 @@ table {
 .remove-consumed-food:hover i {
     color: red;
 }
+
+@import './responsiveness.less';

@@ -1,17 +1,18 @@
 import React from 'react';
 
 export default class Header extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             loggedIn: false,
             username: 'Anonyymi',
-            isFetchingUserInfo: true
+            isFetchingUserInfo: true,
+            isDropdownOpen: this.props.viewportWidth > 767 ? true : false
         };
     }
 
     componentWillMount() {
-        fetch('http://localhost:3000/user-info', {method: 'GET', credentials: 'same-origin'})
+        fetch('/user-info', {method: 'GET', credentials: 'same-origin'})
             .then((res) => res.json())
             .then((userInfo) => {
                 this.setState({
@@ -30,24 +31,27 @@ export default class Header extends React.Component {
             <div className='header'>
                 <div className='header-content-wrapper'>
                     <div className='header-content'>
+                        <button className='toggle-nav-menu' style={{display: 'none'}}>
+                            <i className='fa fa-bars' />
+                        </button>
                         <ul className='nav-menu'>
-                            <li>Daily intake</li>
-                            <li>History</li>
+                            <li>15.5</li>
+                            <li>Päiväkirja</li>
+                            <li>Lisää uusi resepti</li>
                         </ul>
                         <div className='user-info'>
-                            {this.state.isFetchingUserInfo ?
-                                <i className='fa fa-refresh fa-spin fa-2x' />
+                            {this.state.loggedIn ?
+                                <a href='/logout'>
+                                    <button>
+                                        Kirjaudu ulos
+                                    </button>
+                                </a>
                                 :
-                                <div>
-                                    {this.state.loggedIn ?
-                                        <ul>
-                                            <li>{this.state.username}</li>
-                                            <li><a href='/logout'>Kirjaudu ulos</a></li>
-                                        </ul>
-                                        :
-                                        <a href='/login'>Kirjaudu sisään</a>
-                                    }
-                                </div>
+                                <a href='/login'>
+                                    <button>
+                                        Kirjaudu sisään
+                                    </button>
+                                </a>
                             }
                         </div>
                     </div>

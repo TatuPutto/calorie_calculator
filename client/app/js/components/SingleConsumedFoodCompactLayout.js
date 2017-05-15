@@ -20,7 +20,7 @@ export default function SingleConsumedFoodCompactLayout(props) {
                     className='remove-food btn btn-default'
                     onClick={() => props.removeFromDiary(food.consumptionId)}
                 >
-                    <i className='fa fa-remove' />
+                    <i className='fa fa-trash' />
                 </button>
             </td>
         </tr>

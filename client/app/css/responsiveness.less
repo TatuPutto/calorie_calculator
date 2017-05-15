@@ -1,11 +1,46 @@
 @media (max-width: 767px) {
+    /*.nav-menu {
+        position: relative;
+
+
+        width: 120px;
+    }
+
+    .toggle-nav-menu {
+        display: inline;
+    }
+
+    .toggle-nav-menu i {
+        color: white;
+    }*/
+
+/*
+    .nav-menu:before {
+        content: "\f0c9";
+        font-family: FontAwesome;
+        font-size: 16px;
+    }
+*/
+    .nav-menu li {
+        display: none;
+    }
+
+    .nav-menu li:hover {
+        display: block;
+        position: fixed;
+        background: #74a2ff;
+        color: black;
+        margin-top: 35px;
+    }
+
     span {
-        line-height: 20px !important;
+        line-height: 20px;
     }
 
     .food-selection {
-        border-bottom: 2px solid #c3cfff !important;
-        padding-bottom: 30px !important;
+        border-bottom: 2px solid #c3cfff;
+        padding-top: 10px;
+        padding-bottom: 20px;
     }
 
     .matching-foods {
@@ -18,10 +53,9 @@
     }
 
     .food-list {
-        overflow-y: hidden !important;
-        max-height: 9999px !important;
-        border-left: none !important;
-        border-right: none !important;
+        overflow-y: hidden;
+        max-height: 9999px;
+        border: none;
     }
 
     .food-selection-wrapper {
@@ -35,7 +69,7 @@
 
     .food-name {
         text-align: left;
-        width: ~'calc(96% - 53px)';
+        width: ~'calc(96% - 33px)';
         white-space: nowrap;
         overflow: hidden;
         line-height: 20px;
@@ -84,7 +118,7 @@
     }
 
     .consumed-foods {
-        padding: 30px 0 !important;
+        padding: 20px 0;
     }
 
     .consumed-foods-table-wrapper {
@@ -93,12 +127,18 @@
 
     tr {
         height: 110px;
+        border: none;
+        border-bottom: 1px solid #d6dcf8;
+    }
+
+    tr:last-child {
+        height: 40px;
     }
 
     td {
         height: 20px;
         display: inline-block;
-        padding: 0 !important;
+        padding: 0;
         margin-top: 8px;
     }
 

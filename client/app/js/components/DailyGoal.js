@@ -1,5 +1,8 @@
 import React from 'react';
 
+import SetDailyGoal from './SetDailyGoal';
+import DailyGoalProgress from './DailyGoalProgress';
+
 export default class DailyGoal extends React.Component {
     shouldComponentUpdate(nextProps) {
         if(this.props.totalConsumption !== nextProps.totalConsumption) {
@@ -24,60 +27,16 @@ export default class DailyGoal extends React.Component {
             dailyGoal: goal
         } = this.props;
         var dailyGoalOutput;
-
-        console.log(!isFetchingConsumedFoods && !isFetchingDailyGoal && !goal);
+        //console.log(goal);
+        //console.log(!isFetchingConsumedFoods && !isFetchingDailyGoal && !goal);
         if(!isFetchingConsumedFoods && !isFetchingDailyGoal && !goal) {
-            <p data-toggle='modal' data-target='#myModal'>Aseta päivä tavoite</p>
-        } else if(!isFetchingConsumedFoods && !isFetchingDailyGoal && goal) {
-            var energyConsumed = Math.round(total.energy / goal.energy * 100) + '%';
-            var proteinConsumed = Math.round(total.protein / goal.protein * 100) + '%';
-            var carbsConsumed = Math.round(total.carbs / goal.carbohydrates * 100) + '%';
-            var fatConsumed = Math.round(total.fat / goal.fat * 100) + '%';
-
             dailyGoalOutput = (
-                <div className='goal-progress'>
-                    <div className='energy-chart-container'>
-                        <p style={{position: 'relative', top: '35px'}}>Energia</p>
-                        <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                            <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
-                                {energyConsumed}
-                            </p>
-                            <canvas id='energy-goal' />
-                        </div>
-                        <p>{Math.round(total.energy)} kcal / {goal.energy} kcal</p>
-                    </div>
-                    <div className='protein-chart-container'>
-                        <p style={{position: 'relative', top: '35px'}}>Proteiini</p>
-                        <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                            <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
-                                {proteinConsumed}
-                            </p>
-                            <canvas id='protein-goal' />
-                        </div>
-                        <p>{Math.round(total.protein)} g / {goal.protein} g</p>
-                    </div>
-                    <div className='carb-chart-container'>
-                        <p style={{position: 'relative', top: '35px'}}>Hiilihydraatit</p>
-                        <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                            <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
-                                {carbsConsumed}
-                            </p>
-                            <canvas id='carb-goal' />
-                        </div>
-                        <p>{Math.round(total.carbs)} g / {goal.carbohydrates} g</p>
-                    </div>
-                    <div className='fat-chart-container'>
-                        <p style={{position: 'relative', top: '35px'}}>Rasva</p>
-                        <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                            <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
-                                {fatConsumed}
-                            </p>
-                            <canvas id='fat-goal' />
-                        </div>
-                        <p>{Math.round(total.fat)} g / {goal.fat} g</p>
-                    </div>
-                </div>
+                <p data-toggle='modal' data-target='#myModal'>
+                    Aseta päivä tavoite
+                </p>
             );
+        } else if(!isFetchingConsumedFoods && !isFetchingDailyGoal && goal) {
+            dailyGoalOutput = <DailyGoalProgress total={total} goal={goal} />
         } else {
             dailyGoalOutput = <i className='fa fa-spinner fa-3x fa-spin' />;
         }
@@ -85,38 +44,10 @@ export default class DailyGoal extends React.Component {
         return (
             <div className='daily-goal'>
                 <div className='charts col-md-10 col-md-offset-1'>
-                    <h3>Päivä tavoite</h3>
-                    <i className='configure-daily-goals fa fa-cog' data-toggle='modal' data-target='#myModal' />
-
-
-                    <div className='modal fade' id='myModal' role='dialog'>
-                        <div className='modal-dialog'>
-                            <form action='/daily-goal' method='POST' encType='application/x-www-form-urlencoded'>
-
-                                <div className='modal-content'>
-                                    <div className='modal-header'>
-                                        <button className='close' data-dismiss='modal'>&times;</button>
-                                        <h4 className='modal-title'>Määritä päivä tavoite</h4>
-                                    </div>
-                                    <div className='modal-body'>
-                                        <label>Energia</label>
-                                        <input type='text' name='energy' /><br />
-                                        <label>Proteiini</label>
-                                        <input type='text' name='protein' /><br />
-                                        <label>Hiilihydraatit</label>
-                                        <input type='text' name='carbs' /><br />
-                                        <label>Rasva</label>
-                                        <input type='text' name='fat' />
-                                    </div>
-                                    <div className='modal-footer'>
-                                        <button type='submit' className='btn btn-primary'>Aseta</button>
-                                        <button type='button' className='btn btn-default' data-dismiss='modal'>Sulje</button>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
+                    <h3>Päivätavoite</h3>
+                    <i className='configure-daily-goals fa fa-cog'
+                            data-toggle='modal' data-target='#myModal' />
+                    <SetDailyGoal />
                     {dailyGoalOutput}
                 </div>
             </div>
