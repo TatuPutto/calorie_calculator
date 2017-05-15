@@ -64,7 +64,7 @@ export default class Application extends React.Component {
             this.getLatestConsumedFoods()
         }
         this.getConsumedFoods();
-        //this.getDailyGoal();
+        this.getDailyGoal();
     }
 
     // get matching foods when new query params are pushed
@@ -85,7 +85,6 @@ export default class Application extends React.Component {
             })
             .then((res) => res.json())
             .then((data) => {
-
                 this.setState({
                     dailyGoal: data,
                     isFetchingDailyGoal: false
