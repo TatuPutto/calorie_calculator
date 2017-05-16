@@ -15,13 +15,17 @@ router.get('/', function (req, res) {
 
     if(consumedFoodsCookie) {
         var consumedFoods = JSON.parse(consumedFoodsCookie);
-        var consumedFoodsMapped = consumedFoods.map(function (item, i) {
-            return {
-                consumptionId: item.consumptionId,
-                id: item.id,
-                amount: item.amount,
-                timeOfConsumption: item.timeOfConsumption,
-            };
+        var consumedFoodsMapped = [];
+
+        consumedFoods.forEach(function (food) {
+            if(food.active) {
+                consumedFoodsMapped.push({
+                    consumptionId: food.consumptionId,
+                    id: food.id,
+                    amount: food.amount,
+                    timeOfConsumption: food.timeOfConsumption,
+                });
+            }
         });
 
         // get nutrition values per item
@@ -50,6 +54,7 @@ router.post('/', function (req, res) {
 
     var consumedFoodsCookie = req.cookies['consumedFoods'];
     var consumedFoods = [];
+
     // pull values from consumedFoods cookie if it exists
     if(consumedFoodsCookie) {
         consumedFoods = JSON.parse(consumedFoodsCookie);
@@ -59,7 +64,8 @@ router.post('/', function (req, res) {
         consumptionId: new Date().getTime(),
         id: foodId,
         amount: foodAmount,
-        timeOfConsumption: new Date().getTime()
+        timeOfConsumption: new Date().getTime(),
+        active: true
     });
 
     res.cookie(
@@ -78,7 +84,8 @@ router.delete('/', function (req, res) {
             return food.consumptionId == req.query.consumptionId;
         });
 
-        consumedFoods.splice(index, 1);
+        consumedFoods[index].active = false;
+        //consumedFoods.splice(index, 1);
 
         res.cookie('consumedFoods', JSON.stringify(consumedFoods));
     }

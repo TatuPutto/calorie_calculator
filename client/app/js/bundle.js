@@ -48,7 +48,7 @@ render(
         <div className='container-fluid'>
             <Header viewportWidth={viewportWidth} />
             <Route exact path='/' render={Wrapper} />
-            <Route path='/haku' render={Wrapper} />
+            <Route exact path='/haku' render={Wrapper} />
             <Route exact path='/suosikit' render={Wrapper} />
             <Route exact path='/viimeisimmat' render={Wrapper} />
         </div>

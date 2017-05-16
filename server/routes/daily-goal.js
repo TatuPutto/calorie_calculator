@@ -10,8 +10,6 @@ router.use(function (req, res, next) {
     if(req.session.user) {
         next();
     } else {
-        //.writeHead(200, {'Content-Type': 'application/json'});
-        //res.end(JSON.stringify(null));
         dailyGoalWithCookies(req, res);
     }
 });

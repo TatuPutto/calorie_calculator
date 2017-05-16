@@ -2,6 +2,7 @@ var findMatchingFoodsByIds = require('../util/query-csv').findMatchingFoodsByIds
 var getFavoriteFoods = require('../database/get-favorite-foods');
 var addFoodToFavorites = require('../database/add-food-to-favorites');
 var removeFoodFromFavorites = require('../database/remove-food-from-favorites');
+var favoritesCookieFallback = require('./favorites-cookie-fallback');
 var express = require('express');
 var router = express.Router();
 
@@ -10,8 +11,9 @@ router.use(function (req, res, next) {
     if(req.session.user) {
         next();
     } else {
-        res.writeHead(403, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify('Kirjaudu sisään käyttääksesi suosikkeja'));
+        // res.writeHead(403, {'Content-Type': 'application/json'});
+        // res.end(JSON.stringify('Kirjaudu sisään käyttääksesi suosikkeja'));
+        favoritesCookieFallback(req, res);
     }
 });
 

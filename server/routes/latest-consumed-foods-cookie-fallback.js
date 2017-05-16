@@ -1,0 +1,30 @@
+var findMatchingFoodsByIds = require('../util/query-csv').findMatchingFoodsByIds;
+var calcNutritionValues = require('../util/query-csv').calculateNutritionValues;
+var calcTotalNutritionValues = require('../util/query-csv').calcTotalNutritionValues;
+var findIndexOfObjectId = require('../util/find-index-of-object-id');
+var markFoodsAsFavorites = require('../util/mark-foods-as-favorites');
+var cookieParser = require('cookie-parser');
+var express = require('express');
+var router = express.Router();
+
+router.use(cookieParser());
+
+// get latest consumed foods from
+router.get('/', function (req, res) {
+    var latestConsumedFoods = null;
+    var consumedFoodsCookie = req.cookies['consumedFoods'];
+
+    if(consumedFoodsCookie) {
+        var consumedFoods = JSON.parse(consumedFoodsCookie);
+        var consumedFoodsMapped = consumedFoods.map(function (food) {
+            return food.id;
+        });
+
+        latestConsumedFoods = findMatchingFoodsByIds(consumedFoodsMapped);
+    }
+
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify(latestConsumedFoods.reverse()));
+});
+
+module.exports = router;

@@ -27,6 +27,10 @@ export default class Header extends React.Component {
     }
 
     render() {
+        var now = new Date();
+        var day = now.getDate();
+        var month = now.getMonth() + 1;
+
         return (
             <div className='header'>
                 <div className='header-content-wrapper'>
@@ -35,9 +39,8 @@ export default class Header extends React.Component {
                             <i className='fa fa-bars' />
                         </button>
                         <ul className='nav-menu'>
-                            <li>15.5</li>
+                            <li>{day + '.' + month}</li>
                             <li>Päiväkirja</li>
-                            <li>Lisää uusi resepti</li>
                         </ul>
                         <div className='user-info'>
                             {this.state.loggedIn ?
