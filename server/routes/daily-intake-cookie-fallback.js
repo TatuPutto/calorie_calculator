@@ -1,6 +1,7 @@
 var calcNutritionValues = require('../util/query-csv').calculateNutritionValues;
 var calcTotalNutritionValues = require('../util/query-csv').calcTotalNutritionValues;
 var findIndexOfObjectId = require('../util/find-index-of-object-id');
+var setCookieExpirationDate = require('../util/cookie-expiration-date');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var express = require('express');
@@ -10,8 +11,10 @@ router.use(cookieParser());
 
 // get consumedFoods from cookie
 router.get('/', function (req, res) {
-    if(req.cookies['consumedFoods']) {
-        var consumedFoods = JSON.parse(req.cookies['consumedFoods']);
+    var consumedFoodsCookie = req.cookies['consumedFoods'];
+
+    if(consumedFoodsCookie) {
+        var consumedFoods = JSON.parse(consumedFoodsCookie);
         var consumedFoodsMapped = consumedFoods.map(function (item, i) {
             return {
                 consumptionId: item.consumptionId,
@@ -29,6 +32,7 @@ router.get('/', function (req, res) {
 
         res.end(JSON.stringify({nutritionValuesPerItem, nutritionValuesInTotal}));
     }
+
     res.end();
 });
 
@@ -44,27 +48,32 @@ router.post('/', function (req, res) {
         res.end();
     }
 
+    var consumedFoodsCookie = req.cookies['consumedFoods'];
     var consumedFoods = [];
     // pull values from consumedFoods cookie if it exists
-    if(req.cookies['consumedFoods']) {
-        consumedFoods = JSON.parse(req.cookies['consumedFoods']);
+    if(consumedFoodsCookie) {
+        consumedFoods = JSON.parse(consumedFoodsCookie);
     }
 
     consumedFoods.push({
-        consumptionId: (consumedFoods.length + 1),
+        consumptionId: new Date().getTime(),
         id: foodId,
         amount: foodAmount,
         timeOfConsumption: new Date().getTime()
     });
 
-    res.cookie('consumedFoods', JSON.stringify(consumedFoods));
+    res.cookie(
+        'consumedFoods',
+        JSON.stringify(consumedFoods),
+        {maxAge: setCookieExpirationDate()}
+    );
     res.end();
 });
 
 router.delete('/', function (req, res) {
-    var consumedFoods = req.cookies['consumedFoods']
-    if(consumedFoods) {
-        consumedFoods = JSON.parse(consumedFoods);
+    var consumedFoodsCookie = req.cookies['consumedFoods']
+    if(consumedFoodsCookie) {
+        consumedFoods = JSON.parse(consumedFoodsCookie);
         var index = consumedFoods.findIndex(function (food) {
             return food.consumptionId == req.query.consumptionId;
         });
