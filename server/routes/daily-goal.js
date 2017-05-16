@@ -28,11 +28,14 @@ router.get('/', function (req, res) {
 router.use(bodyParser.urlencoded({extended: false}));
 
 router.post('/', function (req, res) {
+    console.log('täällä');
     var energy = req.body.energy;
     var protein = req.body.protein;
     var carbs = req.body.carbs;
     var fat = req.body.fat;
 
+
+    console.log(req.body);
     setDailyGoal(req.session.user.id, energy, protein, carbs, fat)
         .then(() => res.redirect('/'))
         .catch((err) => res.end(err));

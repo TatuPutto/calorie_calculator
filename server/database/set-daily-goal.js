@@ -1,16 +1,18 @@
 var getConnection = require('./create-connection');
 
 module.exports = function setDailyGoal(userId, energy, protein, carbs, fat) {
-    var query = `UPDATE dailygoals SET energy=${energy}, protein=${protein}, ` +
-            `carbohydrates=${carbs}, fat=${fat} WHERE userId=123`;
+    var query = 'INSERT INTO dailygoals ' +
+            '(userId, energy, protein, carbohydrates, fat)' +
+            'VALUES (?, ?, ?, ?, ?)';
+    var data = [userId, energy, protein, carbs, fat];
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
-            connection.release();
             if(err) reject(err);
-            connection.query(query, function (err, results) {
-              if(err) reject(err);
-              resolve();
+            connection.query(query, data, function (err, results) {
+                connection.release();
+                if(err) reject(err);
+                resolve();
             });
         });
     }).catch(function (err) {

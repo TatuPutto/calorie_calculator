@@ -12,7 +12,6 @@ router.get('/:food', function (req, res) {
         // determine which of the foods are in users favorites
         getFavoriteFoods(req.session.user.id)
             .then(function(favoriteFoods) {
-                console.log(favoriteFoods);
                 for(var i = 0; i < favoriteFoods.length; i++) {
                     var index = findIndexOfObjectId(
                         favoriteFoods[i],
@@ -26,8 +25,6 @@ router.get('/:food', function (req, res) {
                         matchingFoods.unshift(moveThis);
                     }
                 }
-
-                console.log(matchingFoods);
 
                 res.writeHead(200, {'Content-Type': 'application/json'});
                 res.end(JSON.stringify(matchingFoods));

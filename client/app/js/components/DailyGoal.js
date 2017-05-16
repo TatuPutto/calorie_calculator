@@ -36,24 +36,28 @@ export default class DailyGoal extends React.Component {
         var dailyGoalOutput;
 
         if(goal) {
-            dailyGoalOutput = <DailyGoalProgress total={total} goal={goal} />;
+            dailyGoalOutput = (
+                <div className='charts col-md-10 col-md-offset-1'>
+                    <h3>Päivätavoite</h3>
+                    <i className='configure-daily-goals fa fa-cog'
+                            data-toggle='modal' data-target='#set-daily-goal' />
+                    <DailyGoalProgress total={total} goal={goal} />
+                </div>
+            );
         } else {
             dailyGoalOutput = (
-                <p data-toggle='modal' data-target='#myModal'>
-                    Aseta päivä tavoite
-                </p>
+                <div style={{marginTop: '20px', fontSize: '18px'}}>
+                    <a data-toggle='modal' data-target='#set-daily-goal'>
+                        Aseta päivätavoite
+                    </a>
+                </div>
             );
         }
 
         return (
             <div className='daily-goal'>
-                <div className='charts col-md-10 col-md-offset-1'>
-                    <h3>Päivätavoite</h3>
-                    <i className='configure-daily-goals fa fa-cog'
-                            data-toggle='modal' data-target='#myModal' />
-                    <SetDailyGoal />
-                    {dailyGoalOutput}
-                </div>
+                <SetDailyGoal />
+                {dailyGoalOutput}
             </div>
         );
     }

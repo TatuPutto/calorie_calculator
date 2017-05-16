@@ -1,13 +1,13 @@
 var getConnection = require('./create-connection');
 
 module.exports = function checkLogin(username, password) {
-    var query = `SELECT * FROM users WHERE username="${username}" ` +
-            `AND password="${password}" LIMIT 1`;
+    var query = 'SELECT * FROM users WHERE username=? AND password=? LIMIT 1';
+    var data = [username, password];
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
             if(err) reject(err);
-            connection.query(query, function (err, results) {
+            connection.query(query, data, function (err, results) {
                 connection.release();
                 if(err) reject(err);
                 if(results.length > 0) {

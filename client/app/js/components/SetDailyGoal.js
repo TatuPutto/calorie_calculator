@@ -2,10 +2,9 @@ import React from 'react';
 
 export default function SetDailyGoal() {
     return (
-        <div className='modal fade' id='myModal' role='dialog'>
+        <div className='modal fade' id='set-daily-goal' role='dialog'>
             <div className='modal-dialog'>
                 <form action='/daily-goal' method='POST' encType='application/x-www-form-urlencoded'>
-
                     <div className='modal-content'>
                         <div className='modal-header'>
                             <button className='close' data-dismiss='modal'>&times;</button>
@@ -35,8 +34,7 @@ export default function SetDailyGoal() {
                             <button type='submit' className='btn btn-primary'>
                                 Aseta
                             </button>
-                            <button type='button' className='btn btn-default'
-                                    data-dismiss='modal'>
+                            <button type='button' className='btn btn-default' data-dismiss='modal'>
                                 Sulje
                             </button>
                         </div>
@@ -46,9 +44,4 @@ export default function SetDailyGoal() {
             </div>
         </div>
     );
-}
-
-
-function calculatePercentualAmount() {
-
 }
