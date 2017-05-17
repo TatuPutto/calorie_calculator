@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FoodSelection from './FoodSelection';
-import ConsumedFoods from './ConsumedFoods';
-import TotalConsumption from './TotalConsumption';
-import SearchTypes from './SearchTypes';
-import DailyGoal from './DailyGoal';
+import FoodSelection from '../components/FoodSelection';
+import ConsumedFoods from '../components/ConsumedFoods';
+import TotalConsumption from '../components/TotalConsumption';
+import SearchTypes from '../components/SearchTypes';
+import DailyGoal from '../components/DailyGoal';
+
+import updateValuesOnAddition from '../util/update-values-on-addition';
+import updateValuesOnRemove from '../util/update-values-on-remove';
 
 var fetchParams = {
     credentials: 'same-origin',
@@ -159,7 +162,14 @@ export default class Application extends React.Component {
     }
 
     changeFetchMethod(fetchMethod) {
-        this.context.router.history.push('/' + fetchMethod);
+        this.setState({fetchMethod});
+        if(fetchMethod == 'haku') {
+            this.getMatchingFoods('maitorahka');
+        } else if(fetchMethod == 'suosikit') {
+            this.getFavoriteFoods();
+        } else {
+            this.getLatestConsumedFoods();
+        }
     }
 
     changeSearchTerm(event) {
@@ -199,6 +209,20 @@ export default class Application extends React.Component {
     }
 
     addToDiary(foodId, foodAmount) {
+        // update consumed foods and total values optimistically on addition
+        var updatedValues = updateValuesOnAddition(
+            foodId,
+            foodAmount,
+            JSON.parse(JSON.stringify(this.state.foods)),
+            JSON.parse(JSON.stringify(this.state.consumedFoods)),
+            JSON.parse(JSON.stringify(this.state.totalConsumption))
+        );
+
+        this.setState({
+            consumedFoods: updatedValues.consumedFoods,
+            totalConsumption: updatedValues.totalConsumption
+        });
+
         var content = {foodId, foodAmount};
         var params = {
             credentials: 'same-origin',
@@ -210,57 +234,51 @@ export default class Application extends React.Component {
             }
         }
 
-        fetch('/daily-intake', params)
-            .then(() => this.getConsumedFoods())
-            .catch((err) => console.error(err));
+        fetch('/daily-intake', params).catch((err) => console.error(err));
     }
 
     removeFromDiary(consumptionId) {
+        // update consumed foods and total values optimistically on removal
+        var updatedValues = updateValuesOnRemove(
+            consumptionId,
+            JSON.parse(JSON.stringify(this.state.consumedFoods)),
+            JSON.parse(JSON.stringify(this.state.totalConsumption))
+        );
+
+        this.setState({
+            consumedFoods: updatedValues.consumedFoods,
+            totalConsumption: updatedValues.totalConsumption
+        });
+
         var url = `/daily-intake?consumptionId=${consumptionId}`;
         var params = {
             ...fetchParams,
             method: 'DELETE'
         };
 
-        fetch(url, params)
-            .then(() => this.getConsumedFoods())
-            .catch((err) => console.error(err));
+        fetch(url, params).catch((err) => console.error(err));
     }
 
     addToFavorites(foodId) {
+        this.toggleFavoriteIcon(foodId, true);
         var url = `/favorites/${foodId}`;
         var params = {
             ...fetchParams,
             method: 'PUT'
         };
 
-        fetch(url, params)
-            .then((res) => {
-                if(res.status === 200) {
-                    this.toggleFavoriteIcon(foodId, true);
-                } else {
-                    alert('Kirjaudu sisään käyttääksesi suosikkeja');
-                    throw new Error('Kirjaudu sisään käyttääksesi suosikkeja.');
-                }
-            }).catch((err) => console.error(err));
+        fetch(url, params).catch((err) => console.error(err));
     }
 
     removeFromFavorites(foodId) {
+        this.toggleFavoriteIcon(foodId, false);
         var url = `/favorites/${foodId}`;
         var params = {
             ...fetchParams,
             method: 'DELETE'
         };
 
-        fetch(url, params)
-        .then((res) => {
-            if(res.status === 200) {
-                this.toggleFavoriteIcon(foodId, false);
-            } else {
-                alert('Kirjaudu sisään käyttääksesi suosikkeja');
-                throw new Error('Kirjaudu sisään käyttääksesi suosikkeja.');
-            }
-        }).catch((err) => console.error(err));
+        fetch(url, params).catch((err) => console.error(err));
     }
 
     toggleFavoriteIcon(foodId, favorite) {
@@ -315,7 +333,6 @@ export default class Application extends React.Component {
         );
     }
 }
-
 
 Application.contextTypes = {router: PropTypes.object.isRequired};
 

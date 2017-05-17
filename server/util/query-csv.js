@@ -90,8 +90,8 @@ function calculateNutritionValues(consumedFoods) {
         // calculate nutrition values in amount
         var energyInAmount = Math.round((erergyIn100Grams / 100) * food.amount);
         var proteinInAmount = round((proteinIn100Grams / 100) * food.amount);
-        var fatnInAmount = round((fatIn100Grams / 100) * food.amount);
         var carbohydratesInAmount = round((carbsIn100Grams / 100) * food.amount);
+        var fatInAmount = round((fatIn100Grams / 100) * food.amount);
 
         nutritionValues.push({
             consumptionId: food.consumptionId,
@@ -101,7 +101,7 @@ function calculateNutritionValues(consumedFoods) {
             name: foodName,
             energy: energyInAmount,
             protein: proteinInAmount,
-            fat: fatnInAmount,
+            fat: fatInAmount,
             carbs: carbohydratesInAmount
         });
     }
