@@ -13,37 +13,34 @@ router.use(cookieParser());
 router.get('/', function (req, res) {
     var consumedFoodsCookie = req.cookies['consumedFoods'];
 
-    if(consumedFoodsCookie) {
-        var consumedFoods = JSON.parse(consumedFoodsCookie);
-        var consumedFoodsMapped = [];
+    var consumedFoods = consumedFoodsCookie ? JSON.parse(consumedFoodsCookie) : [];
+    var consumedFoodsMapped = [];
 
-        consumedFoods.forEach(function (food) {
-            if(food.active) {
-                consumedFoodsMapped.push({
-                    consumptionId: food.consumptionId,
-                    id: food.id,
-                    amount: food.amount,
-                    timeOfConsumption: food.timeOfConsumption,
-                });
-            }
-        });
+    consumedFoods.forEach(function (food) {
+        if(food.active) {
+            consumedFoodsMapped.push({
+                consumptionId: food.consumptionId,
+                id: food.id,
+                amount: food.amount,
+                timeOfConsumption: food.timeOfConsumption,
+            });
+        }
+    });
 
-        // get nutrition values per item
-        var nutritionValuesPerItem = calcNutritionValues(consumedFoodsMapped);
-        // calc sum of nutrition values across all consumed items
-        var nutritionValuesInTotal = calcTotalNutritionValues(nutritionValuesPerItem);
-        //return {nutritionValuesPerItem, nutritionValuesInTotal};
+    // get nutrition values per item
+    var nutritionValuesPerItem = calcNutritionValues(consumedFoodsMapped);
+    // calc sum of nutrition values across all consumed items
+    var nutritionValuesInTotal = calcTotalNutritionValues(nutritionValuesPerItem);
 
-        res.end(JSON.stringify({nutritionValuesPerItem, nutritionValuesInTotal}));
-    }
-
-    res.end();
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify({nutritionValuesPerItem, nutritionValuesInTotal}));
 });
 
 router.use(bodyParser.json());
 
 // add food and amount to cookie
 router.post('/', function (req, res) {
+    var consumptionId = req.body.consumptionId;
     var foodId = req.body.foodId;
     var foodAmount = req.body.foodAmount;
 
@@ -61,7 +58,7 @@ router.post('/', function (req, res) {
     }
 
     consumedFoods.push({
-        consumptionId: new Date().getTime(),
+        consumptionId: consumptionId,
         id: foodId,
         amount: foodAmount,
         timeOfConsumption: new Date().getTime(),

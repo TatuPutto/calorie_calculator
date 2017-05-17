@@ -223,7 +223,11 @@ export default class Application extends React.Component {
             totalConsumption: updatedValues.totalConsumption
         });
 
-        var content = {foodId, foodAmount};
+        var content = {
+            consumptionId: updatedValues.consumedFoods[updatedValues.consumedFoods.length - 1].consumptionId,
+            foodId,
+            foodAmount
+        };
         var params = {
             credentials: 'same-origin',
             method: 'POST',

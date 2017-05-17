@@ -12,7 +12,7 @@ function updateValuesOnConsumedFoodAddition(foodId, foodAmount, foods, consumedF
     addedFood.carbs = Math.round(carbsInAmount * 10) / 10;
     addedFood.fat = Math.round(fatInAmount * 10) / 10;
 
-    addedFood['consumptionId'] = new Date().getTime();
+    addedFood['consumptionId'] = new Date().getTime().toString();
     addedFood['amount'] = foodAmount;
     consumedFoods.push(addedFood);
 

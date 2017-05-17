@@ -32,16 +32,18 @@ router.use(bodyParser.json());
 
 // add food and amount to list of consumed foods
 router.post('/', function (req, res) {
+    console.log(req.body);
     var userId = req.session.user.id;
+    var consumptionId = req.body.consumptionId;
     var foodId = req.body.foodId;
     var foodAmount = req.body.foodAmount;
 
-    if(!foodId || !foodAmount) {
+    if(!consumptionId || !foodId || !foodAmount) {
         res.status(422);
         res.end();
     }
 
-    addFoodToConsumedFoods(userId, foodId, foodAmount)
+    addFoodToConsumedFoods(consumptionId, userId, foodId, foodAmount)
         .then(function () {
             res.status(200);
             res.end();

@@ -96,7 +96,7 @@ function calculateNutritionValues(consumedFoods) {
         nutritionValues.push({
             consumptionId: food.consumptionId,
             amount: food.amount,
-            timeOfConsumption: '' + food.timeOfConsumption,
+            timeOfConsumption: food.timeOfConsumption.toString(),
             id: food.id,
             name: foodName,
             energy: energyInAmount,

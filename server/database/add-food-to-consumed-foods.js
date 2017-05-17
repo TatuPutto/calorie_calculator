@@ -1,10 +1,12 @@
 var getConnection = require('./create-connection');
 
-module.exports = function addFoodToConsumedFoods(userId, foodId, foodAmount) {
+function addFoodToConsumedFoods(consumptionId, userId, foodId, foodAmount) {
+    console.log(arguments);
+    console.log(typeof consumptionId);
     var query = 'INSERT INTO consumedfoods ' +
-            '(userId, foodId, foodAmount, timeOfConsumption) ' +
-            'VALUES (?, ?, ?, NOW())';
-    var data = [userId, foodId, foodAmount];
+            '(consumptionId, userId, foodId, foodAmount, timeOfConsumption) ' +
+            'VALUES (?, ?, ?, ?, NOW())';
+    var data = [consumptionId, userId, foodId, foodAmount];
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
@@ -19,3 +21,5 @@ module.exports = function addFoodToConsumedFoods(userId, foodId, foodAmount) {
         throw err;
     });
 }
+
+module.exports = addFoodToConsumedFoods;

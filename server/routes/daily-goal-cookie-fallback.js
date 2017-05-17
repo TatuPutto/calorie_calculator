@@ -29,7 +29,7 @@ router.post('/', function (req, res) {
 
     var dailyGoal = {energy, protein, carbohydrates, fat};
     res.cookie('dailyGoal', JSON.stringify(dailyGoal));
-    res.end();
+    res.redirect('/');
 });
 
 module.exports = router;

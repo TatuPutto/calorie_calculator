@@ -26,7 +26,10 @@ router.get('/:food', function (req, res) {
         // determine which of the foods are in users favorites (cookie)
         var favoriteFoodsCookie = req.cookies['favorites'];
         var favorites = favoriteFoodsCookie ? JSON.parse(favoriteFoodsCookie) : null;
-        matchingFoods = markFoodsAsFavorites(favorites, matchingFoods);
+
+        if(favorites) {
+            matchingFoods = markFoodsAsFavorites(favorites, matchingFoods);
+        }
 
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify(matchingFoods));
