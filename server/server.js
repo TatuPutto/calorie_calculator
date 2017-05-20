@@ -2,6 +2,7 @@ var express = require('express')
 var session = require('client-sessions');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
+var register = require('./routes/register');
 var userInfo = require('./routes/user-info');
 var clientRoutes = require('./routes/client-routes');
 var matchingFoods = require('./routes/matching-foods');
@@ -18,17 +19,18 @@ app.use(session({
     secret: 'gjkrejtGSDFGertjksfdv<JLfjdsalfsadtjwekWRAsdf',
     duration: (7 * 24 * 60 * 60 * 1000)
 }));
+app.use(express.static(require('path').join(__dirname, '../client/app')));
+app.use(express.static(require('path').join(__dirname, './public')));
 
 app.use('/login', login);
 app.use('/logout', logout);
+app.use('/register', register);
 app.use('/user-info', userInfo);
 app.use('/matching-foods', matchingFoods);
 app.use('/daily-goal', dailyGoal);
 app.use('/daily-intake', dailyIntake);
 app.use('/favorites', favorites);
 app.use('/latest', latest);
-
-app.use(express.static(require('path').join(__dirname, '../client/app')));
 app.use('*', clientRoutes);
 
 app.listen(port, () => console.log('Listening at port ' + port));

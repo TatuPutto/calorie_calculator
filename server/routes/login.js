@@ -6,7 +6,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../login.html'));
+    res.sendFile(path.join(__dirname, '../public/login.html'));
 });
 
 router.use(bodyParser.urlencoded({extended: false}));

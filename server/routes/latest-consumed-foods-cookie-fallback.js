@@ -11,7 +11,7 @@ router.use(cookieParser());
 
 // get latest consumed foods from
 router.get('/', function (req, res) {
-    var latestConsumedFoods = null;
+    var latestConsumedFoods = [];
     var consumedFoodsCookie = req.cookies['consumedFoods'];
 
     if(consumedFoodsCookie) {
@@ -21,10 +21,11 @@ router.get('/', function (req, res) {
         });
 
         latestConsumedFoods = findMatchingFoodsByIds(consumedFoodsMapped);
+        latestConsumedFoods.reverse();
     }
 
     res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(latestConsumedFoods.reverse()));
+    res.end(JSON.stringify(latestConsumedFoods));
 });
 
 module.exports = router;

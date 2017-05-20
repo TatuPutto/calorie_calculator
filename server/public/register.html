@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<head>
+    <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
+    <link href="forms.css" rel="stylesheet"></link>
+    <meta name="viewport" content="width=device-width"></meta>
+    <title>Rekisteröityminen</title>
+</head>
+<body>
+    <div class="register">
+        <div class="register-form-header">
+            <h1>Rekisteröityminen</h1>
+        </div>
+        <div class="form-wrapper">
+            <form action="/register" method="post" enctype="application/x-www-form-urlencoded">
+                <label>Käyttäjätunnus</label>
+                <br />
+                <input type="text" name="username" required />
+                <br />
+                <label>Salasana</label>
+                <br />
+                <input type="password" name="password" required />
+                <br />
+                <input type="submit" value="Rekisteröidy" />
+            </form>
+        </div>
+    </div>
+</body>
