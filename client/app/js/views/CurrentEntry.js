@@ -18,7 +18,7 @@ var fetchParams = {
     }
 };
 
-export default class Application extends React.Component {
+export default class CurrentEntry extends React.Component {
     constructor(props) {
         super();
         this.state = {
@@ -35,7 +35,7 @@ export default class Application extends React.Component {
             isFetchingMatchingFoods: true,
             searchTerm: null,
             fetchMethod: 'haku',
-            fetchError: null
+            fetchError: null,
         };
 
         this.getDailyGoal = this.getDailyGoal.bind(this);
@@ -320,6 +320,7 @@ export default class Application extends React.Component {
                 />
                 <ConsumedFoods
                     viewportWidth={this.props.viewportWidth}
+                    isModifiable={true}
                     consumedFoods={this.state.consumedFoods}
                     totalConsumption={this.state.totalConsumption}
                     removeFromDiary={this.removeFromDiary}
@@ -338,10 +339,4 @@ export default class Application extends React.Component {
     }
 }
 
-Application.contextTypes = {router: PropTypes.object.isRequired};
-
-Application.propTypes = {
-    viewportWidth: PropTypes.number.isRequired,
-    fetchMethod: PropTypes.string.isRequired,
-    search:  PropTypes.string
-};
+CurrentEntry.contextTypes = {router: PropTypes.object.isRequired};

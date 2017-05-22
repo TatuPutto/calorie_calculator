@@ -1,25 +1,28 @@
 import React from 'react';
 import {render} from 'react-dom';
-import {Router, Route, IndexRoute, BrowserRouter, Switch} from 'react-router-dom';
+import {Router, Route, IndexRoute, BrowserRouter, Redirect} from 'react-router-dom';
 
 import Header from './components/Header';
-import Application from './views/Application';
-import Login from './components/Login';
+import CurrentEntry from './views/CurrentEntry';
+import Diary from './views/Diary';
+
+import pad from './util/pad';
 
 require('../css/styles.less');
+
 
 var viewportWidth = Math.max(
     document.documentElement.clientWidth,
     window.innerWidth || 0
 );
 
-var Wrapper = (props) => {
+function CurrentEntryWrapper(props) {
     var pathname = props.location.pathname;
     var search = props.location.search;
     var fetchMethod;
 
     // resolve fetchMethod from pathname
-    if(pathname == '/') {
+    if(pathname == '/current-entry') {
         fetchMethod = 'haku';
     } else {
         fetchMethod = pathname.match(/haku|suosikit|viimeisimmat/g)[0];
@@ -34,7 +37,7 @@ var Wrapper = (props) => {
     }
 
     return (
-        <Application
+        <CurrentEntry
             viewportWidth={viewportWidth}
             fetchMethod={fetchMethod}
             search={search}
@@ -42,15 +45,30 @@ var Wrapper = (props) => {
     );
 }
 
+function DiaryWrapper(props) {
+    var activeEntryDate = null;
+    if(props.location.search) {
+        activeEntryDate = props.location.search.split('=')[1];
+    } else {
+        var d = new Date();
+        var day = pad(d.getDate());
+        var month = pad(d.getMonth() + 1);
+        var year = pad(d.getFullYear());
+        activeEntryDate = `${day}.${month}.${year}`;
+    }
+
+    return (
+        <Diary viewportWidth={viewportWidth} activeEntryDate={activeEntryDate} />
+    );
+}
 
 render(
     <BrowserRouter>
         <div className='container-fluid'>
-            <Header viewportWidth={viewportWidth} />
-            <Route exact path='/' render={Wrapper} />
-            <Route exact path='/haku' render={Wrapper} />
-            <Route exact path='/suosikit' render={Wrapper} />
-            <Route exact path='/viimeisimmat' render={Wrapper} />
+            {/*}<Redirect exact from='/' to='/current-entry' />*/}
+            <Header />
+            <Route exact path='/diary' component={DiaryWrapper} />
+            <Route exact path='/current-entry' component={CurrentEntryWrapper} />
         </div>
     </BrowserRouter>,
     document.getElementById('app')

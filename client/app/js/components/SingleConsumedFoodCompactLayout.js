@@ -15,14 +15,16 @@ export default function SingleConsumedFoodCompactLayout(props) {
             <td className='carb-amount'>{food.carbs} g</td>
             <td className='fat-amount'>{food.fat} g</td>
             <td className={'food-name ' + dominantMacro}>{food.name}</td>
-            <td className='remove-button-container'>
-                <button
-                    className='remove-food btn btn-default'
-                    onClick={() => props.removeFromDiary(food.consumptionId)}
-                >
-                    <i className='fa fa-trash' />
-                </button>
-            </td>
+            {props.isModifiable &&
+                <td className='remove-button-container'>
+                    <button
+                        className='remove-food btn btn-default'
+                        onClick={() => props.removeFromDiary(food.consumptionId)}
+                    >
+                        <i className='fa fa-trash' />
+                    </button>
+                </td>
+            }
         </tr>
     );
 }

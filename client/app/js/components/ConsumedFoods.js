@@ -28,6 +28,7 @@ export default function ConsumedFoods(props) {
 
 ConsumedFoods.propTypes = {
     viewportWidth: PropTypes.number.isRequired,
+    isModifiable: PropTypes.bool.isRequired,
     isFetchingConsumedFoods: PropTypes.bool.isRequired,
     consumedFoods: PropTypes.array.isRequired
 };

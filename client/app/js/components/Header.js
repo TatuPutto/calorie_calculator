@@ -1,4 +1,10 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
+
+var viewportWidth = Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth || 0
+);
 
 export default class Header extends React.Component {
     constructor(props) {
@@ -7,7 +13,7 @@ export default class Header extends React.Component {
             loggedIn: false,
             username: 'Anonyymi',
             isFetchingUserInfo: true,
-            isDropdownOpen: this.props.viewportWidth > 767 ? true : false
+            isDropdownOpen: viewportWidth > 767 ? true : false
         };
     }
 
@@ -27,10 +33,6 @@ export default class Header extends React.Component {
     }
 
     render() {
-        var now = new Date();
-        var day = now.getDate();
-        var month = now.getMonth() + 1;
-
         return (
             <div className='header'>
                 <div className='header-content-wrapper'>
@@ -39,8 +41,8 @@ export default class Header extends React.Component {
                             <i className='fa fa-bars' />
                         </button>
                         <ul className='nav-menu'>
-                            <li>{day + '.' + month}</li>
-                            <li>Päiväkirja</li>
+                            <li><NavLink to='/current-entry' activeStyle={{fontWeight: 'bold'}}>Tänään</NavLink></li>
+                            <li><NavLink to='/diary' activeStyle={{fontWeight: 'bold'}}>Päiväkirja</NavLink></li>
                         </ul>
                         <div className='user-info'>
                             {this.state.loggedIn ?

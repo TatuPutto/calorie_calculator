@@ -13,6 +13,7 @@ export default function ConsumedFoodsTable(props) {
                 <SingleConsumedFood
                     key={food.consumptionId}
                     food={food}
+                    isModifiable={props.isModifiable}
                     removeFromDiary={props.removeFromDiary}
                 />
             );
@@ -21,6 +22,7 @@ export default function ConsumedFoodsTable(props) {
                 <SingleConsumedFoodCompactLayout
                     key={food.consumptionId}
                     food={food}
+                    isModifiable={props.isModifiable}
                     removeFromDiary={props.removeFromDiary}
                 />
             );
@@ -33,7 +35,7 @@ export default function ConsumedFoodsTable(props) {
         <table className='consumed-foods-table'>
             <tbody>
                 {consumedFoodsRows}
-                {props.consumedFoods.length > 1 &&
+                {props.consumedFoods.length > 1 && props.isModifiable &&
                     <TotalConsumption totalConsumption={props.totalConsumption} />
                 }
             </tbody>
@@ -43,5 +45,6 @@ export default function ConsumedFoodsTable(props) {
 
 ConsumedFoodsTable.propTypes = {
     viewportWidth: PropTypes.number.isRequired,
+    isModifiable: PropTypes.bool.isRequired,
     consumedFoods: PropTypes.array.isRequired
 };

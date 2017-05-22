@@ -9,12 +9,12 @@ export default function SingleConsumedFood(props) {
 
     return (
         <tr key={food.consumptionId}>
-            <td
-                className='remove-consumed-food'
-                onClick={() => props.removeFromDiary(food.consumptionId)}
-            >
-                <i className='fa fa-trash' />
-            </td>
+            {props.isModifiable &&
+                <td className='remove-consumed-food'
+                        onClick={() => props.removeFromDiary(food.consumptionId)}>
+                    <i className='fa fa-trash' />
+                </td>
+            }
             <td className={'food-name ' + dominantMacro}>{food.name}</td>
             <td className='food-amount'>{food.amount} g</td>
             <td className='energy-amount'>{food.energy} kcal</td>

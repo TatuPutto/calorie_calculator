@@ -10,6 +10,8 @@ var dailyGoal = require('./routes/daily-goal');
 var dailyIntake = require('./routes/daily-intake');
 var favorites = require('./routes/favorites');
 var latest = require('./routes/latest');
+var diaryEntries = require('./routes/diary-entries');
+var getEntry = require('./routes/get-entry');
 
 var port = process.env.PORT || 3000;
 var app = express();
@@ -31,6 +33,8 @@ app.use('/daily-goal', dailyGoal);
 app.use('/daily-intake', dailyIntake);
 app.use('/favorites', favorites);
 app.use('/latest', latest);
+app.use('/diary-entries', diaryEntries);
+app.use('/entry', getEntry);
 app.use('*', clientRoutes);
 
 app.listen(port, () => console.log('Listening at port ' + port));
