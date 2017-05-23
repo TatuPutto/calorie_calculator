@@ -132,22 +132,6 @@ export default class Diary extends React.Component {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style={{color: '#f6a000'}}>kcal</td>
-                                    <td>
-                                        {Math.round(energyInTotal)}
-                                        {energyInRelationToGoal >= 0 ?
-                                            <span className='over-goal'>
-                                                (+{energyInRelationToGoal})
-                                            </span>
-                                        :
-                                            <span className='under-goal'>
-                                                ({energyInRelationToGoal})
-                                            </span>
-                                        }
-                                    </td>
-                                    <td>{energyGoal}</td>
-                                </tr>
-                                <tr>
                                     <td style={{color: '#0fb70f'}}>Proteiini</td>
                                     <td>
                                         {Math.round(proteinInTotal)} g
@@ -195,6 +179,22 @@ export default class Diary extends React.Component {
                                     </td>
                                     <td>{fatGoal} g</td>
                                 </tr>
+                                <tr>
+                                    <td style={{color: '#f6a000'}}>kcal</td>
+                                    <td>
+                                        {Math.round(energyInTotal)}
+                                        {energyInRelationToGoal >= 0 ?
+                                            <span className='over-goal'>
+                                                (+{energyInRelationToGoal})
+                                            </span>
+                                        :
+                                            <span className='under-goal'>
+                                                ({energyInRelationToGoal})
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>{energyGoal}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -212,7 +212,7 @@ export default class Diary extends React.Component {
                                 onClick={this.toggleConsumedFoodsVisibility}
                                 style={{marginTop: '20px'}}
                             >
-                                Piilota tarkemmat tiedot
+                                Piilota merkinnät
                             </button>
                         </div>
                     :
@@ -220,7 +220,7 @@ export default class Diary extends React.Component {
                             className='btn btn-default'
                             onClick={this.toggleConsumedFoodsVisibility}
                         >
-                            Näytä tarkemmat tiedot
+                            Näytä merkinnät
                         </button>
                     }
                 </div>

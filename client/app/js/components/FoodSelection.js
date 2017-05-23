@@ -42,7 +42,7 @@ export default function FoodSelection(props) {
 
     return (
         <div className='food-selection'>
-            <div className='food-selection-wrapper col-lg-10 col-md-10 col-sm-12 col-md-offset-1 col-lg-offset-1'>
+            <div className={'food-selection-wrapper col-lg-10 col-md-10 col-sm-12'}>
                 <div className='matching-foods'>
                     {fetchMethod == 'haku' &&
                         <div className='search'>

@@ -217,14 +217,10 @@ export default class CurrentEntry extends React.Component {
             JSON.parse(JSON.stringify(this.state.consumedFoods)),
             JSON.parse(JSON.stringify(this.state.totalConsumption))
         );
-
-        this.setState({
-            consumedFoods: updatedValues.consumedFoods,
-            totalConsumption: updatedValues.totalConsumption
-        });
-
+        var consumedFoods = updatedValues.consumedFoods;
+        var totalConsumption = updatedValues.totalConsumption;
         var content = {
-            consumptionId: updatedValues.consumedFoods[updatedValues.consumedFoods.length - 1].consumptionId,
+            consumptionId: consumedFoods[consumedFoods.length - 1].consumptionId,
             foodId,
             foodAmount
         };
@@ -238,6 +234,13 @@ export default class CurrentEntry extends React.Component {
             }
         }
 
+        this.setState({
+            consumedFoods,
+            totalConsumption,
+            selectedFoodId: null,
+            selectedFood: null,
+            selectedFoodAmount: null
+        });
         fetch('active-entry', params).catch((err) => console.error(err));
     }
 

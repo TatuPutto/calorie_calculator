@@ -17,45 +17,48 @@ export default function SingleFood(props) {
                 key={food.id}
                 className='single-food'
                 onClick={() => props.selectFood(food.id, food.name)}
+                style={{background: props.selectedFoodId == food.id ? '#e8f2ff' : '#fff'}}
             >
+                {props.viewportWidth < 768 &&
+                    <div style={{display: 'inline'}}>
+                        <span className='energy-amount'>{food.energy} kcal</span>
+                        <span className='protein-amount'>{food.protein} g</span>
+                        <span className='carb-amount'>{food.carbs} g</span>
+                        <span className='fat-amount'>{food.fat} g</span>
+                        <br />
+                    </div>
+                }
 
-            {props.viewportWidth < 768 &&
-                <div style={{display: 'inline'}}>
-                    <span className='energy-amount'>{food.energy} kcal</span>
-                    <span className='protein-amount'>{food.protein} g</span>
-                    <span className='carb-amount'>{food.carbs} g</span>
-                    <span className='fat-amount'>{food.fat} g</span>
-                    <br />
-                </div>
-            }
-
-            <span className='food-selected-indicator-container'>
-                <i className={props.selectedFoodId == food.id ?
-                        'food-selected-indicator fa fa-chevron-right open' :
-                        'food-selected-indicator fa fa-chevron-right closed'} />
-            </span>
-
-            <span className={'food-name ' + dominantMacro}>
-                {food.name}
-            </span>
-            <span className='favorites'>
-                <button
-                    className='add-to-favorites'
-                    onClick={food.favorite ? () => props.removeFromFavorites(food.id) : () => props.addToFavorites(food.id)}>
-                    <i className={food.favorite ? 'fa fa-star' : 'fa fa-star-o'} />
-                </button>
-            </span>
-
-            {props.viewportWidth > 768 &&
-                <div style={{display: 'inline'}}>
-                    <span className='energy-amount'>{food.energy} kcal</span>
-                    <span className='protein-amount'>{food.protein} g</span>
-                    <span className='carb-amount'>{food.carbs} g</span>
-                    <span className='fat-amount'>{food.fat} g</span>
-                </div>
-            }
-
+                {props.viewportWidth > 768 &&
+                    <span className='food-selected-indicator-container'>
+                        <i className={props.selectedFoodId == food.id ?
+                                'food-selected-indicator fa fa-chevron-right open' :
+                                'food-selected-indicator fa fa-chevron-right closed'} />
+                    </span>
+                }
+                <span className={'food-name ' + dominantMacro}>
+                    {food.name}
+                </span>
+                <span className='favorites'>
+                    <button
+                        className='add-to-favorites'
+                        onClick={food.favorite ?
+                            () => props.removeFromFavorites(food.id) :
+                            () => props.addToFavorites(food.id)}
+                    >
+                        <i className={food.favorite ? 'fa fa-star' : 'fa fa-star-o'} />
+                    </button>
+                </span>
+                {props.viewportWidth > 768 &&
+                    <div style={{display: 'inline'}}>
+                        <span className='energy-amount'>{food.energy} kcal</span>
+                        <span className='protein-amount'>{food.protein} g</span>
+                        <span className='carb-amount'>{food.carbs} g</span>
+                        <span className='fat-amount'>{food.fat} g</span>
+                    </div>
+                }
             </div>
+
             {props.selectedFoodId == food.id &&
                 <AddToConsumedFoods
                     foodId={food.id}

@@ -35,7 +35,7 @@ export default class Header extends React.Component {
     render() {
         return (
             <div className='header'>
-                <div className='header-content-wrapper'>
+                <div className='header-content-wrapper col-md-10 col-sm-12'>
                     <div className='header-content'>
                         <button className='toggle-nav-menu' style={{display: 'none'}}>
                             <i className='fa fa-bars' />
