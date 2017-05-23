@@ -49,6 +49,7 @@ function DiaryWrapper(props) {
     var activeEntryDate = null;
     if(props.location.search) {
         activeEntryDate = props.location.search.split('=')[1];
+        activeEntryDate = activeEntryDate.replace(/[-]/g, '.');
     } else {
         var d = new Date();
         var day = pad(d.getDate());

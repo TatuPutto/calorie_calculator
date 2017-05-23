@@ -11,8 +11,8 @@ router.use(function (req, res, next) {
     }
 });
 
-router.get('/:entry', function (req, res) {
-    getEntryFromDate(req.session.user.id, req.params.entry)
+router.get('/:entryDate', function (req, res) {
+    getEntryFromDate(req.session.user.id, req.params.entryDate)
         .then(function (entry) {
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(entry));

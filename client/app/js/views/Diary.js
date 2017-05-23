@@ -6,14 +6,13 @@ import ConsumedFoodsTable from '../components/ConsumedFoodsTable';
 import pad from '../util/pad';
 
 export default class Diary extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             diaryEntries: [],
             isFetchingdiaryEntries: true,
             diaryEntriesFetchError: null,
             entry: null,
-            activeEntryDate: this.props.activeEntryDate,
             isFetchingEntry: false,
             entryFetchError: null,
             consumedFoodsVisible: false
@@ -43,7 +42,7 @@ export default class Diary extends React.Component {
 
     // get next entry when query params are pushed
     componentWillReceiveProps(nextProps) {
-        this.getEntry(nextProps.entry);
+        this.getEntry(nextProps.activeEntryDate);
     }
 
     componentDidUpdate() {
@@ -78,6 +77,7 @@ export default class Diary extends React.Component {
         var indexOfNextEntry = (direction == 'next') ?
                 currentIndex - 1 : currentIndex + 1;
         var nextEntry = diaryEntries[indexOfNextEntry];
+        nextEntry = nextEntry.replace(/[.]/g, '-');
 
         this.context.router.history.push(`?entry=${nextEntry}`);
     }
@@ -167,7 +167,7 @@ export default class Diary extends React.Component {
                         {this.props.activeEntryDate}
                     </span>
 
-                    {this.props.activeEntryDate != today &&
+                    {this.props.activeEntryDate != today && this.props.activeEntryDate != this.state.diaryEntries[0] &&
                         <button onClick={()=> this.changeEntry('next')}>
                             <i className='fa fa-chevron-right' />
                         </button>
