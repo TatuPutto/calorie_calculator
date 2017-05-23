@@ -80,7 +80,7 @@ export default class CurrentEntry extends React.Component {
     }
 
     getDailyGoal() {
-        fetch(`daily-goal/${getCurrentDate()}`, fetchParams)
+        fetch(`/daily-goal/${getCurrentDate()}`, fetchParams)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -101,7 +101,7 @@ export default class CurrentEntry extends React.Component {
             isFetchingConsumedFoods: true
         });
 
-        fetch('active-entry', fetchParams)
+        fetch('/active-entry', fetchParams)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -118,15 +118,15 @@ export default class CurrentEntry extends React.Component {
     getMatchingFoods(searchTerm) {
         searchTerm = searchTerm.trim();
         if(!searchTerm) return;
-        this.fetchFoods(`matching-foods/${searchTerm}`);
+        this.fetchFoods(`/matching-foods/${searchTerm}`);
     }
 
     getFavoriteFoods() {
-        this.fetchFoods('favorites');
+        this.fetchFoods('/favorites');
     }
 
     getLatestConsumedFoods() {
-        this.fetchFoods('latest');
+        this.fetchFoods('/latest');
     }
 
     fetchFoods(url) {
@@ -236,7 +236,7 @@ export default class CurrentEntry extends React.Component {
             selectedFood: null,
             selectedFoodAmount: null
         });
-        fetch('active-entry', params).catch((err) => console.error(err));
+        fetch('/active-entry', params).catch((err) => console.error(err));
     }
 
     removeFromDiary(consumptionId) {
@@ -252,7 +252,7 @@ export default class CurrentEntry extends React.Component {
             totalConsumption: updatedValues.totalConsumption
         });
 
-        var url = `active-entry?consumptionId=${consumptionId}`;
+        var url = `/active-entry?consumptionId=${consumptionId}`;
         var params = {
             ...fetchParams,
             method: 'DELETE'
