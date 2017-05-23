@@ -14,8 +14,9 @@ router.use(function (req, res, next) {
     }
 });
 
-router.get('/', function (req, res) {
-    getDailyGoal(req.session.user.id)
+router.get('/:date', function (req, res) {
+    console.log(req.params);
+    getDailyGoal(req.session.user.id, req.params.date)
         .then(function (dailyGoal) {
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(dailyGoal));
