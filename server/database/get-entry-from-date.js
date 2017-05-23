@@ -6,8 +6,8 @@ module.exports = function getEntryFromDate(userId, date) {
     console.log(date);
     var query = 'SELECT consumptionId, foodId, foodAmount, timeOfConsumption ' +
             'FROM consumedfoods WHERE userId=? AND active=1 AND ' +
-            'timeOfConsumption >= STR_TO_DATE(?, "%d.%m.%Y") AND ' +
-            'timeOfConsumption < STR_TO_DATE(?, "%d.%m.%Y") + INTERVAL 1 DAY ' +
+            'timeOfConsumption >= STR_TO_DATE(?, "%d-%m-%Y") AND ' +
+            'timeOfConsumption < STR_TO_DATE(?, "%d-%m-%Y") + INTERVAL 1 DAY ' +
             'ORDER BY timeOfConsumption ASC';
 
             /*
@@ -28,7 +28,6 @@ module.exports = function getEntryFromDate(userId, date) {
             });
         });
     }).then(function (data) {
-        console.log(data);
         var consumedFoods = data.map(function (item) {
             return {
                 consumptionId: item.consumptionId,

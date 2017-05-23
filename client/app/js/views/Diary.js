@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ConsumedFoodsTable from '../components/ConsumedFoodsTable';
 
-import pad from '../util/pad';
+import getCurrentDate from '../util/get-current-date';
 
 export default class Diary extends React.Component {
     constructor() {
@@ -46,7 +46,7 @@ export default class Diary extends React.Component {
     }
 
     componentDidUpdate() {
-        if(!this.state.isFetching && this.state.entry) {
+        if(!this.state.isFetching && this.state.entry && this.state.entry.nutritionValuesPerItem.length > 0) {
             window.requestAnimationFrame(() => {
                 drawChart(this.state.entry.nutritionValuesInTotal);
             });
@@ -54,7 +54,7 @@ export default class Diary extends React.Component {
     }
 
     getEntry(entryDate) {
-        document.title = entryDate;
+        document.title = entryDate.replace(/[-]/g, '.');
 
         fetch(`entry/${entryDate}`, {credentials: 'same-origin'})
             .then((res) => res.json())
@@ -85,7 +85,6 @@ export default class Diary extends React.Component {
         var indexOfNextEntry = (direction == 'next') ?
                 currentIndex - 1 : currentIndex + 1;
         var nextEntry = diaryEntries[indexOfNextEntry];
-        nextEntry = nextEntry.replace(/[.]/g, '-');
 
         this.context.router.history.push(`?entry=${nextEntry}`);
     }
@@ -97,7 +96,8 @@ export default class Diary extends React.Component {
     render() {
         var entryElement = null;
 
-        if(!this.state.isFetchingEntry && this.state.entry) {
+        if(!this.state.isFetchingEntry && this.state.entry &&
+                this.state.entry.nutritionValuesPerItem.length > 0) {
             var {
                 energy: energyInTotal,
                 protein: proteinInTotal,
@@ -117,7 +117,7 @@ export default class Diary extends React.Component {
             var fatInRelationToGoal = Math.round(fatInTotal - fatGoal);
 
             entryElement = (
-                <div className='entry-details col-lg-6 col-sm-10 col-xs-12 col-lg-offset-3 col-sm-offset-1'>
+                <div className='entry-details col-sm-10 col-xs-12 col-sm-offset-1'>
                     <div className='macronutrient-split-chart-container'>
                         <canvas id={'macronutrient-split-chart'} />
                     </div>
@@ -225,13 +225,12 @@ export default class Diary extends React.Component {
                     }
                 </div>
             );
+        } else if(!this.state.isFetching) {
+            entryElement = <p>Tältä päivältä ei löytynyt merkintöjä.</p>;
+        } else {
+            entryElement = <i className='fa fa-spinner fa-spin fa-2x' />
         }
 
-        var d = new Date();
-        var day = pad(d.getDate());
-        var month = pad(d.getMonth() + 1);
-        var year = pad(d.getFullYear());
-        var today = `${day}.${month}.${year}`;
 
         return (
             <div className='diary'>
@@ -243,15 +242,15 @@ export default class Diary extends React.Component {
                     }
 
                     <span className='selected-entry'>
-                        {this.props.activeEntryDate}
+                        {this.props.activeEntryDate.replace(/[-]/g, '.')}
                     </span>
 
-                    {this.props.activeEntryDate != today && this.props.activeEntryDate != this.state.diaryEntries[0] &&
+                    {this.props.activeEntryDate != getCurrentDate() &&
+                            this.props.activeEntryDate != this.state.diaryEntries[0] &&
                         <button onClick={()=> this.changeEntry('next')}>
                             <i className='fa fa-chevron-right' />
                         </button>
                     }
-
                 </div>
                 {entryElement}
             </div>

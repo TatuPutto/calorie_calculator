@@ -6,7 +6,7 @@ import Header from './components/Header';
 import CurrentEntry from './views/CurrentEntry';
 import Diary from './views/Diary';
 
-import pad from './util/pad';
+import getCurrentDate from './util/get-current-date';
 
 require('../css/styles.less');
 
@@ -49,13 +49,9 @@ function DiaryWrapper(props) {
     var activeEntryDate = null;
     if(props.location.search) {
         activeEntryDate = props.location.search.split('=')[1];
-        activeEntryDate = activeEntryDate.replace(/[-]/g, '.');
+        //activeEntryDate = activeEntryDate.replace(/[-]/g, '.');
     } else {
-        var d = new Date();
-        var day = pad(d.getDate());
-        var month = pad(d.getMonth() + 1);
-        var year = pad(d.getFullYear());
-        activeEntryDate = `${day}.${month}.${year}`;
+        activeEntryDate = getCurrentDate();
     }
 
     return (

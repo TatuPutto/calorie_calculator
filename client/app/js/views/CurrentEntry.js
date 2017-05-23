@@ -9,7 +9,8 @@ import DailyGoal from '../components/DailyGoal';
 
 import updateValuesOnAddition from '../util/update-values-on-addition';
 import updateValuesOnRemove from '../util/update-values-on-remove';
-import pad from '../util/pad';
+
+import getCurrentDate from '../util/get-current-date';
 
 var fetchParams = {
     credentials: 'same-origin',
@@ -79,13 +80,7 @@ export default class CurrentEntry extends React.Component {
     }
 
     getDailyGoal() {
-        var d = new Date();
-        var day = pad(d.getDate());
-        var month = pad(d.getMonth() + 1);
-        var year = pad(d.getFullYear());
-        var date = `${day}.${month}.${year}`;
-
-        fetch(`daily-goal/${date}`, fetchParams)
+        fetch(`daily-goal/${getCurrentDate()}`, fetchParams)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({

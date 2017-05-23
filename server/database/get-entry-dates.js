@@ -4,7 +4,7 @@ var calcTotalNutritionValues = require('../util/query-csv').calcTotalNutritionVa
 
 module.exports = function getEntryDates(userId) {
     var query = 'SELECT consumptionId, foodId, foodAmount, ' +
-            'DATE_FORMAT(timeOfConsumption, "%d.%m.%Y") AS timeOfConsumption ' +
+            'DATE_FORMAT(timeOfConsumption, "%d-%m-%Y") AS timeOfConsumption ' +
             'FROM consumedfoods WHERE userId=? AND active=1 ' +
             'ORDER BY timeOfConsumption DESC';
 
@@ -25,6 +25,7 @@ module.exports = function getEntryDates(userId) {
             }
         });
 
+        console.log(entries);
         return entries;
     }).catch(function (err) {
         console.log(err);
