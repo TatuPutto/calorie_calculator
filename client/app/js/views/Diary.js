@@ -117,112 +117,112 @@ export default class Diary extends React.Component {
             var fatInRelationToGoal = Math.round(fatInTotal - fatGoal);
 
             entryElement = (
-                <div className='col-lg-6 col-sm-10 col-xs-12 col-lg-offset-3 col-sm-offset-1' style={{padding: '0', marginTop: '40px', textAlign: 'center', borderRadius: '5px'}}>
-                    <div className='entry-details'>
-                        <div style={{width: '400px', height: '400px', margin: '0 auto'}}>
-                            <canvas id={'macronutrient-split-chart'} />
-                        </div>
-                        <div className='total-container'>
-                            <table>
-                                <thead>
+                <div className='entry-details col-lg-6 col-sm-10 col-xs-12 col-lg-offset-3 col-sm-offset-1'>
+                    <div className='macronutrient-split-chart-container'>
+                        <canvas id={'macronutrient-split-chart'} />
+                    </div>
+                    <div className='total-container'>
+                        <table>
+                            <thead>
+                                <tr>
                                     <th>Makro</th>
                                     <th>Määrä</th>
                                     <th>Tavoite</th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style={{color: '#f6a000'}}>kcal</td>
-                                        <td>
-                                            {Math.round(energyInTotal)} kcal
-                                            {energyInRelationToGoal >= 0 ?
-                                                <span className='over-goal'>
-                                                    (+{energyInRelationToGoal})
-                                                </span>
-                                            :
-                                                <span className='under-goal'>
-                                                    ({energyInRelationToGoal})
-                                                </span>
-                                            }
-                                        </td>
-                                        <td>{energyGoal} kcal</td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{color: '#0fb70f'}}>Proteiini</td>
-                                        <td>
-                                            {Math.round(proteinInTotal)} g
-                                            {proteinInRelationToGoal >= 0 ?
-                                                <span className='over-goal'>
-                                                    (+{proteinInRelationToGoal})
-                                                </span>
-                                            :
-                                                <span className='under-goal'>
-                                                    ({proteinInRelationToGoal})
-                                                </span>
-                                            }
-                                        </td>
-                                        <td>{proteinGoal} g</td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{color: '#207eff'}}>Hiilihydraatit</td>
-                                        <td>
-                                            {Math.round(carbsInTotal)} g
-                                            {carbsInRelationToGoal >= 0 ?
-                                                <span className='over-goal'>
-                                                    (+{carbsInRelationToGoal})
-                                                </span>
-                                            :
-                                                <span className='under-goal'>
-                                                    ({carbsInRelationToGoal})
-                                                </span>
-                                            }
-                                        </td>
-                                        <td>{carbGoal} g</td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{color: '#fa6b6b'}}>Rasva</td>
-                                        <td>
-                                            {Math.round(fatInTotal)} g
-                                            {fatInRelationToGoal >= 0 ?
-                                                <span className='over-goal'>
-                                                    (+{fatInRelationToGoal})
-                                                </span>
-                                            :
-                                                <span className='under-goal'>
-                                                    ({fatInRelationToGoal})
-                                                </span>
-                                            }
-                                        </td>
-                                        <td>{fatGoal} g</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style={{color: '#f6a000'}}>kcal</td>
+                                    <td>
+                                        {Math.round(energyInTotal)}
+                                        {energyInRelationToGoal >= 0 ?
+                                            <span className='over-goal'>
+                                                (+{energyInRelationToGoal})
+                                            </span>
+                                        :
+                                            <span className='under-goal'>
+                                                ({energyInRelationToGoal})
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>{energyGoal}</td>
+                                </tr>
+                                <tr>
+                                    <td style={{color: '#0fb70f'}}>Proteiini</td>
+                                    <td>
+                                        {Math.round(proteinInTotal)} g
+                                        {proteinInRelationToGoal >= 0 ?
+                                            <span className='over-goal'>
+                                                (+{proteinInRelationToGoal})
+                                            </span>
+                                        :
+                                            <span className='under-goal'>
+                                                ({proteinInRelationToGoal})
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>{proteinGoal} g</td>
+                                </tr>
+                                <tr>
+                                    <td style={{color: '#207eff'}}>Hiilihydraatit</td>
+                                    <td>
+                                        {Math.round(carbsInTotal)} g
+                                        {carbsInRelationToGoal >= 0 ?
+                                            <span className='over-goal'>
+                                                (+{carbsInRelationToGoal})
+                                            </span>
+                                        :
+                                            <span className='under-goal'>
+                                                ({carbsInRelationToGoal})
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>{carbGoal} g</td>
+                                </tr>
+                                <tr>
+                                    <td style={{color: '#fa6b6b'}}>Rasva</td>
+                                    <td>
+                                        {Math.round(fatInTotal)} g
+                                        {fatInRelationToGoal >= 0 ?
+                                            <span className='over-goal'>
+                                                (+{fatInRelationToGoal})
+                                            </span>
+                                        :
+                                            <span className='under-goal'>
+                                                ({fatInRelationToGoal})
+                                            </span>
+                                        }
+                                    </td>
+                                    <td>{fatGoal} g</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                        {this.state.consumedFoodsVisible ?
-                            <div>
-                                <ConsumedFoodsTable
-                                    viewportWidth={this.props.viewportWidth}
-                                    isModifiable={false}
-                                    isFetchingConsumedFoods={false}
-                                    consumedFoods={this.state.entry.nutritionValuesPerItem}
-                                />
-                                <button
-                                    className='btn btn-default'
-                                    onClick={this.toggleConsumedFoodsVisibility}
-                                    style={{marginTop: '20px'}}
-                                >
-                                    Piilota tarkemmat tiedot
-                                </button>
-                            </div>
-                        :
+                    {this.state.consumedFoodsVisible ?
+                        <div style={{marginBottom: '40px'}}>
+                            <ConsumedFoodsTable
+                                viewportWidth={this.props.viewportWidth}
+                                isModifiable={false}
+                                isFetchingConsumedFoods={false}
+                                consumedFoods={this.state.entry.nutritionValuesPerItem}
+                            />
                             <button
                                 className='btn btn-default'
                                 onClick={this.toggleConsumedFoodsVisibility}
+                                style={{marginTop: '20px'}}
                             >
-                                Näytä tarkemmat tiedot
+                                Piilota tarkemmat tiedot
                             </button>
-                        }
-                    </div>
+                        </div>
+                    :
+                        <button
+                            className='btn btn-default'
+                            onClick={this.toggleConsumedFoodsVisibility}
+                        >
+                            Näytä tarkemmat tiedot
+                        </button>
+                    }
                 </div>
             );
         }

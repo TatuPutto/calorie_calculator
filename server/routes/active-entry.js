@@ -2,7 +2,7 @@ var createConnection = require('../database/create-connection');
 var getConsumedFoods = require('../database/get-consumed-foods');
 var addFoodToConsumedFoods = require('../database/add-food-to-consumed-foods');
 var removeFoodFromConsumedFoods = require('../database/remove-food-from-consumed-foods');
-var dailyIntakeWithCookies = require('./daily-intake-cookie-fallback');
+var activeEntryCookieFallback = require('./active-entry-cookie-fallback');
 var bodyParser = require('body-parser');
 var express = require('express');
 var router = express.Router();
@@ -12,7 +12,7 @@ router.use(function (req, res, next) {
         next();
     } else {
         // use cookies to store consumed foods if user isn't logged in
-        dailyIntakeWithCookies(req, res);
+        activeEntryCookieFallback(req, res);
     }
 });
 
@@ -32,7 +32,6 @@ router.use(bodyParser.json());
 
 // add food and amount to list of consumed foods
 router.post('/', function (req, res) {
-    console.log(req.body);
     var userId = req.session.user.id;
     var consumptionId = req.body.consumptionId;
     var foodId = req.body.foodId;

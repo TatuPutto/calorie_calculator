@@ -6,7 +6,7 @@ var router = express.Router();
 router.use(cookieParser());
 
 // get daily goal from cookie
-router.get('/', function (req, res) {
+router.get('/:date', function (req, res) {
     var dailyGoalCookie = req.cookies['dailyGoal'];
     var dailyGoal = dailyGoalCookie ? JSON.parse(dailyGoalCookie) : null;
 

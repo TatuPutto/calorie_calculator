@@ -41,8 +41,16 @@ export default class Header extends React.Component {
                             <i className='fa fa-bars' />
                         </button>
                         <ul className='nav-menu'>
-                            <li><NavLink to='/current-entry' activeStyle={{fontWeight: 'bold'}}>Tänään</NavLink></li>
-                            <li><NavLink to='/diary' activeStyle={{fontWeight: 'bold'}}>Päiväkirja</NavLink></li>
+                            <li>
+                                <NavLink to='/current-entry' activeStyle={{textDecoration: 'underline'}}>
+                                    Tänään
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to='/diary' activeStyle={{textDecoration: 'underline'}}>
+                                    Päiväkirja
+                                </NavLink>
+                            </li>
                         </ul>
                         <div className='user-info'>
                             {this.state.loggedIn ?

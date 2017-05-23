@@ -2,7 +2,7 @@ var findMatchingFoodsByIds = require('../util/query-csv').findMatchingFoodsByIds
 var markFoodsAsFavorites = require('../util/mark-foods-as-favorites');
 var getLatestConsumedFoods = require('../database/get-latest-consumed-foods');
 var getFavoriteFoods = require('../database/get-favorite-foods');
-var latestConsumedFoodsCookieFallback = require('./latest-consumed-foods-cookie-fallback');
+var latestCookieFallback = require('./latest-cookie-fallback');
 var findIndexOfObjectId = require('../util/find-index-of-object-id');
 var express = require('express');
 var router = express.Router();
@@ -11,7 +11,7 @@ router.use(function (req, res, next) {
     if(req.session.user) {
         next();
     } else {
-        latestConsumedFoodsCookieFallback(req, res);
+        latestCookieFallback(req, res);
     }
 });
 

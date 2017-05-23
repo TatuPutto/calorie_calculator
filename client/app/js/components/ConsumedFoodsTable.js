@@ -33,6 +33,13 @@ export default function ConsumedFoodsTable(props) {
 
     return (
         <table className='consumed-foods-table'>
+            {props.viewportWidth < 768 &&
+                <thead style={{textAlign: 'center'}}>
+                    <tr>
+                        <th>Merkinnät</th>
+                    </tr>
+                </thead>
+            }
             <tbody>
                 {consumedFoodsRows}
                 {props.consumedFoods.length > 1 && props.isModifiable &&

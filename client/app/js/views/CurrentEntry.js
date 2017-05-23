@@ -85,7 +85,7 @@ export default class CurrentEntry extends React.Component {
         var year = pad(d.getFullYear());
         var date = `${day}.${month}.${year}`;
 
-        fetch(`/daily-goal/${date}`, fetchParams)
+        fetch(`daily-goal/${date}`, fetchParams)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -106,7 +106,7 @@ export default class CurrentEntry extends React.Component {
             isFetchingConsumedFoods: true
         });
 
-        fetch('/daily-intake', fetchParams)
+        fetch('active-entry', fetchParams)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -123,15 +123,15 @@ export default class CurrentEntry extends React.Component {
     getMatchingFoods(searchTerm) {
         searchTerm = searchTerm.trim();
         if(!searchTerm) return;
-        this.fetchFoods(`/matching-foods/${searchTerm}`);
+        this.fetchFoods(`matching-foods/${searchTerm}`);
     }
 
     getFavoriteFoods() {
-        this.fetchFoods('/favorites');
+        this.fetchFoods('favorites');
     }
 
     getLatestConsumedFoods() {
-        this.fetchFoods('/latest');
+        this.fetchFoods('latest');
     }
 
     fetchFoods(url) {
@@ -238,7 +238,7 @@ export default class CurrentEntry extends React.Component {
             }
         }
 
-        fetch('/daily-intake', params).catch((err) => console.error(err));
+        fetch('active-entry', params).catch((err) => console.error(err));
     }
 
     removeFromDiary(consumptionId) {
@@ -254,7 +254,7 @@ export default class CurrentEntry extends React.Component {
             totalConsumption: updatedValues.totalConsumption
         });
 
-        var url = `/daily-intake?consumptionId=${consumptionId}`;
+        var url = `active-entry?consumptionId=${consumptionId}`;
         var params = {
             ...fetchParams,
             method: 'DELETE'
@@ -294,7 +294,7 @@ export default class CurrentEntry extends React.Component {
 
     render() {
         return (
-            <div className='daily-intake'>
+            <div className='current-entry'>
                 <SearchTypes
                     fetchMethod={this.state.fetchMethod}
                     changeFetchMethod={this.changeFetchMethod}

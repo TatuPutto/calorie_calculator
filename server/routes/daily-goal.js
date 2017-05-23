@@ -1,7 +1,7 @@
 var getConnection = require('../database/create-connection');
 var setDailyGoal = require('../database/set-daily-goal');
 var getDailyGoal = require('../database/get-daily-goal');
-var dailyGoalWithCookies = require('./daily-goal-cookie-fallback');
+var dailyGoalCookieFallback = require('./daily-goal-cookie-fallback');
 var bodyParser = require('body-parser');
 var express = require('express');
 var router = express.Router();
@@ -10,12 +10,12 @@ router.use(function (req, res, next) {
     if(req.session.user) {
         next();
     } else {
-        dailyGoalWithCookies(req, res);
+        console.log('tällllääääää');
+        dailyGoalCookieFallback(req, res);
     }
 });
 
 router.get('/:date', function (req, res) {
-    console.log(req.params);
     getDailyGoal(req.session.user.id, req.params.date)
         .then(function (dailyGoal) {
             res.writeHead(200, {'Content-Type': 'application/json'});
