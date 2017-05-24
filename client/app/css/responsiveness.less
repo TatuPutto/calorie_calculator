@@ -54,21 +54,35 @@
     }
 
     .entry-details {
-        margin-top: 20px;
+        margin-top: 30px;
+    }
+
+    .entry-details .row {
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+
+
+    .entry-details button {
+        width: 80%;
     }
 
     .macronutrient-split-chart-container {
-        width: 300px;
-        height: 300px;
+        order: 1;
+    }
+
+    .macronutrient-split-chart-container-header {
+        display: none;
     }
 
     .total-container {
         margin: 30px 0;
+        order: 2;
     }
 
     .total-container thead, .consumed-foods-table thead, {
         color: white;
-        background: #4b75ca;
+        background: #4fcc81;
         font-size: 14px;
     }
 
@@ -92,17 +106,23 @@
     }
 
     .total-container th:first-child, .total-container td:first-child {
-        width: 34%;
-        text-align: center;
+        width: 31%;
+        text-align: left;
+        padding-left: 10px;
     }
 
-    .total-container th:nth-child(2), .total-container td:nth-child(2) {
-        width: 33%;
+    //.total-container th:nth-child(2),
+    .total-container td:nth-child(2)
+    .total-container td:nth-child(3),
+    .total-container td:nth-child(4)
+
+    {
+        width: 23%;
     }
 
-    .total-container th:nth-child(3), .total-container td:nth-child(3) {
-        width: 33%;
-    }
+    /*.total-container th:nth-child(3), .total-container td:nth-child(3) {
+        width: 22%;
+    }*/
 
     span {
         line-height: 20px;

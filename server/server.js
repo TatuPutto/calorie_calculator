@@ -1,3 +1,4 @@
+var path = require('path');
 var express = require('express')
 var session = require('client-sessions');
 var login = require('./routes/login');
@@ -21,8 +22,8 @@ app.use(session({
     secret: 'gjkrejtGSDFGertjksfdv<JLfjdsalfsadtjwekWRAsdf',
     duration: (7 * 24 * 60 * 60 * 1000)
 }));
-app.use(express.static(require('path').join(__dirname, '../client/app')));
-app.use(express.static(require('path').join(__dirname, './public')));
+app.use(express.static(path.join(__dirname, '../client/app')));
+app.use(express.static(path.join(__dirname, './public')));
 
 app.use('/login', login);
 app.use('/logout', logout);

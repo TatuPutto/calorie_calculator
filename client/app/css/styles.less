@@ -1,20 +1,24 @@
-.default-border(@width: 1px, @style: solid, @color: #c3cfff, @border-radius: 3px) {
+//@default-border-color: #d6dcf8;
+@default-border-color: #e2e5f3;
+@new-border-color: #e2e5f3;
+
+.default-border(@width: 1px, @style: solid, @color: @default-border-color, @border-radius: 3px) {
     border: @width @style @color;
     border-radius: @border-radius;
 }
 
-.left-td-border(@width: 1px, @style: solid, @color: #d6dcf8) {
+.left-td-border(@width: 1px, @style: solid, @color: @default-border-color) {
     border-left: @width @style @color;
     border-right: @width @style @color;
     border-bottom: @width @style @color;
 }
 
-.mid-td-border(@width: 1px, @style: solid, @color: #d6dcf8) {
+.mid-td-border(@width: 1px, @style: solid, @color: @default-border-color) {
     border-right: @width @style @color;
     border-bottom: @width @style @color;
 }
 
-.right-td-border(@width: 1px, @style: solid, @color: #d6dcf8) {
+.right-td-border(@width: 1px, @style: solid, @color: @default-border-color) {
     border-right: @width @style @color;
     border-bottom: @width @style @color;
 }
@@ -53,7 +57,7 @@ th {
 }
 
 tr {
-    border: 1px solid #d6dcf8;
+    border: 1px solid @default-border-color;
 }
 
 td {
@@ -65,7 +69,7 @@ i {
 }
 
 tr:first-child td {
-    border-top: 1px solid #d6dcf8;
+    border-top: 1px solid @default-border-color;
 }
 
 // table top left rounded border
@@ -129,8 +133,10 @@ td:nth-child(7) {
 .header {
     color: white;
     height: 35px;
-    background: #74a2ff;
-    border-bottom: 1px solid #3e3eff;
+    //background: #74a2ff;
+    //border-bottom: 1px solid #3e3eff;
+    background: #2bb161;
+    border-bottom: 1px solid #1b9c48;
 }
 
 .header-content-wrapper {
@@ -168,9 +174,12 @@ td:nth-child(7) {
     padding: 2px 8px;
     margin-top: 5px;
     color: white;
-    border: 1px solid #5d5df9;
+    /*border: 1px solid #5d5df9;
     border-radius: 3px;
-    background: linear-gradient(#7fb7f1, #3c8fe4);
+    background: linear-gradient(#7fb7f1, #3c8fe4);*/
+    border: 1px solid #107710;
+    border-radius: 3px;
+    background: linear-gradient(#2aca2a, #149e14);
 }
 
 .header button i {
@@ -270,9 +279,7 @@ td:nth-child(7) {
     background: linear-gradient(to right, red 82.125%, rgb(252, 198, 180) 82.125%);
 }
 
-p {
-    display: inline;
-}
+
 /*
 .new-goals p:first-child {
     position: absolute;
@@ -371,7 +378,7 @@ p {
 
 .matching-foods ul li {
     overflow-y: hidden;
-    border-bottom: 1px solid #d6dcf8;
+    border-bottom: 1px solid @default-border-color;
 }
 
 .matching-foods ul li:first-child {
@@ -417,7 +424,7 @@ p {
 
 .add-to-consumed-foods-list {
     background: #fcfcfc;
-    border-top: 1px solid #d6dcf8;
+    border-top: 1px solid @default-border-color;
     text-align: left;
 }
 
@@ -549,27 +556,27 @@ span:nth-child(5) {
 
     .favorites {
         width: 33px;
-        border-right: 1px solid #d6dcf8;
+        border-right: 1px solid @default-border-color;
     }
 
     .energy-amount {
         width: 10%;
         color: #f6a000;
-        border-right: 1px solid #d6dcf8;
+        border-right: 1px solid @default-border-color;
     }
 
     .protein-amount {
         //background: #93f093;
         color: #0fb70f;
         width: 8%;
-        border-right: 1px solid #d6dcf8;
+        border-right: 1px solid @default-border-color;
     }
 
     .carb-amount {
         //background: #c5d4ed;
         color: #207eff;
         width: 8%;
-        border-right: 1px solid #d6dcf8;
+        border-right: 1px solid @default-border-color;
     }
 
     .fat-amount {
@@ -595,12 +602,12 @@ span:nth-child(5) {
         .consumed-foods-table th:nth-child(2), td:nth-child(2) {
             text-align: left;
             width: 55%;
-            border-right: 1px solid #d6dcf8;
+            border-right: 1px solid @default-border-color;
         }
 
         .consumed-foods-table th:nth-child(3), td:nth-child(3) {
             width: 8%;
-            border-right: 1px solid #d6dcf8;
+            border-right: 1px solid @default-border-color;
         }
 
         .consumed-foods-table th:nth-child(4), td:nth-child(4) {
@@ -629,43 +636,43 @@ span:nth-child(5) {
     }
 
     .diary {
-        .consumed-foods-table th:first-child, td:first-child {
+        .consumed-foods-table td:first-child {
             text-align: left;
-            width: 58%;
-            border: 1px solid #d6dcf8;
+            width: 55%;
+            border: 1px solid @default-border-color;
             border-top: none;
         }
 
-        .consumed-foods-table th:nth-child(2), td:nth-child(2) {
+        .consumed-foods-table td:nth-child(2) {
             width: 8%;
-            border: 1px solid #d6dcf8;
+            border: 1px solid @default-border-color;
             border-top: none;
             border-left: none;
         }
 
-        .consumed-foods-table th:nth-child(3), td:nth-child(3) {
+        .consumed-foods-table td:nth-child(3) {
             width: 10%;
-            border: 1px solid #d6dcf8;
+            border: 1px solid @default-border-color;
             border-top: none;
             border-left: none;
         }
 
-        .consumed-foods-table th:nth-child(4), td:nth-child(4) {
-            border: 1px solid #d6dcf8;
-            border-top: none;
-            border-left: none;
-            width: 8%;
-        }
-
-        .consumed-foods-table th:nth-child(5), td:nth-child(5) {
-            border: 1px solid #d6dcf8;
+        .consumed-foods-table td:nth-child(4) {
+            border: 1px solid @default-border-color;
             border-top: none;
             border-left: none;
             width: 8%;
         }
 
-        .consumed-foods-table th:nth-child(6), td:nth-child(6) {
-            border: 1px solid #d6dcf8;
+        .consumed-foods-table td:nth-child(5) {
+            border: 1px solid @default-border-color;
+            border-top: none;
+            border-left: none;
+            width: 8%;
+        }
+
+        .consumed-foods-table td:nth-child(6) {
+            border: 1px solid @default-border-color;
             border-top: none;
             border-left: none;
             width: 8%;
@@ -873,7 +880,7 @@ span:nth-child(5) {
     font-size: 14px;
     max-height: 500px;
     overflow-y: auto;
-    border: 1px solid #d6dcf8;
+    border: 1px solid @default-border-color;
     border-radius: 3px;
     line-height: 30px;
 }
@@ -925,7 +932,7 @@ table {
 }
 
 .remove-consumed-food {
-    border-right: 1px solid #d6dcf8;
+    border-right: 1px solid @default-border-color;
 }
 
 .remove-consumed-food:hover {

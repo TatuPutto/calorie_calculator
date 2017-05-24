@@ -49,7 +49,6 @@ function DiaryWrapper(props) {
     var activeEntryDate = null;
     if(props.location.search) {
         activeEntryDate = props.location.search.split('=')[1];
-        //activeEntryDate = activeEntryDate.replace(/[-]/g, '.');
     } else {
         activeEntryDate = getCurrentDate();
     }
@@ -65,7 +64,7 @@ render(
             {/*}<Redirect exact from='/' to='/current-entry' />*/}
             <Header />
             <Route exact path='/diary' component={DiaryWrapper} />
-            <Route exact path='/current-entry' component={CurrentEntryWrapper} />
+            <Route exact path='/today' component={CurrentEntryWrapper} />
         </div>
     </BrowserRouter>,
     document.getElementById('app')
