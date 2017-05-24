@@ -117,7 +117,7 @@ export default class Diary extends React.Component {
 
             var energyInRelationToGoal = Math.round(energyInTotal - energyGoal);
             var proteinInRelationToGoal = Math.round(proteinInTotal - proteinGoal);
-            var carbsInRelationToGoal = Math.round(400 - carbGoal);
+            var carbsInRelationToGoal = Math.round(carbsInTotal - carbGoal);
             var fatInRelationToGoal = Math.round(fatInTotal - fatGoal);
 
             entryElement = (
@@ -224,14 +224,16 @@ export default class Diary extends React.Component {
                             </button>
                         </div>
                     </div>
-                    {this.state.detailsVisible &&
-                        <ConsumedFoodsTable
-                            viewportWidth={this.props.viewportWidth}
-                            isModifiable={false}
-                            isFetchingConsumedFoods={false}
-                            consumedFoods={this.state.entry.nutritionValuesPerItem}
-                        />
-                    }
+                    <div className='row'>
+                        {this.state.detailsVisible &&
+                            <ConsumedFoodsTable
+                                viewportWidth={this.props.viewportWidth}
+                                isModifiable={false}
+                                isFetchingConsumedFoods={false}
+                                consumedFoods={this.state.entry.nutritionValuesPerItem}
+                            />
+                        }
+                    </div>
                 </div>
             );
         } else if(!this.state.isFetching) {

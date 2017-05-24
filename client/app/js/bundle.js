@@ -22,7 +22,7 @@ function CurrentEntryWrapper(props) {
     var fetchMethod;
 
     // resolve fetchMethod from pathname
-    if(pathname == '/current-entry') {
+    if(pathname == '/' || pathname == '/current-entry') {
         fetchMethod = 'haku';
     } else {
         fetchMethod = pathname.match(/haku|suosikit|viimeisimmat/g)[0];
@@ -63,8 +63,10 @@ render(
         <div className='container-fluid'>
             {/*}<Redirect exact from='/' to='/current-entry' />*/}
             <Header />
+            <Route exact path='/' component={CurrentEntryWrapper} />
+            <Route exact path='/current-entry' component={CurrentEntryWrapper} />
             <Route exact path='/diary' component={DiaryWrapper} />
-            <Route exact path='/today' component={CurrentEntryWrapper} />
+
         </div>
     </BrowserRouter>,
     document.getElementById('app')

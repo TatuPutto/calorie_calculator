@@ -30,7 +30,6 @@ export default function ConsumedFoodsTable(props) {
 
         return row;
     });
-
     return (
         <table className='consumed-foods-table'>
             {props.viewportWidth < 768 &&
@@ -43,7 +42,19 @@ export default function ConsumedFoodsTable(props) {
                 </thead>
             }
 
-            {props.viewportWidth > 768 &&
+            {/*}{props.viewportWidth > 768 && props.isModifiable ?
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Elintarvike</th>
+                        <th>Määrä</th>
+                        <th>kcal</th>
+                        <th>P</th>
+                        <th>HH</th>
+                        <th>R</th>
+                    </tr>
+                </thead>
+                :
                 <thead>
                     <tr>
                         <th>Elintarvike</th>
@@ -54,7 +65,7 @@ export default function ConsumedFoodsTable(props) {
                         <th>R</th>
                     </tr>
                 </thead>
-            }
+            }*/}
             <tbody>
                 {consumedFoodsRows}
                 {props.consumedFoods.length > 1 && props.isModifiable &&

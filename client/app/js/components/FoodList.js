@@ -13,6 +13,25 @@ export default function FoodList(props) {
 
     return (
         <ul className='food-list'>
+            <li style={{color: 'white', background: '#4fcc81', fontSize: '13px', height: '24px'}}>
+                <span style={{width: '66%', textAlign: 'center', verticalAlign: 'top', lineHeight: '23px'}}>
+                    Ravintoaine <i className='fa fa-caret-down' style={{color: '#fff', fontSize: '15px', verticalAlign: 'middle'}}/>
+                </span>
+
+                <span style={{width: '10%', textAlign: 'center', verticalAlign: 'top', lineHeight: '23px', borderLeft: '1px solid #fff'}}>
+                    kcal / 100 g
+                </span>
+                <span style={{width: '8%', textAlign: 'center', verticalAlign: 'top', lineHeight: '23px', borderLeft: '1px solid #fff'}}>
+                    P / 100 g
+                </span>
+                <span style={{width: '8%', textAlign: 'center', verticalAlign: 'top', lineHeight: '23px', borderLeft: '1px solid #fff'}}>
+                    HH / 100 g
+                </span>
+                <span style={{width: '8%', textAlign: 'center', verticalAlign: 'top', lineHeight: '23px'}}>
+                    R / 100 g
+                </span>
+            </li>
+
             {foods.map(function (food) {
                 return (
                     <SingleFood

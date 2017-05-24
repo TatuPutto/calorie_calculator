@@ -49,7 +49,7 @@ export default function drawChart(entry) {
     var ctx = canvas.getContext('2d');
     var radius = ctx.canvas.width / 2;
     var lastSegmentEnd = 0;
-    var segmentColors = ['#60BD68', '#5DA5DA', '#F15854'];
+    var segmentColors = ['#47de83', '#5DA5DA', '#ea5450'];
     var pieData = [protein, carbs, fat];
     var pieTotal = protein + carbs + fat;
 
