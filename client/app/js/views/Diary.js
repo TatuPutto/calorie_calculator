@@ -142,7 +142,7 @@ export default class Diary extends React.Component {
             );
         } else {
             entryElement = <div className='no-entry-found'>
-                <p>Tältä päivältä ei löytynyt merkintöjä.</p>;
+                <p>Tältä päivältä ei löytynyt merkintöjä.</p>
             </div>;
         }
 

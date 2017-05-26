@@ -118,6 +118,7 @@ export default class CurrentEntry extends React.Component {
     getMatchingFoods(searchTerm) {
         searchTerm = searchTerm.trim();
         if(!searchTerm) return;
+        this.setState({searchTerm: null});
         this.fetchFoods(`/matching-foods/${searchTerm}`);
     }
 
@@ -169,6 +170,7 @@ export default class CurrentEntry extends React.Component {
 
     changeSearchTerm(event) {
         if(event.key == 'Enter') {
+            event.currentTarget.value = '';
             this.doSearch();
         } else {
             this.setState({searchTerm: event.currentTarget.value});
@@ -176,7 +178,10 @@ export default class CurrentEntry extends React.Component {
     }
 
     doSearch() {
-        this.context.router.history.push(`?ravintoaine=${this.state.searchTerm}`);
+        if(this.state.searchTerm.trim()) {
+            console.log(this.state.searchTerm);
+            this.context.router.history.push(`?ravintoaine=${this.state.searchTerm}`);
+        }
     }
 
     showMoreResults() {

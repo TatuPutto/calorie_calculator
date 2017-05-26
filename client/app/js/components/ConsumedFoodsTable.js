@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SingleConsumedFood from './SingleConsumedFood';
 import SingleConsumedFoodCompactLayout from './SingleConsumedFoodCompactLayout';
 import TotalConsumption from './TotalConsumption';
+import TotalConsumptionInPercentages from './TotalConsumptionInPercentages';
 
 export default function ConsumedFoodsTable(props) {
     var consumedFoodsRows = props.consumedFoods.map((food) => {
@@ -42,11 +43,11 @@ export default function ConsumedFoodsTable(props) {
                 </thead>
             }
 
-            {props.viewportWidth > 768 && props.isModifiable ?
+            {props.viewportWidth > 768 && props.isModifiable &&
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Elintarvike</th>
+                        <th style={{paddingLeft: '3%'}}>Elintarvike</th>
                         <th>Määrä</th>
                         <th>kcal</th>
                         <th>P</th>
@@ -54,7 +55,8 @@ export default function ConsumedFoodsTable(props) {
                         <th>R</th>
                     </tr>
                 </thead>
-                :
+            }
+            {props.viewportWidth > 768 && !props.isModifiable &&
                 <thead>
                     <tr>
                         <th>Elintarvike</th>
@@ -71,6 +73,10 @@ export default function ConsumedFoodsTable(props) {
                 {props.consumedFoods.length > 1 && props.isModifiable &&
                     <TotalConsumption totalConsumption={props.totalConsumption} />
                 }
+                {props.isModifiable &&
+                    <TotalConsumptionInPercentages
+                            totalConsumption={props.totalConsumption} />
+                }
             </tbody>
         </table>
     );
@@ -79,5 +85,6 @@ export default function ConsumedFoodsTable(props) {
 ConsumedFoodsTable.propTypes = {
     viewportWidth: PropTypes.number.isRequired,
     isModifiable: PropTypes.bool.isRequired,
-    consumedFoods: PropTypes.array.isRequired
+    consumedFoods: PropTypes.array.isRequired,
+    removeFromDiary: PropTypes.func
 };

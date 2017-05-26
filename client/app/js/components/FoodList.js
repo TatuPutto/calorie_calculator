@@ -1,53 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SingleFood from './SingleFood';
+import FoodListHeader from './FoodListHeader';
+import FoodItem from './FoodItem';
+import FoodItemCompactLayout from './FoodItemCompactLayout';
 
 export default function FoodList(props) {
     var foods = [];
-    if(props.viewportWidth < 768) {
-        foods = props.foods.slice(0, (props.offset + 10));
+    var foodItems = [];
+
+    if(props.viewportWidth > 768) {
+        props.foods.forEach((food) => {
+            foodItems.push(<FoodItem key={food.id} food={food} {...props} />);
+        });
     } else {
-        foods = props.foods;
+        foods = props.foods.slice(0, (props.offset + 10));
+        foods.forEach((food) => {
+            foodItems.push(
+                <FoodItemCompactLayout key={food.id} food={food} {...props} />
+            );
+        });
     }
 
     return (
         <ul className='food-list'>
-            <li style={{color: 'white', background: '#2894e2', fontSize: '13px', height: '24px'}}>
-                <span style={{width: '66%', textAlign: 'center', verticalAlign: 'top', lineHeight: '23px'}}>
-                    Ravintoaine <i className='fa fa-caret-down' style={{color: '#fff', fontSize: '15px', verticalAlign: 'middle'}}/>
-                </span>
-
-                <span style={{width: '10%', textAlign: 'center', verticalAlign: 'top', lineHeight: '23px', borderLeft: '1px solid #fff'}}>
-                    kcal / 100 g
-                </span>
-                <span style={{width: '8%', textAlign: 'center', verticalAlign: 'top', lineHeight: '23px', borderLeft: '1px solid #fff'}}>
-                    P / 100 g
-                </span>
-                <span style={{width: '8%', textAlign: 'center', verticalAlign: 'top', lineHeight: '23px', borderLeft: '1px solid #fff'}}>
-                    HH / 100 g
-                </span>
-                <span style={{width: '8%', textAlign: 'center', verticalAlign: 'top', lineHeight: '23px'}}>
-                    R / 100 g
-                </span>
-            </li>
-
-            {foods.map(function (food) {
-                return (
-                    <SingleFood
-                        key={food.id}
-                        viewportWidth={props.viewportWidth}
-                        food={food}
-                        selectFood={props.selectFood}
-                        setSelectedFoodAmount={props.setSelectedFoodAmount}
-                        selectedFoodId={props.selectedFoodId}
-                        selectedFoodAmount={props.selectedFoodAmount}
-                        addToDiary={props.addToDiary}
-                        addToFavorites={props.addToFavorites}
-                        removeFromFavorites={props.removeFromFavorites}
-                    />
-                );
-            })}
+            {props.viewportWidth > 768 &&
+                <FoodListHeader />
+            }
+            {foodItems}
         </ul>
     );
 }

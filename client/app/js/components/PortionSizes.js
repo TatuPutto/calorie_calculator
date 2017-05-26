@@ -8,20 +8,16 @@ export default function PortionSizes(props) {
         var portionAmount = portionSizes[portion];
 
         return (
-            <li
-                key={portion}
-                onClick={() => props.addToDiary(foodId, portionAmount)}
-            >
+            <li key={portion}
+                    onClick={() => props.addToDiary(foodId, portionAmount)}>
                 <a>{portion} ({portionAmount} g)</a>
             </li>
         );
     });
 
     return (
-        <div className='portion-sizes'>
-            <ul>
-                {portions}
-            </ul>
-        </div>
+        <ul className='portion-sizes'>
+            {portions}
+        </ul>
     );
 }

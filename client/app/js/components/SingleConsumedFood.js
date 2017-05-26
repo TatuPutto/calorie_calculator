@@ -27,5 +27,5 @@ export default function SingleConsumedFood(props) {
 
 SingleConsumedFood.propTypes = {
     food: PropTypes.object.isRequired,
-    removeFromDiary: PropTypes.func.isRequired
+    removeFromDiary: PropTypes.func
 };

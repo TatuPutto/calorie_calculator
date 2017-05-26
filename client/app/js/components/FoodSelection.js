@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import SearchTypes from './SearchTypes';
 import FoodList from './FoodList';
+import SearchPane from './SearchPane';
 import ShowMoreResultsButton from './ShowMoreResultsButton';
 
 export default function FoodSelection(props) {
@@ -42,24 +43,15 @@ export default function FoodSelection(props) {
 
     return (
         <div className='food-selection'>
-            <div className={'food-selection-wrapper col-lg-10 col-md-10 col-sm-12'}>
-                <div className='matching-foods'>
-                    {fetchMethod == 'haku' &&
-                        <div className='search'>
-                            <input
-                                type='text'
-                                className='search-input'
-                                placeholder='Hae ruokaa tai raaka-ainetta'
-                                defaultValue={searchTerm}
-                                onKeyUp={changeSearchTerm}
-                            />
-                            <button className='do-search' onClick={doSearch}>
-                                <i className='fa fa-search' />
-                            </button>
-                        </div>
-                    }
-                    {matchingFoodsOutput}
-                </div>
+            <div className={'food-selection-wrapper col-md-10 col-sm-12'}>
+                {fetchMethod == 'haku' &&
+                    <SearchPane
+                        searchTerm={props.searchTerm}
+                        changeSearchTerm={props.changeSearchTerm}
+                        doSearch={props.doSearch}
+                    />
+                }
+                {matchingFoodsOutput}
             </div>
         </div>
     );

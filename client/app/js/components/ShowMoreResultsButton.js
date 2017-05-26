@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SingleFood from './SingleFood';
 
 export default function ShowMoreResultsButton(props) {
     var {viewportWidth, foodsAmount, offset, showMoreResults} = props;

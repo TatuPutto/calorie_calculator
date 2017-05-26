@@ -31,5 +31,5 @@ export default function SingleConsumedFoodCompactLayout(props) {
 
 SingleConsumedFoodCompactLayout.propTypes = {
     food: PropTypes.object.isRequired,
-    removeFromDiary: PropTypes.func.isRequired
+    removeFromDiary: PropTypes.func
 };

@@ -33,7 +33,10 @@ export default function TotalConsumptionTable(props) {
             </thead>
             <tbody>
                 <tr>
-                    <td style={{color: '#0fb70f'}}>Proteiini</td>
+                    <td>
+                        <span className='chart-label'></span>
+                        Proteiini
+                    </td>
                     <td>
                         {Math.round(proteinInTotal)}
                     </td>
@@ -51,7 +54,11 @@ export default function TotalConsumptionTable(props) {
                     </td>
                 </tr>
                 <tr>
-                    <td style={{color: '#207eff'}}>Hiilihydraatit</td>
+                    <td>
+                        <span className='chart-label'
+                                style={{background: '#5da5da'}} />
+                        Hiilihydraatit
+                    </td>
                     <td>
                         {Math.round(carbsInTotal)}
                     </td>
@@ -69,7 +76,10 @@ export default function TotalConsumptionTable(props) {
                     </td>
                 </tr>
                 <tr>
-                    <td style={{color: '#fa6b6b'}}>Rasva</td>
+                    <td><span className='chart-label'
+                            style={{background: '#ea5450'}} />
+                        Rasva
+                    </td>
                     <td>
                         {Math.round(fatInTotal)}
                     </td>
@@ -87,7 +97,11 @@ export default function TotalConsumptionTable(props) {
                     </td>
                 </tr>
                 <tr>
-                    <td style={{color: '#f6a000'}}>kcal</td>
+                    <td>
+                        <span className='chart-label'
+                                style={{background: '#f6a000'}} />
+                            kcal
+                    </td>
                     <td>
                         {Math.round(energyInTotal)}
                     </td>

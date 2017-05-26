@@ -34,13 +34,13 @@ export default function drawChart(entry) {
         }]
     };*/
 
-    CanvasJS.addColorSet('macros', ['#47de83', '#5DA5DA', '#ea5450']);
+    CanvasJS.addColorSet('macros', ['#47de83', '#5da5da', '#ea5450']);
 
     var chart = new CanvasJS.Chart('macronutrient-split-chart-container', {
         height: 260,
         width: 260,
         colorSet: 'macros',
-        animationEnabled: true,
+        animationEnabled: true, markerBorderColor: "#fff",
         animationDuration: 400,
         interactivityEnabled: false,
     	data: [{
@@ -49,8 +49,7 @@ export default function drawChart(entry) {
 			indexLabelFontSize: 18,
 			indexLabelFontWeight: 'normal',
 			startAngle: 0,
-			indexLabelFontColor: 'MistyRose',
-			indexLabelLineColor: 'darkgrey',
+			indexLabelFontColor: '#fff',
 			indexLabelPlacement: 'inside',
 			indexLabel: '#percent%',
 			dataPoints: [
@@ -60,6 +59,7 @@ export default function drawChart(entry) {
 			]
         }]
 	});
+
 	chart.render();
 
 /*
