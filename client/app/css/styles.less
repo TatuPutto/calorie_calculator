@@ -58,6 +58,7 @@ table {
 th {
     padding-bottom: 5px;
     padding: 2px;
+    border-right: 1px solid rgb(255, 255, 255);
 }
 
 tr {
@@ -66,6 +67,10 @@ tr {
 
 td {
     padding: 6px;
+}
+
+td:first-child {
+    text-align: left;
 }
 
 i {
@@ -139,8 +144,8 @@ td:nth-child(7) {
     height: 35px;
     //background: #74a2ff;
     //border-bottom: 1px solid #3e3eff;
-    background: #2bb161;
-    border-bottom: 1px solid #1b9c48;
+    background: #0e81d4;
+    border-bottom: 1px solid #0e74bd;
 }
 
 .header-content-wrapper {
@@ -178,12 +183,13 @@ td:nth-child(7) {
     padding: 2px 8px;
     margin-top: 5px;
     color: white;
-    /*border: 1px solid #5d5df9;
+    border: 1px solid #5d5df9;
     border-radius: 3px;
-    background: linear-gradient(#7fb7f1, #3c8fe4);*/
+    background: linear-gradient(#7fb7f1, #3c8fe4);
     border: 1px solid #107710;
     border-radius: 3px;
-    background: linear-gradient(#2aca2a, #149e14);
+
+    //background: linear-gradient(#71c4ff, #2894e2);
 }
 
 .header button i {
@@ -594,7 +600,7 @@ span:nth-child(5) {
     }
 
 
-    .consumed-foods-table th, td {
+    .consumed-foods-table td {
         padding: 6px;
     }
 
@@ -640,6 +646,11 @@ span:nth-child(5) {
     }
 
     .diary {
+        .consumed-foods-table th:first-child {
+            padding-left: 6px;
+        }
+
+
         .consumed-foods-table td:first-child {
             text-align: left;
             width: 55%;
@@ -993,6 +1004,12 @@ table {
     background: linear-gradient(to bottom, #fdaa8f, #de6f40);
     height: 30px;
     line-height: 30px;
+    font-size: 20px;
+}
+
+.loading, .no-entry-found {
+    text-align: center;
+    margin-top: 5%;
     font-size: 20px;
 }
 

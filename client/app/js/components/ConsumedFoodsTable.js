@@ -42,7 +42,7 @@ export default function ConsumedFoodsTable(props) {
                 </thead>
             }
 
-            {/*}{props.viewportWidth > 768 && props.isModifiable ?
+            {props.viewportWidth > 768 && props.isModifiable ?
                 <thead>
                     <tr>
                         <th></th>
@@ -65,7 +65,7 @@ export default function ConsumedFoodsTable(props) {
                         <th>R</th>
                     </tr>
                 </thead>
-            }*/}
+            }
             <tbody>
                 {consumedFoodsRows}
                 {props.consumedFoods.length > 1 && props.isModifiable &&

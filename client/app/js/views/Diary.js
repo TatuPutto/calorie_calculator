@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import SelectDiaryEntry from '../components/SelectDiaryEntry';
+import TotalConsumptionTable from '../components/TotalConsumptionTable';
 import ConsumedFoodsTable from '../components/ConsumedFoodsTable';
 
 import drawMacroChart from '../util/draw-macro-chart';
@@ -59,6 +60,7 @@ export default class Diary extends React.Component {
 
     getEntry(entryDate) {
         document.title = entryDate.replace(/[-]/g, '.');
+        this.setState({entry: null, isFetchingEntry: true});
 
         fetch(`entry/${entryDate}`, {credentials: 'same-origin'})
             .then((res) => res.json())
@@ -74,7 +76,6 @@ export default class Diary extends React.Component {
                             entryFetchError: null,
                             detailsVisible: false
                         });
-
                     }).catch((err) => console.error(err));
             }).catch((err) => this.setState({
                 isFetchingEntry: false,
@@ -100,26 +101,12 @@ export default class Diary extends React.Component {
     render() {
         var entryElement = null;
 
-        if(!this.state.isFetchingEntry && this.state.entry &&
+        if(this.state.isFetchingEntry) {
+            entryElement = <div className='loading'>
+                <i className='fa fa-spinner fa-spin fa-3x' />
+            </div>;
+        } else if(!this.state.isFetchingEntry && this.state.entry &&
                 this.state.entry.nutritionValuesPerItem.length > 0) {
-            var {
-                energy: energyInTotal,
-                protein: proteinInTotal,
-                carbs: carbsInTotal,
-                fat: fatInTotal
-            } = this.state.entry.nutritionValuesInTotal;
-            var {
-                energy: energyGoal,
-                protein: proteinGoal,
-                carbohydrates: carbGoal,
-                fat: fatGoal
-            } = this.state.entry.goal;
-
-            var energyInRelationToGoal = Math.round(energyInTotal - energyGoal);
-            var proteinInRelationToGoal = Math.round(proteinInTotal - proteinGoal);
-            var carbsInRelationToGoal = Math.round(carbsInTotal - carbGoal);
-            var fatInRelationToGoal = Math.round(fatInTotal - fatGoal);
-
             entryElement = (
                 <div className='entry-details col-lg-10 col-md-12 col-xs-12 col-lg-offset-1'>
                     <div className='row'>
@@ -127,93 +114,10 @@ export default class Diary extends React.Component {
                             <div className='macronutrient-split-chart-container-header'>
                                 Makrojakauma
                             </div>
-                            <canvas id={'macronutrient-split-chart'} />
+                            <div id='macronutrient-split-chart-container'></div>
                         </div>
                         <div className='total-container col-sm-8'>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Makro</th>
-                                        <th>Määrä</th>
-                                        <th>Tavoite</th>
-                                        <th>Jäljellä</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style={{color: '#0fb70f'}}>Proteiini</td>
-                                        <td>
-                                            {Math.round(proteinInTotal)}
-                                        </td>
-                                        <td>{proteinGoal}</td>
-                                        <td>
-                                        {proteinInRelationToGoal >= 0 ?
-                                            <span className='over-goal'>
-                                                +{proteinInRelationToGoal} g
-                                            </span>
-                                        :
-                                            <span className='under-goal'>
-                                                {Math.abs(proteinInRelationToGoal)} g
-                                            </span>
-                                        }
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{color: '#207eff'}}>Hiilihydraatit</td>
-                                        <td>
-                                            {Math.round(carbsInTotal)}
-                                        </td>
-                                        <td>{carbGoal}</td>
-                                        <td>
-                                            {carbsInRelationToGoal >= 0 ?
-                                                <span className='over-goal'>
-                                                    -{carbsInRelationToGoal} g
-                                                </span>
-                                            :
-                                                <span className='under-goal'>
-                                                    {Math.abs(carbsInRelationToGoal)} g
-                                                </span>
-                                            }
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{color: '#fa6b6b'}}>Rasva</td>
-                                        <td>
-                                            {Math.round(fatInTotal)}
-                                        </td>
-                                        <td>{fatGoal}</td>
-                                        <td>
-                                            {fatInRelationToGoal >= 0 ?
-                                                <span className='over-goal'>
-                                                    -{fatInRelationToGoal} g
-                                                </span>
-                                            :
-                                                <span className='under-goal'>
-                                                    {Math.abs(fatInRelationToGoal)} g
-                                                </span>
-                                            }
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{color: '#f6a000'}}>kcal</td>
-                                        <td>
-                                            {Math.round(energyInTotal)}
-                                        </td>
-                                        <td>{energyGoal}</td>
-                                        <td>
-                                        {energyInRelationToGoal >= 0 ?
-                                            <span className='over-goal'>
-                                                -{energyInRelationToGoal} kcal
-                                            </span>
-                                        :
-                                            <span className='under-goal'>
-                                                {Math.abs(energyInRelationToGoal)} kcal
-                                            </span>
-                                        }
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <TotalConsumptionTable entry={this.state.entry} />
                             <button className='btn btn-default'
                                     onClick={this.toggleDetails}>
                                 {this.state.detailsVisible ?
@@ -236,10 +140,10 @@ export default class Diary extends React.Component {
                     </div>
                 </div>
             );
-        } else if(!this.state.isFetching) {
-            entryElement = <p>Tältä päivältä ei löytynyt merkintöjä.</p>;
         } else {
-            entryElement = <i className='fa fa-spinner fa-spin fa-2x' />
+            entryElement = <div className='no-entry-found'>
+                <p>Tältä päivältä ei löytynyt merkintöjä.</p>;
+            </div>;
         }
 
 

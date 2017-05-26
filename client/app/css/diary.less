@@ -2,8 +2,8 @@
     //background: rgb(145, 182, 255);
     //background: rgb(75, 117, 202);
     box-shadow: 0px 2px 5px #b9abab;
-    border-bottom: 1px solid #4ba259;
-    background: #4fcc81;
+    border-bottom: 1px solid #2181c7;
+    background: #2894e2;
     line-height: 50px;
     text-align: center;
 }
@@ -20,7 +20,7 @@
 
 .diary-entry-selection i {
     vertical-align: middle;
-    -webkit-text-stroke: 1px #4fcc81;
+    -webkit-text-stroke: 1px #2894e2;
     color: white;
     font-size: 24px;
 }
@@ -50,25 +50,26 @@
 
 .entry-details button {
     margin-top: 30px;
-    border-color: #4fcc81;
-    color: #4fcc81;
+    border-color: #2894e2;
+    color: #2894e2;
     font-size: 15px;
     width: 100%;
     height: 40px;
 }
 
 .entry-details button:hover {
-    border-color: #268c4e;
-    color: #268c4e;
+    border-color: #0a5a94;
+    color: #0a5a94;
     background: #f5f4f4;
 }
 
 .entry-details button:focus {
-    border-color: #268c4e;
-    color: #268c4e;
-    background: #f5f4f4;
+    border-color: #2894e2;
+    color: #2894e2;
+    background: #fff;
     outline: none;
 }
+
 
 
 .entry-details button span {
@@ -78,31 +79,62 @@
 .macronutrient-split-chart-container {
     margin: 0 auto;
     order: 2;
+    height: 270px;
+    overflow-y: hidden;
+}
+
+#macronutrient-split-chart-container {
+    height: calc(100% - 25px);
 }
 
 .macronutrient-split-chart-container-header {
-    line-height: 34px;
+    line-height: 24px;
     color: white;
-    background: #4fcc81;
+    background: #2894e2;
     font-size: 15px;
     border-radius: 4px;
-    margin-bottom: 20px;
+}
+
+.canvasjs-chart-container {
+    //margin: 0 auto;
+    text-align: center !important;
+}
+
+.canvasjs-chart-canvas {
+    position: relative !important;
+    display: block;
+    margin: 0 auto;
+}
+
+.canvasjs-chart-credit {
+    display: none;
 }
 
 .total-container {
-    //margin: 40px 0;
-    margin-right: 40px;
+    //margin-top: 20px;
 }
 
 .total-container thead, .consumed-foods-table thead {
     color: white;
-    background: #4fcc81;
+    background: #2894e2;
     font-size: 15px;
 }
 
+.current-entry thead {
+    font-size: 13px;
+}
+
+.current-entry th:first-child {
+    border: none;
+    border-top-left-radius: 3px;
+}
+
+.current-entry th:last-child {
+    border-top-right-radius: 3px;
+}
 
 thead tr {
-    height: 34px;
+    height: 24px;
 }
 
 th {
@@ -124,7 +156,7 @@ th:first-child {
 
 .total-container td {
     font-size: 16px;
-    padding: 10px;
+    padding: 10px 6px;
     color: #797979;
 }
 

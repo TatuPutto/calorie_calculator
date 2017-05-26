@@ -8,9 +8,9 @@ export default function drawChart(entry) {
     var carbPercentage = Math.round(carbs / macroTotal * 100);
     var fatPercentage = Math.round(fat / macroTotal * 100);
 
-    var options =  {
+    /*var options =  {
         legend: {
-            display: true,
+            display: false,
             labels: {
                 fontSize: 10
             }
@@ -32,17 +32,44 @@ export default function drawChart(entry) {
                 '#F15854'
             ]
         }]
-    };
+    };*/
 
+    CanvasJS.addColorSet('macros', ['#47de83', '#5DA5DA', '#ea5450']);
 
+    var chart = new CanvasJS.Chart('macronutrient-split-chart-container', {
+        height: 260,
+        width: 260,
+        colorSet: 'macros',
+        animationEnabled: true,
+        animationDuration: 400,
+        interactivityEnabled: false,
+    	data: [{
+			type: 'pie',
+			indexLabelFontFamily: 'Roboto',
+			indexLabelFontSize: 18,
+			indexLabelFontWeight: 'normal',
+			startAngle: 0,
+			indexLabelFontColor: 'MistyRose',
+			indexLabelLineColor: 'darkgrey',
+			indexLabelPlacement: 'inside',
+			indexLabel: '#percent%',
+			dataPoints: [
+				{y: proteinPercentage},
+				{y: carbPercentage},
+				{y: fatPercentage}
+			]
+        }]
+	});
+	chart.render();
 
-    /*new Chart(document.getElementById(('macronutrient-split-chart')), {
+/*
+    new Chart(document.getElementById(('macronutrient-split-chart')), {
         type: 'pie',
         data: data,
         options: options
-    });*/
-
-    var canvas = document.getElementById('macronutrient-split-chart');
+    });
+*/
+/*    var canvas = document.getElementById('macronutrient-split-chart');
     canvas.width  = 250;
     canvas.height = 250;
 
@@ -84,5 +111,5 @@ export default function drawChart(entry) {
         ctx.fillText((pieData[i] / pieTotal * 100).toFixed(1) + '%', setX, setY);
 
         lastSegmentEnd += Math.PI * 2 * (pieData[i] / pieTotal);
-    }
+    }*/
 }

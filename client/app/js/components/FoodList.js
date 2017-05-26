@@ -13,7 +13,7 @@ export default function FoodList(props) {
 
     return (
         <ul className='food-list'>
-            <li style={{color: 'white', background: '#4fcc81', fontSize: '13px', height: '24px'}}>
+            <li style={{color: 'white', background: '#2894e2', fontSize: '13px', height: '24px'}}>
                 <span style={{width: '66%', textAlign: 'center', verticalAlign: 'top', lineHeight: '23px'}}>
                     Ravintoaine <i className='fa fa-caret-down' style={{color: '#fff', fontSize: '15px', verticalAlign: 'middle'}}/>
                 </span>
