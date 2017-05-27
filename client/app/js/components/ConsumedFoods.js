@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ConsumedFoodsTable from './ConsumedFoodsTable';
+import TotalNutritionValuesTable from './TotalNutritionValuesTable';
 
 export default function ConsumedFoods(props) {
     var {viewportWidth, isFetchingConsumedFoods, consumedFoods} = props;
@@ -13,8 +14,10 @@ export default function ConsumedFoods(props) {
         consumedFoodsOutput = <p>Et ole syönyt tänään mitään</p>
     } else {
         consumedFoodsOutput = (
-            <div className='consumed-foods-table-wrapper col-lg-10 col-md-10 col-sm-12'>
+            <div className='consumed-foods-table-wrapper col-md-10'>
                 <ConsumedFoodsTable {...props} />
+                <TotalNutritionValuesTable
+                        totalConsumption={props.totalConsumption} />
             </div>
         );
     }

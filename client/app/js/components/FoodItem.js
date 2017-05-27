@@ -27,7 +27,7 @@ export default function FoodItem(props) {
         <li>
             <div
                 key={id}
-                nClick={() => selectFood(id, name)}
+                onClick={() => selectFood(id, name)}
                 style={{background: selectedFoodId == id ? '#e8f2ff' : '#fff'}}
             >
                 <span className='food-selected-indicator-container'>
@@ -49,12 +49,12 @@ export default function FoodItem(props) {
                         <i className={isInfavorites ? 'fa fa-star' : 'fa fa-star-o'} />
                     </button>
                 </span>
-                <span style={{display: 'inline'}}>
+                <div style={{display: 'inline'}}>
                     <span className='energy-amount'>{energy} kcal</span>
                     <span className='protein-amount'>{protein} g</span>
                     <span className='carb-amount'>{carbs} g</span>
                     <span className='fat-amount'>{fat} g</span>
-                </span>
+                </div>
             </div>
             {selectedFoodId == id &&
                 <AddToConsumedFoods {...props} includeNutritionValues={false} />

@@ -14,19 +14,16 @@ export default function TotalConsumptionTable(props) {
         carbohydrates: carbGoal,
         fat: fatGoal
     } = props.entry.goal;
-
     var energyInRelationToGoal = Math.round(energyInTotal - energyGoal);
     var proteinInRelationToGoal = Math.round(proteinInTotal - proteinGoal);
     var carbsInRelationToGoal = Math.round(carbsInTotal - carbGoal);
     var fatInRelationToGoal = Math.round(fatInTotal - fatGoal);
-
 
     return (
         <table>
             <thead>
                 <tr>
                     <th>Makro</th>
-                    <th>Määrä</th>
                     <th>Tavoite</th>
                     <th>Jäljellä</th>
                 </tr>
@@ -35,10 +32,7 @@ export default function TotalConsumptionTable(props) {
                 <tr>
                     <td>
                         <span className='chart-label'></span>
-                        Proteiini
-                    </td>
-                    <td>
-                        {Math.round(proteinInTotal)}
+                        Proteiini ({Math.round(proteinInTotal)} g)
                     </td>
                     <td>{proteinGoal}</td>
                     <td>
@@ -46,7 +40,7 @@ export default function TotalConsumptionTable(props) {
                         <span className='over-goal'>
                             +{proteinInRelationToGoal} g
                         </span>
-                    :
+                        :
                         <span className='under-goal'>
                             {Math.abs(proteinInRelationToGoal)} g
                         </span>
@@ -57,10 +51,7 @@ export default function TotalConsumptionTable(props) {
                     <td>
                         <span className='chart-label'
                                 style={{background: '#5da5da'}} />
-                        Hiilihydraatit
-                    </td>
-                    <td>
-                        {Math.round(carbsInTotal)}
+                            Hiilihydraatit ({Math.round(carbsInTotal)} g)
                     </td>
                     <td>{carbGoal}</td>
                     <td>
@@ -68,7 +59,7 @@ export default function TotalConsumptionTable(props) {
                             <span className='over-goal'>
                                 -{carbsInRelationToGoal} g
                             </span>
-                        :
+                            :
                             <span className='under-goal'>
                                 {Math.abs(carbsInRelationToGoal)} g
                             </span>
@@ -78,10 +69,7 @@ export default function TotalConsumptionTable(props) {
                 <tr>
                     <td><span className='chart-label'
                             style={{background: '#ea5450'}} />
-                        Rasva
-                    </td>
-                    <td>
-                        {Math.round(fatInTotal)}
+                        Rasva ({Math.round(fatInTotal)} g)
                     </td>
                     <td>{fatGoal}</td>
                     <td>
@@ -89,7 +77,7 @@ export default function TotalConsumptionTable(props) {
                             <span className='over-goal'>
                                 -{fatInRelationToGoal} g
                             </span>
-                        :
+                            :
                             <span className='under-goal'>
                                 {Math.abs(fatInRelationToGoal)} g
                             </span>
@@ -100,10 +88,7 @@ export default function TotalConsumptionTable(props) {
                     <td>
                         <span className='chart-label'
                                 style={{background: '#f6a000'}} />
-                            kcal
-                    </td>
-                    <td>
-                        {Math.round(energyInTotal)}
+                            kcal ({Math.round(energyInTotal)} kcal)
                     </td>
                     <td>{energyGoal}</td>
                     <td>
@@ -111,7 +96,7 @@ export default function TotalConsumptionTable(props) {
                         <span className='over-goal'>
                             -{energyInRelationToGoal} kcal
                         </span>
-                    :
+                        :
                         <span className='under-goal'>
                             {Math.abs(energyInRelationToGoal)} kcal
                         </span>

@@ -81,10 +81,10 @@ td:first-child {
 i {
     color: #919191;
 }
-
+/*
 tr:first-child td {
     border-top: 1px solid @default-border-color;
-}
+}*/
 
 // table top left rounded border
 tr:first-child {
@@ -97,12 +97,12 @@ tr:first-child {
 }
 
 // table bottom left rounded border
-.current-entry tr:nth-last-child(2) td:first-child {
+.current-entry tr:last-child td:first-child {
     border-bottom-left-radius: 3px;
 }
 
 // table bottom right rounded border
-.current-entry tr:nth-last-child(2) td:last-child {
+.current-entry tr:last-child td:last-child {
     border-bottom-right-radius: 3px;
 }
 
@@ -433,6 +433,19 @@ Food list
     width: 8%;
 }
 
+.food-list-header span:last-child {
+    border-right: 1px solid #2894e2;
+}
+
+.food-list li:last-child {
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.food-list li:last-child span:last-child {
+    border-bottom-right-radius: 3px;
+}
+
 .single-food:hover {
     background: whitesmoke;
 }
@@ -609,9 +622,8 @@ span:nth-child(5) {
         top: 0;
     }
 
-
     .consumed-foods-table td {
-        padding: 6px;
+        padding: 4px;
     }
 
     .current-entry {
@@ -714,22 +726,48 @@ span:nth-child(5) {
         th:first-child {
             border-left: none;
             border-bottom: none;
-            border-top-left-radius: 4px;
+            border-top-left-radius: 3px;
         }
 
         th:last-child {
-            border-top-right-radius: 4px;
+            border-top-right-radius: 3px;
         }
 
         tr:last-child td:first-child {
-            border-bottom-left-radius: 4px;
+            border-bottom-left-radius: 3px;
         }
 
         tr:last-child td:last-child {
-            border-bottom-right-radius: 4px;
+            border-bottom-right-radius: 3px;
         }
     }
 
+
+    /*==========================================================================
+    ============================================================================
+                        TOTAL NUTRITION VALUES TABLE
+    ============================================================================
+    ==========================================================================*/
+    .total-nutrition-values td {
+        border: none !important;
+    }
+
+    .total-nutrition-values td:nth-child(4) {
+        vertical-align: top;
+        color: #f6a000;
+    }
+
+    .total-nutrition-values td:nth-child(5) {
+        color: #0fb70f;
+    }
+
+    .total-nutrition-values td:nth-child(6) {
+        color: #207eff;
+    }
+
+    .total-nutrition-values td:nth-child(7) {
+        color: #fa6b6b;
+    }
 
     .energy-chart-container {
         min-width: 150px;
@@ -759,52 +797,6 @@ span:nth-child(5) {
         flex-basis: 22%;
     }
 }
-
-/*
-.matching-foods span:first-child {
-    width: 10px;
-}
-//33 + 10
-
-.matching-foods span:nth-child(2) {
-    border-left: none;
-    text-align: left;
-    width: ~'calc(66% - 43px)';
-    white-space: nowrap;
-    overflow: hidden;
-    line-height: 20px;
-    text-overflow: ellipsis;
-    position: relative;
-    top: 6px;
-}
-
-.matching-foods span:nth-child(3) {
-    width: 33px;
-}
-
-.matching-foods span:nth-child(4) {
-    width: 10%;
-}
-
-.matching-foods span:nth-child(5) {
-    background: #93f093;
-    color: green;
-    width: 8%;
-}
-
-.matching-foods span:nth-child(6) {
-    background: #c1c1ff;
-    color: blue;
-    width: 8%;
-}
-
-.matching-foods span:nth-child(7) {
-    background: #fcc6b4;
-    color: red;
-    width: 8%;
-}
-*/
-
 
 .search {
     margin-bottom: 20px;

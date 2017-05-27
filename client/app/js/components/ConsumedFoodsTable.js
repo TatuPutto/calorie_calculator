@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ConsumedFoodsTableHeader from './ConsumedFoodsTableHeader';
 import SingleConsumedFood from './SingleConsumedFood';
 import SingleConsumedFoodCompactLayout from './SingleConsumedFoodCompactLayout';
-import TotalConsumption from './TotalConsumption';
-import TotalConsumptionInPercentages from './TotalConsumptionInPercentages';
 
 export default function ConsumedFoodsTable(props) {
     var consumedFoodsRows = props.consumedFoods.map((food) => {
@@ -31,52 +30,15 @@ export default function ConsumedFoodsTable(props) {
 
         return row;
     });
+
     return (
         <table className='consumed-foods-table'>
-            {props.viewportWidth < 768 &&
-                <thead>
-                    <tr>
-                        <th style={{textAlign: 'center'}}>
-                            Merkinnät
-                        </th>
-                    </tr>
-                </thead>
-            }
-
-            {props.viewportWidth > 768 && props.isModifiable &&
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th style={{paddingLeft: '3%'}}>Elintarvike</th>
-                        <th>Määrä</th>
-                        <th>kcal</th>
-                        <th>P</th>
-                        <th>HH</th>
-                        <th>R</th>
-                    </tr>
-                </thead>
-            }
-            {props.viewportWidth > 768 && !props.isModifiable &&
-                <thead>
-                    <tr>
-                        <th>Elintarvike</th>
-                        <th>Määrä</th>
-                        <th>kcal</th>
-                        <th>P</th>
-                        <th>HH</th>
-                        <th>R</th>
-                    </tr>
-                </thead>
-            }
+            <ConsumedFoodsTableHeader
+                viewportWidth={props.viewportWidth}
+                isModifiable={props.isModifiable}
+            />
             <tbody>
                 {consumedFoodsRows}
-                {props.consumedFoods.length > 1 && props.isModifiable &&
-                    <TotalConsumption totalConsumption={props.totalConsumption} />
-                }
-                {props.isModifiable &&
-                    <TotalConsumptionInPercentages
-                            totalConsumption={props.totalConsumption} />
-                }
             </tbody>
         </table>
     );

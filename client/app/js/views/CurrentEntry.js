@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import FoodSelection from '../components/FoodSelection';
 import ConsumedFoods from '../components/ConsumedFoods';
-import TotalConsumption from '../components/TotalConsumption';
 import SearchTypes from '../components/SearchTypes';
 import DailyGoal from '../components/DailyGoal';
 
