@@ -37,6 +37,15 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.container-fluid {
+    padding: 0;
+}
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
 h3 {
     font-size: 20px;
 }
@@ -81,10 +90,6 @@ td:first-child {
 i {
     color: #919191;
 }
-/*
-tr:first-child td {
-    border-top: 1px solid @default-border-color;
-}*/
 
 // table top left rounded border
 tr:first-child {
@@ -134,16 +139,6 @@ td:nth-child(7) {
     .right-td-border();
 }
 
-
-.row {
-    margin-right: 0;
-    margin-left: 0;
-}
-
-.container-fluid {
-    padding: 0;
-}
-
 .header {
     color: white;
     height: 35px;
@@ -151,16 +146,6 @@ td:nth-child(7) {
     //border-bottom: 1px solid #3e3eff;
     background: #0e81d4;
     border-bottom: 1px solid #0e74bd;
-}
-
-.header-content-wrapper {
-    max-width: 1100px;
-    margin: 0 auto;
-    float: none;
-}
-
-.header-content {
-    margin: 0 auto;
 }
 
 .header a {
@@ -177,10 +162,6 @@ td:nth-child(7) {
     display: inline;
     vertical-align: middle;
     margin-right: 10px;
-}
-
-.user-info {
-    float: right;
 }
 
 .header button {
@@ -205,6 +186,22 @@ td:nth-child(7) {
     margin-right: 5px;
 }
 
+
+
+
+.header-content-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    float: none;
+}
+
+.header-content {
+    margin: 0 auto;
+}
+
+.user-info {
+    float: right;
+}
 
 .calories-consumed {
     width: 100%;
@@ -294,32 +291,15 @@ td:nth-child(7) {
     background: linear-gradient(to right, red 82.125%, rgb(252, 198, 180) 82.125%);
 }
 
-
-/*
-.new-goals p:first-child {
-    position: absolute;
-    top: 27px;
-    left: 75px;
-    color: #b8ffad;
-    font-size: 16px;
-    text-shadow: -1px -1px #81839e;
-}
-
-.new-goals p:nth-child(2) {
-    position: absolute;
-    top: 27px;
-    left: 425px;
-    color: white;
-    text-align: 2px 2px black;
-    text-shadow: -1px -1px #81839e;
-    font-size: 16px;
-}
-
-*/
-
 .daily-goal {
     padding-bottom: 60px;
     text-align: center;
+    background: #313233;
+}
+
+html {
+    height: 100%;
+    background: #313233;
 }
 
 .daily-goal h3 {
@@ -383,11 +363,11 @@ td:nth-child(7) {
 }
 
 
-/*==================================================================
-====================================================================
-Food list
-====================================================================
-==================================================================*/
+/*==============================================================================
+================================================================================
+                                Food list
+================================================================================
+==============================================================================*/
 
 .food-list li {
     overflow-y: hidden;
@@ -470,15 +450,27 @@ Food list
 }
 
 .add-to-consumed-foods {
-    border-top: @default-border;
+    /*border-top: @default-border;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;*/
+    border-top: 1px solid #e2e5f3;
     text-align: left;
     display: flex;
     flex-direction: column;
     padding: 15px;
+    position: absolute;
+    z-index: 9999;
+    background: #fff;
+    padding-right: 32px;
+    border: 1px solid #d2d2d2;
+    border-radius: 4px;
+    box-shadow: 1px 1px 3px #a0a0a0;
 }
 
 .portion-sizes {
-    width: 40%;
+    //width: 40%;
 }
 
 .portion-sizes li {
@@ -489,15 +481,15 @@ Food list
     border-top: none;
 }
 
-.portion-sizes a {
-    padding: 2px;
-    border-radius: 2px;
-}
-
-.portion-sizes a:hover {
+.portion-sizes li:hover {
     background: #aec2e3;
     text-decoration: none;
     cursor: pointer;
+}
+
+.portion-sizes a {
+    padding: 2px;
+    border-radius: 2px;
 }
 
 .add-custom-amount {

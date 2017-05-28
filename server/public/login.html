@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <head>
+    <meta name="viewport" content="width=device-width"></meta>
     <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
     <link href="forms.css" rel="stylesheet"></link>
-    <meta name="viewport" content="width=device-width"></meta>
     <title>Sisään kirjautuminen</title>
 </head>
 <body>
@@ -12,16 +12,12 @@
         </div>
         <div class="form-wrapper">
             <form action="/login" method="post" enctype="application/x-www-form-urlencoded">
-                <label>Käyttäjätunnus</label>
-                <br />
-                <input type="text" name="username" placeholder="Käyttäjätätunnus" />
-                <br />
-                <label>Salasana</label>
-                <br />
+
+                <input type="text" name="username" placeholder="Käyttäjätunnus" />
                 <input type="password" name="password" placeholder="Salasana" />
-                <br />
                 <input type="submit" value="Kirjaudu sisään" />
             </form>
+            <p><a href="/register">Rekisteröidy</a> tai <a href="/">jatka suoraan sivulle</a></p>
         </div>
     </div>
 </body>

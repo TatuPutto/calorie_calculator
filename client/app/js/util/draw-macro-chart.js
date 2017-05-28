@@ -46,7 +46,7 @@ export default function drawChart(entry) {
     	data: [{
 			type: 'pie',
 			indexLabelFontFamily: 'Roboto',
-			indexLabelFontSize: 18,
+			indexLabelFontSize: 16,
 			indexLabelFontWeight: 'normal',
 			startAngle: 0,
 			indexLabelFontColor: '#fff',

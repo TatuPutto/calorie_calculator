@@ -10,7 +10,7 @@ export default function DailyGoalProgress(props) {
     return (
         <div className='goal-progress'>
             <div className='energy-chart-container'>
-                <p style={{position: 'relative', top: '35px'}}>Energia</p>
+                {/*}<p style={{position: 'relative', top: '35px'}}>Energia</p>*/}
                 <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
                     <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
                         {energyConsumed}
@@ -20,7 +20,7 @@ export default function DailyGoalProgress(props) {
                 <p>{Math.round(total.energy)} kcal / {goal.energy} kcal</p>
             </div>
             <div className='protein-chart-container'>
-                <p style={{position: 'relative', top: '35px'}}>Proteiini</p>
+                {/*<p style={{position: 'relative', top: '35px'}}>Proteiini</p>*/}
                 <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
                     <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
                         {proteinConsumed}
@@ -30,7 +30,7 @@ export default function DailyGoalProgress(props) {
                 <p>{Math.round(total.protein)} g / {goal.protein} g</p>
             </div>
             <div className='carb-chart-container'>
-                <p style={{position: 'relative', top: '35px'}}>Hiilihydraatit</p>
+                {/*<p style={{position: 'relative', top: '35px'}}>Hiilihydraatit</p>*/}
                 <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
                     <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
                         {carbsConsumed}
@@ -40,7 +40,7 @@ export default function DailyGoalProgress(props) {
                 <p>{Math.round(total.carbs)} g / {goal.carbohydrates} g</p>
             </div>
             <div className='fat-chart-container'>
-                <p style={{position: 'relative', top: '35px'}}>Rasva</p>
+                {/*<p style={{position: 'relative', top: '35px'}}>Rasva</p>*/}
                 <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
                     <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
                         {fatConsumed}
