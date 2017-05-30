@@ -2,9 +2,16 @@
 @default-border: 1px solid #e2e5f3;
 @default-border-color: #e2e5f3;
 @new-border-color: #e2e5f3;
-@secondary-blue: #2894e2;
+//@secondary-blue: #2894e2;
+@secondary-blue: #60bcff;
 @table-header-line-heigh: 24px;
 @table-header-border: 1px solid #fff;
+
+//default nutrient colors
+@energy-color: #f9a200;
+@protein-color: #639e63;
+@carb-color: #207eff;
+@fat-color: #fa6b6b;
 
 .default-border(@width: 1px, @style: solid, @color: @default-border-color, @border-radius: 3px) {
     border: @width @style @color;
@@ -30,6 +37,18 @@
 * {
     margin: 0;
     padding: 0;
+}
+
+::-webkit-scrollbar {
+ 	width: 6px;
+}
+
+::-webkit-scrollbar-track {
+ 	background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
 }
 
 body {
@@ -292,14 +311,10 @@ td:nth-child(7) {
 }
 
 .daily-goal {
-    padding-bottom: 60px;
+    margin-bottom: 20px;
     text-align: center;
-    background: #313233;
-}
-
-html {
-    height: 100%;
-    background: #313233;
+    margin-top: 25px;
+    //background: #313233;
 }
 
 .daily-goal h3 {
@@ -368,22 +383,37 @@ html {
                                 Food list
 ================================================================================
 ==============================================================================*/
+.food-list {
+    font-size: 13px;
+    //max-height: 500px;
+    height: 539px;
+    overflow-y: scroll;
+    //border: 1px solid @default-border-color;
+    //border-radius: 3px;
+    line-height: 32px;
+        border: 1px solid #e2e5f3;
+}
 
 .food-list li {
     overflow-y: hidden;
-    border: 1px solid  @default-border-color;
+    border: 1px solid @default-border-color;
     border-top: none;
+    border-right: none;
 }
 
 .food-list li:first-child {
-    border: none;
+    //border: none;
 }
 
 .food-list-header {
-    color: white;
-    background: @secondary-blue;
+    //color: white;
+    //background: @secondary-blue;
+    list-style-type: none;
     font-size: 13px;
-    height: @table-header-line-heigh;
+    height: 25px;
+    background: #60bcff;
+    color: #fff;
+    padding-right: 6px;
 }
 
 .food-list-header i {
@@ -395,7 +425,8 @@ html {
 .food-list-header span {
     text-align: center;
     vertical-align: top;
-    line-height: @table-header-line-heigh;
+    //line-height: @table-header-line-heigh;
+    line-height: 25px;
     border-right: @table-header-border;
 }
 
@@ -414,7 +445,8 @@ html {
 }
 
 .food-list-header span:last-child {
-    border-right: 1px solid #2894e2;
+    //border-right: 1px solid #2894e2;
+    border: none;
 }
 
 .food-list li:last-child {
@@ -450,11 +482,6 @@ html {
 }
 
 .add-to-consumed-foods {
-    /*border-top: @default-border;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    padding: 15px;*/
     border-top: 1px solid #e2e5f3;
     text-align: left;
     display: flex;
@@ -503,6 +530,11 @@ html {
     margin-right: 6px;
 }
 
+.no-results {
+    position: relative;
+    top: 20%;
+    font-size: 16px;
+}
 
 span {
     display: inline-block;
@@ -764,38 +796,49 @@ span:nth-child(5) {
     .energy-chart-container {
         min-width: 150px;
         color: #fcb93d;
-        font-size: 18px;
+        font-size: 16px;
         flex-basis: 22%;
     }
 
     .protein-chart-container {
         min-width: 150px;
         color: rgb(99, 158, 99);
-        font-size: 18px;
+        font-size: 16px;
         flex-basis: 22%;
     }
 
     .carb-chart-container {
         min-width: 150px;
         color: #207eff;
-        font-size: 18px;
+        font-size: 16px;
         flex-basis: 22%;
     }
 
     .fat-chart-container {
         min-width: 150px;
         color: #fa6b6b;
-        font-size: 18px;
+        font-size: 16px;
         flex-basis: 22%;
     }
 }
 
+.food-selection-header {
+    background: #fcfcfc;
+    display: flex;
+    border: 1px solid #e2e5f3;
+    height: 34px;
+}
+
 .search {
-    margin-bottom: 20px;
+    //margin-bottom: 20px;
+    flex-grow: 2;
+    line-height: 32px;
+    margin: 0 8px;
 }
 
 .search-input {
-    height: 35px;
+    //height: 35px;
+    height: 28px;
     width: ~"calc(100% - 80px)";
     border-radius: 3px;
     border: 1px solid #c3cfff;
@@ -805,7 +848,8 @@ span:nth-child(5) {
 }
 
 .do-search {
-    height: 35px;
+    //height: 35px;
+    line-height: 26px;
     width: 75px;
     background: white;
     border-style: solid;
@@ -813,7 +857,7 @@ span:nth-child(5) {
     border-radius: 3px;
     border: 1px solid #c3cfff;
     font-size: 16px;
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 .search-input:hover, .do-search:hover {
@@ -821,10 +865,17 @@ span:nth-child(5) {
 }
 
 .search-types {
-    background: #fcfcfc;
-    border-bottom: 1px solid #e2e5f3;
+    //background: #fcfcfc;
+    /*border-bottom: 1px solid #e2e5f3;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 10px;*/
+    //display: inline-block;
+    //width: 100%;
+    //text-align: left;
+    //border: 1px solid #e2e5f3;
+    border-radius: 0px;
+    /*border-top-right-radius: 3px;
+    border-top-left-radius: 3px;*/
 }
 
 .search-types button {
@@ -835,7 +886,7 @@ span:nth-child(5) {
 }
 
 .search-types button:first-child {
-    margin-left: 0;
+    margin-left: 8px;
 }
 
 .search-types button:last-child {
@@ -848,17 +899,72 @@ span:nth-child(5) {
 
 
 .search-types .active {
-    .default-border();
-    border-top: 4px solid #74a2ff;
+    //.default-border();
+    /*border-top: 4px solid #74a2ff;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     border-bottom: none;
     position: relative;
-    top: 1px;
+    top: 2px;
     padding: 6px 15px;
-    background: white;
+    height: 32px;
+    background: white;*/
+    /*border: 1px solid #e2e5f3;
+    border-top: none;
+    border-top: none;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom: none;*/
+    position: relative;
+    top: -1px;
+    height: 34px;
+    padding: 6px 15px;
+    background: #60bcff;
+    color: #fff;
+}
+
+.search-types .active::before {
+    /*border-top: 4px solid #74a2ff;
+    height: 13px;
+    border-right: 1px solid #e2e5f3;
+    border-left: 1px solid #e2e5f3;
+    content: "";
+    display: block;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    position: absolute;
+    top: -6px;
+    width: calc(100% + 32px);
+    width: calc(100% + 2px);
+    margin-left: -16px;*/
+    border-top: 4px solid #60bcff;
+height: 11px;
+/*border-right: 1px solid #e2e5f3;
+border-left: 1px solid #e2e5f3;*/
+/* border-bottom: 1px solid #74a2ff; */
+content: "";
+/* background: white; */
+z-index: -;
+/* background: #74a2ff; */
+display: block;
+border-top-left-radius: 4px;
+border-top-right-radius: 4px;
+border-bottom-right-radius: 0;
+position: absolute;
+/* bottom: 10px; */
+top: -4px;
+width: calc(132%);
+width: 100%;
+margin-left: -15px;
+/* padding: 0 15px; */
+/* padding-bottom: 1px; */
+}
+
+.search-types .active i {
+    color: #fff;
 }
 
 .heading-wrapper {
@@ -872,6 +978,7 @@ span:nth-child(5) {
     text-align: center;
     background: white;
     padding-top: 20px;
+    height: 600px;
     //border-bottom: 1px solid #c3cfff;
     padding-bottom: 40px;
 }
@@ -891,17 +998,6 @@ span:nth-child(5) {
     margin-left: auto;
     /*padding-bottom: 20px;*/
 }
-
-
-.food-list {
-    font-size: 14px;
-    max-height: 500px;
-    overflow-y: auto;
-    //border: 1px solid @default-border-color;
-    border-radius: 3px;
-    line-height: 30px;
-}
-
 
 .protein-dominant {
     color: #0fb70f;
@@ -926,19 +1022,18 @@ span:nth-child(5) {
     background: white;
     padding-bottom: 40px;
     text-align: center;
+    max-width: 1200px;
+    margin: 60px auto 40px;
     //border-bottom: 1px solid #c3cfff;
 }
 
 .consumed-foods-table-wrapper {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1100px;
-    float: none;
+    max-width: 1200px;
 }
 
 .consumed-foods-table {
     text-align: center;
-    font-size: 14px;
+    font-size: 13px;
     //width: 76%;
     margin-left: auto;
     margin-right: auto;

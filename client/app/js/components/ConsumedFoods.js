@@ -14,7 +14,7 @@ export default function ConsumedFoods(props) {
         consumedFoodsOutput = <p>Et ole syönyt tänään mitään</p>
     } else {
         consumedFoodsOutput = (
-            <div className='consumed-foods-table-wrapper col-md-10'>
+            <div className='consumed-foods-table-wrapper col-md-10 col-md-offset-2'>
                 <ConsumedFoodsTable {...props} />
                 <TotalNutritionValuesTable
                         totalConsumption={props.totalConsumption} />

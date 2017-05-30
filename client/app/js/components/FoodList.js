@@ -23,12 +23,14 @@ export default function FoodList(props) {
     }
 
     return (
+        <div>
+        {/*}{props.viewportWidth > 767 &&*/}
+            <FoodListHeader viewportWidth={props.viewportWidth} />
+
         <ul className='food-list'>
-            {props.viewportWidth > 768 &&
-                <FoodListHeader />
-            }
             {foodItems}
         </ul>
+        </div>
     );
 }
 

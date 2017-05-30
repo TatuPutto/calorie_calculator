@@ -11,8 +11,8 @@ export default function DailyGoalProgress(props) {
         <div className='goal-progress'>
             <div className='energy-chart-container'>
                 {/*}<p style={{position: 'relative', top: '35px'}}>Energia</p>*/}
-                <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                    <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                <div style={{position: 'relative', width: '80px', margin: '0 auto 10px auto'}}>
+                    <p style={{position: 'relative', top: '58px', fontSize: '20px'}}>
                         {energyConsumed}
                     </p>
                     <canvas id='energy-goal' />
@@ -21,8 +21,8 @@ export default function DailyGoalProgress(props) {
             </div>
             <div className='protein-chart-container'>
                 {/*<p style={{position: 'relative', top: '35px'}}>Proteiini</p>*/}
-                <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                    <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                <div style={{position: 'relative', width: '80px', margin: '0 auto 10px auto'}}>
+                    <p style={{position: 'relative', top: '58px', fontSize: '20px'}}>
                         {proteinConsumed}
                     </p>
                     <canvas id='protein-goal' />
@@ -31,8 +31,8 @@ export default function DailyGoalProgress(props) {
             </div>
             <div className='carb-chart-container'>
                 {/*<p style={{position: 'relative', top: '35px'}}>Hiilihydraatit</p>*/}
-                <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                    <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                <div style={{position: 'relative', width: '80px', margin: '0 auto 10px auto'}}>
+                    <p style={{position: 'relative', top: '58px', fontSize: '20px'}}>
                         {carbsConsumed}
                     </p>
                     <canvas id='carb-goal' />
@@ -41,8 +41,8 @@ export default function DailyGoalProgress(props) {
             </div>
             <div className='fat-chart-container'>
                 {/*<p style={{position: 'relative', top: '35px'}}>Rasva</p>*/}
-                <div style={{position: 'relative', width: '100px', margin: '0 auto 10px auto'}}>
-                    <p style={{position: 'relative', top: '72px', fontSize: '24px'}}>
+                <div style={{position: 'relative', width: '80px', margin: '0 auto 10px auto'}}>
+                    <p style={{position: 'relative', top: '58px', fontSize: '20px'}}>
                         {fatConsumed}
                     </p>
                     <canvas id='fat-goal' />

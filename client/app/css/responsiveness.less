@@ -1,4 +1,8 @@
 @media (max-width: 767px) {
+    div[class*="col"] {
+        padding: 0;
+    }
+
     span {
         line-height: 20px;
     }
@@ -135,6 +139,7 @@
     .food-selection {
         border-bottom: none;
         padding-bottom: 0;
+        height: initial;
     }
 
     .food-selection-wrapper {
@@ -142,21 +147,39 @@
     }
 
     .food-list {
+        font-size: 14px;
         overflow-y: hidden;
         max-height: 9999px;
+        height: initial;
         border: none;
     }
 
     .food-list li {
         border-right: none;
         border-left: none;
-        line-height: 50px;
+        //line-height: 50px;
+        padding: 5px 8px;
+        border-bottom: 3px solid @default-border-color;
     }
 
     .food-list li:first-child {
-        border: 1px solid @default-border-color;
+        //border: 1px solid @default-border-color;
         border-right: none;
         border-left: none;
+    }
+
+    .food-list-header {
+        height: 30px;
+        padding: 0 8px;
+    }
+
+    .food-list-header span {
+        line-height: 30px;
+        border: none;
+    }
+
+    .food-list-header span {
+        width: 25% !important;
     }
 
     .search {
@@ -171,6 +194,14 @@
 
     .add-to-consumed-foods {
         padding: 15px !important;
+        border-top: @default-border;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        position: relative;
+        box-shadow: none;
+        border: none;
     }
 
     .add-to-consumed-foods span {
@@ -183,69 +214,97 @@
     }
 
     .portion-sizes li {
-        line-height: 30px;
+        line-height: 20px;
+        border: none;
     }
 
     .portion-sizes li:first-child {
         border: none;
     }
 
+    .food-name-wrapper {
+        width: ~'calc(100% - 33px)';
+        height: 40px;
+    }
+
     .food-name {
         text-align: left;
-        width: ~'calc(96% - 33px)';
-        white-space: nowrap;
-        overflow: hidden;
+
         line-height: 20px;
+        display: table-cell;
+        vertical-align: middle;
+        height: 40px;
+        /*white-space: nowrap;
+        overflow: hidden;
+
         text-overflow: ellipsis;
         position: relative;
-        top: 6px;
+        top: 6px;*/
+        color: #4e4d4d;
     }
 
     .favorites {
         width: 33px;
+        margin-top: 5px;
+        height: 40px;
+        vertical-align: top;
     }
 
     .energy-amount {
-        font-size: 15px;
-        line-height: 30px;
+        font-size: 14px;
+        line-height: 20px;
         width: 25%;
-        color: #8f6907;
-        color: white;
-        background: #fed17e;
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
-        background: linear-gradient(to bottom, #fed17e, #fcb93d);
+        color: @energy-color;;
+        //color: white;
+        //background: #fed17e;
+        //background: linear-gradient(to bottom, #fed17e, #fcb93d);
     }
 
     .protein-amount {
-        font-size: 15px;
-        line-height: 30px;
-        color: green;
-        color: white;
-        width: 25%;
-        background: linear-gradient(to bottom, #93f093, #7fe07f);
+        font-size: 14px;
+        line-height: 20px;
+        color: @protein-color;
+        //color: white;
+        width: 21%;
+        margin: 0 2%;
+        border-radius: 15px;
+        //background: linear-gradient(to bottom, #93f093, #7fe07f);
     }
 
     .carb-amount {
-        font-size: 15px;
-        line-height: 30px;
-        background: #c5d4ed;
-        color: #4b4bdd;
-        color: white;
-        width: 25%;
-        background: linear-gradient(to bottom, #aeccff, #8bb6ff);
+        font-size: 14px;
+        line-height: 20px;
+        //background: #c5d4ed;
+        color: @carb-color;
+        //color: white;
+        width: 21%;
+        margin: 0 2%;
+        border-radius: 15px;
+        //background: linear-gradient(to bottom, #aeccff, #8bb6ff);
     }
 
     .fat-amount {
-        font-size: 15px;
-        line-height: 30px;
-        background: #fcc6b4;
-        color: #ac2f2f;
-        color: white;
-        width: 25%;
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
-        background: linear-gradient(to bottom, #fdaa8f, #ff834f);
+        font-size: 14px;
+        line-height: 20px;
+        //background: #fcc6b4;
+        color: @fat-color;;
+        //color: white;
+        width: 21%;
+        margin: 0 2%;
+        border-radius: 15px;
+        //background: linear-gradient(to bottom, #fdaa8f, #ff834f);
+    }
+
+    .protein-dominant {
+        background: #ccffcc;
+    }
+
+    .carb-dominant {
+        background: #d4f5ff;
+    }
+
+    .fat-dominant {
+        background: #ffd5d5
     }
 
     .consumed-foods {
@@ -374,6 +433,11 @@
         margin-right: 15%;
     }
 
+    .daily-goal {
+        margin-top: 0;
+        margin-bottom: 40px;
+    }
+
     .daily-goal h3 {
         width: 100%;
         line-height: 24px;
@@ -381,6 +445,7 @@
         background: #2894e2;
         font-size: 14px;
         display: block;
+        margin: 0;
     }
 
     .configure-daily-goals {
@@ -393,6 +458,10 @@
         padding: 5px 10px;
         border: 1px solid #d4d4d4;
         border-radius: 3px;
+    }
+
+    .goal-progress {
+        margin-top: 10px;
     }
 
     .modal .amount {

@@ -297,29 +297,42 @@ export default class CurrentEntry extends React.Component {
     render() {
         return (
             <div className='current-entry'>
-                <SearchTypes
-                    fetchMethod={this.state.fetchMethod}
-                    changeFetchMethod={this.changeFetchMethod}
-                />
-                <FoodSelection
-                    viewportWidth={this.props.viewportWidth}
-                    searchTerm={this.state.searchTerm}
-                    changeSearchTerm={this.changeSearchTerm}
-                    doSearch={this.doSearch}
-                    foods={this.state.foods}
-                    offset={this.state.shownResultsOffset}
-                    showMoreResults={this.showMoreResults}
-                    selectedFoodId={this.state.selectedFoodId}
-                    selectedFoodAmount={this.state.selectedFoodAmount}
-                    setSelectedFoodAmount={this.setSelectedFoodAmount}
-                    isFetchingMatchingFoods={this.state.isFetchingMatchingFoods}
-                    selectFood={this.selectFood}
-                    addToDiary={this.addToDiary}
-                    addToFavorites={this.addToFavorites}
-                    removeFromFavorites={this.removeFromFavorites}
-                    fetchMethod={this.state.fetchMethod}
-                    fetchError={this.state.fetchError}
-                />
+                <div className='row' style={{maxWidth: '1200px', margin: '0 auto'}}>
+                    {/*}<SearchTypes
+                        fetchMethod={this.state.fetchMethod}
+                        changeFetchMethod={this.changeFetchMethod}
+                    />*/}
+                    {!this.state.isFetchingConsumedFoods && !this.state.isFetchingDailyGoal &&
+                        <DailyGoal
+                            dailyGoal={this.state.dailyGoal}
+                            totalConsumption={this.state.totalConsumption}
+                            isFetchingDailyGoal={this.state.isFetchingDailyGoal}
+                            isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
+                        />
+                    }
+                    <FoodSelection
+                        fetchMethod={this.state.fetchMethod}
+                        changeFetchMethod={this.changeFetchMethod}
+                        viewportWidth={this.props.viewportWidth}
+                        searchTerm={this.state.searchTerm}
+                        changeSearchTerm={this.changeSearchTerm}
+                        doSearch={this.doSearch}
+                        foods={this.state.foods}
+                        offset={this.state.shownResultsOffset}
+                        showMoreResults={this.showMoreResults}
+                        selectedFoodId={this.state.selectedFoodId}
+                        selectedFoodAmount={this.state.selectedFoodAmount}
+                        setSelectedFoodAmount={this.setSelectedFoodAmount}
+                        isFetchingMatchingFoods={this.state.isFetchingMatchingFoods}
+                        selectFood={this.selectFood}
+                        addToDiary={this.addToDiary}
+                        addToFavorites={this.addToFavorites}
+                        removeFromFavorites={this.removeFromFavorites}
+                        fetchMethod={this.state.fetchMethod}
+                        fetchError={this.state.fetchError}
+                    />
+            </div>
+
                 <ConsumedFoods
                     viewportWidth={this.props.viewportWidth}
                     isModifiable={true}
@@ -328,14 +341,7 @@ export default class CurrentEntry extends React.Component {
                     removeFromDiary={this.removeFromDiary}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
-                {!this.state.isFetchingConsumedFoods && !this.state.isFetchingDailyGoal &&
-                    <DailyGoal
-                        dailyGoal={this.state.dailyGoal}
-                        totalConsumption={this.state.totalConsumption}
-                        isFetchingDailyGoal={this.state.isFetchingDailyGoal}
-                        isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
-                    />
-                }
+
             </div>
         );
     }

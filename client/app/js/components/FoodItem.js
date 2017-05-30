@@ -32,9 +32,9 @@ export default function FoodItem(props) {
             >
                 <span className='food-selected-indicator-container'>
                     <i className={selectedFoodId == id ?
-                            'food-selected-indicator fa fa-chevron-right open'
+                            'food-selected-indicator fa fa-caret-right open'
                             :
-                            'food-selected-indicator fa fa-chevron-right closed'
+                            'food-selected-indicator fa fa-caret-right closed'
                         }
                     />
                 </span>
@@ -49,15 +49,13 @@ export default function FoodItem(props) {
                         <i className={isInfavorites ? 'fa fa-star' : 'fa fa-star-o'} />
                     </button>
                 </span>
-                <div style={{display: 'inline'}}>
-                    <span className='energy-amount'>{energy} kcal</span>
-                    <span className='protein-amount'>{protein} g</span>
-                    <span className='carb-amount'>{carbs} g</span>
-                    <span className='fat-amount'>{fat} g</span>
-                </div>
+                <span className='energy-amount'>{energy} kcal</span>
+                <span className='protein-amount'>{protein} g</span>
+                <span className='carb-amount'>{carbs} g</span>
+                <span className='fat-amount'>{fat} g</span>
             </div>
             {selectedFoodId == id &&
-                <AddToConsumedFoods {...props} includeNutritionValues={false} />
+                <AddToConsumedFoods {...props} />
             }
         </li>
     );

@@ -14,6 +14,7 @@ export default function FoodItemCompactLayout(props) {
     var {
         id,
         name,
+        energy,
         protein,
         carbs,
         fat,
@@ -28,7 +29,9 @@ export default function FoodItemCompactLayout(props) {
                 onClick={() => selectFood(id, name)}
                 style={{background: selectedFoodId == id ? '#e8f2ff' : '#fff'}}
             >
-                <span className={'food-name ' + dominantMacro}>{name}</span>
+                <span className='food-name-wrapper' style={{height: '40px'}}>
+                <span className={'food-name'}>{name}</span>
+                </span>
                 <span className='favorites'>
                     <button
                         className='add-to-favorites'
@@ -39,9 +42,14 @@ export default function FoodItemCompactLayout(props) {
                         <i className={isInfavorites ? 'fa fa-star' : 'fa fa-star-o'} />
                     </button>
                 </span>
+                {/*dominantMacro*/}
+                <span className='energy-amount'>{energy}</span>
+                <span className={'protein-amount ' + (dominantMacro == 'protein-dominant' ? dominantMacro : '')}>{protein}</span>
+                <span className={'carb-amount ' + (dominantMacro == 'carb-dominant' ? dominantMacro : '')}>{carbs}</span>
+                <span className={'fat-amount ' + (dominantMacro == 'fat-dominant' ? dominantMacro : '')}>{fat}</span>
             </div>
             {selectedFoodId == id &&
-                <AddToConsumedFoods {...props} includeNutritionValues={true} />
+                <AddToConsumedFoods {...props} />
             }
         </li>
     );

@@ -12,20 +12,10 @@ export default function AddToConsumedFoods(props) {
         setSelectedFoodAmount,
         addToDiary,
         portionSizes,
-        includeNutritionValues
     } = props;
 
     return (
         <div className='add-to-consumed-foods'>
-            {includeNutritionValues &&
-                <span>
-                    <span className='energy-amount'>{food.energy} kcal</span>
-                    <span className='protein-amount'>{food.protein} g</span>
-                    <span className='carb-amount'>{food.carbs} g</span>
-                    <span className='fat-amount'>{food.fat} g</span>
-                    <br />
-                </span>
-            }
             <PortionSizes
                 portionSizes={food.portionSizes}
                 foodId={food.id}
