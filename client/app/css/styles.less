@@ -76,6 +76,8 @@ p {
 input[type="text"] {
     padding-left: 5px;
     padding-right: 5px;
+    border: 1px solid @default-border-color;
+    border-radius: 3px;
 }
 
 ul {
@@ -91,7 +93,7 @@ table {
 th {
     padding-bottom: 5px;
     padding: 2px;
-    border-right: 1px solid rgb(255, 255, 255);
+    //border-right: 1px solid rgb(255, 255, 255);
 }
 
 tr {
@@ -391,14 +393,14 @@ td:nth-child(7) {
     //border: 1px solid @default-border-color;
     //border-radius: 3px;
     line-height: 32px;
-        border: 1px solid #e2e5f3;
+    border: 1px solid #e2e5f3;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 
 .food-list li {
     overflow-y: hidden;
-    border: 1px solid @default-border-color;
-    border-top: none;
-    border-right: none;
+    border-bottom: 1px solid @default-border-color;
 }
 
 .food-list li:first-child {
@@ -416,6 +418,11 @@ td:nth-child(7) {
     padding-right: 6px;
 }
 
+.food-list-header.extra-height {
+    height: 65px;
+    padding-top: 40px;
+}
+
 .food-list-header i {
     color: #fff;
     font-size: 15px;
@@ -427,7 +434,7 @@ td:nth-child(7) {
     vertical-align: top;
     //line-height: @table-header-line-heigh;
     line-height: 25px;
-    border-right: @table-header-border;
+    //border-right: @table-header-border;
 }
 
 .food-list-header span:first-child {
@@ -490,9 +497,9 @@ td:nth-child(7) {
     position: absolute;
     z-index: 9999;
     background: #fff;
-    padding-right: 32px;
     border: 1px solid #d2d2d2;
-    border-radius: 4px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
     box-shadow: 1px 1px 3px #a0a0a0;
 }
 
@@ -600,8 +607,7 @@ span:nth-child(5) {
     margin: 0 auto;
 }
 
-
-@media (min-width: 768px) {
+@media(min-width: 768px) {
     .food-name {
         text-align: left;
         width: ~'calc(66% - 53px)';
@@ -644,6 +650,28 @@ span:nth-child(5) {
 
     .consumed-foods .food-name {
         top: 0;
+    }
+
+    .do-edit {
+        width: 48%;
+        padding: 0;
+        margin-top: 5px;
+        margin-right: 4%;
+        background: #fff;
+    }
+
+    .do-edit i {
+        color: green;
+    }
+
+    .cancel-edit {
+        width: 48%;
+        padding: 0;
+        margin-top: 5px;
+    }
+
+    .cancel-edit i {
+        color: red;
     }
 
     .consumed-foods-table td {
@@ -797,66 +825,67 @@ span:nth-child(5) {
         min-width: 150px;
         color: #fcb93d;
         font-size: 16px;
-        flex-basis: 22%;
+        //flex-basis: 22%;
     }
 
     .protein-chart-container {
         min-width: 150px;
         color: rgb(99, 158, 99);
         font-size: 16px;
-        flex-basis: 22%;
+        //flex-basis: 22%;
     }
 
     .carb-chart-container {
         min-width: 150px;
         color: #207eff;
         font-size: 16px;
-        flex-basis: 22%;
+        //flex-basis: 22%;
     }
 
     .fat-chart-container {
         min-width: 150px;
         color: #fa6b6b;
         font-size: 16px;
-        flex-basis: 22%;
+        //flex-basis: 22%;
     }
 }
 
 .food-selection-header {
     background: #fcfcfc;
+    text-align: left;
     display: flex;
+    flex-direction: column;
     border: 1px solid #e2e5f3;
     height: 34px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
 }
 
 .search {
-    //margin-bottom: 20px;
     flex-grow: 2;
-    line-height: 32px;
-    margin: 0 8px;
+    line-height: 31px;
+    margin-top: 5px;
+    margin-left: 10px;
 }
 
 .search-input {
     //height: 35px;
-    height: 28px;
-    width: ~"calc(100% - 80px)";
+    height: 26px;
+    width: ~"calc(100% - 90px)";
     border-radius: 3px;
-    border: 1px solid #c3cfff;
+    border: 1px solid @default-border-color;
     //padding-left: 5px;
-    //padding-right: 5px;
     margin-right: 5px;
 }
 
 .do-search {
     //height: 35px;
-    line-height: 26px;
+    line-height: 24px;
     width: 75px;
     background: white;
-    border-style: solid;
-    border-width: 1px;
     border-radius: 3px;
-    border: 1px solid #c3cfff;
-    font-size: 16px;
+    border: 1px solid @default-border-color;
+    font-size: 15px;
     vertical-align: middle;
 }
 
@@ -885,8 +914,8 @@ span:nth-child(5) {
     margin-left: 8px;
 }
 
-.search-types button:first-child {
-    margin-left: 8px;
+.search-types button:first-child.active {
+    margin-left: -1px;
 }
 
 .search-types button:last-child {
@@ -895,6 +924,10 @@ span:nth-child(5) {
 
 .search-types button:focus {
     outline: none;
+}
+
+.search-types i {
+    margin-right: 6px;
 }
 
 
@@ -918,6 +951,7 @@ span:nth-child(5) {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     border-bottom: none;*/
+    margin-left: 8px;
     position: relative;
     top: -1px;
     height: 34px;

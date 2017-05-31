@@ -2,28 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ConsumedFoodsTableHeader from './ConsumedFoodsTableHeader';
-import SingleConsumedFood from './SingleConsumedFood';
-import SingleConsumedFoodCompactLayout from './SingleConsumedFoodCompactLayout';
+import ConsumedFoodRow from './ConsumedFoodRow';
+import ConsumedFoodRowCompactLayout from './ConsumedFoodRowCompactLayout';
 
 export default function ConsumedFoodsTable(props) {
     var consumedFoodsRows = props.consumedFoods.map((food) => {
         var row;
         if(props.viewportWidth > 768) {
             row = (
-                <SingleConsumedFood
+                <ConsumedFoodRow
                     key={food.consumptionId}
                     food={food}
                     isModifiable={props.isModifiable}
+                    addToDiary={props.addToDiary}
                     removeFromDiary={props.removeFromDiary}
+                    updateDiaryEntry={props.updateDiaryEntry}
                 />
             );
         } else {
             row = (
-                <SingleConsumedFoodCompactLayout
+                <ConsumedFoodRowCompactLayout
                     key={food.consumptionId}
                     food={food}
                     isModifiable={props.isModifiable}
+                    addToDiary={props.addToDiary}
                     removeFromDiary={props.removeFromDiary}
+                    updateDiaryEntry={props.updateDiaryEntry}
                 />
             );
         }
@@ -48,5 +52,7 @@ ConsumedFoodsTable.propTypes = {
     viewportWidth: PropTypes.number.isRequired,
     isModifiable: PropTypes.bool.isRequired,
     consumedFoods: PropTypes.array.isRequired,
-    removeFromDiary: PropTypes.func
+    addToDiary: PropTypes.func,
+    removeFromDiary: PropTypes.func,
+    updateDiaryEntry: PropTypes.func
 };

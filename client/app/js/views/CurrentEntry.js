@@ -8,7 +8,6 @@ import DailyGoal from '../components/DailyGoal';
 
 import updateValuesOnAddition from '../util/update-values-on-addition';
 import updateValuesOnRemove from '../util/update-values-on-remove';
-
 import getCurrentDate from '../util/get-current-date';
 
 var fetchParams = {
@@ -53,6 +52,7 @@ export default class CurrentEntry extends React.Component {
         this.setSelectedFoodAmount = this.setSelectedFoodAmount.bind(this);
         this.addToDiary = this.addToDiary.bind(this);
         this.removeFromDiary = this.removeFromDiary.bind(this);
+        this.updateDiaryEntry = this.updateDiaryEntry.bind(this);
         this.addToFavorites = this.addToFavorites.bind(this);
         this.removeFromFavorites = this.removeFromFavorites.bind(this);
         this.toggleFavoriteIcon = this.toggleFavoriteIcon.bind(this);
@@ -265,6 +265,20 @@ export default class CurrentEntry extends React.Component {
         fetch(url, params).catch((err) => console.error(err));
     }
 
+    updateDiaryEntry(consumptionId, foodAmount) {
+        var params = {
+            ...fetchParams,
+            credentials: 'same-origin',
+            method: 'PATCH',
+            body: JSON.stringify({consumptionId, foodAmount}),
+        }
+
+        fetch('/active-entry', params)
+            .then(() => this.getConsumedFoods())
+            .catch((err) => console.error(err));
+
+    }
+
     addToFavorites(foodId) {
         this.toggleFavoriteIcon(foodId, true);
         var url = `/favorites/${foodId}`;
@@ -298,17 +312,17 @@ export default class CurrentEntry extends React.Component {
         return (
             <div className='current-entry'>
                 <div className='row' style={{maxWidth: '1200px', margin: '0 auto'}}>
-                    {/*}<SearchTypes
-                        fetchMethod={this.state.fetchMethod}
-                        changeFetchMethod={this.changeFetchMethod}
-                    />*/}
-                    {!this.state.isFetchingConsumedFoods && !this.state.isFetchingDailyGoal &&
+                    {!this.state.isFetchingConsumedFoods && !this.state.isFetchingDailyGoal ?
                         <DailyGoal
                             dailyGoal={this.state.dailyGoal}
                             totalConsumption={this.state.totalConsumption}
                             isFetchingDailyGoal={this.state.isFetchingDailyGoal}
                             isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                         />
+                        :
+                        <div className='col-md-2' style={{textAlign: 'center', marginTop: '240px'}}>
+                            <i className='fa fa-spinner fa-3x fa-spin' />
+                        </div>
                     }
                     <FoodSelection
                         fetchMethod={this.state.fetchMethod}
@@ -331,17 +345,17 @@ export default class CurrentEntry extends React.Component {
                         fetchMethod={this.state.fetchMethod}
                         fetchError={this.state.fetchError}
                     />
-            </div>
-
+                </div>
                 <ConsumedFoods
                     viewportWidth={this.props.viewportWidth}
                     isModifiable={true}
                     consumedFoods={this.state.consumedFoods}
                     totalConsumption={this.state.totalConsumption}
+                    addToDiary={this.addToDiary}
                     removeFromDiary={this.removeFromDiary}
+                    updateDiaryEntry={this.updateDiaryEntry}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
-
             </div>
         );
     }

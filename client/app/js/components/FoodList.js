@@ -24,12 +24,13 @@ export default function FoodList(props) {
 
     return (
         <div>
-        {/*}{props.viewportWidth > 767 &&*/}
-            <FoodListHeader viewportWidth={props.viewportWidth} />
-
-        <ul className='food-list'>
-            {foodItems}
-        </ul>
+            <FoodListHeader
+                viewportWidth={props.viewportWidth}
+                fetchMethod={props.fetchMethod}
+            />
+            <ul className='food-list'>
+                {foodItems}
+            </ul>
         </div>
     );
 }

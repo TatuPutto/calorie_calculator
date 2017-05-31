@@ -25,7 +25,6 @@ module.exports = function getEntryDates(userId) {
             }
         });
 
-        console.log(entries);
         return entries;
     }).catch(function (err) {
         console.log(err);

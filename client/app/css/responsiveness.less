@@ -40,7 +40,7 @@
         width: 100%;
         line-height: 24px;
         color: white;
-        background: #2894e2;
+        background: @secondary-blue;
         font-size: 14px;
     }
 
@@ -100,7 +100,7 @@
 
     .total-container thead, .consumed-foods-table thead, {
         color: white;
-        background: #2894e2;
+        background: @secondary-blue;
         font-size: 14px;
     }
 
@@ -146,6 +146,11 @@
         padding: 0;
     }
 
+    .food-selection-header {
+        flex-direction: column;
+        border-radius: 0;
+    }
+
     .food-list {
         font-size: 14px;
         overflow-y: hidden;
@@ -158,14 +163,17 @@
         border-right: none;
         border-left: none;
         //line-height: 50px;
-        padding: 5px 8px;
-        border-bottom: 3px solid @default-border-color;
+        border-bottom: 3px solid #eaeaea;
     }
 
     .food-list li:first-child {
         //border: 1px solid @default-border-color;
         border-right: none;
         border-left: none;
+    }
+
+    .food-list div:first-child {
+        padding: 5px 8px;
     }
 
     .food-list-header {
@@ -182,9 +190,23 @@
         width: 25% !important;
     }
 
+    .food-list-header.extra-height {
+        height: 80px;
+        padding-top: 50px;
+    }
+
     .search {
+        margin-top: 12px;
         margin-left: 2%;
         margin-right: 2%;
+    }
+
+    .do-search {
+        display: none;
+    }
+
+    .search-input {
+        width: 100%;
     }
 
     .food-item {
@@ -209,17 +231,21 @@
     }
 
     .portion-sizes {
-        margin-top: 10px;
         width: 100%;
     }
 
     .portion-sizes li {
         line-height: 20px;
+        padding: 6px 0;
         border: none;
     }
 
     .portion-sizes li:first-child {
         border: none;
+    }
+
+    .portion-sizes a:hover {
+        text-decoration: none;
     }
 
     .food-name-wrapper {
@@ -308,14 +334,16 @@
     }
 
     .consumed-foods {
-        padding: 15px 0;
+        margin-top: 20px;
     }
 
     .consumed-foods-table-wrapper {
         padding: 0;
     }
 
-
+    .consumed-foods-table th:first-child {
+        text-align: center;
+    }
 
     .diary .consumed-foods-table tr {
         height: 70px;
@@ -442,7 +470,7 @@
         width: 100%;
         line-height: 24px;
         color: white;
-        background: #2894e2;
+        background: @secondary-blue;
         font-size: 14px;
         display: block;
         margin: 0;

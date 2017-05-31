@@ -2,8 +2,8 @@
     //background: rgb(145, 182, 255);
     //background: rgb(75, 117, 202);
     box-shadow: 0px 2px 5px #b9abab;
-    border-bottom: 1px solid #2181c7;
-    background: #2894e2;
+    border-bottom: 1px solid #1e9af5;
+    background: @secondary-blue;
     line-height: 50px;
     text-align: center;
 }
@@ -15,26 +15,27 @@
 }
 .chart-label {
     background: #47de83;
-width: paddin;
-/* padding: 8px; */
-border-radius: 4px;
-/* vertical-align: top; */
-/* line-height: 24px; */
-margin-left: 0px;
-height: 16px;
-width: 16px;
-/* margin-top: 0px; */
-position: relative;
-top: 2px;
-margin-right: 6px;
+    width: paddin;
+    /* padding: 8px; */
+    border-radius: 4px;
+    /* vertical-align: top; */
+    /* line-height: 24px; */
+    margin-left: 0px;
+    height: 16px;
+    width: 16px;
+    /* margin-top: 0px; */
+    position: relative;
+    top: 2px;
+    margin-right: 6px;
 }
+
 .diary-entry-selection button:focus {
     outline: none;
 }
 
 .diary-entry-selection i {
     vertical-align: middle;
-    -webkit-text-stroke: 1px #2894e2;
+    -webkit-text-stroke: 1px @secondary-blue;
     color: white;
     font-size: 24px;
 }
@@ -64,8 +65,8 @@ margin-right: 6px;
 
 .entry-details button {
     margin-top: 30px;
-    border-color: #2894e2;
-    color: #2894e2;
+    border-color: @secondary-blue;
+    color: @secondary-blue;
     font-size: 15px;
     width: 100%;
     height: 40px;
@@ -78,8 +79,8 @@ margin-right: 6px;
 }
 
 .entry-details button:focus {
-    border-color: #2894e2;
-    color: #2894e2;
+    border-color: @secondary-blue;
+    color: @secondary-blue;
     background: #fff;
     outline: none;
 }
@@ -104,7 +105,7 @@ margin-right: 6px;
 .macronutrient-split-chart-container-header {
     line-height: 24px;
     color: white;
-    background: #2894e2;
+    background: @secondary-blue;
     font-size: 15px;
     border-radius: 4px;
 }
@@ -130,7 +131,7 @@ margin-right: 6px;
 
 .total-container thead, .consumed-foods-table thead {
     color: white;
-    background: #2894e2;
+    background: @secondary-blue;
     font-size: 15px;
 }
 
@@ -161,7 +162,7 @@ th:first-child {
 }
 
 th:last-child {
-    border-right: 1px solid #2894e2;
+    border-right: 1px solid @secondary-blue;
 }
 
 .total-container th:first-child {

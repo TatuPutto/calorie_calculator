@@ -2,10 +2,12 @@ import React from 'react';
 
 export default function FoodListHeader(props) {
     var foodListHeader;
+    var cn = 'food-list-header ' +
+            (props.fetchMethod == 'haku' ? 'extra-height' : '');
 
     if(props.viewportWidth > 767) {
         foodListHeader = (
-            <li className='food-list-header'>
+            <li className={cn}>
                 <span>Elintarkive <i className='fa fa-caret-down' /></span>
                 <span>kcal / 100 g</span>
                 <span>P / 100 g</span>
@@ -15,7 +17,7 @@ export default function FoodListHeader(props) {
         );
     } else {
         foodListHeader = (
-            <li className='food-list-header'>
+            <li className={cn}>
                 <span>kcal</span>
                 <span>P</span>
                 <span>HH</span>

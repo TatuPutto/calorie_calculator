@@ -1,6 +1,7 @@
 var createConnection = require('../database/create-connection');
 var getConsumedFoods = require('../database/get-consumed-foods');
 var addFoodToConsumedFoods = require('../database/add-food-to-consumed-foods');
+var updateConsumedFoodAmount = require('../database/update-consumed-food-amount');
 var removeFoodFromConsumedFoods = require('../database/remove-food-from-consumed-foods');
 var activeEntryCookieFallback = require('./active-entry-cookie-fallback');
 var bodyParser = require('body-parser');
@@ -40,17 +41,39 @@ router.post('/', function (req, res) {
     if(!consumptionId || !foodId || !foodAmount) {
         res.status(422);
         res.end();
+    } else {
+        addFoodToConsumedFoods(consumptionId, userId, foodId, foodAmount)
+            .then(function () {
+                res.status(200);
+                res.end();
+            }).catch(function (err) {
+                res.status(400);
+                res.end(err);
+            });
     }
-
-    addFoodToConsumedFoods(consumptionId, userId, foodId, foodAmount)
-        .then(function () {
-            res.status(200);
-            res.end();
-        }).catch(function (err) {
-            res.status(400);
-            res.end(err);
-        });
 });
+
+// update amount of consumed food in the list
+router.patch('/', function (req, res) {
+    var userId = req.session.user.id;
+    var consumptionId = req.body.consumptionId;
+    var foodAmount = req.body.foodAmount;
+
+    if(!consumptionId || !foodAmount || foodAmount <= 0) {
+        res.status(422);
+        res.end();
+    } else {
+        updateConsumedFoodAmount(consumptionId, userId, foodAmount)
+            .then(function () {
+                res.status(200);
+                res.end();
+            }).catch(function (err) {
+                res.status(400);
+                res.end(err);
+            });
+    }
+});
+
 
 // remove item from list
 router.delete('/', function (req, res) {

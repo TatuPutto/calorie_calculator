@@ -1,8 +1,6 @@
 var getConnection = require('./create-connection');
 
 function addFoodToConsumedFoods(consumptionId, userId, foodId, foodAmount) {
-    console.log(arguments);
-    console.log(typeof consumptionId);
     var query = 'INSERT INTO consumedfoods ' +
             '(consumptionId, userId, foodId, foodAmount, timeOfConsumption) ' +
             'VALUES (?, ?, ?, ?, NOW())';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SearchTypes from './SearchTypes';
+import FoodSelectionHeader from './FoodSelectionHeader';
 import FoodList from './FoodList';
 import SearchPane from './SearchPane';
 import ShowMoreResultsButton from './ShowMoreResultsButton';
@@ -47,20 +47,14 @@ export default function FoodSelection(props) {
 
     return (
         <div className='food-selection col-md-10 col-sm-12'>
-                <div className='food-selection-header'>
-                    <SearchTypes
-                        fetchMethod={props.fetchMethod}
-                        changeFetchMethod={props.changeFetchMethod}
-                    />
-                    {fetchMethod == 'haku' &&
-                        <SearchPane
-                            searchTerm={props.searchTerm}
-                            changeSearchTerm={props.changeSearchTerm}
-                            doSearch={props.doSearch}
-                        />
-                    }
-                </div>
-                {matchingFoodsOutput}
+            <FoodSelectionHeader
+                fetchMethod={props.fetchMethod}
+                changeFetchMethod={props.changeFetchMethod}
+                searchTerm={props.searchTerm}
+                changeSearchTerm={props.changeSearchTerm}
+                doSearch={props.doSearch}
+            />
+            {matchingFoodsOutput}
         </div>
     );
 }

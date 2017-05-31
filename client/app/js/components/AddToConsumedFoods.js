@@ -36,6 +36,5 @@ AddToConsumedFoods.propTypes = {
     selectedFoodId: PropTypes.string,
     selectedFoodAmount: PropTypes.string,
     setSelectedFoodAmount: PropTypes.func.isRequired,
-    addToDiary: PropTypes.func.isRequired,
-    includeNutritionValues: PropTypes.bool.isRequired
+    addToDiary: PropTypes.func.isRequired
 };
