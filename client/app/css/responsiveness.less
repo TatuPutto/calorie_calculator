@@ -7,14 +7,18 @@
         line-height: 20px;
     }
 
+    table {
+        border-collapse: collapse;
+    }
+
     th {
         border: none;
     }
 
     tr {
-        height: 110px;
+        //height: 140px;
+        height: 100%;
         border: none;
-        border-bottom: 1px solid #d6dcf8;
         border-radius: 0;
     }
 
@@ -27,12 +31,40 @@
     }
 
     td {
-        height: 20px;
+        //height: 20px;
         display: inline-block;
         padding: 0;
-        margin-top: 8px;
+        margin-top: 10px;
     }
 
+    td:first-child {
+        margin-top: 5px;
+    }
+
+    .total-nutrition-values td {
+        font-size: 16px;
+        border: none;
+    }
+
+    .total-nutrition-values td:nth-child(4) {
+        width: 25%;
+        color: @energy-color;
+    }
+
+    .total-nutrition-values td:nth-child(5) {
+        width: 25%;
+        color: @protein-color;
+    }
+
+    .total-nutrition-values td:nth-child(6) {
+        width: 25%;
+        color: @carb-color;
+    }
+
+    .total-nutrition-values td:nth-child(7) {
+        width: 25%;
+        color: @fat-color;
+    }
 
     .total-nutrition-values::before {
         content: "Yhteensä";
@@ -195,6 +227,10 @@
         padding-top: 50px;
     }
 
+    .search-types {
+        text-align: center;
+    }
+
     .search {
         margin-top: 12px;
         margin-left: 2%;
@@ -255,17 +291,10 @@
 
     .food-name {
         text-align: left;
-
         line-height: 20px;
         display: table-cell;
         vertical-align: middle;
         height: 40px;
-        /*white-space: nowrap;
-        overflow: hidden;
-
-        text-overflow: ellipsis;
-        position: relative;
-        top: 6px;*/
         color: #4e4d4d;
     }
 
@@ -280,45 +309,34 @@
         font-size: 14px;
         line-height: 20px;
         width: 25%;
-        color: @energy-color;;
-        //color: white;
-        //background: #fed17e;
-        //background: linear-gradient(to bottom, #fed17e, #fcb93d);
+        color: @energy-color;
     }
 
     .protein-amount {
         font-size: 14px;
         line-height: 20px;
         color: @protein-color;
-        //color: white;
         width: 21%;
         margin: 0 2%;
         border-radius: 15px;
-        //background: linear-gradient(to bottom, #93f093, #7fe07f);
     }
 
     .carb-amount {
         font-size: 14px;
         line-height: 20px;
-        //background: #c5d4ed;
         color: @carb-color;
-        //color: white;
         width: 21%;
         margin: 0 2%;
         border-radius: 15px;
-        //background: linear-gradient(to bottom, #aeccff, #8bb6ff);
     }
 
     .fat-amount {
         font-size: 14px;
         line-height: 20px;
-        //background: #fcc6b4;
         color: @fat-color;;
-        //color: white;
         width: 21%;
         margin: 0 2%;
         border-radius: 15px;
-        //background: linear-gradient(to bottom, #fdaa8f, #ff834f);
     }
 
     .protein-dominant {
@@ -326,7 +344,7 @@
     }
 
     .carb-dominant {
-        background: #d4f5ff;
+        background: #c5d4ed;
     }
 
     .fat-dominant {
@@ -334,11 +352,15 @@
     }
 
     .consumed-foods {
-        margin-top: 20px;
+        margin-top: 0;
     }
 
     .consumed-foods-table-wrapper {
         padding: 0;
+    }
+
+    .consumed-foods-table {
+        margin-top: 20px;
     }
 
     .consumed-foods-table th:first-child {
@@ -349,11 +371,15 @@
         height: 70px;
     }
 
-
     .consumed-foods-table tr, .consumed-foods-table td {
         font-size: 14px;
         border: none;
     }
+
+    .consumed-foods-table tr {
+        border-bottom: 3px solid #eaeaea;
+    }
+
 
     .consumed-foods-table tr:first-child td {
         border: none;
@@ -363,65 +389,50 @@
         border-radius: 0 !important;
     }
 
+    .consumed-foods-table .food-name {
+        display: inline-block;
+        color: #4e4d4d;
+        text-align: left;
+        width: 96%;
+        height: initial;
+    }
+
     .consumed-foods-table .food-amount {
         line-height: 20px;
         width: 20%;
-        color: #a463a6;
-        background: #d3b2d1;
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
-        background: linear-gradient(to bottom, #d3b2d1, #c68dc2);
-        color: white;
     }
 
     .consumed-foods-table .energy-amount {
         line-height: 20px;
         width: 19%;
-        color: #af810b;
-        color: white;
-        background: #fed17e;
-        background: linear-gradient(to bottom, #fed17e, #fcb93d);
+        color: @energy-color;
         border-radius: 0;
     }
 
     .consumed-foods-table .protein-amount {
         line-height: 20px;
-        background: #93f093;
-        color: green;
-        color: white;
+        color: @protein-color;
         width: 19%;
-        background: linear-gradient(to bottom, #93f093, #7fe07f);
+        margin: 10px 0 0 0;
     }
 
     .consumed-foods-table .carb-amount {
         line-height: 20px;
-        background: #c5d4ed;
-        color: #7171eb;
-        color: white;
+        color: @carb-color;
         width: 19%;
-        background: linear-gradient(to bottom, #aeccff, #8bb6ff);
+        margin: 10px 0 0 0;
     }
 
     .consumed-foods-table .fat-amount {
         line-height: 20px;
-        background: #fcc6b4;
-        color: red;
-        color: white;
+        color: @fat-color;
         width: 19%;
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
-        background: linear-gradient(to bottom, #fdaa8f, #ff834f);
-    }
-
-    .consumed-foods-table .food-name {
-        text-align: left;
-        margin-top: 0;
-        margin-bottom: 5px;
-        width: 96%;
+        margin: 10px 0 0 0;
     }
 
     .consumed-foods-table .remove-button-container {
         width: 96%;
+        margin-bottom: 5px;
     }
 
     .consumed-foods-table .remove-food {
@@ -498,17 +509,6 @@
 
 
 }
-/*
-.daily-goal::before {
-    content: "Päivätavoite";
-    display: block;
-    width: 100%;
-    line-height: 24px;
-    color: white;
-    background: #2894e2;
-    font-size: 14px
-}
-*/
 
 @media (max-width: 500px) {
     .energy-chart-container {

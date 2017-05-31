@@ -9,10 +9,10 @@ export default function FoodListHeader(props) {
         foodListHeader = (
             <li className={cn}>
                 <span>Elintarkive <i className='fa fa-caret-down' /></span>
-                <span>kcal / 100 g</span>
-                <span>P / 100 g</span>
-                <span>HH / 100 g</span>
-                <span>R / 100 g</span>
+                <span>kcal</span>
+                <span>P</span>
+                <span>HH</span>
+                <span>R</span>
             </li>
         );
     } else {

@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ConsumedFoodsTableHeader(props) {
     var theadRow = null;
-    if(props.isModifiable) {
+    if(props.isModifiable || props.viewportWidth < 768) {
         theadRow = (
             <tr>
                 <th colSpan={7}>Merkinnät</th>

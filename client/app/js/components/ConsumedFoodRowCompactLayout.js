@@ -9,12 +9,14 @@ export default function ConsumedFoodRowCompactLayout(props) {
 
     return (
         <tr>
-            <td className='food-amount'>{food.amount} g</td>
-            <td className='energy-amount'>{food.energy} kcal</td>
-            <td className='protein-amount'>{food.protein} g</td>
-            <td className='carb-amount'>{food.carbs} g</td>
-            <td className='fat-amount'>{food.fat} g</td>
-            <td className={'food-name ' + dominantMacro}>{food.name}</td>
+            <td className='food-name'>{food.name}</td>
+            <td className='food-amount' onClick={() => props.addToDiary(food.id, food.amount)}>
+                <a>{food.amount} g</a>
+            </td>
+            <td className='energy-amount'>{food.energy}</td>
+            <td className={'protein-amount ' + (dominantMacro == 'protein-dominant' ? dominantMacro : '')}>{food.protein}</td>
+            <td className={'carb-amount ' + (dominantMacro == 'carb-dominant' ? dominantMacro : '')}>{food.carbs}</td>
+            <td className={'fat-amount ' + (dominantMacro == 'fat-dominant' ? dominantMacro : '')}>{food.fat}</td>
             {props.isModifiable &&
                 <td className='remove-button-container'>
                     <button
@@ -31,5 +33,6 @@ export default function ConsumedFoodRowCompactLayout(props) {
 
 ConsumedFoodRowCompactLayout.propTypes = {
     food: PropTypes.object.isRequired,
+    addToDiary: PropTypes.func,
     removeFromDiary: PropTypes.func
 };

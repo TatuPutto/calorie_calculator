@@ -42,7 +42,6 @@ export default function FoodItemCompactLayout(props) {
                         <i className={isInfavorites ? 'fa fa-star' : 'fa fa-star-o'} />
                     </button>
                 </span>
-                {/*dominantMacro*/}
                 <span className='energy-amount'>{energy}</span>
                 <span className={'protein-amount ' + (dominantMacro == 'protein-dominant' ? dominantMacro : '')}>{protein}</span>
                 <span className={'carb-amount ' + (dominantMacro == 'carb-dominant' ? dominantMacro : '')}>{carbs}</span>
