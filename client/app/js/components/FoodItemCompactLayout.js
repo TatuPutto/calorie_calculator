@@ -30,7 +30,7 @@ export default function FoodItemCompactLayout(props) {
                 style={{background: selectedFoodId == id ? '#e8f2ff' : '#fff'}}
             >
                 <span className='food-name-wrapper' style={{height: '40px'}}>
-                <span className={'food-name'}>{name}</span>
+                <span className='food-name'>{name}</span>
                 </span>
                 <span className='favorites'>
                     <button

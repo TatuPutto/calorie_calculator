@@ -1,4 +1,4 @@
-@media (max-width: 767px) {
+@media(max-width: 767px) {
     div[class*="col"] {
         padding: 0;
     }
@@ -11,27 +11,31 @@
         border-collapse: collapse;
     }
 
-    th {
-        border: none;
+    thead {
+        color: white;
+        background: @secondary-blue;
+        font-size: 14px;
     }
-
-    tr {
-        //height: 140px;
-        height: 100%;
-        border: none;
-        border-radius: 0;
-    }
-
-    /*tr:last-child {
-        height: 40px;
-    }*/
 
     thead tr {
         height: 20px !important;
     }
 
+    thead tr th {
+        border-radius: 0 !important;
+    }
+
+    th {
+        border: none;
+    }
+
+    tr {
+        height: 100%;
+        border: none;
+        border-radius: 0;
+    }
+
     td {
-        //height: 20px;
         display: inline-block;
         padding: 0;
         margin-top: 10px;
@@ -39,8 +43,27 @@
 
     td:first-child {
         margin-top: 5px;
+        text-align: center;
     }
 
+    /*==========================================================================
+    ============================================================================
+                                    Header
+    ============================================================================
+    ==========================================================================*/
+    .header ul li {
+        font-size: 13px;
+    }
+
+    .header button {
+        font-size: 12px;
+    }
+
+    /*==========================================================================
+    ============================================================================
+                            Diary view
+    ============================================================================
+    ==========================================================================*/
     .total-nutrition-values td {
         font-size: 16px;
         border: none;
@@ -76,14 +99,6 @@
         font-size: 14px;
     }
 
-    .header ul li {
-        font-size: 13px;
-    }
-
-    .header button {
-        font-size: 12px;
-    }
-
     .diary-entry-selection {
         line-height: 40px;
     }
@@ -110,7 +125,6 @@
         padding: 0;
     }
 
-
     .entry-details button {
         width: 80%;
     }
@@ -130,16 +144,6 @@
         order: 2;
     }
 
-    .total-container thead, .consumed-foods-table thead, {
-        color: white;
-        background: @secondary-blue;
-        font-size: 14px;
-    }
-
-    td:first-child {
-        text-align: center;
-    }
-
     .total-container tr {
         height: auto;
     }
@@ -156,7 +160,6 @@
     }
 
     .total-container th:first-child, .total-container td:first-child {
-        //width: 31%;
         width: 56%;
         text-align: left;
         padding-left: 10px;
@@ -168,6 +171,11 @@
     }
 
 
+    /*==========================================================================
+    ============================================================================
+                            Current entry view
+    ============================================================================
+    ==========================================================================*/
     .food-selection {
         border-bottom: none;
         padding-bottom: 0;
@@ -182,6 +190,25 @@
         flex-direction: column;
         border-radius: 0;
     }
+
+    .search-types {
+        text-align: center;
+    }
+
+    .search {
+        margin-top: 12px;
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+
+    .do-search {
+        display: none;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
 
     .food-list {
         font-size: 14px;
@@ -205,7 +232,7 @@
     }
 
     .food-list div:first-child {
-        padding: 5px 8px;
+        padding: 10px 8px 5px 8px;
     }
 
     .food-list-header {
@@ -215,7 +242,7 @@
 
     .food-list-header span {
         line-height: 30px;
-        border: none;
+        font-size: 14px;
     }
 
     .food-list-header span {
@@ -227,47 +254,9 @@
         padding-top: 50px;
     }
 
-    .search-types {
-        text-align: center;
-    }
-
-    .search {
-        margin-top: 12px;
-        margin-left: 2%;
-        margin-right: 2%;
-    }
-
-    .do-search {
-        display: none;
-    }
-
-    .search-input {
-        width: 100%;
-    }
-
     .food-item {
         padding-top: 8px;
         padding-bottom: 6px;
-    }
-
-    .add-to-consumed-foods {
-        padding: 15px !important;
-        border-top: @default-border;
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-        padding: 15px;
-        position: relative;
-        box-shadow: none;
-        border: none;
-    }
-
-    .add-to-consumed-foods span {
-        text-align: center;
-    }
-
-    .portion-sizes {
-        width: 100%;
     }
 
     .portion-sizes li {
@@ -276,33 +265,25 @@
         border: none;
     }
 
-    .portion-sizes li:first-child {
-        border: none;
-    }
-
-    .portion-sizes a:hover {
-        text-decoration: none;
-    }
-
     .food-name-wrapper {
         width: ~'calc(100% - 33px)';
         height: 40px;
     }
 
     .food-name {
+        display: table-cell;
+        height: 40px;
         text-align: left;
         line-height: 20px;
-        display: table-cell;
-        vertical-align: middle;
-        height: 40px;
         color: #4e4d4d;
     }
 
     .favorites {
         width: 33px;
-        margin-top: 5px;
+        margin-top: -5px;
         height: 40px;
         vertical-align: top;
+        text-align: right;
     }
 
     .energy-amount {
@@ -316,8 +297,7 @@
         font-size: 14px;
         line-height: 20px;
         color: @protein-color;
-        width: 21%;
-        margin: 0 2%;
+        width: 25%;
         border-radius: 15px;
     }
 
@@ -325,8 +305,7 @@
         font-size: 14px;
         line-height: 20px;
         color: @carb-color;
-        width: 21%;
-        margin: 0 2%;
+        width: 25%;
         border-radius: 15px;
     }
 
@@ -334,21 +313,20 @@
         font-size: 14px;
         line-height: 20px;
         color: @fat-color;;
-        width: 21%;
-        margin: 0 2%;
+        width: 25%;
         border-radius: 15px;
     }
 
     .protein-dominant {
-        background: #ccffcc;
+        font-weight: bold;
     }
 
     .carb-dominant {
-        background: #c5d4ed;
+        font-weight: bold;
     }
 
     .fat-dominant {
-        background: #ffd5d5
+        font-weight: bold;
     }
 
     .consumed-foods {
@@ -385,10 +363,6 @@
         border: none;
     }
 
-    thead tr th {
-        border-radius: 0 !important;
-    }
-
     .consumed-foods-table .food-name {
         display: inline-block;
         color: #4e4d4d;
@@ -413,21 +387,18 @@
         line-height: 20px;
         color: @protein-color;
         width: 19%;
-        margin: 10px 0 0 0;
     }
 
     .consumed-foods-table .carb-amount {
         line-height: 20px;
         color: @carb-color;
         width: 19%;
-        margin: 10px 0 0 0;
     }
 
     .consumed-foods-table .fat-amount {
         line-height: 20px;
         color: @fat-color;
         width: 19%;
-        margin: 10px 0 0 0;
     }
 
     .consumed-foods-table .remove-button-container {
@@ -440,6 +411,12 @@
         padding: 6px 0;
     }
 
+
+    /*==========================================================================
+    ============================================================================
+                            Daily goal
+    ============================================================================
+    ==========================================================================*/
     .energy-chart-container {
         min-width: 150px;
         color: #fcb93d;
@@ -503,27 +480,13 @@
         margin-top: 10px;
     }
 
+
+    /*==========================================================================
+    ============================================================================
+                            Modal window
+    ============================================================================
+    ==========================================================================*/
     .modal .amount {
         width: ~"calc(100% - 80px)";
-    }
-
-
-}
-
-@media (max-width: 500px) {
-    .energy-chart-container {
-        margin-left: 0;
-    }
-
-    .protein-chart-container {
-        margin-right: 0;
-    }
-
-    .carb-chart-container {
-        margin-left: 0;
-    }
-
-    .fat-chart-container {
-        margin-right: 0;
     }
 }

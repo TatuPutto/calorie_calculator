@@ -35,38 +35,36 @@ export default class Header extends React.Component {
     render() {
         return (
             <div className='header'>
-                <div className='header-content-wrapper col-md-10 col-sm-12'>
-                    <div className='header-content'>
-                        <button className='toggle-nav-menu' style={{display: 'none'}}>
-                            <i className='fa fa-bars' />
-                        </button>
-                        <ul className='nav-menu'>
-                            <li>
-                                <NavLink to='/current-entry' activeStyle={{textDecoration: 'underline'}}>
-                                    Tänään
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to='/diary' activeStyle={{textDecoration: 'underline'}}>
-                                    Päiväkirja
-                                </NavLink>
-                            </li>
-                        </ul>
-                        <div className='user-info'>
-                            {this.state.loggedIn ?
-                                <a href='/logout'>
-                                    <button>
-                                        <i className='fa fa-sign-out' /> Kirjaudu ulos
-                                    </button>
-                                </a>
-                                :
-                                <a href='/login'>
-                                    <button>
-                                        <i className='fa fa-sign-in' /> Kirjaudu sisään
-                                    </button>
-                                </a>
-                            }
-                        </div>
+                <div className='header-content col-md-10 col-sm-12 col-md-offset-1'>
+                    <button className='toggle-nav-menu' style={{display: 'none'}}>
+                        <i className='fa fa-bars' />
+                    </button>
+                    <ul className='nav-menu'>
+                        <li>
+                            <NavLink to='/current-entry' activeStyle={{textDecoration: 'underline'}}>
+                                Tänään
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/diary' activeStyle={{textDecoration: 'underline'}}>
+                                Päiväkirja
+                            </NavLink>
+                        </li>
+                    </ul>
+                    <div className='user-info'>
+                        {this.state.loggedIn ?
+                            <a href='/logout'>
+                                <button>
+                                    <i className='fa fa-sign-out' /> Kirjaudu ulos
+                                </button>
+                            </a>
+                            :
+                            <a href='/login'>
+                                <button>
+                                    <i className='fa fa-sign-in' /> Kirjaudu sisään
+                                </button>
+                            </a>
+                        }
                     </div>
                 </div>
             </div>

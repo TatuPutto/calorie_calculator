@@ -7,44 +7,6 @@ import SearchPane from './SearchPane';
 import ShowMoreResultsButton from './ShowMoreResultsButton';
 
 export default function FoodSelection(props) {
-    var {
-        viewportWidth,
-        fetchMethod,
-        fetchError,
-        isFetchingMatchingFoods,
-        foods,
-        searchTerm,
-        changeSearchTerm,
-        doSearch,
-        offset,
-        showMoreResults
-    } = props;
-    var matchingFoodsOutput = null;
-
-    if(fetchError) {
-        matchingFoodsOutput = <p>{fetchError}</p>;
-    } else if(isFetchingMatchingFoods) {
-        matchingFoodsOutput = <i className='fa fa-spinner fa-3x fa-spin' />;
-    } else if(foods.length === 0 && !isFetchingMatchingFoods && !fetchError) {
-        matchingFoodsOutput = (
-            <div className='no-results'>
-                Syötettä vastaavia elintarvikkeita ei löytynyt
-            </div>
-        );
-    } else {
-        matchingFoodsOutput = (
-            <div>
-                <FoodList {...props} />
-                <ShowMoreResultsButton
-                    viewportWidth={viewportWidth}
-                    foodsAmount={foods.length}
-                    offset={offset}
-                    showMoreResults={showMoreResults}
-                />
-            </div>
-        );
-    }
-
     return (
         <div className='food-selection col-md-10 col-sm-12'>
             <FoodSelectionHeader
@@ -54,7 +16,7 @@ export default function FoodSelection(props) {
                 changeSearchTerm={props.changeSearchTerm}
                 doSearch={props.doSearch}
             />
-            {matchingFoodsOutput}
+            <FoodList {...props} />
         </div>
     );
 }

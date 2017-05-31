@@ -1,315 +1,9 @@
-//@default-border-color: #d6dcf8;
-@default-border: 1px solid #e2e5f3;
-@default-border-color: #e2e5f3;
-@new-border-color: #e2e5f3;
-//@secondary-blue: #2894e2;
-@secondary-blue: #60bcff;
-@table-header-line-heigh: 24px;
-@table-header-border: 1px solid #fff;
+@import './global.less';
+@import './header.less';
 
-//default nutrient colors
-@energy-color: #f9a200;
-@protein-color: #639e63;
-@carb-color: #207eff;
-@fat-color: #fa6b6b;
-
-.default-border(@width: 1px, @style: solid, @color: @default-border-color, @border-radius: 3px) {
-    border: @width @style @color;
-    border-radius: @border-radius;
-}
-
-.left-td-border(@width: 1px, @style: solid, @color: @default-border-color) {
-    border-left: @width @style @color;
-    border-right: @width @style @color;
-    border-bottom: @width @style @color;
-}
-
-.mid-td-border(@width: 1px, @style: solid, @color: @default-border-color) {
-    border-right: @width @style @color;
-    border-bottom: @width @style @color;
-}
-
-.right-td-border(@width: 1px, @style: solid, @color: @default-border-color) {
-    border-right: @width @style @color;
-    border-bottom: @width @style @color;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-}
-
-::-webkit-scrollbar {
- 	width: 6px;
-}
-
-::-webkit-scrollbar-track {
- 	background: rgba(0, 0, 0, 0.1);
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.5);
-}
-
-body {
-    overflow-y: scroll;
-    font-family: 'Roboto', sans-serif;
-}
-
-.container-fluid {
-    padding: 0;
-}
-
-.row {
-    margin-right: 0;
-    margin-left: 0;
-}
-
-h3 {
-    font-size: 20px;
-}
-
-p {
-    margin: 0;
-}
-
-input[type="text"] {
-    padding-left: 5px;
-    padding-right: 5px;
-    border: 1px solid @default-border-color;
-    border-radius: 3px;
-}
-
-ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-
-table {
-    border-collapse: separate;
-}
-
-th {
-    padding-bottom: 5px;
-    padding: 2px;
-    //border-right: 1px solid rgb(255, 255, 255);
-}
-
-tr {
-    border: 1px solid @default-border-color;
-}
-
-td {
-    padding: 6px;
-}
-
-td:first-child {
-    text-align: left;
-}
-
-i {
-    color: #919191;
-}
-
-// table top left rounded border
-tr:first-child {
-    border-top-left-radius: 3px;
-}
-
-// table top right rounded border
-tr:first-child {
-    border-top-right-radius: 3px;
-}
-
-// table bottom left rounded border
-.current-entry tr:last-child td:first-child {
-    border-bottom-left-radius: 3px;
-}
-
-// table bottom right rounded border
-.current-entry tr:last-child td:last-child {
-    border-bottom-right-radius: 3px;
-}
-
-td:first-child {
-    .left-td-border();
-}
-
-td:nth-child(2) {
-    .mid-td-border();
-}
-
-td:nth-child(3) {
-    .mid-td-border();
-}
-
-td:nth-child(4) {
-    .mid-td-border();
-}
-
-td:nth-child(5) {
-    .mid-td-border();
-}
-
-td:nth-child(6) {
-    .mid-td-border();
-}
-
-td:nth-child(7) {
-    .right-td-border();
-}
-
-.header {
-    color: white;
-    height: 35px;
-    //background: #74a2ff;
-    //border-bottom: 1px solid #3e3eff;
-    background: #0e81d4;
-    border-bottom: 1px solid #0e74bd;
-}
-
-.header a {
-    color: white;
-}
-
-.header ul {
-    float: left;
-    -webkit-padding-start: 0;
-}
-
-.header ul li {
-    line-height: 34px;
-    display: inline;
-    vertical-align: middle;
-    margin-right: 10px;
-}
-
-.header button {
-    font-size: 13px;
-    padding: 2px 8px;
-    margin-top: 5px;
-    color: white;
-    border: 1px solid #5d5df9;
-    border-radius: 3px;
-    background: linear-gradient(#7fb7f1, #3c8fe4);
-    border: 1px solid #107710;
-    border-radius: 3px;
-
-    //background: linear-gradient(#71c4ff, #2894e2);
-}
-
-.header button i {
-    color: white;
-    border-right: 1px solid white;
-    line-height: 15px;
-    padding-right: 7px;
-    margin-right: 5px;
-}
-
-
-
-
-.header-content-wrapper {
-    max-width: 1100px;
-    margin: 0 auto;
-    float: none;
-}
-
-.header-content {
-    margin: 0 auto;
-}
-
-.user-info {
-    float: right;
-}
-
-.calories-consumed {
-    width: 100%;
-    height: 10px;
-    text-shadow: teal;
-    background: linear-gradient(to right, orange 70%, #ffdab7 70%);
-    border-radius: 3px;
-}
-
-
-.protein-consumed {
-    background-color: lightgreen;
-    width: 35%;
-    height: 10px;
-    text-align: 2px 2px black;
-    text-shadow: teal;
-    /* text-shadow: -1px -2px #1fb03e; */
-    color: #168116;
-    background: linear-gradient(to right, green, lightgreen),
-    -webkit-gradient(linear, left top, left bottom, from(#21c50e), to(#289551));
-    background: -webkit-gradient(linear, left top, left bottom, from(#22ce0e), to(#30af60));
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    background: linear-gradient(to right, green 32.3333%, rgb(147, 240, 147) 32.3333%);
-}
-
-.protein-goal {
-    background-color: lightgreen;
-    width: 100px;
-    height: 35px;
-    text-align: 2px 2px black;
-    text-shadow: teal;
-    /* text-shadow: -1px -2px #1fb03e; */
-    color: #168116;
-    background: -webkit-gradient(linear, left top, left bottom, from(#d8e6db), to(#9cd390));
-}
-
-
-.carbs-consumed {
-    background-color: lightgreen;
-    width: 50%;
-    height: 10px;
-    text-align: 2px 2px black;
-    text-shadow: teal;
-    /* text-shadow: -1px -2px #1fb03e; */
-    color: #168116;
-    background: -webkit-gradient(linear, left top, left bottom, from(lightblue), to(blue));
-    background: linear-gradient(to right, blue 17.12%, rgb(193, 193, 255) 17.12%);
-}
-
-.carb-goal {
-    background-color: lightgreen;
-    width: 150px;
-    height: 12px;
-    text-align: 2px 2px black;
-    text-shadow: teal;
-    /* text-shadow: -1px -2px #1fb03e; */
-    color: #168116;
-    background: -webkit-gradient(linear, left top, left bottom, from(#d8e6db), to(#9cd390));
-    background: linear-gradient(to right, blue 17.12%, rgb(193, 193, 255) 17.12%);
-}
-
-
-.fat-consumed {
-    background-color: lightgreen;
-    width: 15%;
-    height: 10px;
-    text-align: 2px 2px black;
-    text-shadow: teal;
-    /* text-shadow: -1px -2px #1fb03e; */
-    color: #168116;
-    background: -webkit-gradient(linear, left top, left bottom, from(#f58a9b), to(#db2929));
-    background: linear-gradient(to right, red 82.125%, rgb(252, 198, 180) 82.125%);
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-
-.fat-goal {
-    background-color: lightgreen;
-    width: 150px;
-    height: 10px;
-    text-align: 2px 2px black;
-    text-shadow: teal;
-    /* text-shadow: -1px -2px #1fb03e; */
-    color: #168116;
-    background: -webkit-gradient(linear, left top, left bottom, from(#c8dafd), to(#a2b5d2));
-    background: linear-gradient(to right, red 82.125%, rgb(252, 198, 180) 82.125%);
+.current-entry {
+    max-width: 1200px;
+    margin: 0px auto;
 }
 
 .daily-goal {
@@ -338,7 +32,6 @@ td:nth-child(7) {
 }
 
 .modal .amount {
-    //width: ~'calc(100% - 20px)';
     width: 40%;
     margin-right: 4px;
 }
@@ -387,11 +80,8 @@ td:nth-child(7) {
 ==============================================================================*/
 .food-list {
     font-size: 13px;
-    //max-height: 500px;
-    height: 539px;
+    height: 500px;
     overflow-y: scroll;
-    //border: 1px solid @default-border-color;
-    //border-radius: 3px;
     line-height: 32px;
     border: 1px solid #e2e5f3;
     border-bottom-right-radius: 3px;
@@ -494,17 +184,7 @@ td:nth-child(7) {
     display: flex;
     flex-direction: column;
     padding: 15px;
-    position: absolute;
-    z-index: 9999;
     background: #fff;
-    border: 1px solid #d2d2d2;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    box-shadow: 1px 1px 3px #a0a0a0;
-}
-
-.portion-sizes {
-    //width: 40%;
 }
 
 .portion-sizes li {
@@ -526,6 +206,10 @@ td:nth-child(7) {
     border-radius: 2px;
 }
 
+.portion-sizes a:hover {
+    text-decoration: none;
+}
+
 .add-custom-amount {
     margin-top: 10px;
 }
@@ -538,8 +222,7 @@ td:nth-child(7) {
 }
 
 .no-results {
-    position: relative;
-    top: 20%;
+    margin-top: 20px;
     font-size: 16px;
 }
 
@@ -549,35 +232,6 @@ span {
     //padding-left: 5px;
     line-height: 30px;
 }
-/*
-span:first-child {
-    border-left: none;
-    text-align: left;
-    width: 66%;
-}
-
-span:nth-child(2) {
-    width: 10%;
-}
-
-span:nth-child(3) {
-    background: #93f093;
-    color: green;
-    width: 8%;
-}
-
-span:nth-child(4) {
-    background: #c1c1ff;
-    color: blue;
-    width: 8%;
-}
-
-span:nth-child(5) {
-    background: #fcc6b4;
-    color: red;
-    width: 8%;
-}
-*/
 
 .food-selected-indicator-container {
     width: 20px;
@@ -624,27 +278,27 @@ span:nth-child(5) {
 
     .energy-amount {
         width: 10%;
-        color: #f6a000;
+        color: @energy-color;
         border-right: 1px solid @default-border-color;
     }
 
     .protein-amount {
         //background: #93f093;
-        color: #0fb70f;
+        color: @protein-color;
         width: 8%;
         border-right: 1px solid @default-border-color;
     }
 
     .carb-amount {
         //background: #c5d4ed;
-        color: #207eff;
+        color: @carb-color;
         width: 8%;
         border-right: 1px solid @default-border-color;
     }
 
     .fat-amount {
         //background: #fcc6b4;
-        color: #fa6b6b;
+        color: @fat-color;
         width: 8%;
     }
 
@@ -1007,13 +661,10 @@ margin-left: -15px;
 }
 
 .food-selection {
-    //float: left;
-    //width: 100%;
     text-align: center;
     background: white;
     padding-top: 20px;
-    height: 600px;
-    //border-bottom: 1px solid #c3cfff;
+    height: 650px;
     padding-bottom: 40px;
 }
 
@@ -1024,25 +675,20 @@ margin-left: -15px;
 }
 
 .matching-foods {
-    //float: left;
-    //width: 60%;
-    /*min-height: 700px;*/
-    //margin-top: 20px;
     margin-right: auto;
     margin-left: auto;
-    /*padding-bottom: 20px;*/
 }
 
 .protein-dominant {
-    color: #0fb70f;
+    color: @protein-color;
 }
 
 .carb-dominant {
-    color: #207eff;
+    color: @carb-color;
 }
 
 .fat-dominant {
-    color: #fa6b6b;
+    color: @fat-color;
 }
 
 .show-more-results {
@@ -1051,18 +697,9 @@ margin-left: -15px;
 
 
 .consumed-foods {
-    //float: left;
-    //width: 100%;
     background: white;
-    padding-bottom: 40px;
     text-align: center;
-    max-width: 1200px;
-    margin: 60px auto 40px;
-    //border-bottom: 1px solid #c3cfff;
-}
-
-.consumed-foods-table-wrapper {
-    max-width: 1200px;
+    margin-top: 20px;
 }
 
 .consumed-foods-table {
@@ -1145,4 +782,5 @@ table {
 }
 
 @import './diary.less';
-@import './responsiveness.less';
+@import './500px-767px.less';
+@import './320px-500px.less';

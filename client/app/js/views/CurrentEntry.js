@@ -311,7 +311,7 @@ export default class CurrentEntry extends React.Component {
     render() {
         return (
             <div className='current-entry'>
-                <div className='row' style={{maxWidth: '1200px', margin: '0 auto'}}>
+                <div className='row'>
                     {!this.state.isFetchingConsumedFoods && !this.state.isFetchingDailyGoal ?
                         <DailyGoal
                             dailyGoal={this.state.dailyGoal}

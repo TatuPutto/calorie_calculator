@@ -4,22 +4,56 @@ import PropTypes from 'prop-types';
 import FoodListHeader from './FoodListHeader';
 import FoodItem from './FoodItem';
 import FoodItemCompactLayout from './FoodItemCompactLayout';
+import ShowMoreResultsButton from './ShowMoreResultsButton';
 
 export default function FoodList(props) {
-    var foods = [];
+    var {
+        viewportWidth,
+        fetchMethod,
+        fetchError,
+        isFetchingMatchingFoods,
+        foods,
+        searchTerm,
+        changeSearchTerm,
+        doSearch,
+        offset,
+        showMoreResults
+    } = props;
     var foodItems = [];
+    var matchingFoodsOutput = null;
 
-    if(props.viewportWidth > 768) {
-        props.foods.forEach((food) => {
-            foodItems.push(<FoodItem key={food.id} food={food} {...props} />);
-        });
+    if(fetchError) {
+        matchingFoodsOutput = <p>{fetchError}</p>;
+    } else if(isFetchingMatchingFoods) {
+        matchingFoodsOutput = (
+            <div className='loading'>
+                <i className='fa fa-spinner fa-3x fa-spin' />
+            </div>
+        );
+    } else if(foods.length === 0 && !isFetchingMatchingFoods && !fetchError) {
+        matchingFoodsOutput = (
+            <div className='no-results'>
+                Syötettä vastaavia elintarvikkeita ei löytynyt.
+            </div>
+        );
     } else {
-        foods = props.foods.slice(0, (props.offset + 10));
-        foods.forEach((food) => {
-            foodItems.push(
-                <FoodItemCompactLayout key={food.id} food={food} {...props} />
-            );
-        });
+        if(props.viewportWidth > 768) {
+            props.foods.forEach((food) => {
+                foodItems.push(<FoodItem key={food.id} food={food} {...props} />);
+            });
+        } else {
+            props.foods.slice(0, (props.offset + 10)).forEach((food) => {
+                foodItems.push(
+                    <FoodItemCompactLayout key={food.id} food={food} {...props} />
+                );
+            });
+        }
+
+        matchingFoodsOutput = (
+            <ul className='food-list'>
+                {foodItems}
+            </ul>
+        );
     }
 
     return (
@@ -28,16 +62,28 @@ export default function FoodList(props) {
                 viewportWidth={props.viewportWidth}
                 fetchMethod={props.fetchMethod}
             />
-            <ul className='food-list'>
-                {foodItems}
-            </ul>
+            {matchingFoodsOutput}
+            <ShowMoreResultsButton
+                viewportWidth={viewportWidth}
+                foodsAmount={props.foods.length}
+                offset={offset}
+                showMoreResults={showMoreResults}
+            />
         </div>
     );
 }
 
 FoodList.propTypes = {
     viewportWidth: PropTypes.number.isRequired,
+    fetchMethod: PropTypes.string.isRequired,
+    fetchError: PropTypes.string,
+    isFetchingMatchingFoods: PropTypes.bool.isRequired,
     foods: PropTypes.array.isRequired,
+    offset: PropTypes.number.isRequired,
+    searchTerm: PropTypes.string,
+    changeSearchTerm: PropTypes.func.isRequired,
+    doSearch: PropTypes.func.isRequired,
+    showMoreResults: PropTypes.func.isRequired,
     addToDiary: PropTypes.func.isRequired,
     addToFavorites: PropTypes.func.isRequired,
     removeFromFavorites: PropTypes.func.isRequired,
