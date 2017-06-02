@@ -117,7 +117,10 @@ export default class Diary extends React.Component {
                             <div id='macronutrient-split-chart-container'></div>
                         </div>
                         <div className='total-container col-sm-8'>
-                            <TotalConsumptionTable entry={this.state.entry} />
+                            <TotalConsumptionTable
+                                entry={this.state.entry}
+                                isModifiable={false}
+                            />
                             <button className='btn btn-default'
                                     onClick={this.toggleDetails}>
                                 {this.state.detailsVisible ?

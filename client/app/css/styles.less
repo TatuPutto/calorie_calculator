@@ -82,7 +82,7 @@
     font-size: 13px;
     height: 500px;
     overflow-y: scroll;
-    line-height: 32px;
+    line-height: 30px;
     border: 1px solid #e2e5f3;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -95,6 +95,10 @@
 
 .food-list li:first-child {
     //border: none;
+}
+
+.food-list span {
+    height: 32px;
 }
 
 .food-list-header {
@@ -261,6 +265,32 @@ span {
     margin: 0 auto;
 }
 
+.edit-input {
+    width: 100%;
+}
+
+.do-edit {
+    width: 48%;
+    padding: 0;
+    margin-top: 5px;
+    margin-right: 4%;
+    background: #fff;
+}
+
+.do-edit i {
+    color: green;
+}
+
+.cancel-edit {
+    width: 48%;
+    padding: 0;
+    margin-top: 5px;
+}
+
+.cancel-edit i {
+    color: red;
+}
+
 @media(min-width: 768px) {
     .food-name {
         text-align: left;
@@ -304,28 +334,6 @@ span {
 
     .consumed-foods .food-name {
         top: 0;
-    }
-
-    .do-edit {
-        width: 48%;
-        padding: 0;
-        margin-top: 5px;
-        margin-right: 4%;
-        background: #fff;
-    }
-
-    .do-edit i {
-        color: green;
-    }
-
-    .cancel-edit {
-        width: 48%;
-        padding: 0;
-        margin-top: 5px;
-    }
-
-    .cancel-edit i {
-        color: red;
     }
 
     .consumed-foods-table td {

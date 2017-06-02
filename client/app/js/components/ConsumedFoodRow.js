@@ -60,17 +60,7 @@ export default class ConsumedFoodRow extends React.Component {
                     <td className='food-amount'>{food.amount} g</td>
                 }
 
-                {isModifiable && !this.state.isBeingEdited ?
-                    <td className='food-amount'>
-                        <a onClick={() => addToDiary(food.id, food.amount)}>
-                            {food.amount} g
-                        </a>
-                        <br />
-                        <a onClick={this.toggleEditing}>
-                            Muokkaa
-                        </a>
-                    </td>
-                    :
+                {isModifiable && this.state.isBeingEdited &&
                     <td className='food-amount'>
                         <input type='text'
                             value={this.state.foodAmount}
@@ -87,6 +77,18 @@ export default class ConsumedFoodRow extends React.Component {
                                 onClick={this.toggleEditing}>
                             <i className='fa fa-close' />
                         </button>
+                    </td>
+                }
+
+                {isModifiable && !this.state.isBeingEdited &&
+                    <td className='food-amount'>
+                        <a onClick={() => addToDiary(food.id, food.amount)}>
+                            {food.amount} g
+                        </a>
+                        <br />
+                        <a onClick={this.toggleEditing}>
+                            Muokkaa
+                        </a>
                     </td>
                 }
 

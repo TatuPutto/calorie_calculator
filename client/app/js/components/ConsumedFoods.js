@@ -11,7 +11,7 @@ export default function ConsumedFoods(props) {
     if(isFetchingConsumedFoods) {
         consumedFoodsOutput = <i className='fa fa-spinner fa-spin fa-3x' />
     } else if(consumedFoods.length === 0 && !isFetchingConsumedFoods) {
-        consumedFoodsOutput = <p>Et ole syönyt tänään mitään</p>
+        consumedFoodsOutput = null;
     } else {
         consumedFoodsOutput = (
             <div>
