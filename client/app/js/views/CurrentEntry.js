@@ -5,6 +5,7 @@ import FoodSelection from '../components/FoodSelection';
 import ConsumedFoods from '../components/ConsumedFoods';
 import SearchTypes from '../components/SearchTypes';
 import DailyGoal from '../components/DailyGoal';
+import Loading from '../components/Loading';
 
 import updateValuesOnAddition from '../util/update-values-on-addition';
 import updateValuesOnRemove from '../util/update-values-on-remove';
@@ -320,9 +321,7 @@ export default class CurrentEntry extends React.Component {
                             isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                         />
                         :
-                        <div className='col-md-2' style={{textAlign: 'center', marginTop: '240px'}}>
-                            <i className='fa fa-spinner fa-3x fa-spin' />
-                        </div>
+                        <Loading />
                     }
                     <FoodSelection
                         fetchMethod={this.state.fetchMethod}

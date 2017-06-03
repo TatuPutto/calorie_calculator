@@ -9,14 +9,14 @@ router.use(cookieParser());
 // get favorite foods from cookie
 router.get('/', function (req, res) {
     var favoriteFoodsCookie = req.cookies['favorites'];
-    var favorites = favoriteFoodsCookie ? JSON.parse(favoriteFoodsCookie) : null;
+    var favorites = favoriteFoodsCookie ? JSON.parse(favoriteFoodsCookie) : [];
 
     if(favorites) {
         var matchingFoods = findMatchingFoodsByIds(favorites);
         matchingFoods.forEach(function (food) {
             return food['favorite'] = true;
         });
-        favorites = matchingFoods
+        favorites = matchingFoods;
     }
 
     res.writeHead(200, {'Content-Type' : 'application/json'})

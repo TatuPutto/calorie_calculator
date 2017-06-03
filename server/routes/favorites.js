@@ -6,13 +6,10 @@ var favoritesCookieFallback = require('./favorites-cookie-fallback');
 var express = require('express');
 var router = express.Router();
 
-// allow using favorites only when logged in
 router.use(function (req, res, next) {
     if(req.session.user) {
         next();
     } else {
-        // res.writeHead(403, {'Content-Type': 'application/json'});
-        // res.end(JSON.stringify('Kirjaudu sisään käyttääksesi suosikkeja'));
         favoritesCookieFallback(req, res);
     }
 });

@@ -5,6 +5,7 @@ import FoodListHeader from './FoodListHeader';
 import FoodItem from './FoodItem';
 import FoodItemCompactLayout from './FoodItemCompactLayout';
 import ShowMoreResultsButton from './ShowMoreResultsButton';
+import Loading from './Loading';
 
 export default function FoodList(props) {
     var {
@@ -25,11 +26,7 @@ export default function FoodList(props) {
     if(fetchError) {
         matchingFoodsOutput = <p>{fetchError}</p>;
     } else if(isFetchingMatchingFoods) {
-        matchingFoodsOutput = (
-            <div className='loading'>
-                <i className='fa fa-spinner fa-3x fa-spin' />
-            </div>
-        );
+        matchingFoodsOutput = <Loading />;
     } else if(foods.length === 0 && !isFetchingMatchingFoods && !fetchError) {
         matchingFoodsOutput = (
             <div className='no-results'>

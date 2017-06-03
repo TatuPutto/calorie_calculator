@@ -1,7 +1,7 @@
 var getConnection = require('./create-connection');
 
 module.exports = function getLatestConsumedFoods(userId) {
-    var query = 'SELECT foodId FROM consumedfoods WHERE userId=? ' +
+    var query = 'SELECT foodId FROM consumedFoods WHERE userId=? ' +
             'ORDER BY timeOfConsumption DESC LIMIT 20';
 
     return new Promise(function (resolve, reject) {

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SelectDiaryEntry from '../components/SelectDiaryEntry';
 import TotalConsumptionTable from '../components/TotalConsumptionTable';
 import ConsumedFoodsTable from '../components/ConsumedFoodsTable';
+import Loading from '../components/Loading';
 
 import drawMacroChart from '../util/draw-macro-chart';
 
@@ -102,9 +103,7 @@ export default class Diary extends React.Component {
         var entryElement = null;
 
         if(this.state.isFetchingEntry) {
-            entryElement = <div className='loading'>
-                <i className='fa fa-spinner fa-spin fa-3x' />
-            </div>;
+            entryElement = <Loading />
         } else if(!this.state.isFetchingEntry && this.state.entry &&
                 this.state.entry.nutritionValuesPerItem.length > 0) {
             entryElement = (

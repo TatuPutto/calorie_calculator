@@ -11,7 +11,6 @@ function updateConsumedFoodAmount(consumptionId, userId, foodAmount) {
             if(err) reject(err);
             connection.query(query, data, function (err, result) {
               if(err) reject(err);
-              console.log(result);
               resolve();
             });
         });

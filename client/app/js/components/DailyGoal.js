@@ -46,7 +46,7 @@ export default class DailyGoal extends React.Component {
             );
         } else {
             dailyGoalOutput = (
-                <div style={{marginTop: '20px', fontSize: '18px'}}>
+                <div className='set-daily-goal'>
                     <a data-toggle='modal' data-target='#set-daily-goal'>
                         Aseta päivätavoite
                     </a>

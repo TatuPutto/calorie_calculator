@@ -1,7 +1,7 @@
 var getConnection = require('./create-connection');
 
 module.exports = function addFoodToConsumedFoods(userId, consumptionId) {
-    var query = 'UPDATE consumedfoods SET active=0 WHERE consumptionId=?';
+    var query = 'UPDATE consumedFoods SET active=0 WHERE consumptionId=?';
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {

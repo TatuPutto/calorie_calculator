@@ -5,7 +5,7 @@ var calcTotalNutritionValues = require('../util/query-csv').calcTotalNutritionVa
 module.exports = function getEntryFromDate(userId, date) {
     console.log(date);
     var query = 'SELECT consumptionId, foodId, foodAmount, timeOfConsumption ' +
-            'FROM consumedfoods WHERE userId=? AND active=1 AND ' +
+            'FROM consumedFoods WHERE userId=? AND active=1 AND ' +
             'timeOfConsumption >= STR_TO_DATE(?, "%d-%m-%Y") AND ' +
             'timeOfConsumption < STR_TO_DATE(?, "%d-%m-%Y") + INTERVAL 1 DAY ' +
             'ORDER BY timeOfConsumption ASC';

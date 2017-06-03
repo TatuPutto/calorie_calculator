@@ -35,6 +35,14 @@
         border-radius: 0;
     }
 
+    .current-entry .consumed-foods-table tr:last-child {
+        border-bottom: none;
+    }
+
+    .food-list li:last-child {
+        border-bottom: none;
+    }
+
     td {
         display: inline-block;
         padding: 0;
@@ -42,7 +50,7 @@
     }
 
     td:first-child {
-        margin-top: 5px;
+        margin-top: 10px;
         text-align: center;
     }
 
@@ -59,11 +67,20 @@
         font-size: 12px;
     }
 
+    .header-content {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
     /*==========================================================================
     ============================================================================
                             Diary view
     ============================================================================
     ==========================================================================*/
+    .diary td {
+        margin-bottom: 10px;
+    }
+
     .total-nutrition-values td {
         font-size: 16px;
         border: none;
@@ -142,6 +159,7 @@
         margin: 0;
         padding: 0;
         order: 2;
+        margin-bottom: 20px;
     }
 
     .total-container tr {
@@ -222,13 +240,17 @@
         border-right: none;
         border-left: none;
         //line-height: 50px;
-        border-bottom: 3px solid #eaeaea;
+        border-bottom: 1px solid #eaeaea;
     }
 
     .food-list li:first-child {
         //border: 1px solid @default-border-color;
         border-right: none;
         border-left: none;
+    }
+
+    .food-list span {
+        height: initial;
     }
 
     .food-list div:first-child {
@@ -338,7 +360,7 @@
     }
 
     .consumed-foods-table {
-        margin-top: 20px;
+        //margin-top: 20px;
     }
 
     .consumed-foods-table th:first-child {
@@ -355,9 +377,12 @@
     }
 
     .consumed-foods-table tr {
-        border-bottom: 3px solid #eaeaea;
+        border-bottom: 1px solid #eaeaea;
     }
 
+    .consumed-foods-table thead tr:first-child {
+        border-bottom: none;
+    }
 
     .consumed-foods-table tr:first-child td {
         border: none;
@@ -403,7 +428,7 @@
 
     .consumed-foods-table .remove-button-container {
         width: 96%;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     .consumed-foods-table .remove-food {
@@ -462,6 +487,10 @@
         font-size: 14px;
         display: block;
         margin: 0;
+    }
+
+    .set-daily-goal {
+        margin-top: 40px;
     }
 
     .configure-daily-goals {

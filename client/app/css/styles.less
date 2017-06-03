@@ -7,14 +7,17 @@
 }
 
 .daily-goal {
-    margin-bottom: 20px;
     text-align: center;
     margin-top: 25px;
-    //background: #313233;
+    margin-bottom: 20px;
 }
 
 .daily-goal h3 {
     display: inline;
+}
+
+.set-daily-goal {
+    font-size: 18px;
 }
 
 .configure-daily-goals {
@@ -291,225 +294,19 @@ span {
     color: red;
 }
 
-@media(min-width: 768px) {
-    .food-name {
-        text-align: left;
-        width: ~'calc(66% - 53px)';
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        vertical-align: middle;
-    }
 
-    .favorites {
-        width: 33px;
-        border-right: 1px solid @default-border-color;
-    }
+.food-selection {
+    text-align: center;
+    background: white;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    height: 650px;
+}
 
-    .energy-amount {
-        width: 10%;
-        color: @energy-color;
-        border-right: 1px solid @default-border-color;
-    }
-
-    .protein-amount {
-        //background: #93f093;
-        color: @protein-color;
-        width: 8%;
-        border-right: 1px solid @default-border-color;
-    }
-
-    .carb-amount {
-        //background: #c5d4ed;
-        color: @carb-color;
-        width: 8%;
-        border-right: 1px solid @default-border-color;
-    }
-
-    .fat-amount {
-        //background: #fcc6b4;
-        color: @fat-color;
-        width: 8%;
-    }
-
-    .consumed-foods .food-name {
-        top: 0;
-    }
-
-    .consumed-foods-table td {
-        padding: 4px;
-    }
-
-    .current-entry {
-        .consumed-foods-table th {
-            text-align: center !important;
-        }
-
-        .consumed-foods-table td:first-child {
-            text-align: center !important;
-        }
-
-        .consumed-foods-table th:first-child, td:first-child {
-            width: 3%;
-        }
-
-        .consumed-foods-table th:nth-child(2), td:nth-child(2) {
-            text-align: left;
-            width: 55%;
-            border-right: 1px solid @default-border-color;
-        }
-
-        .consumed-foods-table th:nth-child(3), td:nth-child(3) {
-            width: 8%;
-            border-right: 1px solid @default-border-color;
-        }
-
-        .consumed-foods-table th:nth-child(4), td:nth-child(4) {
-            width: 10%;
-
-        }
-
-        .consumed-foods-table th:nth-child(5), td:nth-child(5) {
-            //background: #93f093;
-            //color: green;
-            width: 8%;
-        }
-
-        .consumed-foods-table th:nth-child(6), td:nth-child(6) {
-            //background: #c1c1ff;
-            //color: blue;
-            width: 8%;
-
-        }
-
-        .consumed-foods-table th:nth-child(7), td:nth-child(7) {
-            //background: #fcc6b4;
-            //color: red;
-            width: 8%;
-        }
-    }
-
-    .diary {
-        .consumed-foods-table th:first-child {
-            padding-left: 6px;
-        }
-
-
-        .consumed-foods-table td:first-child {
-            text-align: left;
-            width: 55%;
-            border: 1px solid @default-border-color;
-            border-top: none;
-        }
-
-        .consumed-foods-table td:nth-child(2) {
-            width: 8%;
-            border: 1px solid @default-border-color;
-            border-top: none;
-            border-left: none;
-        }
-
-        .consumed-foods-table td:nth-child(3) {
-            width: 10%;
-            border: 1px solid @default-border-color;
-            border-top: none;
-            border-left: none;
-        }
-
-        .consumed-foods-table td:nth-child(4) {
-            border: 1px solid @default-border-color;
-            border-top: none;
-            border-left: none;
-            width: 8%;
-        }
-
-        .consumed-foods-table td:nth-child(5) {
-            border: 1px solid @default-border-color;
-            border-top: none;
-            border-left: none;
-            width: 8%;
-        }
-
-        .consumed-foods-table td:nth-child(6) {
-            border: 1px solid @default-border-color;
-            border-top: none;
-            border-left: none;
-            width: 8%;
-        }
-
-        th:first-child {
-            border-left: none;
-            border-bottom: none;
-            border-top-left-radius: 3px;
-        }
-
-        th:last-child {
-            border-top-right-radius: 3px;
-        }
-
-        tr:last-child td:first-child {
-            border-bottom-left-radius: 3px;
-        }
-
-        tr:last-child td:last-child {
-            border-bottom-right-radius: 3px;
-        }
-    }
-
-
-    /*==========================================================================
-    ============================================================================
-                        TOTAL NUTRITION VALUES TABLE
-    ============================================================================
-    ==========================================================================*/
-    .total-nutrition-values td {
-        border: none !important;
-    }
-
-    .total-nutrition-values td:nth-child(4) {
-        vertical-align: top;
-        color: #f6a000;
-    }
-
-    .total-nutrition-values td:nth-child(5) {
-        color: #0fb70f;
-    }
-
-    .total-nutrition-values td:nth-child(6) {
-        color: #207eff;
-    }
-
-    .total-nutrition-values td:nth-child(7) {
-        color: #fa6b6b;
-    }
-
-    .energy-chart-container {
-        min-width: 150px;
-        color: #fcb93d;
-        font-size: 16px;
-        //flex-basis: 22%;
-    }
-
-    .protein-chart-container {
-        min-width: 150px;
-        color: rgb(99, 158, 99);
-        font-size: 16px;
-        //flex-basis: 22%;
-    }
-
-    .carb-chart-container {
-        min-width: 150px;
-        color: #207eff;
-        font-size: 16px;
-        //flex-basis: 22%;
-    }
-
-    .fat-chart-container {
-        min-width: 150px;
-        color: #fa6b6b;
-        font-size: 16px;
-        //flex-basis: 22%;
-    }
+.food-selection-wrapper {
+    max-width: 1100px;
+    float: none;
+    margin: auto;
 }
 
 .food-selection-header {
@@ -668,25 +465,6 @@ margin-left: -15px;
     padding-right: 17px;
 }
 
-.food-selection {
-    text-align: center;
-    background: white;
-    padding-top: 20px;
-    height: 650px;
-    padding-bottom: 40px;
-}
-
-.food-selection-wrapper {
-    max-width: 1100px;
-    float: none;
-    margin: auto;
-}
-
-.matching-foods {
-    margin-right: auto;
-    margin-left: auto;
-}
-
 .protein-dominant {
     color: @protein-color;
 }
@@ -707,7 +485,8 @@ margin-left: -15px;
 .consumed-foods {
     background: white;
     text-align: center;
-    margin-top: 20px;
+    //margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 .consumed-foods-table {
@@ -785,10 +564,16 @@ table {
 
 .loading, .no-entry-found {
     text-align: center;
-    margin-top: 5%;
-    font-size: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
+.loading i {
+    color: @secondary-blue;
+}
+
+
 @import './diary.less';
+@import './768px.less';
 @import './500px-767px.less';
 @import './320px-500px.less';
