@@ -335,16 +335,14 @@ span {
     line-height: 31px;
     margin-top: 5px;
     margin-left: 10px;
-    z-index: 9998;
+    z-index: 200;
 }
 
 .search-input {
-    //height: 35px;
     height: 26px;
     width: ~"calc(100% - 90px)";
     border-radius: 3px;
     border: 1px solid @default-border-color;
-    //padding-left: 5px;
     margin-right: 5px;
 }
 
@@ -573,7 +571,7 @@ table {
     font-size: 20px;
 }
 
-.loading, .no-entry-found {
+.loading {
     flex-grow: 1;
     border: 1px solid @default-border-color;
     padding-top: 40px;
@@ -584,6 +582,12 @@ table {
 
 .loading i {
     color: @secondary-blue;
+}
+
+.no-entry-found {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 18px;
 }
 
 

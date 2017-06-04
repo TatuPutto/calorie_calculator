@@ -35,7 +35,7 @@ export default class Header extends React.Component {
     render() {
         return (
             <div className='header'>
-                <div className='header-content col-md-10 col-sm-12 col-md-offset-1'>
+                    <div className='header-content col-xs-12'>
                     <button className='toggle-nav-menu' style={{display: 'none'}}>
                         <i className='fa fa-bars' />
                     </button>
@@ -45,11 +45,24 @@ export default class Header extends React.Component {
                                 Tänään
                             </NavLink>
                         </li>
-                        <li>
-                            <NavLink to='/diary' activeStyle={{textDecoration: 'underline'}}>
-                                Päiväkirja
-                            </NavLink>
-                        </li>
+                        {this.state.loggedIn ?
+                            <li>
+                                <NavLink to='/diary' activeStyle={{textDecoration: 'underline'}}>
+                                    Päiväkirja
+                                </NavLink>
+                            </li>
+                            :
+                            <li>
+                                <span className='disabled-route'>Päiväkirja</span>
+                                <span className='toggle-tooltip'>
+                                    <i className='fa fa-question' />
+                                    <span className='no-access-tooltip'>
+                                        Päiväkirjaominaisuus on käytettävissä vain kirjautuneille käyttäjille.
+                                    </span>
+                                </span>
+
+                            </li>
+                        }
                     </ul>
                     <div className='user-info'>
                         {this.state.loggedIn ?

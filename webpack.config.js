@@ -1,5 +1,5 @@
 'use strict';
-var productionEnv = 'production';
+var productionEnv = 'development';
 var debug = productionEnv !== 'production';
 //var debug = process.env.NODE_ENV !== 'production';
 var webpack = require('webpack');

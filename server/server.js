@@ -1,4 +1,5 @@
 var path = require('path');
+var url = require('url');
 var express = require('express')
 var session = require('client-sessions');
 var login = require('./routes/login');
@@ -31,8 +32,26 @@ app.use(session({
     duration: (7 * 24 * 60 * 60 * 1000)
 }));
 
-app.use(express.static(path.join(__dirname, '../client/app')));
+// direct user to login page on first visit of session
+app.use(function (req, res, next) {
+    if(req.session.loginVisited) {
+        next();
+    } else {
+        req.session.loginVisited = true;
+        res.redirect('/login');
+    }
+});
 
+app.use(function (req, res, next) {
+    var parsedUrl = url.parse(req.url);
+    if(parsedUrl.pathname == '/') {
+        res.redirect('/current-entry');
+    } else {
+        next();
+    }
+});
+
+app.use(express.static(path.join(__dirname, '../client/app')));
 app.use(express.static(path.join(__dirname, './public')));
 
 app.use('/login', login);

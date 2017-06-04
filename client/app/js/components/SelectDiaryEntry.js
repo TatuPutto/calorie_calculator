@@ -5,10 +5,11 @@ import getCurrentDate from '../util/get-current-date';
 
 export default function SelectDiaryEntry(props) {
     var {activeEntryDate, diaryEntries, changeEntry} = props;
-
+    
     return (
         <div className='diary-entry-selection'>
-            {activeEntryDate != diaryEntries[diaryEntries.length - 1] ?
+            {activeEntryDate != diaryEntries[diaryEntries.length - 1] &&
+                    diaryEntries.length > 0 ?
                 <button onClick={()=> changeEntry('previous')}>
                     <i className='fa fa-chevron-left' />
                 </button>
@@ -22,7 +23,8 @@ export default function SelectDiaryEntry(props) {
                 {activeEntryDate.replace(/[-]/g, '.')}
             </span>
 
-            {activeEntryDate != getCurrentDate() && activeEntryDate != diaryEntries[0] ?
+            {activeEntryDate != getCurrentDate() && activeEntryDate != diaryEntries[0] &&
+                    diaryEntries.length > 0 ?
                 <button onClick={()=> changeEntry('next')}>
                     <i className='fa fa-chevron-right' />
                 </button>

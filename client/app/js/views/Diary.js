@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import SelectDiaryEntry from '../components/SelectDiaryEntry';
 import TotalConsumptionTable from '../components/TotalConsumptionTable';
-import ConsumedFoodsTable from '../components/ConsumedFoodsTable';
-import Loading from '../components/Loading';
+import ConsumedFoodsTable from '../components/ConsumedFoods/ConsumedFoodsTable/ConsumedFoodsTable';
+import Loading from '../components/Loading/Loading';
 
 import drawMacroChart from '../util/draw-macro-chart';
 
@@ -143,11 +143,12 @@ export default class Diary extends React.Component {
                 </div>
             );
         } else {
-            entryElement = <div className='no-entry-found'>
-                <p>Tältä päivältä ei löytynyt merkintöjä.</p>
-            </div>;
+            entryElement = (
+                <div className='no-entry-found'>
+                    <p>Tältä päivältä ei löytynyt merkintöjä.</p>
+                </div>
+            );
         }
-
 
         return (
             <div className='diary'>

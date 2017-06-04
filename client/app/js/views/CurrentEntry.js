@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FoodSelection from '../components/FoodSelection';
-import ConsumedFoods from '../components/ConsumedFoods';
-import SearchTypes from '../components/SearchTypes';
+import FoodSelection from '../components/FoodSelection/FoodSelection';
+import ConsumedFoods from '../components/ConsumedFoods/ConsumedFoods';
 import DailyGoal from '../components/DailyGoal';
-import Loading from '../components/Loading';
+import Loading from '../components/Loading/Loading';
 
 import updateValuesOnAddition from '../util/update-values-on-addition';
 import updateValuesOnRemove from '../util/update-values-on-remove';

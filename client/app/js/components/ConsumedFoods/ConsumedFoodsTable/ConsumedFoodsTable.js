@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ConsumedFoodsTableHeader from './ConsumedFoodsTableHeader';
-import ConsumedFoodRow from './ConsumedFoodRow';
-import ConsumedFoodRowCompactLayout from './ConsumedFoodRowCompactLayout';
+import ConsumedFoodRow from './ConsumedFoodRow/ConsumedFoodRow';
+import ConsumedFoodRowCompactLayout from './ConsumedFoodRow/ConsumedFoodRowCompactLayout';
 
 export default function ConsumedFoodsTable(props) {
     var consumedFoodsRows = props.consumedFoods.map((food) => {

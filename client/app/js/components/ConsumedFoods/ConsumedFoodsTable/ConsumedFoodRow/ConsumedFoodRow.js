@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import calcDominantMacro from '../util/calculate-dominant-macronutrient';
+import calcDominantMacro from '../../../../util/calculate-dominant-macronutrient';
 
 export default class ConsumedFoodRow extends React.Component {
     constructor(props) {

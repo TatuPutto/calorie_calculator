@@ -43,12 +43,48 @@
 }
 
 .header-content {
-    margin: 0 auto;
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     float: none;
 }
 
 .user-info {
     float: right;
+}
+
+.disabled-route {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.toggle-tooltip {
+    margin-left: 5px;
+    color: #fff;
+    background: #444444;
+    border-radius: 15px;
+    text-align: center;
+    width: 18px;
+    line-height: 18px;
+}
+
+.toggle-tooltip i {
+    color: #fff;
+    vertical-align: middle;
+}
+
+.no-access-tooltip {
+    display: none;
+    position: absolute;
+    top: 30px;
+    background: #444444;
+    border-radius: 3px;
+    z-index: 9999;
+    transform: translateX(-52%);
+    padding: 5px 10px;
+}
+
+.toggle-tooltip:hover {
+    .no-access-tooltip {
+        display: inline;
+    }
 }

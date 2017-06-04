@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SearchTypes from './SearchTypes';
-import SearchPane from './SearchPane';
+import SearchTypes from './Search/SearchTypes';
+import SearchPane from './Search/SearchPane';
 
 export default function FoodSelectionHeader(props) {
     return (

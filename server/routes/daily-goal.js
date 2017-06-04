@@ -10,7 +10,6 @@ router.use(function (req, res, next) {
     if(req.session.user) {
         next();
     } else {
-        console.log('tällllääääää');
         dailyGoalCookieFallback(req, res);
     }
 });

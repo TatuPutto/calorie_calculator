@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AddToConsumedFoods from './AddToConsumedFoods';
-import calculateDominantMacronutrient from '../util/calculate-dominant-macronutrient';
+import AddToConsumedFoods from './AddToConsumedFoods/AddToConsumedFoods';
+import calcDominantMacro from '../../../../util/calculate-dominant-macronutrient';
 
 export default function FoodItem(props) {
     var {
@@ -21,7 +21,7 @@ export default function FoodItem(props) {
         fat,
         favorite : isInfavorites,
     } = food;
-    var dominantMacro = calculateDominantMacronutrient(protein, carbs, fat);
+    var dominantMacro = calcDominantMacro(protein, carbs, fat);
 
     return (
         <li>

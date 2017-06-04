@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
     checkLogin(req.body.username, req.body.password)
         .then((userInfo) => {
             req.session.user = userInfo;
-            res.redirect('/');
+            res.redirect('/current-entry');
         })
         .catch((err) => {
             console.log(err);

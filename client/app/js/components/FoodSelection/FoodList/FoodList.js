@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import FoodListHeader from './FoodListHeader';
-import FoodItem from './FoodItem';
-import FoodItemCompactLayout from './FoodItemCompactLayout';
-import ShowMoreResultsButton from './ShowMoreResultsButton';
-import Loading from './Loading';
+import FoodItem from './FoodItem/FoodItem';
+import FoodItemCompactLayout from './FoodItem/FoodItemCompactLayout';
+import ShowMoreResults from '../ShowMoreResults/ShowMoreResults';
+import Loading from '../../Loading/Loading';
 
 export default function FoodList(props) {
     var {
@@ -60,7 +60,7 @@ export default function FoodList(props) {
                 fetchMethod={props.fetchMethod}
             />
             {matchingFoodsOutput}
-            <ShowMoreResultsButton
+            <ShowMoreResults
                 viewportWidth={viewportWidth}
                 foodsAmount={props.foods.length}
                 offset={offset}

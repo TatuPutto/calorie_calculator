@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.get('/', function (req, res) {
     req.session.reset();
-    res.redirect('/');
+    res.redirect('/current-entry');
 });
 
 module.exports = router;

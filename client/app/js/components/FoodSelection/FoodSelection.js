@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import FoodSelectionHeader from './FoodSelectionHeader';
-import FoodList from './FoodList';
-import SearchPane from './SearchPane';
-import ShowMoreResultsButton from './ShowMoreResultsButton';
+import FoodList from './FoodList/FoodList';
 
 export default function FoodSelection(props) {
     return (

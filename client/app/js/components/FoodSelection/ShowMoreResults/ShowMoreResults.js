@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function ShowMoreResultsButton(props) {
+export default function ShowMoreResults(props) {
     var {viewportWidth, foodsAmount, offset, showMoreResults} = props;
     var amountOfVisibleResults = offset + 10;
     var buttonText = `Näytä lisää tuloksia (${amountOfVisibleResults} / ${props.foodsAmount})`;
@@ -18,7 +18,7 @@ export default function ShowMoreResultsButton(props) {
     return showMoreResultsButton;
 }
 
-ShowMoreResultsButton.propTypes = {
+ShowMoreResults.propTypes = {
     viewportWidth: PropTypes.number.isRequired,
     foodsAmount: PropTypes.number.isRequired,
     offset: PropTypes.number.isRequired,
