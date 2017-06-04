@@ -80,9 +80,7 @@ router.delete('/', function (req, res) {
         var index = consumedFoods.findIndex(function (food) {
             return food.consumptionId == req.query.consumptionId;
         });
-
         consumedFoods[index].active = false;
-        //consumedFoods.splice(index, 1);
 
         res.cookie('consumedFoods', JSON.stringify(consumedFoods));
     }

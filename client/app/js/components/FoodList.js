@@ -54,7 +54,7 @@ export default function FoodList(props) {
     }
 
     return (
-        <div>
+        <div className='food-list-wrapper'>
             <FoodListHeader
                 viewportWidth={props.viewportWidth}
                 fetchMethod={props.fetchMethod}

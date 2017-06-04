@@ -10,7 +10,6 @@ import getCurrentDate from './util/get-current-date';
 
 require('../css/styles.less');
 
-
 var viewportWidth = Math.max(
     document.documentElement.clientWidth,
     window.innerWidth || 0

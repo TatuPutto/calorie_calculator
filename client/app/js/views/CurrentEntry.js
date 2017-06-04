@@ -68,8 +68,8 @@ export default class CurrentEntry extends React.Component {
         } else {
             this.getLatestConsumedFoods()
         }
-        this.getConsumedFoods();
         this.getDailyGoal();
+
     }
 
     // get matching foods when new query params are pushed
@@ -87,6 +87,7 @@ export default class CurrentEntry extends React.Component {
                     dailyGoal: data,
                     isFetchingDailyGoal: false
                 });
+                this.getConsumedFoods();
             }).catch((err) => {
                 console.error(err);
                 this.setState({isFetchingDailyGoal: false});
@@ -304,8 +305,11 @@ export default class CurrentEntry extends React.Component {
 
     toggleFavoriteIcon(foodId, favorite) {
         var foods = JSON.parse(JSON.stringify(this.state.foods));
-        var index = foods.findIndex((food) => food.id == foodId);
-        foods[index]['favorite'] = favorite;
+        var food = foods.forEach((food, i) => {
+            if(food.id == foodId) {
+                foods[i]['favorite'] = favorite;
+            }
+        });
         this.setState({foods});
     }
 
@@ -321,7 +325,9 @@ export default class CurrentEntry extends React.Component {
                             isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                         />
                         :
-                        <Loading />
+                        <div className='col-md-2'>
+                            <Loading />
+                        </div>
                     }
                     <FoodSelection
                         fetchMethod={this.state.fetchMethod}

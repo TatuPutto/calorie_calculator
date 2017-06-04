@@ -1,17 +1,15 @@
 'use strict';
-
-var debug = process.env.NODE_ENV !== "production";
+var productionEnv = 'production';
+var debug = productionEnv !== 'production';
+//var debug = process.env.NODE_ENV !== 'production';
 var webpack = require('webpack');
 var path = require('path');
+var CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
-    context: path.join(__dirname, "/client/app"),
-    devtool: debug ? "inline-sourcemap" : null,
-    /*entry: {
-        javascript: "./js/bundle.js",
-        html: './static/index.html'
-    },*/
-    entry: "./js/bundle.js",
+    context: path.join(__dirname, '/client/app'),
+    devtool: debug ? 'inline-sourcemap' : false,
+    entry: './js/bundle.js',
     module: {
         loaders: [{
             test: /\.jsx?$/,
@@ -28,11 +26,11 @@ module.exports = {
         },
         {
     	    test: /\.html$/,
-            loader: "file-loader?name=[name].[ext]"
+            loader: 'file-loader?name=[name].[ext]'
         },
         {
         	test: /\.css$/,
-            loader: "style-loader!css-loader"
+            loader: 'style-loader!css-loader'
         },
         {
             test: /\.less$/,
@@ -40,14 +38,21 @@ module.exports = {
         }]
     },
     output: {
-        path: path.join(__dirname, "/client/app/js"),
-    	//path: __dirname + "client/app/js",
+        path: path.join(__dirname, '/client/app/js'),
         publicPath: '/',
-    	filename: "bundle.min.js"
+    	filename: 'bundle.min.js'
     },
     plugins: debug ? [] : [
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {NODE_ENV: JSON.stringify('production')}
+        }),
         new webpack.optimize.UglifyJsPlugin({mangle: false, sourcemap: false}),
-    ],
+        new CompressionPlugin({
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
+            test: /\.js$|\.css$|\.html$/,
+            threshold: 10240,
+            minRatio: 0.8
+        })
+    ]
 };

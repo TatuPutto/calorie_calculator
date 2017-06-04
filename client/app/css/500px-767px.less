@@ -39,10 +39,6 @@
         border-bottom: none;
     }
 
-    .food-list li:last-child {
-        border-bottom: none;
-    }
-
     td {
         display: inline-block;
         padding: 0;
@@ -59,8 +55,40 @@
                                     Header
     ============================================================================
     ==========================================================================*/
-    .header ul li {
+    .nav-menu::before {
+        content: "\f0c9";
+        font-family: FontAwesome;
+    }
+
+    .nav-menu {
+        line-height: 35px;
+        width: 100px;
+        position: absolute;
+        z-index: 9999;
+    }
+
+    .nav-menu:hover {
+        li {
+            display: list-item;
+            z-index: 9999;
+        }
+    }
+
+    .nav-menu li {
         font-size: 13px;
+        display: none;
+        color: @default-font-color;
+        background: white;
+        width: 100px;
+        padding-left: 10px;
+        margin-left: -15px;
+        border: 1px solid #bfbfbf;
+        border-radius: 3px;
+        box-shadow: 1px 1px 5px #868686;
+    }
+
+    .nav-menu a {
+        color: black;
     }
 
     .header button {
@@ -159,7 +187,6 @@
         margin: 0;
         padding: 0;
         order: 2;
-        margin-bottom: 20px;
     }
 
     .total-container tr {
@@ -227,6 +254,9 @@
         width: 100%;
     }
 
+    .food-list-wrapper {
+        height: initial;
+    }
 
     .food-list {
         font-size: 14px;
@@ -285,6 +315,21 @@
         line-height: 20px;
         padding: 6px 0;
         border: none;
+    }
+
+    .no-results {
+        border: none;
+        font-size: 14px;
+        padding-top: 60px;
+        padding-bottom: 40px;
+        background: #fff;
+    }
+
+    .loading {
+        border: none;
+        padding-top: 60px;
+        padding-bottom: 40px;
+        background: #fff;
     }
 
     .food-name-wrapper {
@@ -360,7 +405,7 @@
     }
 
     .consumed-foods-table {
-        //margin-top: 20px;
+        margin-top: 20px;
     }
 
     .consumed-foods-table th:first-child {

@@ -81,14 +81,21 @@
                                 Food list
 ================================================================================
 ==============================================================================*/
+.food-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 556px;
+}
+
 .food-list {
+    flex-grow: 1;
     font-size: 13px;
-    height: 500px;
     overflow-y: scroll;
     line-height: 30px;
     border: 1px solid #e2e5f3;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
+    background: #fcfcfc;
 }
 
 .food-list li {
@@ -229,8 +236,11 @@
 }
 
 .no-results {
-    margin-top: 20px;
+    flex-grow: 1;
+    padding-top: 20px;
     font-size: 16px;
+    border: 1px solid @default-border-color;
+    background: #fcfcfc;
 }
 
 span {
@@ -325,6 +335,7 @@ span {
     line-height: 31px;
     margin-top: 5px;
     margin-left: 10px;
+    z-index: 9998;
 }
 
 .search-input {
@@ -563,9 +574,12 @@ table {
 }
 
 .loading, .no-entry-found {
+    flex-grow: 1;
+    border: 1px solid @default-border-color;
+    padding-top: 40px;
+    padding-bottom: 20px;
     text-align: center;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    background: #fcfcfc;
 }
 
 .loading i {

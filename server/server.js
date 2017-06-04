@@ -13,16 +13,26 @@ var favorites = require('./routes/favorites');
 var latest = require('./routes/latest');
 var diaryEntries = require('./routes/diary-entries');
 var getEntry = require('./routes/get-entry');
-
 var port = process.env.PORT || 3000;
 var app = express();
+
+// gzip
+if(process.env.NODE_ENV == 'production') {
+    app.get('*.js', function (req, res, next) {
+        req.url = req.url + '.gz';
+        res.set('Content-Encoding', 'gzip');
+        next();
+    });
+}
 
 app.use(session({
     cookieName: 'session',
     secret: 'gjkrejtGSDFGertjksfdv<JLfjdsalfsadtjwekWRAsdf',
     duration: (7 * 24 * 60 * 60 * 1000)
 }));
+
 app.use(express.static(path.join(__dirname, '../client/app')));
+
 app.use(express.static(path.join(__dirname, './public')));
 
 app.use('/login', login);

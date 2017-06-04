@@ -8,7 +8,7 @@ export default function FoodListHeader(props) {
     if(props.viewportWidth > 767) {
         foodListHeader = (
             <li className={cn}>
-                <span>Elintarkive <i className='fa fa-caret-down' /></span>
+                <span>Elintarkive</span>
                 <span>kcal</span>
                 <span>P</span>
                 <span>HH</span>
