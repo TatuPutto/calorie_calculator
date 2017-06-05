@@ -33,8 +33,11 @@ router.put('/:foodId', function (req, res) {
     }
 
     favorites.push(req.params.foodId);
-
-    res.cookie('favorites', JSON.stringify(favorites));
+    res.cookie(
+        'favorites',
+        JSON.stringify(favorites),
+        {maxAge: (30 * 24 * 60 * 60 * 1000)}
+    );
     res.end();
 });
 
@@ -45,7 +48,11 @@ router.delete('/:foodId', function (req, res) {
         var index = favorites.indexOf(req.params.foodId);
         favorites.splice(index, 1);
 
-        res.cookie('favorites', JSON.stringify(favorites));
+        res.cookie(
+            'favorites',
+            JSON.stringify(favorites),
+            {maxAge: (30 * 24 * 60 * 60 * 1000)}
+        );
     }
     res.end();
 });

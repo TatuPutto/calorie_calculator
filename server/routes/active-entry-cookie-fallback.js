@@ -9,7 +9,7 @@ var router = express.Router();
 
 router.use(cookieParser());
 
-// get consumedFoods from cookie
+// get consumed foods from cookie
 router.get('/', function (req, res) {
     var consumedFoodsCookie = req.cookies['consumedFoods'];
 
@@ -73,19 +73,45 @@ router.post('/', function (req, res) {
     res.end();
 });
 
-router.delete('/', function (req, res) {
-    var consumedFoodsCookie = req.cookies['consumedFoods']
-    if(consumedFoodsCookie) {
-        consumedFoods = JSON.parse(consumedFoodsCookie);
-        var index = consumedFoods.findIndex(function (food) {
-            return food.consumptionId == req.query.consumptionId;
-        });
-        consumedFoods[index].active = false;
+// modify amount of existing consumed food entry
+router.patch('/', function (req, res) {
+    var consumptionId = req.body.consumptionId;
+    var foodAmount = req.body.foodAmount;
+    var consumedFoods = JSON.parse(req.cookies['consumedFoods']);
 
-        res.cookie('consumedFoods', JSON.stringify(consumedFoods));
-    }
+    consumedFoods.forEach(function (consumedFood) {
+        if(consumedFood.consumptionId == consumptionId) {
+            return consumedFood.amount = foodAmount;
+        } else {
+            return consumedFood;
+        }
+    });
+
+    res.cookie(
+        'consumedFoods',
+        JSON.stringify(consumedFoods),
+        {maxAge: setCookieExpirationDate()}
+    );
     res.end();
 });
 
+// delete consumed food entry from cookie
+router.delete('/', function (req, res) {
+    var consumedFoodsCookie = req.cookies['consumedFoods'];
+    if(consumedFoodsCookie) {
+        consumedFoods = JSON.parse(consumedFoodsCookie);
+        var index = consumedFoods.findIndex(function (consumedFood) {
+            return consumedFood.consumptionId == req.query.consumptionId;
+        });
+        consumedFoods[index].active = false;
+
+        res.cookie(
+            'consumedFoods',
+            JSON.stringify(consumedFoods),
+            {maxAge: setCookieExpirationDate()}
+        );
+    }
+    res.end();
+});
 
 module.exports = router;

@@ -28,8 +28,12 @@ router.post('/', function (req, res) {
     }
 
     var dailyGoal = {energy, protein, carbohydrates, fat};
-    res.cookie('dailyGoal', JSON.stringify(dailyGoal));
-    res.redirect('/');
+    res.cookie(
+        'dailyGoal',
+        JSON.stringify(dailyGoal),
+        {maxAge: (30 * 24 * 60 * 60 * 1000)}
+    );
+    res.redirect('/current-entry');
 });
 
 module.exports = router;
