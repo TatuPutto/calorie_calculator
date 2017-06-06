@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SelectDiaryEntry from '../components/SelectDiaryEntry';
-import TotalConsumptionTable from '../components/TotalConsumptionTable';
+import SelectDiaryEntry from '../components/SelectDiaryEntry/SelectDiaryEntry';
+import DailyGoalProgressTable from '../components/DailyGoalProgressTable/DailyGoalProgressTable';
 import ConsumedFoodsTable from '../components/ConsumedFoods/ConsumedFoodsTable/ConsumedFoodsTable';
 import Loading from '../components/Loading/Loading';
 
 import drawMacroChart from '../util/draw-macro-chart';
-
 
 export default class Diary extends React.Component {
     constructor() {
@@ -107,21 +106,17 @@ export default class Diary extends React.Component {
         } else if(!this.state.isFetchingEntry && this.state.entry &&
                 this.state.entry.nutritionValuesPerItem.length > 0) {
             entryElement = (
-                <div className='entry-details col-lg-10 col-md-12 col-xs-12 col-lg-offset-1'>
+                <div className='entry-details col-xs-12'>
                     <div className='row'>
                         <div className='macronutrient-split-chart-container col-sm-4'>
-                            <div className='macronutrient-split-chart-container-header'>
-                                Makrojakauma
-                            </div>
                             <div id='macronutrient-split-chart-container'></div>
                         </div>
                         <div className='total-container col-sm-8'>
-                            <TotalConsumptionTable
+                            <DailyGoalProgressTable
                                 entry={this.state.entry}
                                 isModifiable={false}
                             />
-                            <button className='btn btn-default'
-                                    onClick={this.toggleDetails}>
+                            <button className='btn btn-default' onClick={this.toggleDetails}>
                                 {this.state.detailsVisible ?
                                     <span>Piilota merkinnät</span>
                                     :

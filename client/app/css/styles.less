@@ -99,7 +99,8 @@
 }
 
 .food-list li {
-    overflow-y: hidden;
+    //overflow-y: hidden;
+    position: relative;
     border-bottom: 1px solid @default-border-color;
 }
 
@@ -199,6 +200,11 @@
     flex-direction: column;
     padding: 15px;
     background: #fff;
+    position: absolute;
+    z-index: 9999;
+    border: 1px solid #c3c3c3;
+    border-radius: 3px;
+    box-shadow: 1px 1px 5px #adadad;
 }
 
 .portion-sizes li {

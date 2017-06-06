@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import FoodSelection from '../components/FoodSelection/FoodSelection';
 import ConsumedFoods from '../components/ConsumedFoods/ConsumedFoods';
-import DailyGoal from '../components/DailyGoal';
+import DailyGoal from '../components/DailyGoal/DailyGoal';
 import Loading from '../components/Loading/Loading';
 
 import updateValuesOnAddition from '../util/update-values-on-addition';

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import getCurrentDate from '../util/get-current-date';
+import getCurrentDate from '../../util/get-current-date';
 
 export default function SelectDiaryEntry(props) {
     var {activeEntryDate, diaryEntries, changeEntry} = props;
-    
+
     return (
         <div className='diary-entry-selection'>
             {activeEntryDate != diaryEntries[diaryEntries.length - 1] &&
