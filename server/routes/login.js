@@ -6,6 +6,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function (req, res) {
+    req.session.loginVisited = true;
     res.sendFile(path.join(__dirname, '../public/login.html'));
 });
 

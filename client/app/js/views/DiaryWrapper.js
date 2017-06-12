@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Diary from './Diary';
+import getCurrentDate from '../util/get-current-date';
 
 var viewportWidth = Math.max(
     document.documentElement.clientWidth,

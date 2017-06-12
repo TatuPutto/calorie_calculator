@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import 'whatwg-fetch';
 
 import FoodSelection from '../components/FoodSelection/FoodSelection';
 import ConsumedFoods from '../components/ConsumedFoods/ConsumedFoods';

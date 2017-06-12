@@ -8,6 +8,7 @@ var viewportWidth = Math.max(
 );
 
 export default function CurrentEntryWrapper(props) {
+    document.title = 'Ruokapäiväkirja';
     var pathname = props.location.pathname;
     var search = props.location.search;
     var fetchMethod;

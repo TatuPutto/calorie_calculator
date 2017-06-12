@@ -2,6 +2,8 @@ var path = require('path');
 var url = require('url');
 var express = require('express')
 var session = require('client-sessions');
+var cookieParser = require('cookie-parser');
+var acceptCookies = require('./routes/accept-cookies');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var register = require('./routes/register');
@@ -17,14 +19,17 @@ var getEntry = require('./routes/get-entry');
 var port = process.env.PORT || 3000;
 var app = express();
 
-// gzip
-if(process.env.NODE_ENV == 'production') {
-    app.get('*.js', function (req, res, next) {
-        req.url = req.url + '.gz';
-        res.set('Content-Encoding', 'gzip');
-        next();
-    });
-}
+// block usage with safari
+app.use(require('express-useragent').express());
+app.use(function (req, res, next) {
+    if(req.useragent.isSafari) {
+        res.end('Safari is not currently supported!');
+    }
+    next();
+});
+
+app.use(express.static(path.join(__dirname, '../client/app')));
+app.use(express.static(path.join(__dirname, './public')));
 
 app.use(session({
     cookieName: 'session',
@@ -32,12 +37,14 @@ app.use(session({
     duration: (7 * 24 * 60 * 60 * 1000)
 }));
 
-// direct user to login page on first visit of session
 app.use(function (req, res, next) {
-    if(req.session.loginVisited) {
+    var parsedUrl = url.parse(req.url);
+    var pathname = parsedUrl.pathname;
+
+    if(req.session.loginVisited || pathname == '/login' ||
+            pathname == '/accept-cookies') {
         next();
     } else {
-        req.session.loginVisited = true;
         res.redirect('/login');
     }
 });
@@ -51,9 +58,9 @@ app.use(function (req, res, next) {
     }
 });
 
-app.use(express.static(path.join(__dirname, '../client/app')));
-app.use(express.static(path.join(__dirname, './public')));
 
+
+app.use('/accept-cookies', acceptCookies);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/register', register);
