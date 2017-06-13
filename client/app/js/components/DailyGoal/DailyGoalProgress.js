@@ -10,19 +10,20 @@ export default function DailyGoalProgress(props) {
     return (
         <div className='goal-progress'>
             <div className='energy-chart-container'>
-                {/*}<p style={{position: 'relative', top: '35px'}}>Energia</p>*/}
-                <div style={{position: 'relative', width: '80px', margin: '0 auto 10px auto'}}>
-                    <p style={{position: 'relative', top: '58px', fontSize: '20px'}}>
+            <p style={{position: 'relative', top: '38px', color: '#929292'}}>kcal</p>
+                <div style={{position: 'relative', width: '80px', margin: '0 auto'}}>
+                    <p style={{position: 'relative', top: '66px', fontSize: '16px'}}>
                         {energyConsumed}
                     </p>
                     <canvas id='energy-goal' />
                 </div>
-                <p>{Math.round(total.energy)} kcal / {goal.energy} kcal</p>
+
+                <p>{Math.round(total.energy)} / {goal.energy}</p>
             </div>
             <div className='protein-chart-container'>
-                {/*<p style={{position: 'relative', top: '35px'}}>Proteiini</p>*/}
-                <div style={{position: 'relative', width: '80px', margin: '0 auto 10px auto'}}>
-                    <p style={{position: 'relative', top: '58px', fontSize: '20px'}}>
+                <p style={{position: 'relative', top: '38px', color: '#929292'}}>proteiini</p>
+                <div style={{position: 'relative', width: '80px', margin: '0 auto'}}>
+                    <p style={{position: 'relative', top: '66px', fontSize: '16px'}}>
                         {proteinConsumed}
                     </p>
                     <canvas id='protein-goal' />
@@ -30,9 +31,9 @@ export default function DailyGoalProgress(props) {
                 <p>{Math.round(total.protein)} g / {goal.protein} g</p>
             </div>
             <div className='carb-chart-container'>
-                {/*<p style={{position: 'relative', top: '35px'}}>Hiilihydraatit</p>*/}
-                <div style={{position: 'relative', width: '80px', margin: '0 auto 10px auto'}}>
-                    <p style={{position: 'relative', top: '58px', fontSize: '20px'}}>
+                <p style={{position: 'relative', top: '38px', color: '#929292'}}>hiilihydraatit</p>
+                <div style={{position: 'relative', width: '80px', margin: '0 auto'}}>
+                    <p style={{position: 'relative', top: '66px', fontSize: '16px'}}>
                         {carbsConsumed}
                     </p>
                     <canvas id='carb-goal' />
@@ -40,9 +41,9 @@ export default function DailyGoalProgress(props) {
                 <p>{Math.round(total.carbs)} g / {goal.carbohydrates} g</p>
             </div>
             <div className='fat-chart-container'>
-                {/*<p style={{position: 'relative', top: '35px'}}>Rasva</p>*/}
-                <div style={{position: 'relative', width: '80px', margin: '0 auto 10px auto'}}>
-                    <p style={{position: 'relative', top: '58px', fontSize: '20px'}}>
+                <p style={{position: 'relative', top: '38px', color: '#929292'}}>rasva</p>
+                <div style={{position: 'relative', width: '80px', margin: '0 auto'}}>
+                    <p style={{position: 'relative', top: '66px', fontSize: '16px'}}>
                         {fatConsumed}
                     </p>
                     <canvas id='fat-goal' />

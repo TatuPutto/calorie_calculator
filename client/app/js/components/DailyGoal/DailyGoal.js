@@ -65,7 +65,9 @@ export default class DailyGoal extends React.Component {
 
 function createChart(total, goal) {
     var options = {
-        cutoutPercentage: 85,
+        cutoutPercentage: 88,
+        rotation: 1 * Math.PI,
+        circumference: 1 * Math.PI,
         tooltips: {
             enabled: false
         }
@@ -96,8 +98,9 @@ function createChart(total, goal) {
                 data: [total.energy, (goal.energy - total.energy)],
                 borderWidth: 0,
                 backgroundColor: [
-                    'orange',
-                    '#ffdab7'
+                    '#f9a200',
+                    '#ebebeb'
+                    //'#ffdab7'
                 ],
                 hoverBackgroundColor: [
                     'orange',
@@ -140,11 +143,11 @@ function createChart(total, goal) {
                 borderWidth: 0,
                 backgroundColor: [
                     'green',
-                    '#93f093'
+                    '#ebebeb'
                 ],
                 hoverBackgroundColor: [
                     'green',
-                    '#93f093'
+                    '#ebebeb'
                 ]
             }]
         };
@@ -182,11 +185,11 @@ function createChart(total, goal) {
                 borderWidth: 0,
                 backgroundColor: [
                     'blue',
-                    '#c5d4ed'
+                    '#ebebeb'
                 ],
                 hoverBackgroundColor: [
                     'blue',
-                    '#c5d4ed'
+                    '#ebebeb'
                 ]
             }]
         };
@@ -224,11 +227,11 @@ function createChart(total, goal) {
                 borderWidth: 0,
                 backgroundColor: [
                     'red',
-                    '#fcc6b4'
+                    '#ebebeb'
                 ],
                 hoverBackgroundColor: [
                     'red',
-                    '#fcc6b4'
+                    '#ebebeb'
                 ]
             }]
         };

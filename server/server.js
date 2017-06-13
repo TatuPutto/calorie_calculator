@@ -28,14 +28,23 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(express.static(path.join(__dirname, '../client/app')));
-app.use(express.static(path.join(__dirname, './public')));
-
 app.use(session({
     cookieName: 'session',
     secret: 'gjkrejtGSDFGertjksfdv<JLfjdsalfsadtjwekWRAsdf',
     duration: (7 * 24 * 60 * 60 * 1000)
 }));
+
+app.use(function (req, res, next) {
+    var parsedUrl = url.parse(req.url);
+    if(parsedUrl.pathname == '/') {
+        res.redirect('/current-entry');
+    } else {
+        next();
+    }
+});
+
+app.use(express.static(path.join(__dirname, '../client/app')));
+app.use(express.static(path.join(__dirname, './public')));
 
 app.use(function (req, res, next) {
     var parsedUrl = url.parse(req.url);
@@ -48,17 +57,6 @@ app.use(function (req, res, next) {
         res.redirect('/login');
     }
 });
-
-app.use(function (req, res, next) {
-    var parsedUrl = url.parse(req.url);
-    if(parsedUrl.pathname == '/') {
-        res.redirect('/current-entry');
-    } else {
-        next();
-    }
-});
-
-
 
 app.use('/accept-cookies', acceptCookies);
 app.use('/login', login);
