@@ -16,5 +16,10 @@ export default function DiaryWrapper(props) {
         activeEntryDate = getCurrentDate();
     }
 
-    return <Diary viewportWidth={viewportWidth} activeEntryDate={activeEntryDate} />;
+    return (
+        <Diary
+            viewportWidth={viewportWidth}
+            activeEntryDate={activeEntryDate}
+        />
+    );
 }

@@ -1,23 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'whatwg-fetch';
 
-import FoodSelection from '../components/FoodSelection/FoodSelection';
-import ConsumedFoods from '../components/ConsumedFoods/ConsumedFoods';
-import DailyGoal from '../components/DailyGoal/DailyGoal';
-import Loading from '../components/Loading/Loading';
+import FoodSelection from '../components/FoodSelection';
+import ConsumedFoods from '../components/ConsumedFoods';
+import DailyGoal from '../components/DailyGoal';
+import Loading from '../components/Loading';
 
+import {get, post, patch, remove} from '../util/fetch';
 import updateValuesOnAddition from '../util/update-values-on-addition';
 import updateValuesOnRemove from '../util/update-values-on-remove';
 import getCurrentDate from '../util/get-current-date';
 
-var fetchParams = {
-    credentials: 'same-origin',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    }
-};
 
 export default class CurrentEntry extends React.Component {
     constructor(props) {
@@ -35,7 +28,7 @@ export default class CurrentEntry extends React.Component {
             isFetchingConsumedFoods: true,
             isFetchingMatchingFoods: true,
             searchTerm: null,
-            fetchMethod: 'haku',
+            fetchMethod: 'search',
             fetchError: null,
         };
 
@@ -61,7 +54,7 @@ export default class CurrentEntry extends React.Component {
 
     componentWillMount() {
         this.setState({fetchMethod: this.props.fetchMethod});
-        if(this.props.fetchMethod == 'haku') {
+        if(this.props.fetchMethod == 'search') {
             this.getMatchingFoods(this.props.search);
         } else if(this.props.fetchMethod == 'suosikit') {
             this.getFavoriteFoods();
@@ -69,18 +62,17 @@ export default class CurrentEntry extends React.Component {
             this.getLatestConsumedFoods()
         }
         this.getDailyGoal();
-
     }
 
     // get matching foods when new query params are pushed
     componentWillReceiveProps(nextProps) {
-        if(nextProps.fetchMethod == 'haku') {
+        if(nextProps.fetchMethod == 'search') {
             this.getMatchingFoods(nextProps.search);
         }
     }
 
     getDailyGoal() {
-        fetch(`/daily-goal/${getCurrentDate()}`, fetchParams)
+        get(`/daily-goal/${getCurrentDate()}`)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -102,7 +94,7 @@ export default class CurrentEntry extends React.Component {
             isFetchingConsumedFoods: true
         });
 
-        fetch('/active-entry', fetchParams)
+        get('/active-entry')
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -118,7 +110,9 @@ export default class CurrentEntry extends React.Component {
 
     getMatchingFoods(searchTerm) {
         searchTerm = searchTerm.trim();
-        if(!searchTerm) return;
+        if(!searchTerm) {
+            return this.setState({foods: [], isFetchingMatchingFoods: false});
+        }
         this.setState({searchTerm: null});
         this.fetchFoods(`/matching-foods/${searchTerm}`);
     }
@@ -141,7 +135,7 @@ export default class CurrentEntry extends React.Component {
             showResultsOffset: 0
         });
 
-        fetch(url, fetchParams)
+        get(url)
             .then((res) => res.json())
             .then((data) => {
                 this.setState({
@@ -150,9 +144,8 @@ export default class CurrentEntry extends React.Component {
                     fetchError: null
                 });
             }).catch((err) => {
-                console.error(err);
                 this.setState({
-                    fetchError: `Haussa tapahtui virhe`,
+                    fetchError: `Haussa tapahtui virhe (${err})`,
                     isFetchingMatchingFoods: false,
                 });
             });
@@ -160,9 +153,9 @@ export default class CurrentEntry extends React.Component {
 
     changeFetchMethod(fetchMethod) {
         this.setState({fetchMethod});
-        if(fetchMethod == 'haku') {
-            this.getMatchingFoods('maitorahka');
-        } else if(fetchMethod == 'suosikit') {
+        if(fetchMethod == 'search') {
+            this.getMatchingFoods('');
+        } else if(fetchMethod == 'favorites') {
             this.getFavoriteFoods();
         } else {
             this.getLatestConsumedFoods();
@@ -170,17 +163,12 @@ export default class CurrentEntry extends React.Component {
     }
 
     changeSearchTerm(event) {
-        if(event.key == 'Enter') {
-            event.currentTarget.value = '';
-            this.doSearch();
-        } else {
-            this.setState({searchTerm: event.currentTarget.value});
-        }
+        this.setState({searchTerm: event.currentTarget.value});
     }
 
-    doSearch() {
+    doSearch(event) {
+        event.preventDefault();
         if(this.state.searchTerm.trim()) {
-            console.log(this.state.searchTerm);
             this.context.router.history.push(`?ravintoaine=${this.state.searchTerm}`);
         }
     }
@@ -225,15 +213,9 @@ export default class CurrentEntry extends React.Component {
             foodId,
             foodAmount
         };
-        var params = {
-            credentials: 'same-origin',
-            method: 'POST',
-            body: JSON.stringify(content),
-            headers: {
-                ...fetchParams.headers,
-                'Content-Length': content.length
-            }
-        }
+
+        post('/active-entry', content)
+            .catch((err) => console.error(err));
 
         this.setState({
             consumedFoods,
@@ -242,7 +224,6 @@ export default class CurrentEntry extends React.Component {
             selectedFood: null,
             selectedFoodAmount: null
         });
-        fetch('/active-entry', params).catch((err) => console.error(err));
     }
 
     removeFromDiary(consumptionId) {
@@ -253,54 +234,33 @@ export default class CurrentEntry extends React.Component {
             JSON.parse(JSON.stringify(this.state.totalConsumption))
         );
 
+        remove(`/active-entry?consumptionId=${consumptionId}`)
+            .catch((err) => console.error(err));
+
         this.setState({
             consumedFoods: updatedValues.consumedFoods,
             totalConsumption: updatedValues.totalConsumption
         });
-
-        var url = `/active-entry?consumptionId=${consumptionId}`;
-        var params = {
-            ...fetchParams,
-            method: 'DELETE'
-        };
-
-        fetch(url, params).catch((err) => console.error(err));
     }
 
     updateDiaryEntry(consumptionId, foodAmount) {
-        var params = {
-            ...fetchParams,
-            credentials: 'same-origin',
-            method: 'PATCH',
-            body: JSON.stringify({consumptionId, foodAmount}),
-        }
-
-        fetch('/active-entry', params)
+        patch('/active-entry', {consumptionId, foodAmount})
             .then(() => this.getConsumedFoods())
             .catch((err) => console.error(err));
-
     }
 
     addToFavorites(foodId) {
         this.toggleFavoriteIcon(foodId, true);
-        var url = `/favorites/${foodId}`;
-        var params = {
-            ...fetchParams,
-            method: 'PUT'
-        };
 
-        fetch(url, params).catch((err) => console.error(err));
+        post(`/favorites/${foodId}`)
+            .catch((err) => console.error(err));
     }
 
     removeFromFavorites(foodId) {
         this.toggleFavoriteIcon(foodId, false);
-        var url = `/favorites/${foodId}`;
-        var params = {
-            ...fetchParams,
-            method: 'DELETE'
-        };
 
-        fetch(url, params).catch((err) => console.error(err));
+        remove(`/favorites/${foodId}`)
+            .catch((err) => console.error(err));
     }
 
     toggleFavoriteIcon(foodId, favorite) {
@@ -314,21 +274,23 @@ export default class CurrentEntry extends React.Component {
     }
 
     render() {
+        var {isFetchingConsumedFoods, isFetchingDailyGoal} = this.state;
+
         return (
             <div className='current-entry'>
                 <div className='row'>
-                    {!this.state.isFetchingConsumedFoods && !this.state.isFetchingDailyGoal ?
+                    {!isFetchingConsumedFoods && !isFetchingDailyGoal ? (
                         <DailyGoal
                             dailyGoal={this.state.dailyGoal}
                             totalConsumption={this.state.totalConsumption}
-                            isFetchingDailyGoal={this.state.isFetchingDailyGoal}
-                            isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
+                            isFetchingDailyGoal={isFetchingDailyGoal}
+                            isFetchingConsumedFoods={isFetchingConsumedFoods}
                         />
-                        :
+                    ) : (
                         <div className='col-md-2'>
                             <Loading />
                         </div>
-                    }
+                    )}
                     <FoodSelection
                         fetchMethod={this.state.fetchMethod}
                         changeFetchMethod={this.changeFetchMethod}

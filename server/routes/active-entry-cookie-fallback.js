@@ -1,5 +1,5 @@
-var calcNutritionValues = require('../util/query-csv').calculateNutritionValues;
-var calcTotalNutritionValues = require('../util/query-csv').calcTotalNutritionValues;
+var calcNutritionValues = require('../util/query-json').calculateNutritionValues;
+var calcTotalNutritionValues = require('../util/query-json').calcTotalNutritionValues;
 var findIndexOfObjectId = require('../util/find-index-of-object-id');
 var setCookieExpirationDate = require('../util/cookie-expiration-date');
 var bodyParser = require('body-parser');

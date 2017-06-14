@@ -1,4 +1,4 @@
-var findMatchingFoodsByIds = require('../util/query-csv').findMatchingFoodsByIds;
+var findMatchingFoodsByIds = require('../util/query-json').findMatchingFoodsByIds;
 var getFavoriteFoods = require('../database/get-favorite-foods');
 var addFoodToFavorites = require('../database/add-food-to-favorites');
 var removeFoodFromFavorites = require('../database/remove-food-from-favorites');
@@ -30,7 +30,7 @@ router.get('/', function (req, res) {
         });
 });
 
-router.put('/:foodId', function (req, res) {
+router.post('/:foodId', function (req, res) {
     addFoodToFavorites(req.session.user.id, req.params.foodId)
         .then(function () {
             res.status(200);

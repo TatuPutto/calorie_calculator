@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SearchTypes from './Search/SearchTypes';
-import SearchPane from './Search/SearchPane';
+import SearchTypes from './SearchTypes';
+import SearchPane from './SearchPane';
 
 export default function FoodSelectionHeader(props) {
     return (
@@ -11,7 +11,7 @@ export default function FoodSelectionHeader(props) {
                 fetchMethod={props.fetchMethod}
                 changeFetchMethod={props.changeFetchMethod}
             />
-            {props.fetchMethod == 'haku' &&
+            {props.fetchMethod == 'search' &&
                 <SearchPane
                     searchTerm={props.searchTerm}
                     changeSearchTerm={props.changeSearchTerm}

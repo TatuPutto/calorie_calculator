@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ConsumedFoodsTable from './ConsumedFoodsTable/ConsumedFoodsTable';
-import TotalNutritionValuesTable from './TotalNutritionValuesTable/TotalNutritionValuesTable';
-import Loading from '../Loading/Loading';
+import ConsumedFoodsTable from './ConsumedFoodsTable';
+import TotalNutritionValuesTable from './TotalNutritionValuesTable';
+import Loading from './Loading';
 
 export default function ConsumedFoods(props) {
     var {viewportWidth, isFetchingConsumedFoods, consumedFoods} = props;

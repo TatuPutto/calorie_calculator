@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function ConsumedFoodsTableHeader(props) {
     var theadRow = null;
@@ -23,3 +24,8 @@ export default function ConsumedFoodsTableHeader(props) {
 
     return <thead>{theadRow}</thead>;
 }
+
+ConsumedFoodsTableHeader.propTypes = {
+    viewportWidth: PropTypes.number.isRequired,
+    isModifiable: PropTypes.bool.isRequired,
+};

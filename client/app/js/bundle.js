@@ -3,8 +3,8 @@ import {render} from 'react-dom';
 import {Router, Route, IndexRoute, BrowserRouter, Redirect} from 'react-router-dom';
 import Promise from 'promise-polyfill';
 
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import CurrentEntryWrapper from './views/CurrentEntryWrapper';
 import DiaryWrapper from './views/DiaryWrapper';
 import getCurrentDate from './util/get-current-date';

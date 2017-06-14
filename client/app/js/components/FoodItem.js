@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AddToConsumedFoods from './AddToConsumedFoods/AddToConsumedFoods';
-import calcDominantMacro from '../../../../util/calculate-dominant-macronutrient';
+import AddToConsumedFoods from './AddToConsumedFoods';
+import calcDominantMacro from '../util/calculate-dominant-macronutrient';
 
 export default function FoodItem(props) {
     var {
@@ -38,7 +38,7 @@ export default function FoodItem(props) {
                         }
                     />
                 </span>
-                <span className={'food-name ' + dominantMacro}>{name}</span>
+                <span className='food-name'>{name}</span>
                 <span className='favorites'>
                     <button
                         className='add-to-favorites'
@@ -50,9 +50,15 @@ export default function FoodItem(props) {
                     </button>
                 </span>
                 <span className='energy-amount'>{energy} kcal</span>
-                <span className='protein-amount'>{protein} g</span>
-                <span className='carb-amount'>{carbs} g</span>
-                <span className='fat-amount'>{fat} g</span>
+                <span className={'protein-amount ' + (dominantMacro == 'protein' ? dominantMacro : '')}>
+                    {protein} g
+                </span>
+                <span className={'carb-amount ' + (dominantMacro == 'carb' ? dominantMacro : '')}>
+                    {carbs} g
+                </span>
+                <span className={'fat-amount ' + (dominantMacro == 'fat' ? dominantMacro : '')}>
+                    {fat} g
+                </span>
             </div>
             {selectedFoodId == id &&
                 <AddToConsumedFoods {...props} />

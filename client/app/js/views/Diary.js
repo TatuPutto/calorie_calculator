@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SelectDiaryEntry from '../components/SelectDiaryEntry/SelectDiaryEntry';
-import DailyGoalProgressTable from '../components/DailyGoalProgressTable/DailyGoalProgressTable';
-import ConsumedFoodsTable from '../components/ConsumedFoods/ConsumedFoodsTable/ConsumedFoodsTable';
-import Loading from '../components/Loading/Loading';
+import SelectDiaryEntry from '../components/SelectDiaryEntry';
+import DailyGoalProgressTable from '../components/DailyGoalProgressTable';
+import ConsumedFoodsTable from '../components/ConsumedFoodsTable';
+import Loading from '../components/Loading';
 
+import {get} from '../util/fetch';
 import drawMacroChart from '../util/draw-macro-chart';
 
 export default class Diary extends React.Component {
@@ -27,7 +28,7 @@ export default class Diary extends React.Component {
     }
 
     componentWillMount() {
-        fetch('diary-entries', {credentials: 'same-origin'})
+        get('diary-entries')
             .then((res) => res.json())
             .then((diaryEntries) => {
                 // get entry specified by query param
@@ -62,10 +63,10 @@ export default class Diary extends React.Component {
         document.title = entryDate.replace(/[-]/g, '.');
         this.setState({entry: null, isFetchingEntry: true});
 
-        fetch(`entry/${entryDate}`, {credentials: 'same-origin'})
+        get(`entry/${entryDate}`)
             .then((res) => res.json())
             .then((entry) => {
-                fetch(`daily-goal/${entryDate}`, {credentials: 'same-origin'})
+                get(`daily-goal/${entryDate}`)
                     .then((res) => res.json())
                     .then((goal) => {
                         entry['goal'] = goal;

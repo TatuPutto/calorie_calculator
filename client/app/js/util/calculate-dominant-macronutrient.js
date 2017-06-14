@@ -3,15 +3,15 @@ function calculateDominantMacronutrient(protein, carbs, fat) {
 
     if(+protein > +carbs) {
         if(+protein > +fat) {
-            dominantMacro = 'protein-dominant';
+            dominantMacro = 'protein';
         } else {
-            dominantMacro = 'fat-dominant';
+            dominantMacro = 'fat';
         }
     } else {
         if(+carbs > +fat) {
-            dominantMacro = 'carb-dominant';
+            dominantMacro = 'carb';
         } else {
-            dominantMacro = 'fat-dominant';
+            dominantMacro = 'fat';
         }
     }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import FoodSelectionHeader from './FoodSelectionHeader';
-import FoodList from './FoodList/FoodList';
+import FoodList from './FoodList';
 
 export default function FoodSelection(props) {
     return (

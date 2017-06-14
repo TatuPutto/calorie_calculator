@@ -17,17 +17,14 @@ export default function SetDailyGoal() {
 
                             <label>Proteiini</label><br />
                             <input type='text' className='amount' name='protein' required />
-                            {/*<input type='text' className='percentual-amount' />*/}
                             <span className='percent-sign'>g</span><br />
 
                             <label>Hiilihydraatit</label><br />
                             <input type='text' className='amount' name='carbs' required />
-                            {/*<input type='text' className='percentual-amount' />*/}
                             <span className='percent-sign'>g</span><br />
 
                             <label>Rasva</label><br />
                             <input type='text' className='amount' name='fat' required />
-                            {/*<input type='text' className='percentual-amount' />*/}
                             <span className='percent-sign'>g</span><br />
                         </div>
                         <div className='modal-footer'>
@@ -40,7 +37,6 @@ export default function SetDailyGoal() {
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     );

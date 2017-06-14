@@ -10,22 +10,14 @@ var viewportWidth = Math.max(
 export default function CurrentEntryWrapper(props) {
     document.title = 'Ruokapäiväkirja';
     var pathname = props.location.pathname;
-    var search = props.location.search;
+    var search = props.location.search.split('=')[1] || ' ';
     var fetchMethod;
 
     // resolve fetchMethod from pathname
     if(pathname == '/current-entry') {
-        fetchMethod = 'haku';
+        fetchMethod = 'search';
     } else {
-        fetchMethod = pathname.match(/haku|suosikit|viimeisimmat/g)[0];
-    }
-
-    // set which food item is to be searched for
-    // defaults to maitorahka if no query params are present
-    if(!search) {
-        search = 'maitorahka';
-    } else {
-        search = search.split('=')[1];
+        fetchMethod = pathname.match(/search|favorites|latest/g)[0];
     }
 
     return (

@@ -39,8 +39,11 @@ export default class DailyGoal extends React.Component {
             dailyGoalOutput = (
                 <div className='charts'>
                     <h3>Päivätavoite</h3>
-                    <i className='configure-daily-goals fa fa-cog'
-                            data-toggle='modal' data-target='#set-daily-goal' />
+                    <i
+                        className='configure-daily-goals fa fa-cog'
+                        data-toggle='modal'
+                        data-target='#set-daily-goal'
+                    />
                     <DailyGoalProgress total={total} goal={goal} />
                 </div>
             );
@@ -127,11 +130,11 @@ function createChart(total, goal) {
                 borderWidth: 0,
                 backgroundColor: [
                     'black',
-                    'green'
+                    '#639e63'
                 ],
                 hoverBackgroundColor: [
                     'black',
-                    'green'
+                    '#639e63'
                 ]
             }]
         };
@@ -142,11 +145,11 @@ function createChart(total, goal) {
                 data: [total.protein, (goal.protein - total.protein)],
                 borderWidth: 0,
                 backgroundColor: [
-                    'green',
+                    '#639e63',
                     '#ebebeb'
                 ],
                 hoverBackgroundColor: [
-                    'green',
+                    '#639e63',
                     '#ebebeb'
                 ]
             }]
@@ -170,11 +173,11 @@ function createChart(total, goal) {
                 borderWidth: 0,
                 backgroundColor: [
                     'black',
-                    'blue'
+                    '#207eff'
                 ],
                 hoverBackgroundColor: [
                     'black',
-                    'blue'
+                    '#207eff'
                 ]
             }]
         };
@@ -184,11 +187,11 @@ function createChart(total, goal) {
                 data: [total.carbs, (goal.carbohydrates - total.carbs)],
                 borderWidth: 0,
                 backgroundColor: [
-                    'blue',
+                    '#207eff',
                     '#ebebeb'
                 ],
                 hoverBackgroundColor: [
-                    'blue',
+                    '#207eff',
                     '#ebebeb'
                 ]
             }]
@@ -211,11 +214,11 @@ function createChart(total, goal) {
                 borderWidth: 0,
                 backgroundColor: [
                     'black',
-                    'red'
+                    '#fa6b6b'
                 ],
                 hoverBackgroundColor: [
                     'black',
-                    'red'
+                    '#fa6b6b'
                 ]
             }]
         };
@@ -226,11 +229,11 @@ function createChart(total, goal) {
                 data: [total.fat, (goal.fat - total.fat)],
                 borderWidth: 0,
                 backgroundColor: [
-                    'red',
+                    '#fa6b6b',
                     '#ebebeb'
                 ],
                 hoverBackgroundColor: [
-                    'red',
+                    '#fa6b6b',
                     '#ebebeb'
                 ]
             }]

@@ -1,4 +1,4 @@
-var findMatchingFoodsByName = require('../util/query-csv').findMatchingFoodsByName;
+var findMatchingFoodsByName = require('../util/query-json').findMatchingFoodsByName;
 var markFoodsAsFavorites = require('../util/mark-foods-as-favorites');
 var getFavoriteFoods = require('../database/get-favorite-foods');
 var cookieParser = require('cookie-parser');

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import getCurrentDate from '../../util/get-current-date';
+import getCurrentDate from '../util/get-current-date';
 
 export default function SelectDiaryEntry(props) {
     var {activeEntryDate, diaryEntries, changeEntry} = props;
@@ -23,8 +23,8 @@ export default function SelectDiaryEntry(props) {
                 {activeEntryDate.replace(/[-]/g, '.')}
             </span>
 
-            {activeEntryDate != getCurrentDate() && activeEntryDate != diaryEntries[0] &&
-                    diaryEntries.length > 0 ?
+            {activeEntryDate != getCurrentDate() && activeEntryDate !=
+                    diaryEntries[0] && diaryEntries.length > 0 ?
                 <button onClick={()=> changeEntry('next')}>
                     <i className='fa fa-chevron-right' />
                 </button>

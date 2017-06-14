@@ -1,4 +1,4 @@
-var findMatchingFoodsByIds = require('../util/query-csv').findMatchingFoodsByIds;
+var findMatchingFoodsByIds = require('../util/query-json').findMatchingFoodsByIds;
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var express = require('express');
@@ -23,7 +23,7 @@ router.get('/', function (req, res) {
     res.end(JSON.stringify(favorites));
 });
 
-router.put('/:foodId', function (req, res) {
+router.post('/:foodId', function (req, res) {
     var favoriteFoodsCookie = req.cookies['favorites'];
     var favorites = [];
 

@@ -1,4 +1,4 @@
-var findMatchingFoodsByIds = require('../util/query-csv').findMatchingFoodsByIds;
+var findMatchingFoodsByIds = require('../util/query-json').findMatchingFoodsByIds;
 var markFoodsAsFavorites = require('../util/mark-foods-as-favorites');
 var getLatestConsumedFoods = require('../database/get-latest-consumed-foods');
 var getFavoriteFoods = require('../database/get-favorite-foods');

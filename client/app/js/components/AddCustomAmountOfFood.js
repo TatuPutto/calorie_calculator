@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function AddCustomAmountOfFood(props) {
     var {
@@ -23,3 +24,10 @@ export default function AddCustomAmountOfFood(props) {
         </div>
     );
 }
+
+AddCustomAmountOfFood.propTypes = {
+    foodId: PropTypes.string.isRequired,
+    selectedFoodAmount: PropTypes.number,
+    setSelectedFoodAmount: PropTypes.func.isRequired,
+    addToDiary: PropTypes.func.isRequired
+};

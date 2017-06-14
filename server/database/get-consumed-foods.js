@@ -1,6 +1,6 @@
 var getConnection = require('./create-connection');
-var calcNutritionValues = require('../util/query-csv').calculateNutritionValues;
-var calcTotalNutritionValues = require('../util/query-csv').calcTotalNutritionValues;
+var calcNutritionValues = require('../util/query-json').calculateNutritionValues;
+var calcTotalNutritionValues = require('../util/query-json').calcTotalNutritionValues;
 
 module.exports = function getConsumedFoods(userId) {
     var query = 'SELECT consumptionId, foodId, foodAmount, timeOfConsumption ' +
