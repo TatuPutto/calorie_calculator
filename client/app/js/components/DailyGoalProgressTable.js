@@ -23,7 +23,7 @@ export default function DailyGoalProgressTable(props) {
         <table>
             <thead>
                 <tr>
-                    <th>Makro</th>
+                    <th>Ravintotekijä</th>
                     <th>Tavoite</th>
                     <th>Jäljellä</th>
                 </tr>
@@ -31,57 +31,59 @@ export default function DailyGoalProgressTable(props) {
             <tbody>
                 <tr>
                     <td>
-                        <span className='chart-label'></span>
-                        Proteiini ({Math.round(proteinInTotal)} g)
+                        <span className='protein-segment-legend'>
+                            Proteiini ({Math.round(proteinInTotal)} g)
+                        </span>
                     </td>
                     <td>{proteinGoal}</td>
                     <td>
-                    {proteinInRelationToGoal >= 0 ?
+                    {proteinInRelationToGoal >= 0 ? (
                         <span className='over-goal'>
                             +{proteinInRelationToGoal} g
                         </span>
-                        :
+                    ) : (
                         <span className='under-goal'>
                             {Math.abs(proteinInRelationToGoal)} g
                         </span>
-                    }
+                    )}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <span className='chart-label'
-                                style={{background: '#5da5da'}} />
+                        <span className='carb-segment-legend'>
                             Hiilihydraatit ({Math.round(carbsInTotal)} g)
+                        </span>
                     </td>
                     <td>{carbGoal}</td>
                     <td>
-                        {carbsInRelationToGoal >= 0 ?
+                        {carbsInRelationToGoal >= 0 ? (
                             <span className='over-goal'>
                                 -{carbsInRelationToGoal} g
                             </span>
-                            :
+                        ) : (
                             <span className='under-goal'>
                                 {Math.abs(carbsInRelationToGoal)} g
                             </span>
-                        }
+                        )}
                     </td>
                 </tr>
                 <tr>
-                    <td><span className='chart-label'
-                            style={{background: '#ea5450'}} />
-                        Rasva ({Math.round(fatInTotal)} g)
+                    <td>
+                        <span className='fat-segment-legend'>
+                            Rasva ({Math.round(fatInTotal)} g)
+                        </span>
                     </td>
                     <td>{fatGoal}</td>
                     <td>
-                        {fatInRelationToGoal >= 0 ?
+                        {fatInRelationToGoal >= 0 ? (
                             <span className='over-goal'>
                                 -{fatInRelationToGoal} g
                             </span>
-                            :
+                        ) : (
                             <span className='under-goal'>
                                 {Math.abs(fatInRelationToGoal)} g
                             </span>
-                        }
+                        )}
                     </td>
                 </tr>
                 <tr>
@@ -92,15 +94,15 @@ export default function DailyGoalProgressTable(props) {
                     </td>
                     <td>{energyGoal}</td>
                     <td>
-                    {energyInRelationToGoal >= 0 ?
+                    {energyInRelationToGoal >= 0 ? (
                         <span className='over-goal'>
                             -{energyInRelationToGoal} kcal
                         </span>
-                        :
+                    ) : (
                         <span className='under-goal'>
                             {Math.abs(energyInRelationToGoal)} kcal
                         </span>
-                    }
+                    )}
                     </td>
                 </tr>
             </tbody>

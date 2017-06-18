@@ -1,0 +1,56 @@
+.food-list-header {
+    list-style-type: none;
+    font-size: 13px;
+    height: 25px;
+    background: #60bcff;
+    color: #fff;
+    padding-right: 6px;
+}
+
+.food-list-header.extra-height {
+    height: 65px;
+    padding-top: 40px;
+}
+
+.food-list-header span {
+    text-align: center;
+    vertical-align: top;
+    line-height: 25px;
+}
+
+.food-list-header span:first-child {
+    width: 64%;
+}
+
+.food-list-header span:nth-child(2),
+.food-list-header span:nth-child(3),
+.food-list-header span:nth-child(4),
+.food-list-header span:nth-child(5) {
+    width: 9%;
+}
+
+.food-list-header span:last-child {
+    border: none;
+}
+
+
+@media(max-width: 767px) {
+    .food-list-header {
+        height: 30px;
+        padding: 0 8px;
+    }
+
+    .food-list-header span {
+        line-height: 30px;
+        font-size: 14px;
+    }
+
+    .food-list-header span {
+        width: 25% !important;
+    }
+
+    .food-list-header.extra-height {
+        height: 80px;
+        padding-top: 50px;
+    }
+}
