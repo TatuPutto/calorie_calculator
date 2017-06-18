@@ -20,7 +20,6 @@ render(
     <BrowserRouter>
         <div className='container-fluid'>
             <Header />
-            <Route exact path='/' component={CurrentEntryWrapper} />
             <Route exact path='/current-entry' component={CurrentEntryWrapper} />
             <Route exact path='/diary' component={DiaryWrapper} />
             <Footer />

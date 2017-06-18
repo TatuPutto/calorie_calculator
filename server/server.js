@@ -37,7 +37,7 @@ app.use(session({
 app.use(function (req, res, next) {
     var parsedUrl = url.parse(req.url);
     if(parsedUrl.pathname == '/') {
-        res.redirect('/current-entry');
+        res.redirect('/current-entry?sort=search&q=');
     } else {
         next();
     }
@@ -50,8 +50,7 @@ app.use(function (req, res, next) {
     var parsedUrl = url.parse(req.url);
     var pathname = parsedUrl.pathname;
 
-    if(req.session.loginVisited || pathname == '/login' ||
-            pathname == '/accept-cookies') {
+    if(req.session.loginVisited || pathname == '/login' || pathname == '/accept-cookies') {
         next();
     } else {
         res.redirect('/login');

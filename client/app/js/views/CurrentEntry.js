@@ -14,7 +14,7 @@ import getCurrentDate from '../util/get-current-date';
 
 export default class CurrentEntry extends React.Component {
     constructor(props) {
-        super();
+        super(props);
         this.state = {
             dailyGoal: null,
             consumedFoods: [],
@@ -27,8 +27,8 @@ export default class CurrentEntry extends React.Component {
             isFetchingDailyGoal: true,
             isFetchingConsumedFoods: true,
             isFetchingMatchingFoods: true,
-            searchTerm: null,
-            fetchMethod: 'search',
+            searchTerm: this.props.searchTerm,
+            fetchMethod: this.props.fetchMethod,
             fetchError: null,
         };
 
@@ -53,10 +53,9 @@ export default class CurrentEntry extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({fetchMethod: this.props.fetchMethod});
         if(this.props.fetchMethod == 'search') {
-            this.getMatchingFoods(this.props.search);
-        } else if(this.props.fetchMethod == 'suosikit') {
+            this.getMatchingFoods(this.props.searchTerm);
+        } else if(this.props.fetchMethod == 'favorites') {
             this.getFavoriteFoods();
         } else {
             this.getLatestConsumedFoods()
@@ -64,10 +63,13 @@ export default class CurrentEntry extends React.Component {
         this.getDailyGoal();
     }
 
-    // get matching foods when new query params are pushed
     componentWillReceiveProps(nextProps) {
         if(nextProps.fetchMethod == 'search') {
-            this.getMatchingFoods(nextProps.search);
+            this.getMatchingFoods(nextProps.searchTerm);
+        } else if(nextProps.fetchMethod == 'favorites') {
+            this.getFavoriteFoods();
+        } else {
+            this.getLatestConsumedFoods()
         }
     }
 
@@ -102,7 +104,6 @@ export default class CurrentEntry extends React.Component {
                     totalConsumption: data.nutritionValuesInTotal,
                     isFetchingConsumedFoods: false
                 });
-                console.log(data.nutritionValuesPerItem);
             }).catch((err) => {
                 this.setState({isFetchingConsumedFoods: false});
                 console.error(err);
@@ -114,7 +115,6 @@ export default class CurrentEntry extends React.Component {
         if(!searchTerm) {
             return this.setState({foods: [], isFetchingMatchingFoods: false});
         }
-        this.setState({searchTerm: null});
         this.fetchFoods(`/matching-foods/${searchTerm}`);
     }
 
@@ -155,22 +155,29 @@ export default class CurrentEntry extends React.Component {
     changeFetchMethod(fetchMethod) {
         this.setState({fetchMethod});
         if(fetchMethod == 'search') {
-            this.getMatchingFoods('');
+            this.context.router.history.push('?sort=search&q=');
         } else if(fetchMethod == 'favorites') {
-            this.getFavoriteFoods();
+            this.context.router.history.push('?sort=favorites');
         } else {
-            this.getLatestConsumedFoods();
+            this.context.router.history.push('?sort=latest');
         }
     }
 
     changeSearchTerm(event) {
-        this.setState({searchTerm: event.currentTarget.value});
+        var searchTerm = event.currentTarget.value;
+        this.setState({searchTerm});
+        if(searchTerm.trim()) {
+            this.context.router.history.push(`?sort=search&q=${searchTerm}`);
+        } else {
+            this.context.router.history.push('?sort=search&q=');
+        }
+
     }
 
     doSearch(event) {
         event.preventDefault();
         if(this.state.searchTerm.trim()) {
-            this.context.router.history.push(`?ravintoaine=${this.state.searchTerm}`);
+            this.context.router.history.push(`?q=${this.state.searchTerm}`);
         }
     }
 

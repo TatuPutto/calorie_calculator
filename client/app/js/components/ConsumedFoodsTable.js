@@ -12,18 +12,6 @@ export default function ConsumedFoodsTable(props) {
     var RowWrapper = ConsumedFoodRowWrapper(
         (props.viewportWidth > 768 ? ConsumedFoodRow : ConsumedFoodRowCompactLayout)
     );
-    var consumedFoodsRows = props.consumedFoods.map((food) => {
-        return (
-            <RowWrapper
-                key={food.consumptionId}
-                food={food}
-                isModifiable={props.isModifiable}
-                copyEntry={props.copyEntry}
-                removeFromDiary={props.removeFromDiary}
-                updateDiaryEntry={props.updateDiaryEntry}
-            />
-        );
-    });
 
     return (
         <table className='consumed-foods-table'>
@@ -32,7 +20,18 @@ export default function ConsumedFoodsTable(props) {
                 isModifiable={props.isModifiable}
             />
             <tbody>
-                {consumedFoodsRows}
+                {props.consumedFoods.map((food) => {
+                    return (
+                        <RowWrapper
+                            key={food.consumptionId}
+                            food={food}
+                            isModifiable={props.isModifiable}
+                            copyEntry={props.copyEntry}
+                            removeFromDiary={props.removeFromDiary}
+                            updateDiaryEntry={props.updateDiaryEntry}
+                        />
+                    );
+                })}
             </tbody>
         </table>
     );
