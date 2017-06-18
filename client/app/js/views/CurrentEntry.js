@@ -102,6 +102,7 @@ export default class CurrentEntry extends React.Component {
                     totalConsumption: data.nutritionValuesInTotal,
                     isFetchingConsumedFoods: false
                 });
+                console.log(data.nutritionValuesPerItem);
             }).catch((err) => {
                 this.setState({isFetchingConsumedFoods: false});
                 console.error(err);
@@ -226,6 +227,23 @@ export default class CurrentEntry extends React.Component {
         });
     }
 
+    copyEntry = (entry) => {
+        var date = new Date();
+        var tempEntry = JSON.parse(JSON.stringify(entry));
+        var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
+
+        tempEntry.consumptionId = date.getTime().toString();
+        tempEntry.timeOfConsumption = date;
+        tempConsumedFoods.push(tempEntry);
+        this.setState({consumedFoods: tempConsumedFoods});
+
+        post('/active-entry', {
+            consumptionId: tempEntry.consumptionId,
+            foodId: tempEntry.id,
+            foodAmount: tempEntry.amount
+        }).catch((err) => console.error(err));
+    }
+
     removeFromDiary(consumptionId) {
         // update consumed foods and total values optimistically on removal
         var updatedValues = updateValuesOnRemove(
@@ -318,7 +336,7 @@ export default class CurrentEntry extends React.Component {
                     isModifiable={true}
                     consumedFoods={this.state.consumedFoods}
                     totalConsumption={this.state.totalConsumption}
-                    addToDiary={this.addToDiary}
+                    copyEntry={this.copyEntry}
                     removeFromDiary={this.removeFromDiary}
                     updateDiaryEntry={this.updateDiaryEntry}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}

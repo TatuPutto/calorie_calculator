@@ -3,109 +3,80 @@ import PropTypes from 'prop-types';
 
 import calcDominantMacro from '../util/calculate-dominant-macronutrient';
 
-export default class ConsumedFoodRowCompactLayout extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isBeingEdited: false,
-            foodAmount: this.props.food.amount,
-            validInput: true
-        };
-        this.toggleEditing = this.toggleEditing.bind(this);
-        this.changeFoodAmount = this.changeFoodAmount.bind(this);
-        this.update = this.update.bind(this);
-    }
+export default function ConsumedFoodRowCompactLayout(props) {
+    var {
+        food,
+        foodAmount,
+        isBeingEdited,
+        validInput,
+        isModifiable,
+        toggleEditing,
+        changeFoodAmount,
+        update,
+        copyEntry,
+        removeFromDiary,
+        updateDiaryEntry
+    } = props;
+    var dominantMacro = calcDominantMacro(food.protein, food.carbs, food.fat);
 
-    toggleEditing() {
-        this.setState({isBeingEdited: !this.state.isBeingEdited});
-    }
+    return (
+        <tr>
+            <td className='food-name'>{food.name}</td>
 
-    changeFoodAmount(event) {
-        var foodAmount = event.currentTarget.value.trim();
+            {!isModifiable &&
+                <td className='food-amount'>{food.amount} g</td>
+            }
 
-        this.setState({
-            foodAmount: foodAmount,
-            validInput: (foodAmount && foodAmount > 0) ? true : false
-        });
-    }
+            {isModifiable && isBeingEdited &&
+                <td className='food-amount'>
+                    <input
+                        type='text'
+                        className='edit-input'
+                        value={foodAmount}
+                        onChange={changeFoodAmount}
+                        style={!validInput ?
+                            {borderColor: 'red', boxShadow: '0px 0px 5px red'} : {}
+                        }
+                    />
+                    <button className='do-edit btn btn-default'
+                            onClick={update}>
+                        <i className='fa fa-check' />
+                    </button>
+                    <button className='cancel-edit btn btn-default'
+                            onClick={toggleEditing}>
+                        <i className='fa fa-close' />
+                    </button>
+                </td>
+            }
 
-    update(consumptionId) {
-        var foodAmount = this.state.foodAmount.trim();
+            {isModifiable && !isBeingEdited &&
+                <td className='food-amount'>
+                    <a onClick={() => copyEntry(food)}>
+                        {food.amount} g
+                    </a>
+                    <br />
+                    <a onClick={toggleEditing}>
+                        Muokkaa
+                    </a>
+                </td>
+            }
 
-        if(foodAmount && foodAmount > 0) {
-            this.props.updateDiaryEntry(this.props.food.consumptionId, foodAmount)
-        }
-    }
-
-    render() {
-        var {
-            food,
-            isModifiable,
-            addToDiary,
-            removeFromDiary,
-            updateDiaryEntry
-        } = this.props;
-        var dominantMacro = calcDominantMacro(food.protein, food.carbs, food.fat);
-
-        return (
-            <tr>
-                <td className='food-name'>{food.name}</td>
-
-                {!isModifiable &&
-                    <td className='food-amount'>{food.amount} g</td>
-                }
-
-                {isModifiable && this.state.isBeingEdited &&
-                    <td className='food-amount'>
-                        <input
-                            type='text'
-                            className='edit-input'
-                            value={this.state.foodAmount}
-                            onChange={this.changeFoodAmount}
-                            style={!this.state.validInput ?
-                                {borderColor: 'red', boxShadow: '0px 0px 5px red'} : {}
-                            }
-                        />
-                        <button className='do-edit btn btn-default'
-                                onClick={this.update}>
-                            <i className='fa fa-check' />
-                        </button>
-                        <button className='cancel-edit btn btn-default'
-                                onClick={this.toggleEditing}>
-                            <i className='fa fa-close' />
-                        </button>
-                    </td>
-                }
-
-                {isModifiable && !this.state.isBeingEdited &&
-                    <td className='food-amount'>
-                        <a onClick={() => addToDiary(food.id, food.amount)}>
-                            {food.amount} g
-                        </a>
-                        <br />
-                        <a onClick={this.toggleEditing}>
-                            Muokkaa
-                        </a>
-                    </td>
-                }
-
-                <td className='energy-amount'>{food.energy}</td>
-                <td className={'protein-amount ' + (dominantMacro == 'protein' ? dominantMacro : '')}>{food.protein}</td>
-                <td className={'carb-amount ' + (dominantMacro == 'carb' ? dominantMacro : '')}>{food.carbs}</td>
-                <td className={'fat-amount ' + (dominantMacro == 'fat' ? dominantMacro : '')}>{food.fat}</td>
-                {isModifiable &&
-                    <td className='remove-button-container'>
-                        <button
-                            className='remove-food btn btn-default'
-                            onClick={() => removeFromDiary(food.consumptionId)}
-                        >
-                            <i className='fa fa-trash' />
-                        </button>
-                    </td>
-                }
-            </tr>
-        );
-    }
+            <td className='energy-amount'>{food.energy}</td>
+            <td className={'protein-amount ' + (dominantMacro == 'protein' ? dominantMacro : '')}>{food.protein}</td>
+            <td className={'carb-amount ' + (dominantMacro == 'carb' ? dominantMacro : '')}>{food.carbs}</td>
+            <td className={'fat-amount ' + (dominantMacro == 'fat' ? dominantMacro : '')}>{food.fat}</td>
+            {isModifiable &&
+                <td className='remove-button-container'>
+                    <button
+                        className='remove-food btn btn-default'
+                        onClick={() => removeFromDiary(food.consumptionId)}
+                    >
+                        <i className='fa fa-trash' />
+                    </button>
+                </td>
+            }
+        </tr>
+    );
 }
 
 ConsumedFoodRowCompactLayout.propTypes = {

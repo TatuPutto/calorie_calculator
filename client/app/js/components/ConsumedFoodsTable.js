@@ -2,37 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ConsumedFoodsTableHeader from './ConsumedFoodsTableHeader';
+import ConsumedFoodRowWrapper from './ConsumedFoodRowWrapper';
 import ConsumedFoodRow from './ConsumedFoodRow';
 import ConsumedFoodRowCompactLayout from './ConsumedFoodRowCompactLayout';
 
-export default function ConsumedFoodsTable(props) {
-    var consumedFoodsRows = props.consumedFoods.map((food) => {
-        var row;
-        if(props.viewportWidth > 768) {
-            row = (
-                <ConsumedFoodRow
-                    key={food.consumptionId}
-                    food={food}
-                    isModifiable={props.isModifiable}
-                    addToDiary={props.addToDiary}
-                    removeFromDiary={props.removeFromDiary}
-                    updateDiaryEntry={props.updateDiaryEntry}
-                />
-            );
-        } else {
-            row = (
-                <ConsumedFoodRowCompactLayout
-                    key={food.consumptionId}
-                    food={food}
-                    isModifiable={props.isModifiable}
-                    addToDiary={props.addToDiary}
-                    removeFromDiary={props.removeFromDiary}
-                    updateDiaryEntry={props.updateDiaryEntry}
-                />
-            );
-        }
 
-        return row;
+export default function ConsumedFoodsTable(props) {
+    // create HOC for handling ConsumedFoodRow and ConsumedFoodRowCompactLayout state
+    var RowWrapper = ConsumedFoodRowWrapper(
+        (props.viewportWidth > 768 ? ConsumedFoodRow : ConsumedFoodRowCompactLayout)
+    );
+    var consumedFoodsRows = props.consumedFoods.map((food) => {
+        return (
+            <RowWrapper
+                key={food.consumptionId}
+                food={food}
+                isModifiable={props.isModifiable}
+                copyEntry={props.copyEntry}
+                removeFromDiary={props.removeFromDiary}
+                updateDiaryEntry={props.updateDiaryEntry}
+            />
+        );
     });
 
     return (
