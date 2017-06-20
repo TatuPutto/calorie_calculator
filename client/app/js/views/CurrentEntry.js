@@ -45,6 +45,7 @@ export default class CurrentEntry extends React.Component {
         this.selectFood = this.selectFood.bind(this);
         this.setSelectedFoodAmount = this.setSelectedFoodAmount.bind(this);
         this.addToDiary = this.addToDiary.bind(this);
+        this.copyEntry = this.copyEntry.bind(this);
         this.removeFromDiary = this.removeFromDiary.bind(this);
         this.updateDiaryEntry = this.updateDiaryEntry.bind(this);
         this.addToFavorites = this.addToFavorites.bind(this);
@@ -234,7 +235,7 @@ export default class CurrentEntry extends React.Component {
         });
     }
 
-    copyEntry = (entry) => {
+    copyEntry(entry) {
         var date = new Date();
         var tempEntry = JSON.parse(JSON.stringify(entry));
         var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));

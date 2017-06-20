@@ -6,7 +6,7 @@ import FoodList from './FoodList';
 
 export default function FoodSelection(props) {
     return (
-        <div className='food-selection col-md-10 col-sm-12'>
+        <div className='food-selection col-md-9 col-sm-12 col-md-offset-1'>
             <FoodSelectionHeader
                 fetchMethod={props.fetchMethod}
                 changeFetchMethod={props.changeFetchMethod}

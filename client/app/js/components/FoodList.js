@@ -44,21 +44,22 @@ export default function FoodList(props) {
                     if(food.favorite && !favoritesCategorySeparated) {
                         favoritesCategorySeparated = true;
                         foodItems.push(
-                            <li style={{lineHeight: '35px', textAlign: 'left', fontSize: '14px', paddingLeft: '6px', borderBottom: '2px solid #e2e5f3'}}>
-                                <i className='fa fa-star' /> Suosikit
+                            <li className='category-separator'>
+                                <i className='fa fa-star' />Suosikit
                             </li>
                         );
                     } else if(!food.favorite && food.latelyConsumed && !latestCategorySeparated) {
                         latestCategorySeparated = true;
                         foodItems.push(
-                            <li style={{lineHeight: '35px', textAlign: 'left', fontSize: '14px', paddingLeft: '6px', borderTop: '1px solid #e2e5f3', borderBottom: '2px solid #e2e5f3'}}>
-                                <i className='fa fa-history' /> Viimeaikaiset
+                            <li className='category-separator'>
+                                <i className='fa fa-history' />Viimeaikaiset
                             </li>
                         );
                     } else if (!food.latelyConsumed && latestCategorySeparated && !regularResultsSeparated) {
                         regularResultsSeparated = true;
                         foodItems.push(
-                            <li style={{height: '15px', textAlign: 'left', fontSize: '14px', paddingLeft: '6px', borderTop: '1px solid #e2e5f3', borderBottom: '2px solid #e2e5f3'}}>
+                            <li className='category-separator'>
+                                <i className='fa fa-search' />Hakutulokset
                             </li>
                         );
                     }

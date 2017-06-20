@@ -9,7 +9,9 @@
 .daily-goal {
     text-align: center;
     margin-top: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    background: #fff;
+    box-shadow: @module-shadow;
 }
 
 .daily-goal h3 {
@@ -26,6 +28,8 @@
     border: none;
     margin-left: 10px;
     vertical-align: middle;
+    position: absolute;
+    right: 20px;
 }
 
 .modal input[type="text"] {
@@ -63,9 +67,16 @@
     .default-border();
 }
 
-.charts {
+.daily-goal-wrapper {
     float: none;
-    padding: 0;
+    padding: 20px;
+}
+
+.daily-goal-header {
+    border-bottom: 2px solid #e4e4e4;
+    padding-bottom: 15px;
+    margin-bottom: -20px;
+    text-align: left;
 }
 
 .charts h4 {
@@ -85,7 +96,7 @@
 .food-list-wrapper {
     display: flex;
     flex-direction: column;
-    height: 556px;
+    height: 591px;
 }
 
 .food-list {
@@ -93,10 +104,10 @@
     font-size: 13px;
     overflow-y: scroll;
     line-height: 30px;
-    border: 1px solid #e2e5f3;
+    //border: 1px solid #e2e5f3;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
-    background: #fcfcfc;
+    background: #fff;
 }
 
 .food-list li {
@@ -112,6 +123,20 @@
 .food-list span {
     height: 32px;
 }
+
+.category-separator {
+    line-height: 25px;
+    text-align: left;
+    padding-left: 6px;
+    background: #666666;
+    color: #fff;
+
+    i {
+        margin-right: 6px;
+        color: #fff;
+    }
+}
+
 
 .food-list-header {
     //color: white;
@@ -245,9 +270,9 @@
 .no-results {
     flex-grow: 1;
     padding-top: 20px;
-    font-size: 16px;
-    border: 1px solid @default-border-color;
-    background: #fcfcfc;
+    font-size: 14px;
+    //border: 1px solid @default-border-color;
+    background: #fff;
 }
 
 span {
@@ -316,8 +341,9 @@ span {
     text-align: center;
     background: white;
     margin-top: 40px;
-    padding-bottom: 40px;
-    height: 630px;
+    margin-bottom: 40px;
+    height: 625px;
+    box-shadow: @module-shadow;
 }
 
 .food-selection-wrapper {
@@ -327,11 +353,11 @@ span {
 }
 
 .food-selection-header {
-    background: #fcfcfc;
+    background: #fff;
     text-align: left;
     display: flex;
     flex-direction: column;
-    border: 1px solid #e2e5f3;
+    //border: 1px solid #e2e5f3;
     height: 34px;
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
@@ -371,17 +397,8 @@ span {
 }
 
 .search-types {
-    //background: #fcfcfc;
-    /*border-bottom: 1px solid #e2e5f3;
-    text-align: center;
-    padding-top: 10px;*/
-    //display: inline-block;
-    //width: 100%;
-    //text-align: left;
-    //border: 1px solid #e2e5f3;
-    border-radius: 0px;
-    /*border-top-right-radius: 3px;
-    border-top-left-radius: 3px;*/
+    position: relative;
+    top: 1px;
 }
 
 .search-types button {
@@ -392,7 +409,7 @@ span {
 }
 
 .search-types button:first-child.active {
-    margin-left: -1px;
+    margin-left: 0;
 }
 
 .search-types button:last-child {
@@ -485,6 +502,7 @@ span {
     text-align: center;
     margin-bottom: 40px;
     float: none;
+    box-shadow: @module-shadow;
 }
 
 .consumed-foods-table {
@@ -592,7 +610,7 @@ table {
     bottom: 0;
     border-top: 1px solid #e2e5f3;
     height: 35px;
-    background: whitesmoke;
+    background: #fff;
     text-align: center;
     margin-top: 20px;
 }

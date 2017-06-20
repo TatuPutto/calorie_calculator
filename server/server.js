@@ -3,6 +3,9 @@ var url = require('url');
 var express = require('express')
 var session = require('client-sessions');
 var cookieParser = require('cookie-parser');
+var checkUseragent = require('./middleware/check-useragent');
+var firstVisit = require('./middleware/first-visit');
+var redirect = require('./middleware/redirect');
 var acceptCookies = require('./routes/accept-cookies');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
@@ -19,14 +22,8 @@ var getEntry = require('./routes/get-entry');
 var port = process.env.PORT || 3000;
 var app = express();
 
-// block usage with safari
-app.use(require('express-useragent').express());
-app.use(function (req, res, next) {
-    if(req.useragent.isSafari) {
-        res.end('Safari is not currently supported!');
-    }
-    next();
-});
+// check that user is using supported browser (Chrome, Firefox, Opera, IE or Edge)
+app.use(checkUseragent);
 
 app.use(session({
     cookieName: 'session',
@@ -34,28 +31,13 @@ app.use(session({
     duration: (7 * 24 * 60 * 60 * 1000)
 }));
 
-app.use(function (req, res, next) {
-    var parsedUrl = url.parse(req.url);
-    if(parsedUrl.pathname == '/') {
-        res.redirect('/current-entry?sort=search&q=');
-    } else {
-        next();
-    }
-});
-
+// redirect root requests to /current-entry
+app.use(redirect);
 app.use(express.static(path.join(__dirname, '../client/app')));
 app.use(express.static(path.join(__dirname, './public')));
-
-app.use(function (req, res, next) {
-    var parsedUrl = url.parse(req.url);
-    var pathname = parsedUrl.pathname;
-
-    if(req.session.loginVisited || pathname == '/login' || pathname == '/accept-cookies') {
-        next();
-    } else {
-        res.redirect('/login');
-    }
-});
+// only allow user to access the page
+// after login has been visited and cookies are accepted
+app.use(firstVisit);
 
 app.use('/accept-cookies', acceptCookies);
 app.use('/login', login);

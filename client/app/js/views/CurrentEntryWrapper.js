@@ -10,17 +10,20 @@ var viewportWidth = Math.max(
 export default function CurrentEntryWrapper(props) {
     document.title = 'Ruokapäiväkirja';
     var search = props.location.search;
-    var fetchMethod;
+    var fetchMethod = 'search';
     var searchTerm = '';
 
-    if(!search) {
-        location.href = '/current-entry?sort=search&q=';
-    } else {
-        fetchMethod = search.split('&')[0].match(/search|favorites|latest/g)[0];
+    if(search) {
+        fetchMethod = search.split('&')[0].match(/search|favorites|latest/g);
+        if(fetchMethod) {
+            fetchMethod = fetchMethod[0];
+        } else {
+            fetchMethod = 'search';
+        }
     }
 
-    if(fetchMethod == 'search') {
-        searchTerm = search.split('&')[1].split('=')[1] || ' ';
+    if(fetchMethod == 'search' && search) {
+        searchTerm = search.split('&')[1].split('=')[1];
     }
 
     return (

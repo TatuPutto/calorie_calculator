@@ -24,7 +24,7 @@ export default function ConsumedFoods(props) {
     }
 
     return (
-        <div className='consumed-foods col-md-10 col-md-offset-2'>
+        <div className='consumed-foods col-md-9 col-md-offset-3'>
             {consumedFoodsOutput}
         </div>
     );

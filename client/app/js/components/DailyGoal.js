@@ -15,14 +15,14 @@ export default class DailyGoal extends React.Component {
     componentDidMount() {
         if(this.props.dailyGoal) {
             window.requestAnimationFrame(() => {
-                createChart(this.props.totalConsumption, this.props.dailyGoal)
+                createCharts(this.props.totalConsumption, this.props.dailyGoal)
             });
         }
     }
 
     componentDidUpdate() {
         window.requestAnimationFrame(() => {
-            createChart(this.props.totalConsumption, this.props.dailyGoal)
+            createCharts(this.props.totalConsumption, this.props.dailyGoal);
         });
     }
 
@@ -37,13 +37,15 @@ export default class DailyGoal extends React.Component {
 
         if(goal) {
             dailyGoalOutput = (
-                <div className='charts'>
-                    <h3>Päivätavoite</h3>
-                    <i
-                        className='configure-daily-goals fa fa-cog'
-                        data-toggle='modal'
-                        data-target='#set-daily-goal'
-                    />
+                <div className='daily-goal-wrapper'>
+                    <div className='daily-goal-header'>
+                        <h3>Päivätavoite</h3>
+                        <i
+                            className='configure-daily-goals fa fa-cog'
+                            data-toggle='modal'
+                            data-target='#set-daily-goal'
+                        />
+                    </div>
                     <DailyGoalProgress total={total} goal={goal} />
                 </div>
             );
@@ -66,7 +68,7 @@ export default class DailyGoal extends React.Component {
     }
 }
 
-function createChart(total, goal) {
+function createCharts(total, goal) {
     var options = {
         cutoutPercentage: 88,
         rotation: 1 * Math.PI,
