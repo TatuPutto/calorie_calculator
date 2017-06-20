@@ -1,6 +1,6 @@
 @media(min-width: 768px) {
     .food-name {
-        color: #4e4d4d;
+        color: @text-color;
         text-align: left;
         width: ~'calc(66% - 53px)';
         white-space: nowrap;
@@ -11,157 +11,34 @@
 
     .favorites {
         width: 33px;
-        border-right: 1px solid @default-border-color;
+        border-right: @border;
     }
 
     .energy-amount {
         width: 10%;
         color: @energy-color;
-        border-right: 1px solid @default-border-color;
+        border-right: @border;
     }
 
     .protein-amount {
         //background: #93f093;
         color: @protein-color;
         width: 8%;
-        border-right: 1px solid @default-border-color;
+        border-right: @border;
     }
 
     .carb-amount {
         //background: #c5d4ed;
         color: @carb-color;
         width: 8%;
-        border-right: 1px solid @default-border-color;
+        border-right: @border;
+
     }
 
     .fat-amount {
         //background: #fcc6b4;
         color: @fat-color;
         width: 8%;
-    }
-
-    .consumed-foods .food-name {
-        top: 0;
-    }
-
-    .consumed-foods-table td {
-        padding: 4px;
-    }
-
-    .current-entry {
-        .consumed-foods-table th {
-            text-align: center !important;
-        }
-
-        .consumed-foods-table td:first-child {
-            text-align: center !important;
-        }
-
-        .consumed-foods-table th:first-child, td:first-child {
-            width: 3%;
-        }
-
-        .consumed-foods-table th:nth-child(2), td:nth-child(2) {
-            text-align: left;
-            width: 55%;
-            border-right: 1px solid @default-border-color;
-        }
-
-        .consumed-foods-table th:nth-child(3), td:nth-child(3) {
-            width: 8%;
-            border-right: 1px solid @default-border-color;
-        }
-
-        .consumed-foods-table th:nth-child(4), td:nth-child(4) {
-            width: 10%;
-
-        }
-
-        .consumed-foods-table th:nth-child(5), td:nth-child(5) {
-            //background: #93f093;
-            //color: green;
-            width: 8%;
-        }
-
-        .consumed-foods-table th:nth-child(6), td:nth-child(6) {
-            //background: #c1c1ff;
-            //color: blue;
-            width: 8%;
-
-        }
-
-        .consumed-foods-table th:nth-child(7), td:nth-child(7) {
-            //background: #fcc6b4;
-            //color: red;
-            width: 8%;
-        }
-    }
-
-    .diary {
-        .consumed-foods-table th:first-child {
-            padding-left: 6px;
-        }
-
-
-        .consumed-foods-table td:first-child {
-            text-align: left;
-            width: 55%;
-            border: 1px solid @default-border-color;
-            border-top: none;
-        }
-
-        .consumed-foods-table td:nth-child(2) {
-            width: 8%;
-            border: 1px solid @default-border-color;
-            border-top: none;
-            border-left: none;
-        }
-
-        .consumed-foods-table td:nth-child(3) {
-            width: 10%;
-            border: 1px solid @default-border-color;
-            border-top: none;
-            border-left: none;
-        }
-
-        .consumed-foods-table td:nth-child(4) {
-            border: 1px solid @default-border-color;
-            border-top: none;
-            border-left: none;
-            width: 8%;
-        }
-
-        .consumed-foods-table td:nth-child(5) {
-            border: 1px solid @default-border-color;
-            border-top: none;
-            border-left: none;
-            width: 8%;
-        }
-
-        .consumed-foods-table td:nth-child(6) {
-            border: 1px solid @default-border-color;
-            border-top: none;
-            border-left: none;
-            width: 8%;
-        }
-
-        th:first-child {
-            border-left: none;
-            border-bottom: none;
-            border-top-left-radius: 3px;
-        }
-
-        th:last-child {
-            border-top-right-radius: 3px;
-        }
-
-        tr:last-child td:first-child {
-            border-bottom-left-radius: 3px;
-        }
-
-        tr:last-child td:last-child {
-            border-bottom-right-radius: 3px;
-        }
     }
 
 

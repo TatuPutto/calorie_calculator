@@ -1,15 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function ConsumedFoodsTableHeader(props) {
+export default function ConsumedFoodsTableHeader({isModifiable, viewportWidth}) {
     var theadRow = null;
-    if(props.isModifiable || props.viewportWidth < 768) {
-        theadRow = (
-            <tr>
-                <th colSpan={7}>Merkinnät</th>
-            </tr>
-        );
-    } else {
+    if(!isModifiable && viewportWidth > 767) {
         theadRow = (
             <tr>
                 <th>Elintarvike</th>
@@ -20,6 +14,8 @@ export default function ConsumedFoodsTableHeader(props) {
                 <th>R</th>
             </tr>
         );
+    } else {
+        theadRow = <tr><th colSpan={7}>Merkinnät</th></tr>;
     }
 
     return <thead>{theadRow}</thead>;

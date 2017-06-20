@@ -18,39 +18,45 @@ export default function ConsumedFoodRowCompactLayout(props) {
         updateDiaryEntry
     } = props;
     var dominantMacro = calcDominantMacro(food.protein, food.carbs, food.fat);
+    var proteinClass = 'consumed-food-protein-amount ' +
+            (dominantMacro == 'protein' ? 'dominant' : '');
+    var carbClass = 'consumed-food-carb-amount ' +
+            (dominantMacro == 'carb' ? 'dominant' : '');
+    var fatClass = 'consumed-food-fat-amount ' +
+            (dominantMacro == 'fat' ? 'dominant' : '');
+    var invalidInputStyle = {borderColor: 'red', boxShadow: '0px 0px 5px red'};
 
     return (
         <tr>
-            <td className='food-name'>{food.name}</td>
-
+            <td className='consumed-food-name'>{food.name}</td>
             {!isModifiable &&
-                <td className='food-amount'>{food.amount} g</td>
+                <td className='consumed-food-amount'>{food.amount} g</td>
             }
-
             {isModifiable && isBeingEdited &&
-                <td className='food-amount'>
+                <td className='consumed-food-amount'>
                     <input
                         type='text'
                         className='edit-input'
                         value={foodAmount}
                         onChange={changeFoodAmount}
-                        style={!validInput ?
-                            {borderColor: 'red', boxShadow: '0px 0px 5px red'} : {}
-                        }
+                        style={!validInput ? invalidInputStyle : null}
                     />
-                    <button className='do-edit btn btn-default'
-                            onClick={update}>
+                    <button
+                        className='consumed-food-edit-amount btn btn-default'
+                        onClick={update}
+                    >
                         <i className='fa fa-check' />
                     </button>
-                    <button className='cancel-edit btn btn-default'
-                            onClick={toggleEditing}>
+                    <button
+                        className='consumed-food-cancel-edit btn btn-default'
+                        onClick={toggleEditing}
+                    >
                         <i className='fa fa-close' />
                     </button>
                 </td>
             }
-
             {isModifiable && !isBeingEdited &&
-                <td className='food-amount'>
+                <td className='consumed-food-amount'>
                     <a onClick={() => copyEntry(food)}>
                         {food.amount} g
                     </a>
@@ -60,15 +66,14 @@ export default function ConsumedFoodRowCompactLayout(props) {
                     </a>
                 </td>
             }
-
-            <td className='energy-amount'>{food.energy}</td>
-            <td className={'protein-amount ' + (dominantMacro == 'protein' ? dominantMacro : '')}>{food.protein}</td>
-            <td className={'carb-amount ' + (dominantMacro == 'carb' ? dominantMacro : '')}>{food.carbs}</td>
-            <td className={'fat-amount ' + (dominantMacro == 'fat' ? dominantMacro : '')}>{food.fat}</td>
+            <td className='consumed-food-energy-amount'>{food.energy} kcal</td>
+            <td className={proteinClass}>{food.protein} g</td>
+            <td className={carbClass}>{food.carbs} g</td>
+            <td className={fatClass}>{food.fat} g</td>
             {isModifiable &&
-                <td className='remove-button-container'>
+                <td className='consumed-food-remove'>
                     <button
-                        className='remove-food btn btn-default'
+                        className='btn btn-default'
                         onClick={() => removeFromDiary(food.consumptionId)}
                     >
                         <i className='fa fa-trash' />

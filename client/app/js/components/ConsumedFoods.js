@@ -8,6 +8,8 @@ import Loading from './Loading';
 export default function ConsumedFoods(props) {
     var {viewportWidth, isFetchingConsumedFoods, consumedFoods} = props;
     var consumedFoodsOutput = null;
+    var consumedFoodsClass = 'consumed-foods ' +
+            (props.isModifiable ? 'col-md-9 col-md-offset-3' : 'col-xs-12');
 
     if(isFetchingConsumedFoods) {
         consumedFoodsOutput = <Loading />;
@@ -17,14 +19,17 @@ export default function ConsumedFoods(props) {
         consumedFoodsOutput = (
             <div>
                 <ConsumedFoodsTable {...props} />
-                <TotalNutritionValuesTable
-                        totalConsumption={props.totalConsumption} />
+                {props.isModifiable &&
+                    <TotalNutritionValuesTable
+                        totalConsumption={props.totalConsumption}
+                    />
+                }
             </div>
         );
     }
 
     return (
-        <div className='consumed-foods col-md-9 col-md-offset-3'>
+        <div className={consumedFoodsClass}>
             {consumedFoodsOutput}
         </div>
     );

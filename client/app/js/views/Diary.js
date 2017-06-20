@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import SelectDiaryEntry from '../components/SelectDiaryEntry';
 import DailyGoalProgressTable from '../components/DailyGoalProgressTable';
-import ConsumedFoodsTable from '../components/ConsumedFoodsTable';
+import ConsumedFoods from '../components/ConsumedFoods';
 import Loading from '../components/Loading';
 
 import {get} from '../util/fetch';
@@ -128,7 +128,7 @@ export default class Diary extends React.Component {
                     </div>
                     <div className='row'>
                         {this.state.detailsVisible &&
-                            <ConsumedFoodsTable
+                            <ConsumedFoods
                                 viewportWidth={this.props.viewportWidth}
                                 isModifiable={false}
                                 isFetchingConsumedFoods={false}
