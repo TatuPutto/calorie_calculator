@@ -9,7 +9,7 @@ export default function ConsumedFoods(props) {
     var {viewportWidth, isFetchingConsumedFoods, consumedFoods} = props;
     var consumedFoodsOutput = null;
     var consumedFoodsClass = 'consumed-foods ' +
-            (props.isModifiable ? 'col-md-9 col-md-offset-3' : 'col-xs-12');
+            (props.isModifiable ? 'col-md-10 col-md-offset-2' : 'col-xs-12');
 
     if(isFetchingConsumedFoods) {
         consumedFoodsOutput = <Loading />;
@@ -17,7 +17,10 @@ export default function ConsumedFoods(props) {
         consumedFoodsOutput = null;
     } else {
         consumedFoodsOutput = (
-            <div>
+            <div className='consumed-foods-wrapper'>
+                <div className='consumed-foods-header'>
+                    <h3>Merkinnät</h3>
+                </div>
                 <ConsumedFoodsTable {...props} />
                 {props.isModifiable &&
                     <TotalNutritionValuesTable

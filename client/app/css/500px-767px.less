@@ -1,6 +1,8 @@
 @media(max-width: 767px) {
     div[class*="col"] {
         padding: 0;
+        margin-left: 8px;
+        margin-right: 8px;
     }
 /*
     span {
@@ -55,50 +57,7 @@ f
                                     Header
     ============================================================================
     ==========================================================================*/
-    .nav-menu::before {
-        content: "\f0c9";
-        font-family: FontAwesome;
-    }
 
-    .nav-menu {
-        line-height: 35px;
-        width: 100px;
-        position: absolute;
-        z-index: 9999;
-    }
-
-    .nav-menu:hover {
-        li {
-            display: list-item;
-            z-index: 9999;
-        }
-    }
-
-    .nav-menu li {
-        font-size: 13px;
-        display: none;
-        color: @text-color;
-        background: white;
-        width: 100px;
-        padding-left: 10px;
-        margin-left: -15px;
-        border: 1px solid #bfbfbf;
-        border-radius: 3px;
-        box-shadow: 1px 1px 5px #868686;
-    }
-
-    .nav-menu a {
-        color: black;
-    }
-
-    .header button {
-        font-size: 12px;
-    }
-
-    .header-content {
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-    }
 
     /*==========================================================================
     ============================================================================
@@ -225,6 +184,8 @@ f
         border-bottom: none;
         padding-bottom: 0;
         height: initial;
+        margin-top: 0;
+        margin-bottom: 0;
     }
 
     .food-selection-wrapper {
@@ -236,9 +197,9 @@ f
         border-radius: 0;
     }
 
-    .search-types {
+    /*.search-types {
         text-align: center;
-    }
+    }*/
 
     .search {
         margin-top: 12px;
@@ -326,8 +287,7 @@ f
     .no-results {
         border: none;
         font-size: 14px;
-        padding-top: 60px;
-        padding-bottom: 40px;
+        padding: 40px 0;
         background: #fff;
     }
 
@@ -515,8 +475,15 @@ f
     }
 
     .daily-goal {
-        margin-top: 0;
-        margin-bottom: 40px;
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    /*.daily-goal-header {
+        border: none;
+        padding-bottom: 15px;
+        margin: -20px;
+        text-align: center;
     }
 
     .daily-goal h3 {
@@ -527,6 +494,8 @@ f
         font-size: 14px;
         display: block;
         margin: 0;
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
     }
 
     .set-daily-goal {
@@ -543,7 +512,7 @@ f
         padding: 5px 10px;
         border: 1px solid #d4d4d4;
         border-radius: 3px;
-    }
+    }*/
 
     .goal-progress {
         margin-top: 10px;

@@ -15,10 +15,10 @@ export default function ConsumedFoodsTable(props) {
 
     return (
         <table className='consumed-foods-table'>
-            <ConsumedFoodsTableHeader
+            {/*}<ConsumedFoodsTableHeader
                 viewportWidth={props.viewportWidth}
                 isModifiable={props.isModifiable}
-            />
+            />*/}
             <tbody>
                 {props.consumedFoods.map((food) => {
                     return (

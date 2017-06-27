@@ -37,49 +37,38 @@ export default function FoodList(props) {
         var favoritesCategorySeparated = false;
         var latestCategorySeparated = false;
         var regularResultsSeparated = false;
+        var Component = props.viewportWidth > 768 ? FoodItem : FoodItemCompactLayout;
 
-        if(props.viewportWidth > 768) {
-            props.foods.forEach((food, i) => {
-                if(fetchMethod == 'search') {
-                    if(food.favorite && !favoritesCategorySeparated) {
-                        favoritesCategorySeparated = true;
-                        foodItems.push(
-                            <li className='category-separator'>
-                                <i className='fa fa-star' />Suosikit
-                            </li>
-                        );
-                    } else if(!food.favorite && food.latelyConsumed && !latestCategorySeparated) {
-                        latestCategorySeparated = true;
-                        foodItems.push(
-                            <li className='category-separator'>
-                                <i className='fa fa-history' />Viimeaikaiset
-                            </li>
-                        );
-                    } else if (!food.latelyConsumed && latestCategorySeparated && !regularResultsSeparated) {
-                        regularResultsSeparated = true;
-                        foodItems.push(
-                            <li className='category-separator'>
-                                <i className='fa fa-search' />Hakutulokset
-                            </li>
-                        );
-                    }
+        props.foods.forEach((food, i) => {
+            if(fetchMethod == 'search') {
+                if(food.favorite && !favoritesCategorySeparated) {
+                    favoritesCategorySeparated = true;
+                    foodItems.push(
+                        <li key='favorites' className='category-separator'>
+                            <i className='fa fa-star' />Suosikit
+                        </li>
+                    );
+                } else if(!food.favorite && food.latelyConsumed && !latestCategorySeparated) {
+                    latestCategorySeparated = true;
+                    foodItems.push(
+                        <li key='lately-consumed' className='category-separator'>
+                            <i className='fa fa-history' />Viimeaikaiset
+                        </li>
+                    );
+                } else if(!food.latelyConsumed && latestCategorySeparated && !regularResultsSeparated) {
+                    regularResultsSeparated = true;
+                    foodItems.push(
+                        <li key='search-results' className='category-separator'>
+                            <i className='fa fa-search' />Hakutulokset
+                        </li>
+                    );
                 }
+            }
 
-                foodItems.push(<FoodItem key={food.id} food={food} {...props} />);
-            });
-        } else {
-            props.foods.slice(0, (props.offset + 10)).forEach((food) => {
-                foodItems.push(
-                    <FoodItemCompactLayout key={food.id} food={food} {...props} />
-                );
-            });
-        }
+            foodItems.push(<Component key={food.id} food={food} {...props} />);
+        });
 
-        matchingFoodsOutput = (
-            <ul className='food-list'>
-                {foodItems}
-            </ul>
-        );
+        matchingFoodsOutput = <ul className='food-list'>{foodItems}</ul>;
     }
 
     return (
