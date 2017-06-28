@@ -21,44 +21,41 @@ export default function FoodItem(props) {
         fat,
         favorite : isInfavorites,
     } = food;
+    var favoriteToggleFunction = isInfavorites ?
+            removeFromFavorites : addToFavorites;
+    var selectedIndicatorClass = 'food-selected-indicator fa fa-caret-right ' +
+            (selectedFoodId == id ? 'open' : 'closed')
     var dominantMacro = calcDominantMacro(protein, carbs, fat);
+    var proteinClass = 'food-protein-amount ' +
+            (dominantMacro == 'protein' ? 'dominant' : '');
+    var carbClass = 'food-carb-amount ' +
+            (dominantMacro == 'carb' ? 'dominant' : '');
+    var fatClass = 'food-fat-amount ' +
+            (dominantMacro == 'fat' ? 'dominant' : '');
 
     return (
-        <li>
+        <li className='food-item'>
             <div
                 key={id}
                 onClick={() => selectFood(id, name)}
-                style={{background: selectedFoodId == id ? '#e8f2ff' : '#fff'}}
+                style={{background: selectedFoodId == id ? '#e8f2ff' : ''}}
             >
                 <span className='food-selected-indicator-container'>
-                    <i className={selectedFoodId == id ?
-                            'food-selected-indicator fa fa-caret-right open'
-                            :
-                            'food-selected-indicator fa fa-caret-right closed'
-                        }
-                    />
+                    <i className={selectedIndicatorClass} />
                 </span>
                 <span className='food-name'>{name}</span>
-                <span className='favorites'>
+                <span className='food-favorite-status'>
                     <button
-                        className='add-to-favorites'
-                        onClick={isInfavorites ?
-                            () => removeFromFavorites(id) :
-                            () => addToFavorites(id)}
+                        className='food-add-to-favorites'
+                        onClick={() => favoriteToggleFunction(id)}
                     >
                         <i className={isInfavorites ? 'fa fa-star' : 'fa fa-star-o'} />
                     </button>
                 </span>
-                <span className='energy-amount'>{energy} kcal</span>
-                <span className={'protein-amount ' + (dominantMacro == 'protein' ? dominantMacro : '')}>
-                    {protein} g
-                </span>
-                <span className={'carb-amount ' + (dominantMacro == 'carb' ? dominantMacro : '')}>
-                    {carbs} g
-                </span>
-                <span className={'fat-amount ' + (dominantMacro == 'fat' ? dominantMacro : '')}>
-                    {fat} g
-                </span>
+                <span className='food-energy-amount'>{energy} kcal</span>
+                <span className={proteinClass}>{protein} g</span>
+                <span className={carbClass}>{carbs} g</span>
+                <span className={fatClass}>{fat} g</span>
             </div>
             {selectedFoodId == id &&
                 <AddToConsumedFoods {...props} />

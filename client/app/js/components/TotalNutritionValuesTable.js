@@ -12,8 +12,6 @@ export default function TotalNutritionValuesTable({totalConsumption: total}) {
             <tbody>
                 <tr>
                     <td />
-                    <td />
-                    <td />
                     <td>{total.energy} kcal</td>
                     <td>
                         {total.protein} g

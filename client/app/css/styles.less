@@ -5,13 +5,13 @@
     max-width: 1200px;
     margin: 0px auto;
 }
-
+/*
 @media (max-width: 991px) and (min-width: 768px) {
     .current-entry {
         margin-left: 15px;
         margin-right: 15px;
     }
-}
+}*/
 
 .daily-goal {
     text-align: center;
@@ -108,131 +108,7 @@
                                 Food list
 ================================================================================
 ==============================================================================*/
-.food-list-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 591px;
-}
 
-.food-list {
-    flex-grow: 1;
-    font-size: 13px;
-    overflow-y: scroll;
-    line-height: 30px;
-    //border: 1px solid #e2e5f3;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    background: #fff;
-}
-
-.food-list li {
-    //overflow-y: hidden;
-    position: relative;
-    border-bottom: @border;
-}
-
-.food-list li:first-child {
-    //border: none;
-}
-
-.food-list span {
-    height: 32px;
-}
-
-.category-separator {
-    line-height: 25px;
-    text-align: left;
-    padding-left: 6px;
-    background: #666666;
-    color: #fff;
-
-    i {
-        margin-right: 6px;
-        color: #fff;
-    }
-}
-
-
-.food-list-header {
-    //color: white;
-    //background: @secondary-blue;
-    list-style-type: none;
-    font-size: 13px;
-    height: 25px;
-    background: #60bcff;
-    color: #fff;
-    padding-right: 6px;
-}
-
-.food-list-header.extra-height {
-    height: 65px;
-    padding-top: 40px;
-}
-
-.food-list-header i {
-    color: #fff;
-    font-size: 15px;
-    vertical-align: middle;
-}
-
-.food-list-header span {
-    text-align: center;
-    vertical-align: top;
-    //line-height: @table-header-line-heigh;
-    line-height: 25px;
-    //border-right: @table-header-border;
-}
-
-.food-list-header span:first-child {
-    width: 66%;
-}
-
-.food-list-header span:nth-child(2) {
-    width: 10%;
-}
-
-.food-list-header span:nth-child(3),
-.food-list-header span:nth-child(4),
-.food-list-header span:nth-child(5) {
-    width: 8%;
-}
-
-.food-list-header span:last-child {
-    //border-right: 1px solid #2894e2;
-    border: none;
-}
-
-.food-list li:last-child {
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-}
-
-.food-list li:last-child span:last-child {
-    border-bottom-right-radius: 3px;
-}
-
-.single-food:hover {
-    background: whitesmoke;
-}
-
-.add-to-favorites {
-    position: relative;
-    top: 2px;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 0;
-    line-height: 26px;
-    background: none;
-    border: none;
-}
-
-.add-to-favorites:focus {
-    outline: none;
-}
-
-.add-to-favorites i {
-    color: orange;
-}
 
 .add-to-consumed-foods {
     border-top: 1px solid #e2e5f3;
@@ -288,34 +164,9 @@
     font-size: 14px;
     //border: @border;
     background: #fff;
+    border-radius: 3px;
 }
 
-span {
-    display: inline-block;
-    /*padding: 6px;*/
-    //padding-left: 5px;
-    line-height: 30px;
-}
-
-.food-selected-indicator-container {
-    width: 20px;
-}
-
-.food-selected-indicator {
-    font-size: 12px;
-    position: relative;
-    transition: all 0.1s;
-}
-
-.food-selected-indicator.open {
-    //right: 1px;
-    transform: rotate(90deg);
-}
-
-.food-selected-indicator.closed {
-    //right: 0;
-    transform: rotate(0deg);
-}
 
 .goal-progress {
     display: flex;
@@ -325,197 +176,10 @@ span {
     margin: 0 auto;
 }
 
-.edit-input {
-    width: 100%;
-}
-
-
-.food-selection {
-    text-align: center;
-    margin-top: 30px;
-    height: 625px;
-    border-radius: 3px;
-}
-
-.food-selection-wrapper {
-    box-shadow: @module-shadow;
-    background: #fff;
-    border-radius: 3px;
-}
-
-.food-selection-header {
-    background: #fff;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    //border: 1px solid #e2e5f3;
-    height: 34px;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-}
-
-.search {
-    flex-grow: 2;
-    line-height: 31px;
-    margin-top: 5px;
-    margin-left: 10px;
-    margin-right: 10px;
-    z-index: 200;
-}
-
-.search-input {
-    height: 26px;
-    //width: ~"calc(100% - 90px)";
-    width: 100%;
-    border-radius: 3px;
-    border: @border;
-    margin-right: 5px;
-}
-
-.search-types {
-    position: relative;
-    top: 1px;
-}
-
-.search-types button {
-    background: transparent;
-    border: none;
-    margin-right: 8px;
-    margin-left: 8px;
-}
-
-.search-types button:first-child.active {
-    margin-left: 0;
-}
-
-.search-types button:last-child {
-    margin-right: 0;
-}
-
-.search-types button:focus {
-    outline: none;
-}
-
-.search-types i {
-    margin-right: 6px;
-}
-
-
-.search-types .active {
-    position: relative;
-    top: -1px;
-    height: 34px;
-    padding: 6px 15px;
-    background: #60bcff;
-    color: #fff;
-}
-
-.search-types .active::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -4px;
-    margin-left: -15px;
-    width: 100%;
-    border-top: 4px solid #60bcff;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-}
-
-.search-types .active i {
-    color: #fff;
-}
-
-.heading-wrapper {
-    border-bottom: 1px solid #c3cfff;
-    padding-right: 17px;
-}
-
-.protein-dominant {
-    //color: @protein-color;
-    font-weight: bold;
-}
-
-.carb-dominant {
-    //color: @carb-color;
-    font-weight: bold;
-}
-
-.fat-dominant {
-    //color: @fat-color;
-    font-weight: bold;
-}
-
 .show-more-results {
     margin: 20px;
 }
 
-
-
-table {
-    width: 100%;
-}
-
-.remove-consumed-food {
-    border-right: @border;
-}
-
-.remove-consumed-food:hover {
-    cursor: pointer;
-}
-
-.remove-consumed-food:hover i {
-    color: red;
-}
-
-
-.diary-energy {
-    color: rgb(246, 160, 0);
-    width: 25%;
-    color: #af810b;
-    color: white;
-    background: #fed17e;
-    background: linear-gradient(to bottom, #f1c676, #e4a839);
-    border-radius: 0;
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    height: 30px;
-    line-height: 30px;
-    font-size: 20px;
-}
-
-.diary-protein {
-    color: rgb(15, 183, 15);
-    background: #93f093;
-    color: green;
-    color: white;
-    width: 25%;
-    background: linear-gradient(to bottom, #84da84, #37b346);
-    height: 30px;
-    line-height: 30px;
-    font-size: 20px;
-}
-
-.diary-carbs {
-    color: white;
-    width: 25%;
-    background: linear-gradient(to bottom, #aeccff, #8bb6ff);
-    height: 30px;
-    line-height: 30px;
-    font-size: 20px;
-    background: linear-gradient(#7fb7f1, #337bc5);
-}
-
-.diary-fat {
-    color: white;
-    width: 25%;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    background: linear-gradient(to bottom, #fdaa8f, #de6f40);
-    height: 30px;
-    line-height: 30px;
-    font-size: 20px;
-}
 
 .loading {
    padding-top: 40px;
@@ -565,10 +229,16 @@ table {
 
 
 @import './_Header.less';
+@import './_FoodSelection.less';
+@import './_FoodSelectionHeader.less';
+@import './_SearchTypes.less';
+@import './_SearchPane.less';
+@import './_FoodList.less';
+@import './_FoodListHeader.less';
+@import './_FoodItem.less';
 @import './_ConsumedFoods.less';
 @import './_ConsumedFoodsTable.less';
-
-
+@import './_TotalNutritionValues.less';
 @import './diary.less';
 @import './768px.less';
 @import './500px-767px.less';

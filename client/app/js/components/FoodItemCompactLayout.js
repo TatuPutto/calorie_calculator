@@ -20,10 +20,18 @@ export default function FoodItemCompactLayout(props) {
         fat,
         favorite : isInfavorites,
     } = food;
-    var dominantMacro = calcDominantMacro(protein, carbs, fat);
+    var favoriteToggleFunction = isInfavorites ?
+            removeFromFavorites : addToFavorites;
+            var dominantMacro = calcDominantMacro(protein, carbs, fat);
+    var proteinClass = 'food-protein-amount ' +
+            (dominantMacro == 'protein' ? 'dominant' : '');
+    var carbClass = 'food-carb-amount ' +
+            (dominantMacro == 'carb' ? 'dominant' : '');
+    var fatClass = 'food-fat-amount ' +
+            (dominantMacro == 'fat' ? 'dominant' : '');
 
     return (
-        <li>
+        <li className='food-item'>
             <div
                 key={id}
                 onClick={() => selectFood(id, name)}
@@ -32,20 +40,18 @@ export default function FoodItemCompactLayout(props) {
                 <span className='food-name-wrapper' style={{height: '40px'}}>
                 <span className='food-name'>{name}</span>
                 </span>
-                <span className='favorites'>
+                <span className='food-favorite-status'>
                     <button
-                        className='add-to-favorites'
-                        onClick={isInfavorites ?
-                            () => removeFromFavorites(id) :
-                            () => addToFavorites(id)}
+                        className='food-add-to-favorites'
+                        onClick={() => favoriteToggleFunction(id)}
                     >
                         <i className={isInfavorites ? 'fa fa-star' : 'fa fa-star-o'} />
                     </button>
                 </span>
-                <span className='energy-amount'>{energy}</span>
-                <span className={'protein-amount ' + (dominantMacro == 'protein' ? dominantMacro : '')}>{protein}</span>
-                <span className={'carb-amount ' + (dominantMacro == 'carb' ? dominantMacro : '')}>{carbs}</span>
-                <span className={'fat-amount ' + (dominantMacro == 'fat' ? dominantMacro : '')}>{fat}</span>
+                <span className='food-energy-amount'>{energy} kcal</span>
+                <span className={proteinClass}>{protein} g</span>
+                <span className={carbClass}>{carbs} g</span>
+                <span className={fatClass}>{fat} g</span>
             </div>
             {selectedFoodId == id &&
                 <AddToConsumedFoods {...props} />

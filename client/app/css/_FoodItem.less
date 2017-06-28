@@ -1,0 +1,141 @@
+.food-item {
+    position: relative;
+    border-bottom: @border;
+
+    &:hover {
+        background: whitesmoke;
+        cursor: pointer;
+    }
+}
+
+.food-selected-indicator-container {
+    width: 20px;
+}
+
+.food-selected-indicator {
+    font-size: 12px;
+    position: relative;
+    transition: all 0.1s;
+
+    &.open {
+        transform: rotate(90deg);
+    }
+
+    &.closed {
+        transform: rotate(0deg);
+    }
+}
+
+.food-add-to-favorites {
+    position: relative;
+    top: 2px;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 26px;
+    background: none;
+    border: none;
+
+    &:focus {
+        outline: none;
+    }
+
+    i {
+        color: orange;
+    }
+}
+
+@media @laptopAndUp {
+    .food-name {
+        color: @text-color;
+        text-align: left;
+        width: ~'calc(66% - 53px)';
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+    }
+
+    .food-favorite-status {
+        width: 33px;
+        border-right: @border;
+    }
+
+    .food-energy-amount {
+        width: 10%;
+        color: @energy-color;
+        border-right: @border;
+    }
+
+    .food-protein-amount {
+        width: 8%;
+        color: @protein-color;
+        border-right: @border;
+    }
+
+    .food-carb-amount {
+        width: 8%;
+        color: @carb-color;
+        border-right: @border;
+
+    }
+
+    .food-fat-amount {
+        width: 8%;
+        color: @fat-color;
+    }
+}
+
+@media @tablet {
+    .food-name-wrapper {
+        width: ~'calc(100% - 33px)';
+        height: 40px;
+    }
+
+    .food-name {
+        display: table-cell;
+        height: 40px;
+        text-align: left;
+        line-height: 20px;
+        color: #4e4d4d;
+    }
+
+    .food-favorite-status {
+        width: 33px;
+        margin-top: -5px;
+        height: 40px;
+        vertical-align: top;
+        text-align: right;
+    }
+
+    .food-energy-amount {
+        font-size: 14px;
+        line-height: 20px;
+        width: 25%;
+        color: @energy-color;
+    }
+
+    .food-protein-amount {
+        font-size: 14px;
+        line-height: 20px;
+        color: @protein-color;
+        width: 25%;
+        border-radius: 15px;
+    }
+
+    .food-carb-amount {
+        font-size: 14px;
+        line-height: 20px;
+        color: @carb-color;
+        width: 25%;
+        border-radius: 15px;
+    }
+
+    .food-fat-amount {
+        font-size: 14px;
+        line-height: 20px;
+        color: @fat-color;;
+        width: 25%;
+        border-radius: 15px;
+    }
+}
