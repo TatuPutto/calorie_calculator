@@ -9,7 +9,11 @@ export default function ShowMoreResults(props) {
 
     if(foodsAmount > 10 && foodsAmount > amountOfVisibleResults && viewportWidth < 768) {
         showMoreResultsButton = (
-            <button className='show-more-results btn btn-default' onClick={showMoreResults}>
+            <button
+                className='show-more-results btn btn-default'
+                onClick={showMoreResults}
+                style={{margin: '20px'}}
+            >
                 {buttonText}
             </button>
         );

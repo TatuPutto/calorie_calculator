@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 
 export default function ConsumedFoodsTableHeader({isModifiable, viewportWidth}) {
     var theadRow = null;
-    if(!isModifiable && viewportWidth > 767) {
+
+    if(viewportWidth > 767) {
         theadRow = (
             <tr>
-                <th>Elintarvike</th>
+                <th colSpan={isModifiable ? 2 : null}>Elintarvike</th>
                 <th>Määrä</th>
                 <th>kcal</th>
                 <th>P</th>

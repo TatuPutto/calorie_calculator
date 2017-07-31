@@ -1,7 +1,6 @@
 import React from 'react';
 
-export default function DailyGoalProgress(props) {
-    var {total, goal} = props;
+export default function DailyGoalProgress({total, goal}) {
     var energyConsumed = Math.round(total.energy / goal.energy * 100) + '%';
     var proteinConsumed = Math.round(total.protein / goal.protein * 100) + '%';
     var carbsConsumed = Math.round(total.carbs / goal.carbohydrates * 100) + '%';
@@ -9,46 +8,45 @@ export default function DailyGoalProgress(props) {
 
     return (
         <div className='goal-progress'>
-            <div className='energy-chart-container'>
-            <p style={{position: 'relative', top: '38px', color: '#929292'}}>kcal</p>
-                <div style={{position: 'relative', width: '80px', margin: '0 auto'}}>
-                    <p style={{position: 'relative', top: '66px', fontSize: '16px'}}>
-                        {energyConsumed}
-                    </p>
-                    <canvas id='energy-goal' />
+            <div className='energy-goal'>
+                <p className='macro-title'>kcal</p>
+                <div className='chart-container'>
+                    <p className='macro-total-percentage'>{energyConsumed}</p>
+                    <canvas id='energy-chart' />
                 </div>
-
-                <p>{Math.round(total.energy)} / {goal.energy}</p>
+                <p className='macro-total'>
+                    {Math.round(total.energy)} / {goal.energy}
+                </p>
             </div>
-            <div className='protein-chart-container'>
-                <p style={{position: 'relative', top: '38px', color: '#929292'}}>proteiini</p>
-                <div style={{position: 'relative', width: '80px', margin: '0 auto'}}>
-                    <p style={{position: 'relative', top: '66px', fontSize: '16px'}}>
-                        {proteinConsumed}
-                    </p>
-                    <canvas id='protein-goal' />
+            <div className='protein-goal'>
+                <p className='macro-title'>proteiini</p>
+                <div className='chart-container'>
+                    <p className='macro-total-percentage'>{proteinConsumed}</p>
+                    <canvas id='protein-chart' />
                 </div>
-                <p>{Math.round(total.protein)} g / {goal.protein} g</p>
+                <p className='macro-total'>
+                    {Math.round(total.protein)} g / {goal.protein} g
+                </p>
             </div>
-            <div className='carb-chart-container'>
-                <p style={{position: 'relative', top: '38px', color: '#929292'}}>hiilihydraatit</p>
-                <div style={{position: 'relative', width: '80px', margin: '0 auto'}}>
-                    <p style={{position: 'relative', top: '66px', fontSize: '16px'}}>
-                        {carbsConsumed}
-                    </p>
-                    <canvas id='carb-goal' />
+            <div className='carb-goal'>
+                <p className='macro-title'>hiilihydraatit</p>
+                <div className='chart-container'>
+                    <p className='macro-total-percentage'>{carbsConsumed}</p>
+                    <canvas id='carb-chart' />
                 </div>
-                <p>{Math.round(total.carbs)} g / {goal.carbohydrates} g</p>
+                <p className='macro-total'>
+                    {Math.round(total.carbs)} g / {goal.carbohydrates} g
+                </p>
             </div>
-            <div className='fat-chart-container'>
-                <p style={{position: 'relative', top: '38px', color: '#929292'}}>rasva</p>
-                <div style={{position: 'relative', width: '80px', margin: '0 auto'}}>
-                    <p style={{position: 'relative', top: '66px', fontSize: '16px'}}>
-                        {fatConsumed}
-                    </p>
-                    <canvas id='fat-goal' />
+            <div className='fat-goal'>
+                <p className='macro-title'>rasva</p>
+                <div className='chart-container'>
+                    <p className='macro-total-percentage'>{fatConsumed}</p>
+                    <canvas id='fat-chart' />
                 </div>
-                <p>{Math.round(total.fat)} g / {goal.fat} g</p>
+                <p className='macro-total'>
+                    {Math.round(total.fat)} g / {goal.fat} g
+                </p>
             </div>
         </div>
     );

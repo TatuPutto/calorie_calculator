@@ -37,7 +37,7 @@ export default class Header extends React.Component {
     render() {
         return (
             <div className='header'>
-                    <div className='header-content col-xs-12'>
+                    <div className='header-content'>
                     <NavMenu loggedIn={this.state.loggedIn} />
                     <UserInfo loggedIn={this.state.loggedIn} />
                 </div>

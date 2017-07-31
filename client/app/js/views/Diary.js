@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SelectDiaryEntry from '../components/SelectDiaryEntry';
-import DailyGoalProgressTable from '../components/DailyGoalProgressTable';
-import ConsumedFoods from '../components/ConsumedFoods';
+import DiaryEntrySelection from '../components/DiaryEntrySelection';
+import EntryDetails from '../components/EntryDetails';
 import Loading from '../components/Loading';
 
 import {get} from '../util/fetch';
@@ -100,46 +99,20 @@ export default class Diary extends React.Component {
     }
 
     render() {
-        var entryElement = null;
+        var {isFetchingEntry, entry} = this.state;
+        var entryDetails = null;
 
-        if(this.state.isFetchingEntry) {
-            entryElement = <Loading />
-        } else if(!this.state.isFetchingEntry && this.state.entry &&
-                this.state.entry.nutritionValuesPerItem.length > 0) {
-            entryElement = (
-                <div className='entry-details col-xs-12'>
-                    <div className='row'>
-                        <div className='macronutrient-split-chart-container col-sm-4'>
-                            <div id='macronutrient-split-chart-container'></div>
-                        </div>
-                        <div className='total-container col-sm-8'>
-                            <DailyGoalProgressTable
-                                entry={this.state.entry}
-                                isModifiable={false}
-                            />
-                            <button className='btn btn-default' onClick={this.toggleDetails}>
-                                {this.state.detailsVisible ?
-                                    <span>Piilota merkinnät</span>
-                                    :
-                                    <span>Näytä merkinnät</span>
-                                }
-                            </button>
-                        </div>
-                    </div>
-                    <div className='row'>
-                        {this.state.detailsVisible &&
-                            <ConsumedFoods
-                                viewportWidth={this.props.viewportWidth}
-                                isModifiable={false}
-                                isFetchingConsumedFoods={false}
-                                consumedFoods={this.state.entry.nutritionValuesPerItem}
-                            />
-                        }
-                    </div>
-                </div>
+        if(isFetchingEntry) {
+            entryDetails = <Loading />;
+        } else if(!isFetchingEntry && entry && entry.nutritionValuesPerItem.length > 0) {
+            entryDetails = (
+                <EntryDetails
+                    entry={entry}
+                    viewportWidth={this.props.viewportWidth}
+                />
             );
         } else {
-            entryElement = (
+            entryDetails = (
                 <div className='no-entry-found'>
                     <p>Tältä päivältä ei löytynyt merkintöjä.</p>
                 </div>
@@ -148,12 +121,12 @@ export default class Diary extends React.Component {
 
         return (
             <div className='diary'>
-                <SelectDiaryEntry
+                <DiaryEntrySelection
                     activeEntryDate={this.props.activeEntryDate}
                     diaryEntries={this.state.diaryEntries}
                     changeEntry={this.changeEntry}
                 />
-                {entryElement}
+                {entryDetails}
             </div>
         );
     }

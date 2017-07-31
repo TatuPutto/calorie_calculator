@@ -1,36 +1,29 @@
 import React from 'react';
 
 import DailyGoalProgressTable from '../components/DailyGoalProgressTable';
-import ConsumedFoodsTable from '../components/ConsumedFoodsTable';
+import ConsumedFoods from '../components/ConsumedFoods';
 
 export default function({entry, detailsVisible, viewportWidth, toggleDetails}) {
     return (
-        <div className='entry-details col-xs-12'>
+        <div className='entry-details'>
             <div className='row'>
-                <div id='macronutrient-split-chart-container' className='col-sm-4'></div>
-                <div className='total-container col-sm-8'>
-                    <DailyGoalProgressTable
-                        entry={entry}
-                        isModifiable={false}
-                    />
-                    <button className='btn btn-default' onClick={toggleDetails}>
-                        {detailsVisible ?
-                            <span>Piilota merkinnät</span>
-                            :
-                            <span>Näytä merkinnät</span>
-                        }
-                    </button>
+                <div className='col-sm-3' style={{height: '320px', background: '#fff', boxShadow: '0px 1px 4px #c1c1c1', padding: '15px', borderRadius: '3px', order: '2'}}>
+                    <div className='' style={{borderBottom: '2px solid #e4e4e4', paddingBottom: '15px', marginBottom: '10px'}}><h3>Makrojakauma</h3></div>
+                    <div id='macronutrient-split-chart-container'></div>
                 </div>
-            </div>
-            <div className='row'>
-                {detailsVisible &&
-                    <ConsumedFoodsTable
+                {/*}<div className='total-container col-sm-9'>*/}
+                <div className='col-sm-9'>
+                    <DailyGoalProgressTable entry={entry} isModifiable={false} />
+                    <ConsumedFoods
                         viewportWidth={viewportWidth}
                         isModifiable={false}
                         isFetchingConsumedFoods={false}
                         consumedFoods={entry.nutritionValuesPerItem}
                     />
-                }
+                </div>
+            </div>
+            <div className='row'>
+
             </div>
         </div>
     );

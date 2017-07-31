@@ -1,234 +1,13 @@
 @import './global.less';
-//@import './header.less';
-
-.current-entry {
-    max-width: 1200px;
-    margin: 0px auto;
-}
-/*
-@media (max-width: 991px) and (min-width: 768px) {
-    .current-entry {
-        margin-left: 15px;
-        margin-right: 15px;
-    }
-}*/
-
-.daily-goal {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.daily-goal-wrapper {
-    background: #fff;
-    box-shadow: 0px 1px 4px #c1c1c1;
-    border-radius: 3px;
-}
-
-.daily-goal h3 {
-    display: inline;
-}
-
-.set-daily-goal {
-    font-size: 18px;
-}
-
-.configure-daily-goals {
-    font-size: 18px;
-    background: transparent;
-    border: none;
-    margin-left: 10px;
-    vertical-align: middle;
-    position: absolute;
-    right: 35px;
-}
-
-.modal input[type="text"] {
-    height: 35px;
-    border-radius: 3px;
-    border: 1px solid #c3cfff;
-    margin-bottom: 10px;
-}
-
-.modal .amount {
-    width: 40%;
-    margin-right: 4px;
-}
-
-.modal .percentual-amount {
-    width: 10%;
-    text-align: center;
-    margin-right: 4px;
-}
-
-.modal .percent-sign {
-    font-size: 18px;
-    line-height: 35px;
-    vertical-align: middle;
-}
-
-.macronutrient-progress {
-    text-align: center;
-}
-
-.daily-goal-wrapper {
-    float: none;
-    padding: 20px;
-}
-
-.daily-goal-header {
-    border-bottom: 2px solid #e4e4e4;
-    padding-bottom: 15px;
-    margin-bottom: -20px;
-}
-
-@media @desktop {
-    .daily-goal-header {
-        text-align: left;
-    }
-}
-
-@media @laptop {
-    .daily-goal-header {
-        text-align: center;
-    }
-}
-
-
-.charts h4 {
-    display: inline;
-}
-
-.charts .col-xs-6 {
-    padding: 0;
-}
-
-
-/*==============================================================================
-================================================================================
-                                Food list
-================================================================================
-==============================================================================*/
-
-
-.add-to-consumed-foods {
-    border-top: 1px solid #e2e5f3;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    background: #fff;
-    position: absolute;
-    z-index: 9999;
-    border: 1px solid #c3c3c3;
-    border-radius: 3px;
-    box-shadow: 1px 1px 5px #adadad;
-}
-
-.portion-sizes li {
-    border: none;
-}
-
-.portion-sizes li:first-child {
-    border-top: none;
-}
-
-.portion-sizes li:hover {
-    background: #aec2e3;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.portion-sizes a {
-    padding: 2px;
-    border-radius: 2px;
-}
-
-.portion-sizes a:hover {
-    text-decoration: none;
-}
-
-.add-custom-amount {
-    margin-top: 10px;
-}
-
-.add-custom-amount input {
-    height: 34px;
-    border: 1px solid #c3cfff;
-    border-radius: 4px;
-    margin-right: 6px;
-}
-
-.no-results {
-    flex-grow: 1;
-    padding-top: 20px;
-    font-size: 14px;
-    //border: @border;
-    background: #fff;
-    border-radius: 3px;
-}
-
-
-.goal-progress {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.show-more-results {
-    margin: 20px;
-}
-
-
-.loading {
-   padding-top: 40px;
-   padding-bottom: 20px;
-   text-align: center;
-}
-
-.loading i {
-    color: @secondary-blue;
-}
-
-.food-list-wrapper .loading {
-    flex-grow: 1;
-    border: @border;
-    padding-top: 40px;
-    padding-bottom: 20px;
-    text-align: center;
-    background: #fcfcfc;
-}
-
-.no-entry-found {
-    margin-top: 60px;
-    text-align: center;
-    font-size: 18px;
-}
-
-.footer {
-    position: fixed;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    border-top: 1px solid #e2e5f3;
-    height: 35px;
-    background: #fff;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.footer p {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-left: 10px;
-    font-size: 12px;
-    color: #797979;
-}
-
-
+@import './_CurrentEntry.less';
+@import './_Diary.less';
 @import './_Header.less';
+@import './_Footer.less';
+@import './_Loading.less';
+@import './_DailyGoal.less';
+@import './_DailyGoalProgress.less';
+@import './_DailyGoalProgressTable.less';
+@import './_Modal.less';
 @import './_FoodSelection.less';
 @import './_FoodSelectionHeader.less';
 @import './_SearchTypes.less';
@@ -236,10 +15,12 @@
 @import './_FoodList.less';
 @import './_FoodListHeader.less';
 @import './_FoodItem.less';
+@import './_AddToConsumedFoods.less';
+@import './_PortionSizes.less';
+@import './_AddCustomAmountOfFood.less';
 @import './_ConsumedFoods.less';
 @import './_ConsumedFoodsTable.less';
 @import './_TotalNutritionValues.less';
+@import './_DiaryEntrySelection.less';
 @import './diary.less';
-@import './768px.less';
 @import './500px-767px.less';
-@import './320px-500px.less';

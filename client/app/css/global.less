@@ -16,7 +16,6 @@
 @carb-color: #207eff;
 @fat-color: #fa6b6b;
 
-
 .round-border(@width: 1px, @style: solid, @color: @border-color, @border-radius: 3px) {
     border: @width @style @color;
     border-radius: @border-radius;
@@ -81,6 +80,11 @@ table {
     width: 100%;
 }
 
+th {
+    font-weight: normal;
+    text-align: center;
+}
+
 h3 {
     font-size: 15px;
     margin: 0;
@@ -99,7 +103,6 @@ input[type="text"] {
     padding-right: 5px;
     .round-border();
 }
-
 
 .container-fluid {
     padding: 0;

@@ -6,15 +6,18 @@
     background: #fff;
     border-collapse: separate;
 }
+/*
+.diary .consumed-foods-table {
+    font-size: 14px;
+}
+*/
+.consumed-foods-table thead {
+    color: white;
+    background: @secondary-blue;
+}
 
 .consumed-foods-table thead tr {
     height: 24px;
-}
-
-.consumed-foods-table th {
-    text-align: center;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
 }
 
 .consumed-foods-table td {
@@ -85,14 +88,6 @@
 
 
 @media @laptopAndUp {
-    .consumed-foods-table th:first-child {
-        border-top-left-radius: 3px;
-    }
-
-    .consumed-foods-table th:last-child {
-        border-top-right-radius: 3px;
-    }
-
     .consumed-food-amount, .consumed-food-energy-amount {
         width: 9%;
     }

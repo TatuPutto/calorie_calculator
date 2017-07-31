@@ -51,10 +51,12 @@ export default class DailyGoal extends React.Component {
             );
         } else {
             dailyGoalOutput = (
-                <div className='set-daily-goal'>
-                    <a data-toggle='modal' data-target='#set-daily-goal'>
-                        Aseta päivätavoite
-                    </a>
+                <div className='daily-goal-wrapper'>
+                    <div className='set-daily-goal'>
+                        <a data-toggle='modal' data-target='#set-daily-goal'>
+                            Aseta päivätavoite
+                        </a>
+                    </div>
                 </div>
             );
         }
@@ -67,6 +69,7 @@ export default class DailyGoal extends React.Component {
         );
     }
 }
+
 
 function createCharts(total, goal) {
     var options = {
@@ -115,12 +118,11 @@ function createCharts(total, goal) {
         };
     }
 
-    new Chart(document.getElementById('energy-goal'), {
+    new Chart(document.getElementById('energy-chart'), {
         type: 'doughnut',
         data: energyChartData,
         options: options
     });
-
 
     var proteinChartData;
     if((goal.protein - total.protein) < 0) {
@@ -158,12 +160,11 @@ function createCharts(total, goal) {
         };
     }
 
-    new Chart(document.getElementById('protein-goal'), {
+    new Chart(document.getElementById('protein-chart'), {
         type: 'doughnut',
         data: proteinChartData,
         options: options
     });
-
 
     var carbChartData;
     if((goal.carbohydrates - total.carbs) < 0) {
@@ -200,7 +201,7 @@ function createCharts(total, goal) {
         };
     }
 
-    new Chart(document.getElementById('carb-goal'), {
+    new Chart(document.getElementById('carb-chart'), {
         type: 'doughnut',
         data: carbChartData,
         options: options
@@ -242,8 +243,7 @@ function createCharts(total, goal) {
         };
     }
 
-
-    new Chart(document.getElementById('fat-goal'), {
+    new Chart(document.getElementById('fat-chart'), {
         type: 'doughnut',
         data: fatChartData,
         options: options

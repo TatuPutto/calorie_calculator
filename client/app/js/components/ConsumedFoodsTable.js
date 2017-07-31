@@ -6,15 +6,15 @@ import ConsumedFoodRowWrapper from './ConsumedFoodRowWrapper';
 import ConsumedFoodRow from './ConsumedFoodRow';
 import ConsumedFoodRowCompactLayout from './ConsumedFoodRowCompactLayout';
 
-
 export default function ConsumedFoodsTable(props) {
     // create HOC for handling ConsumedFoodRow and ConsumedFoodRowCompactLayout state
     var RowWrapper = ConsumedFoodRowWrapper(
-        (props.viewportWidth > 768 ? ConsumedFoodRow : ConsumedFoodRowCompactLayout)
+        props.viewportWidth > 768 ? ConsumedFoodRow : ConsumedFoodRowCompactLayout
     );
 
     return (
         <table className='consumed-foods-table'>
+            <ConsumedFoodsTableHeader {...props} />
             <tbody>
                 {props.consumedFoods.map((food) => {
                     return (

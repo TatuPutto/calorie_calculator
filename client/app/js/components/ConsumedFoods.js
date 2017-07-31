@@ -14,12 +14,14 @@ export default function ConsumedFoods(props) {
     if(isFetchingConsumedFoods) {
         consumedFoodsOutput = <Loading />;
     } else if(consumedFoods.length === 0 && !isFetchingConsumedFoods) {
-        consumedFoodsOutput = null;
+        consumedFoodsOutput = (
+            <div style={{padding: '10px', fontSize: '14px'}}>Ei merkintöjä</div>
+        );
     } else {
         consumedFoodsOutput = (
-            <div className='consumed-foods-wrapper'>
+            <div>
                 <div className='consumed-foods-header'>
-                    <h3>Merkinnät</h3>
+                    <h3><i className='fa fa-pencil' /> Merkinnät</h3>
                 </div>
                 <ConsumedFoodsTable {...props} />
                 {props.isModifiable &&
@@ -33,7 +35,9 @@ export default function ConsumedFoods(props) {
 
     return (
         <div className={consumedFoodsClass}>
-            {consumedFoodsOutput}
+            <div className='consumed-foods-wrapper'>
+                {consumedFoodsOutput}
+            </div>
         </div>
     );
 }
