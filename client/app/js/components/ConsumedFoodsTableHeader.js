@@ -16,7 +16,17 @@ export default function ConsumedFoodsTableHeader({isModifiable, viewportWidth}) 
             </tr>
         );
     } else {
-        theadRow = <tr><th colSpan={7}>Merkinnät</th></tr>;
+        //theadRow = <tr><th colSpan={7}>Merkinnät</th></tr>;
+        theadRow = (
+            <tr>
+                <td style={{margin: 0, width: '20%', lineHeight: '24px'}}>Määrä</td>
+                <td style={{margin: 0, width: '20%', lineHeight: '24px'}}>kcal</td>
+                <td style={{margin: 0, width: '20%', lineHeight: '24px'}}>P</td>
+                <td style={{margin: 0, width: '20%', lineHeight: '24px'}}>HH</td>
+                <td style={{margin: 0, width: '20%', lineHeight: '24px'}}>R</td>
+
+            </tr>
+        );
     }
 
     return <thead>{theadRow}</thead>;

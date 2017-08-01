@@ -7,12 +7,10 @@
     border-bottom: @border;
 }
 
-
 .daily-goal-progress-table th:first-child,
 .daily-goal-progress-table td:first-child {
     text-align: left;
 }
-
 
 .daily-goal-progress-table td:last-child {
     border-right: none;
@@ -21,7 +19,6 @@
 .daily-goal-progress-table tr:last-child td {
     border-bottom: none;
 }
-
 
 .protein-segment-legend {
     border-bottom: 3px solid #47de83;
@@ -33,4 +30,18 @@
 
 .fat-segment-legend {
     border-bottom: 3px solid #ea5450;
+}
+
+@media @tablet {
+    .daily-goal-progress-table th:first-child,
+    .daily-goal-progress-table td:first-child {
+        width: 50%;
+    }
+
+    .daily-goal-progress-table th:nth-child(2),
+    .daily-goal-progress-table td:nth-child(2),
+    .daily-goal-progress-table th:last-child,
+    .daily-goal-progress-table td:last-child {
+        width: 25%;
+    }
 }

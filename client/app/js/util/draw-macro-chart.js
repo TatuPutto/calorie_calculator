@@ -12,7 +12,6 @@ export default function drawChart(entry) {
 
     var chart = new CanvasJS.Chart('macronutrient-split-chart-container', {
         height: 260,
-        width: 260,
         colorSet: 'macros',
         animationEnabled: true, markerBorderColor: "#fff",
         animationDuration: 400,

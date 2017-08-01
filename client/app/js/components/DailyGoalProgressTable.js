@@ -20,9 +20,8 @@ export default function DailyGoalProgressTable({entry}) {
     var fatInRelationToGoal = Math.round(fatInTotal - fatGoal);
 
     return (
-        <div className='col-xs-12' style={{float: 'none'}}>
-            <div style={{background: '#fff', boxShadow: '0px 1px 4px #c1c1c1', borderRadius: '3px'}}>
-            <div style={{padding: '10px 0'}}><h3><i className='fa fa-plane' /> Progress</h3></div>
+        <div style={{background: '#fff', boxShadow: '0px 1px 4px #c1c1c1', borderRadius: '3px'}}>
+            <div style={{padding: '10px 0'}}><h3>Kokonaiskulutus</h3></div>
             <table className='daily-goal-progress-table'>
                 <thead>
                     <tr>
@@ -110,6 +109,6 @@ export default function DailyGoalProgressTable({entry}) {
                     </tr>
                 </tbody>
             </table>
-        </div></div>
+        </div>
     );
 }
