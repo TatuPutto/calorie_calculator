@@ -106,10 +106,7 @@ export default class Diary extends React.Component {
             entryDetails = <Loading />;
         } else if(!isFetchingEntry && entry && entry.nutritionValuesPerItem.length > 0) {
             entryDetails = (
-                <EntryDetails
-                    entry={entry}
-                    viewportWidth={this.props.viewportWidth}
-                />
+                <EntryDetails entry={entry} viewportWidth={this.props.viewportWidth} />
             );
         } else {
             entryDetails = (

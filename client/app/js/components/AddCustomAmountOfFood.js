@@ -17,8 +17,11 @@ export default function AddCustomAmountOfFood(props) {
                 value={selectedFoodAmount || ''}
                 onChange={setSelectedFoodAmount}
             />
-            <button className='btn btn-info'
-                    onClick={() => addToDiary(foodId, selectedFoodAmount)}>
+            <button
+                className='btn btn-info'
+                style={{background: 'linear-gradient(#5bc0de, #4cabc7)'}}
+                onClick={() => addToDiary(foodId, selectedFoodAmount)}
+            >
                 Lisää
             </button>
         </div>

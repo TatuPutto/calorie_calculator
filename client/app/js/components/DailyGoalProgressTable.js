@@ -21,7 +21,7 @@ export default function DailyGoalProgressTable({entry}) {
 
     return (
         <div style={{background: '#fff', boxShadow: '0px 1px 4px #c1c1c1', borderRadius: '3px'}}>
-            <div style={{padding: '10px 0'}}><h3>Kokonaiskulutus</h3></div>
+            <div style={{padding: '10px 0'}}><h3>Päiväsaanti</h3></div>
             <table className='daily-goal-progress-table'>
                 <thead>
                     <tr>

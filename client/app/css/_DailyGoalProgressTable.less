@@ -2,14 +2,39 @@
     background: #fff;
 }
 
+.daily-goal-progress-table thead {
+    color: white;
+    background: @secondary-blue;
+    font-size: 14px;
+}
+
 .daily-goal-progress-table td {
+    height: 45px;
+    padding: 6px;
+    font-size: 14px;
+    color: @text-color;
     border-right: @border;
     border-bottom: @border;
 }
 
-.daily-goal-progress-table th:first-child,
+.daily-goal-progress-table th:first-child {
+    text-align: left;
+    padding-left: 6px;
+}
+
+.daily-goal-progress-table th:nth-child(2),
+.daily-goal-progress-table th:nth-child(3) {
+    text-align: center
+}
+
 .daily-goal-progress-table td:first-child {
     text-align: left;
+}
+
+.daily-goal-progress-table td:nth-child(2),
+.daily-goal-progress-table td:nth-child(3),
+.daily-goal-progress-table td:nth-child(4) {
+    width: 15%;
 }
 
 .daily-goal-progress-table td:last-child {
@@ -30,6 +55,10 @@
 
 .fat-segment-legend {
     border-bottom: 3px solid #ea5450;
+}
+
+.over-goal {
+    color: red;
 }
 
 @media @tablet {

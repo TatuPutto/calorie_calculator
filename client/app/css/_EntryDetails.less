@@ -61,6 +61,32 @@
     margin-bottom: 10px;
 }
 
+.macronutrient-split-chart-container {
+    margin: 0 auto;
+    order: 2;
+    height: 270px;
+    overflow-y: hidden;
+}
+
+#macronutrient-split-chart-container {
+    height: calc(100% - 25px);
+}
+
+.canvasjs-chart-container {
+    text-align: center !important;
+}
+
+.canvasjs-chart-canvas {
+    position: relative !important;
+    display: block;
+    margin: 0 auto;
+}
+
+.canvasjs-chart-credit {
+    display: none;
+}
+
+
 @media @tablet {
     .tables-wrapper {
         order: 2;
@@ -69,5 +95,19 @@
     .macronutrient-split {
         order: 1;
         margin-bottom: 30px;
+    }
+
+    .entry-details {
+        margin-top: 20px;
+    }
+
+    .entry-details .row {
+        flex-direction: column;
+        margin-bottom: 0;
+        padding: 0;
+    }
+
+    .entry-details .row:last-child {
+        padding: 0;
     }
 }

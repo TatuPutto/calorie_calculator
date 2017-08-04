@@ -12,10 +12,10 @@
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
     background: #fff;
-}
 
-.food-list span {
-    height: 32px;
+    span {
+        height: 32px;
+    }
 }
 
 .category-separator {
@@ -50,28 +50,34 @@
         max-height: 9999px;
         height: initial;
         border: none;
-    }
 
-    .food-list li {
-        border-right: none;
-        border-left: none;
-        border-bottom: 1px solid #eaeaea;
-    }
+        div:first-child {
+            padding: 10px 8px 5px 8px;
+        }
 
-    .food-list li:first-child {
-        border-right: none;
-        border-left: none;
-    }
+        li {
+            border-right: none;
+            border-left: none;
+            border-bottom: 1px solid #eaeaea;
+        }
 
-    .food-list span {
-        height: initial;
-    }
+        li:first-child {
+            border-right: none;
+            border-left: none;
+        }
 
-    .food-list div:first-child {
-        padding: 10px 8px 5px 8px;
+        span {
+            height: initial;
+        }
     }
 
     .category-separator {
         text-align: center;
+    }
+
+    .no-results {
+        font-size: 14px;
+        padding: 40px 0;
+        background: #fff;
     }
 }
