@@ -12,10 +12,15 @@
         </div>
         <div class="form-wrapper">
             <form action="/register" method="post" enctype="application/x-www-form-urlencoded">
-                <input type="text" name="username" placeholder="Käyttäjätunnus" />
-                <input type="password" name="password" placeholder="Salasana" />
+                <label class="popup-label input-unfocused">Käyttäjätunnus</label>
+                <input type="text" name="username" placeholder="Käyttäjätunnus"
+                        onfocus="showLabel(this)" onblur="hideLabel(0)" required>
+                        <label class="popup-label input-unfocused">Salasana</label>
+                        <input type="text" name="password" placeholder="Salasana"
+                                onfocus="showLabel(this)" onblur="hideLabel(1)" required>
                 <input type="submit" value="Rekisteröidy" />
             </form>
         </div>
     </div>
+    <script type="text/javascript" src="form-actions.js"></script>
 </body>

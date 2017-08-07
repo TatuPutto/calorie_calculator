@@ -39,7 +39,7 @@ input[type="text"],  input[type="password"] {
     border-radius: 3px;
     padding: 2px 5px;
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     background: #f9f9f9;
 }
 
@@ -122,6 +122,32 @@ input[type="submit"]:disabled, .disabled {
     font-weight: bold;
     margin-left: 20px;
     padding: 10px;
+}
+
+.popup-label {
+    left: 25px;
+    font-size: 12px;
+    visibility: hidden;
+    position: absolute;
+    transition: all 0.2s ease-out;
+}
+
+.popup-label.input-focused {
+    visibility: visible;
+    transform: translateY(-10px);
+    -ms-transform: translateY(-10px);
+    -webkit-transform: translateY(-10px);
+    -moz-transform: translateY(-10px);
+    -o-transform: translateY(-10px);
+}
+
+.popup-label.input-unfocused {
+    visibility: hidden;
+    transform: translateY(10px);
+    -ms-transform: translateY(10px);
+    -webkit-transform: translateY(10px);
+    -moz-transform: translateY(10px);
+    -o-transform: translateY(10px);
 }
 
 @media(max-width: 350px) {

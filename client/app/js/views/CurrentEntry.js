@@ -11,6 +11,7 @@ import updateValuesOnAddition from '../util/update-values-on-addition';
 import updateValuesOnRemove from '../util/update-values-on-remove';
 import getCurrentDate from '../util/get-current-date';
 
+var searchTimeout = null;
 
 export default class CurrentEntry extends React.Component {
     constructor(props) {
@@ -166,19 +167,26 @@ export default class CurrentEntry extends React.Component {
 
     changeSearchTerm(event) {
         var searchTerm = event.currentTarget.value;
-        this.setState({searchTerm});
+        this.setState({searchTerm, isFetchingMatchingFoods: true});
+
+        // cancel search if user is typing
+        if(searchTimeout) {
+            clearTimeout(searchTimeout);
+        }
+
+        // do search after 500ms delay
+        searchTimeout = setTimeout(() => this.doSearch(searchTerm), 500);
+    }
+
+    doSearch(searchTerm) {
+        /*event.preventDefault();
+        if(this.state.searchTerm.trim()) {
+            this.context.router.history.push(`?q=${this.state.searchTerm}`);
+        }*/
         if(searchTerm.trim()) {
             this.context.router.history.push(`?sort=search&q=${searchTerm}`);
         } else {
             this.context.router.history.push('?sort=search&q=');
-        }
-
-    }
-
-    doSearch(event) {
-        event.preventDefault();
-        if(this.state.searchTerm.trim()) {
-            this.context.router.history.push(`?q=${this.state.searchTerm}`);
         }
     }
 
