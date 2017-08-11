@@ -1,6 +1,6 @@
 var getConnection = require('./create-connection');
 
-module.exports = function registerUser(username, password) {
+module.exports = function addUser(username, password) {
     // TODO encryption for password
     var query = 'INSERT INTO users (username, password) VALUES (?, ?)';
     var data = [username, password];

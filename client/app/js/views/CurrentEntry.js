@@ -157,7 +157,7 @@ export default class CurrentEntry extends React.Component {
     changeFetchMethod(fetchMethod) {
         this.setState({fetchMethod});
         if(fetchMethod == 'search') {
-            this.context.router.history.push('?sort=search&q=');
+            this.context.router.history.push(`?sort=search&q=${this.state.searchTerm}`);
         } else if(fetchMethod == 'favorites') {
             this.context.router.history.push('?sort=favorites');
         } else {

@@ -2,7 +2,6 @@
 //var productionEnv = 'development';
 var productionEnv = 'production';
 var debug = productionEnv !== 'production';
-//var debug = process.env.NODE_ENV !== 'production';
 var webpack = require('webpack');
 var path = require('path');
 var CompressionPlugin = require('compression-webpack-plugin');

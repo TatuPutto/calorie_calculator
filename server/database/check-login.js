@@ -21,7 +21,8 @@ module.exports = function checkLogin(username, password) {
                 }
             });
         });
-    }).catch(function (err) {
+    })
+    .catch(function (err) {
         console.log(err);
         throw err;
     });
