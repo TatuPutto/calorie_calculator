@@ -10,17 +10,11 @@ module.exports = function checkUsernameAvailability(username) {
                 connection.release();
                 if(err) reject(err);
                 if(results.length === 0) {
-                    console.log('resolvataan');
                     resolve();
                 } else {
-                    console.log(results.length + ' rejektoidaan');
                     reject();
                 }
             });
         });
-    })
-    .catch(function (err) {
-        console.log(`Käyttäjätunnuksen saatavuuden tarkistaminen ei onnistunut (${err})`);
-        throw err;
     });
 }

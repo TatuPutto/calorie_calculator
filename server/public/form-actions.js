@@ -1,3 +1,7 @@
+var validUsername = false;
+var validPassword = false;
+var timeout = null;
+
 function showLabel(textInput) {
     var label = textInput.previousElementSibling;
     label.className = 'popup-label input-focused';
@@ -14,6 +18,98 @@ function hideLabel(inputNum) {
         textInput.placeholder = placeholderText;
     }, 200)
 }
+
+function checkUsernameAvailability(e) {
+    var usernameToCheck = e.value;
+    var userNameValidityindicator = document.getElementById('username-validity-indicator');
+    userNameValidityindicator.className = 'loading';
+
+    if(usernameToCheck.length === 0) {
+        e.className = ' ';
+        userNameValidityindicator.className = ' ';
+        return;
+    }
+
+    if(timeout) {
+        clearTimeout(timeout);
+    }
+
+    timeout = setTimeout(() => {
+        fetch(`/username-available/${usernameToCheck}`, {credentials: 'same-origin'})
+            .then((res) => {
+                if(res.status === 200) {
+                    return Promise.resolve();
+                } else {
+                    return Promise.reject();
+                }
+            })
+            .then(() => createValidUsernameNotification(e, userNameValidityindicator))
+            .catch(() => createInvalidUsernameNotification(e, userNameValidityindicator));
+    }, 500);
+}
+
+function createValidUsernameNotification(input, indicator) {
+    var notification = document.getElementById('invalid-username-notification');
+
+    if(notification) {
+        notification.parentNode.removeChild(notification);
+    }
+
+    input.className = 'valid-input';
+    indicator.className = 'valid-input';
+}
+
+function createInvalidUsernameNotification(input, indicator) {
+    if(!document.getElementById('invalid-username-notification')) {
+        var notAvailableNotification = document.createElement('div');
+        notAvailableNotification.id = 'invalid-username-notification';
+        notAvailableNotification.className = 'invalid-input-notification';
+        var notifactionText = document.createTextNode('Käyttäjätunnus on jo käytössä.');
+        notAvailableNotification.appendChild(notifactionText);
+        input.parentNode.insertBefore(notAvailableNotification, input.nextSibling);
+    }
+
+    input.className = 'invalid-input';
+    indicator.className = 'invalid-input';
+}
+
+function checkPasswordValidity(e) {
+    var passwordToCheck = e.value;
+
+    if(passwordToCheck.length >= 8 && /[0-9]/g.test(passwordToCheck)) {
+        return createValidPasswordNotification(e);
+    } else {
+        return createInvalidPasswordNotification(e);
+    }
+}
+
+function createValidPasswordNotification(input) {
+    var notification = document.getElementById('invalid-password-notification');
+
+    if(notification) {
+        notification.parentNode.removeChild(notification);
+    }
+
+    input.className = 'valid-input';
+    document.getElementById('password-validity-indicator').className = 'valid-input';
+}
+
+function createInvalidPasswordNotification(input) {
+    if(!document.getElementById('invalid-password-notification')) {
+        var invalidPasswordNotification = document.createElement('div');
+        invalidPasswordNotification.id = 'invalid-password-notification';
+        invalidPasswordNotification.className = 'invalid-input-notification';
+        var notifactionText = document.createTextNode(
+            'Salasanan täytyy olla vähintään 8 merkkiä pitkä ja sisältää yksi numero.'
+        );
+        invalidPasswordNotification.appendChild(notifactionText);
+        input.parentNode.insertBefore(invalidPasswordNotification, input.nextSibling);
+    }
+
+    input.className = 'invalid-input';
+    document.getElementById('password-validity-indicator').className = 'invalid-input';
+}
+
 
 function areCookiesAccepted() {
     var cookiesAllowed = checkIfCookiesAreAccepted();

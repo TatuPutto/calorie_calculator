@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <head>
     <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet"></link>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"></link>
     <link href="forms.css" rel="stylesheet"></link>
     <meta name="viewport" content="width=device-width"></meta>
     <title>Rekisteröityminen</title>
@@ -12,13 +13,19 @@
         </div>
         <div class="form-wrapper">
             <form action="/register" method="post" enctype="application/x-www-form-urlencoded">
-                <label class="popup-label input-unfocused">Käyttäjätunnus</label>
-                <input type="text" name="username" placeholder="Käyttäjätunnus"
-                        onfocus="showLabel(this)" onblur="hideLabel(0)" required>
-                        <label class="popup-label input-unfocused">Salasana</label>
-                        <input type="password" name="password" placeholder="Salasana"
-                                onfocus="showLabel(this)" onblur="hideLabel(1)" required>
-                <input type="submit" value="Rekisteröidy" />
+                <div>
+                    <label class="popup-label input-unfocused">Käyttäjätunnus</label>
+                    <input type="text" name="username" placeholder="Käyttäjätunnus" onfocus="showLabel(this)"
+                            onblur="hideLabel(0)" oninput="checkUsernameAvailability(this)" required>
+                    <span id="username-validity-indicator"></span>
+                </div>
+                <div>
+                    <label class="popup-label input-unfocused">Salasana</label>
+                    <input type="password" name="password" placeholder="Salasana" onfocus="showLabel(this)"
+                            onblur="hideLabel(1)" oninput="checkPasswordValidity(this)" required>
+                    <span id="password-validity-indicator"></span>
+                </div>
+                <input type="submit" value="Rekisteröidy">
             </form>
         </div>
     </div>

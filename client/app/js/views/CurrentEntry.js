@@ -31,6 +31,7 @@ export default class CurrentEntry extends React.Component {
             searchTerm: this.props.searchTerm,
             fetchMethod: this.props.fetchMethod,
             fetchError: null,
+            viewportWidth: this.props.viewportWidth
         };
 
         this.getDailyGoal = this.getDailyGoal.bind(this);
@@ -65,6 +66,20 @@ export default class CurrentEntry extends React.Component {
         this.getDailyGoal();
     }
 
+    componentDidMount() {
+        var resizeTimeout = null;
+        window.addEventListener('resize', (e) => {
+            if(!resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                var viewportWidth = Math.max(
+                    document.documentElement.clientWidth,
+                    window.innerWidth || 0
+                );
+                this.setState({viewportWidth});
+            }, 200);
+        });
+    }
+
     componentWillReceiveProps(nextProps) {
         if(nextProps.fetchMethod == 'search') {
             this.getMatchingFoods(nextProps.searchTerm);
@@ -79,10 +94,7 @@ export default class CurrentEntry extends React.Component {
         get(`/daily-goal/${getCurrentDate()}`)
             .then((res) => res.json())
             .then((data) => {
-                this.setState({
-                    dailyGoal: data,
-                    isFetchingDailyGoal: false
-                });
+                this.setState({ dailyGoal: data, isFetchingDailyGoal: false});
                 this.getConsumedFoods();
             }).catch((err) => {
                 console.error(err);
@@ -328,7 +340,7 @@ export default class CurrentEntry extends React.Component {
                     <FoodSelection
                         fetchMethod={this.state.fetchMethod}
                         changeFetchMethod={this.changeFetchMethod}
-                        viewportWidth={this.props.viewportWidth}
+                        viewportWidth={this.state.viewportWidth}
                         searchTerm={this.state.searchTerm}
                         changeSearchTerm={this.changeSearchTerm}
                         doSearch={this.doSearch}
@@ -348,7 +360,7 @@ export default class CurrentEntry extends React.Component {
                     />
                 </div>
                 <ConsumedFoods
-                    viewportWidth={this.props.viewportWidth}
+                    viewportWidth={this.state.viewportWidth}
                     isModifiable={true}
                     consumedFoods={this.state.consumedFoods}
                     totalConsumption={this.state.totalConsumption}

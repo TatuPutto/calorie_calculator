@@ -9,8 +9,8 @@ import {get} from '../util/fetch';
 import drawMacroChart from '../util/draw-macro-chart';
 
 export default class Diary extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             diaryEntries: [],
             isFetchingdiaryEntries: true,
@@ -18,7 +18,8 @@ export default class Diary extends React.Component {
             entry: null,
             isFetchingEntry: false,
             entryFetchError: null,
-            detailsVisible: false
+            detailsVisible: false,
+            viewportWidth: this.props.viewportWidth
         };
 
         this.getEntry = this.getEntry.bind(this);
@@ -41,6 +42,20 @@ export default class Diary extends React.Component {
                 isFetchingdiaryEntries: false,
                 diaryEntriesFetchError: err
             }));
+    }
+
+    componentDidMount() {
+        var resizeTimeout = null;
+        window.addEventListener('resize', (e) => {
+            if(!resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                var viewportWidth = Math.max(
+                    document.documentElement.clientWidth,
+                    window.innerWidth || 0
+                );
+                this.setState({viewportWidth});
+            }, 200);
+        });
     }
 
     // get next entry when query params are pushed
@@ -106,7 +121,7 @@ export default class Diary extends React.Component {
             entryDetails = <Loading />;
         } else if(!isFetchingEntry && entry && entry.nutritionValuesPerItem.length > 0) {
             entryDetails = (
-                <EntryDetails entry={entry} viewportWidth={this.props.viewportWidth} />
+                <EntryDetails entry={entry} viewportWidth={this.state.viewportWidth} />
             );
         } else {
             entryDetails = (
