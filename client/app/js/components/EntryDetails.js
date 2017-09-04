@@ -14,7 +14,7 @@ export default function EntryDetails(props) {
     return (
         <div className='entry-details'>
             <div className='row'>
-                <div className='macronutrient-split col-sm-3'>
+                <div className='macronutrient-split col-sm-2'>
                     <div className='macronutrient-split-wrapper'>
                         <div className='macronutrient-split-header'>
                             <h3>Makrojakauma</h3>
@@ -22,7 +22,7 @@ export default function EntryDetails(props) {
                         <div id='macronutrient-split-chart-container'></div>
                     </div>
                 </div>
-                <div className='tables-wrapper col-sm-9'>
+                <div className='tables-wrapper col-sm-10'>
                     <DailyGoalProgressTable entry={entry} isModifiable={false} />
                     <ConsumedFoods
                         viewportWidth={viewportWidth}

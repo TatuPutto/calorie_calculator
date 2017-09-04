@@ -11,7 +11,7 @@ export default function DailyGoalProgressTable({entry}) {
     var {
         energy: energyGoal,
         protein: proteinGoal,
-        carbohydrates: carbGoal,
+        carbs: carbGoal,
         fat: fatGoal
     } = entry.goal;
     var energyInRelationToGoal = Math.round(energyInTotal - energyGoal);
@@ -21,7 +21,9 @@ export default function DailyGoalProgressTable({entry}) {
 
     return (
         <div style={{background: '#fff', boxShadow: '0px 1px 4px #c1c1c1', borderRadius: '3px'}}>
-            <div style={{padding: '10px 0'}}><h3>Päiväsaanti</h3></div>
+            <div style={{padding: '10px 0'}}>
+                <h3>Päiväsaanti</h3>
+            </div>
             <table className='daily-goal-progress-table'>
                 <thead>
                     <tr>
@@ -89,22 +91,18 @@ export default function DailyGoalProgressTable({entry}) {
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <span className='chart-label'
-                                    style={{background: '#f6a000'}} />
-                                kcal ({Math.round(energyInTotal)} kcal)
-                        </td>
+                        <td> kcal ({Math.round(energyInTotal)} kcal)</td>
                         <td>{energyGoal}</td>
                         <td>
-                        {energyInRelationToGoal >= 0 ? (
-                            <span className='over-goal'>
-                                -{energyInRelationToGoal} kcal
-                            </span>
-                        ) : (
-                            <span className='under-goal'>
-                                {Math.abs(energyInRelationToGoal)} kcal
-                            </span>
-                        )}
+                            {energyInRelationToGoal >= 0 ? (
+                                <span className='over-goal'>
+                                    -{energyInRelationToGoal} kcal
+                                </span>
+                            ) : (
+                                <span className='under-goal'>
+                                    {Math.abs(energyInRelationToGoal)} kcal
+                                </span>
+                            )}
                         </td>
                     </tr>
                 </tbody>

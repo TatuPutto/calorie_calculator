@@ -54,9 +54,7 @@ function portion(num, breakP) {
 
     for(var i = breakP; i < portionSizes.length; i++) {
         if(portionSizes[i].split(';')[0] == num) {
-            console.log('täällä');
             var prop = portionSizes[i].split(';')[1];
-            console.log(prop);
             var propReal;
             if(prop == 'PORTS') propReal = 'pieni annos';
             if(prop == 'PORTM') propReal = 'keskikokoinen annos';

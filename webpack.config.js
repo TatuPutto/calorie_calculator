@@ -24,18 +24,11 @@ module.exports = {
                     ],
                 },
         },
-        {
-    	    test: /\.html$/,
-            loader: 'file-loader?name=[name].[ext]'
-        },
-        {
-        	test: /\.css$/,
-            loader: 'style-loader!css-loader'
-        },
-        {
-            test: /\.less$/,
-            loader: 'style-loader!css-loader!less-loader',
-        }]
+        {test: /\.html$/, loader: 'file-loader?name=[name].[ext]'},
+        {test: /\.css$/, loader: 'style-loader!css-loader'},
+        {test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},
+        {test: /\.json$/, loader: 'json-loader'}
+    ]
     },
     output: {
         path: path.join(__dirname, '/client/app/js'),

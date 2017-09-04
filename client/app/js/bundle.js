@@ -22,7 +22,7 @@ render(
             <Header />
             <Route exact path='/current-entry' component={CurrentEntryWrapper} />
             <Route exact path='/diary' component={DiaryWrapper} />
-            <Footer />
+            {/*}<Footer />*/}
         </div>
     </BrowserRouter>,
     document.getElementById('app')

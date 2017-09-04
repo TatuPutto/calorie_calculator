@@ -223,7 +223,11 @@ export default class CurrentEntry extends React.Component {
     }
 
     setSelectedFoodAmount(event) {
-        this.setState({selectedFoodAmount: event.currentTarget.value});
+        var value = event.currentTarget.value;
+
+        if(value.length < 5 && !isNaN(value)) {
+            this.setState({selectedFoodAmount: event.currentTarget.value});
+        }
     }
 
     addToDiary(foodId, foodAmount) {
@@ -257,6 +261,7 @@ export default class CurrentEntry extends React.Component {
 
     copyEntry(entry) {
         var date = new Date();
+        //var tempEntry = JSON.parse(JSON.stringify(entry));
         var tempEntry = JSON.parse(JSON.stringify(entry));
         var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
 
@@ -269,7 +274,9 @@ export default class CurrentEntry extends React.Component {
             consumptionId: tempEntry.consumptionId,
             foodId: tempEntry.id,
             foodAmount: tempEntry.amount
-        }).catch((err) => console.error(err));
+        })
+            .then(() => this.getConsumedFoods())
+            .catch((err) => console.error(err));
     }
 
     removeFromDiary(consumptionId) {

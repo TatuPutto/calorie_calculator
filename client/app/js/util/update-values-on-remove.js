@@ -1,5 +1,5 @@
 function updateValuesOnConsumedFoodRemove(consumptionId, consumedFoods, totalConsumption) {
-    var indexToBeRemoved;
+    var indexToBeRemoved, removedFood;
     var consumedFoodsAfterRemoval = consumedFoods.filter((consumedFood, i) => {
         if(consumedFood.consumptionId == consumptionId) {
             indexToBeRemoved = i;
@@ -7,7 +7,8 @@ function updateValuesOnConsumedFoodRemove(consumptionId, consumedFoods, totalCon
             return consumedFood;
         }
     });
-    var removedFood = consumedFoods[indexToBeRemoved];
+
+    removedFood = consumedFoods[indexToBeRemoved];
 
     totalConsumption.energy = Math.round(totalConsumption.energy - removedFood.energy);
     totalConsumption.protein = Math.round((totalConsumption.protein - removedFood.protein) * 10) / 10;

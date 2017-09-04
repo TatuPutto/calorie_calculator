@@ -1,7 +1,7 @@
 var getConnection = require('./create-connection');
 
 module.exports = function getDailyGoal(userId, date) {
-    var query = 'SELECT energy, protein, carbohydrates, fat ' +
+    var query = 'SELECT energy, protein, carbohydrates as carbs, fat ' +
             'FROM dailyGoals WHERE userId=? AND ' +
             'setAt <= STR_TO_DATE(?, "%d-%m-%Y") + INTERVAL 1 DAY ' +
             'ORDER BY setAt DESC';

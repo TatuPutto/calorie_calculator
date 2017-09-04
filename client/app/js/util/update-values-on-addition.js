@@ -1,6 +1,5 @@
 function updateValuesOnConsumedFoodAddition(foodId, foodAmount, foods, consumedFoods, totalConsumption) {
     var addedFood = foods.filter((food) => food.id == foodId)[0];
-
     var energyInAmount = addedFood.energy / 100 * foodAmount;
     var proteinInAmount = addedFood.protein / 100 * foodAmount;
     var carbsInAmount = addedFood.carbs / 100 * foodAmount;

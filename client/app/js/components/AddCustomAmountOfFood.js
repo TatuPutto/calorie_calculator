@@ -1,31 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function AddCustomAmountOfFood(props) {
-    var {
-        foodId,
-        selectedFoodAmount,
-        setSelectedFoodAmount,
-        addToDiary
-    } = props;
+export default class AddCustomAmountOfFood extends React.Component {
+    componentDidMount() {
+        this.amountInput.focus();
+    }
 
-    return (
-        <div className='add-custom-amount'>
-            <input
-                type='text'
-                placeholder='Määrä...'
-                value={selectedFoodAmount || ''}
-                onChange={setSelectedFoodAmount}
-            />
-            <button
-                className='btn btn-info'
-                style={{background: 'linear-gradient(#5bc0de, #4cabc7)'}}
-                onClick={() => addToDiary(foodId, selectedFoodAmount)}
-            >
-                Lisää
-            </button>
-        </div>
-    );
+    render() {
+        var {
+            foodId,
+            selectedFoodAmount,
+            setSelectedFoodAmount,
+            addToDiary
+        } = this.props;
+
+        return (
+            <div className='add-custom-amount'>
+                <form onSubmit={() => addToDiary(foodId, selectedFoodAmount)}>
+                    <input
+                        ref={input => this.amountInput = input}
+                        type='text'
+                        placeholder='Annos'
+                        value={selectedFoodAmount || ''}
+                        onChange={setSelectedFoodAmount}
+                    />
+                    <button
+                        className='btn btn-info'
+                        onClick={() => addToDiary(foodId, selectedFoodAmount)}
+                        style={{
+                            background: '#4692d2',
+                            borderColor: '#4692d2',
+                            boxShadow: '0px 1px 0px #97cfff inset'
+                        }}
+                    >
+                        Lisää
+                    </button>
+                </form>
+            </div>
+        );
+    }
 }
 
 AddCustomAmountOfFood.propTypes = {

@@ -12,6 +12,18 @@
     box-shadow: 1px 1px 5px #adadad;
 }
 
+.add-to-consumed-foods::before {
+    content: "";
+    display: block;
+    width: 0;
+    border-left: 8px solid #e8f2ff;
+    border-right: 8px solid #e8f2ff;
+    border-bottom: 8px solid #fff;
+    position: absolute;
+    top: -8px;
+    left: ~"calc(50% - 15px)";
+}
+
 @media @tablet {
     .add-to-consumed-foods {
         position: relative;

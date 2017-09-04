@@ -33,7 +33,7 @@ export default function ConsumedFoodRow(props) {
                     className='consumed-food-remove'
                     onClick={() => removeFromDiary(food.consumptionId)}
                 >
-                    <i className='fa fa-trash' />
+                    <i className='fa fa-remove' />
                 </td>
             }
             <td className='consumed-food-name'>{food.name}</td>

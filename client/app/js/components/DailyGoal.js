@@ -9,6 +9,7 @@ export default class DailyGoal extends React.Component {
         if(this.props.totalConsumption !== nextProps.totalConsumption) {
             return true;
         }
+
         return false;
     }
 
@@ -40,11 +41,14 @@ export default class DailyGoal extends React.Component {
                 <div className='daily-goal-wrapper'>
                     <div className='daily-goal-header'>
                         <h3>Päivätavoite</h3>
-                        <i
-                            className='configure-daily-goals fa fa-cog'
+
+                        <button className='configure-daily-goals'
                             data-toggle='modal'
                             data-target='#set-daily-goal'
-                        />
+                            data-tooltip-text='Muokkaa päivätavoitetta'
+                        >
+                            <i className='fa fa-cog' />
+                        </button>
                     </div>
                     <DailyGoalProgress total={total} goal={goal} />
                 </div>
@@ -72,180 +76,73 @@ export default class DailyGoal extends React.Component {
 
 
 function createCharts(total, goal) {
+    for(var macro in total) {
+        var macroAmountColor = getMacroChartColor(macro);
+        var data = createChartData(goal[macro], total[macro], macroAmountColor);
+        addChartToDOM(macro, data);
+    }
+}
+
+function getMacroChartColor(macro) {
+    var macroAmountColor;
+
+    switch(macro) {
+        case 'energy':
+            macroAmountColor = '#ffa600';
+            break;
+        case 'protein':
+            macroAmountColor = '#639e63';
+            break;
+        case 'carbs':
+            macroAmountColor = '#207eff';
+            break;
+        case 'fat':
+            macroAmountColor = '#fa6b6b';
+            break;
+    }
+
+    return macroAmountColor;
+}
+
+function createChartData(macroGoal, macroTotal, macroAmountColor) {
+    var data, overByPercentage;
+    var overConsumptionColor = '#000';
+    var chartBackgroundColor = '#dcdcdc';
+
+    if((macroGoal - macroTotal) < 0) {
+        overByPercentage = macroTotal - macroGoal;
+
+        data = {
+            datasets: [{
+                data: [overByPercentage, macroGoal],
+                borderWidth: 0,
+                backgroundColor: [overConsumptionColor, macroAmountColor]
+            }]
+        };
+    } else {
+        data = {
+            datasets: [{
+                data: [macroTotal, (macroGoal - macroTotal)],
+                borderWidth: 0,
+                backgroundColor: [macroAmountColor, chartBackgroundColor]
+            }]
+        };
+    }
+
+    return data;
+}
+
+function addChartToDOM(macro, data) {
     var options = {
         cutoutPercentage: 88,
         rotation: 1 * Math.PI,
         circumference: 1 * Math.PI,
-        tooltips: {
-            enabled: false
-        }
+        tooltips: {enabled: false}
     };
 
-    var energyChartData;
-    if((goal.energy - total.energy) < 0) {
-        var overByPercent = total.energy - goal.energy;
-
-        energyChartData  = {
-            datasets: [{
-                data: [overByPercent, goal.energy],
-                borderWidth: 0,
-                backgroundColor: [
-                    'black',
-                    'orange'
-                ],
-                hoverBackgroundColor: [
-                    'black',
-                    'orange'
-                ]
-            }]
-        };
-
-    } else {
-        energyChartData = {
-            datasets: [{
-                data: [total.energy, (goal.energy - total.energy)],
-                borderWidth: 0,
-                backgroundColor: [
-                    '#f9a200',
-                    '#ebebeb'
-                    //'#ffdab7'
-                ],
-                hoverBackgroundColor: [
-                    'orange',
-                    '#ffdab7'
-                ]
-            }]
-        };
-    }
-
-    new Chart(document.getElementById('energy-chart'), {
+    return new Chart(document.getElementById(macro + '-chart'), {
         type: 'doughnut',
-        data: energyChartData,
-        options: options
-    });
-
-    var proteinChartData;
-    if((goal.protein - total.protein) < 0) {
-        var overByPercent = total.protein - goal.protein;
-
-        proteinChartData  = {
-            datasets: [{
-                data: [overByPercent, goal.protein],
-                borderWidth: 0,
-                backgroundColor: [
-                    'black',
-                    '#639e63'
-                ],
-                hoverBackgroundColor: [
-                    'black',
-                    '#639e63'
-                ]
-            }]
-        };
-
-    } else {
-        proteinChartData = {
-            datasets: [{
-                data: [total.protein, (goal.protein - total.protein)],
-                borderWidth: 0,
-                backgroundColor: [
-                    '#639e63',
-                    '#ebebeb'
-                ],
-                hoverBackgroundColor: [
-                    '#639e63',
-                    '#ebebeb'
-                ]
-            }]
-        };
-    }
-
-    new Chart(document.getElementById('protein-chart'), {
-        type: 'doughnut',
-        data: proteinChartData,
-        options: options
-    });
-
-    var carbChartData;
-    if((goal.carbohydrates - total.carbs) < 0) {
-        var overByPercent = total.carbs - goal.carbohydrates;
-
-        carbChartData  = {
-            datasets: [{
-                data: [overByPercent, goal.carbohydrates],
-                borderWidth: 0,
-                backgroundColor: [
-                    'black',
-                    '#207eff'
-                ],
-                hoverBackgroundColor: [
-                    'black',
-                    '#207eff'
-                ]
-            }]
-        };
-    } else {
-        carbChartData = {
-            datasets: [{
-                data: [total.carbs, (goal.carbohydrates - total.carbs)],
-                borderWidth: 0,
-                backgroundColor: [
-                    '#207eff',
-                    '#ebebeb'
-                ],
-                hoverBackgroundColor: [
-                    '#207eff',
-                    '#ebebeb'
-                ]
-            }]
-        };
-    }
-
-    new Chart(document.getElementById('carb-chart'), {
-        type: 'doughnut',
-        data: carbChartData,
-        options: options
-    });
-
-    var fatChartData;
-    if((goal.fat - total.fat) < 0) {
-        var overByPercent = total.fat - goal.fat;
-
-        fatChartData  = {
-            datasets: [{
-                data: [overByPercent, goal.fat],
-                borderWidth: 0,
-                backgroundColor: [
-                    'black',
-                    '#fa6b6b'
-                ],
-                hoverBackgroundColor: [
-                    'black',
-                    '#fa6b6b'
-                ]
-            }]
-        };
-
-    } else {
-        fatChartData  = {
-            datasets: [{
-                data: [total.fat, (goal.fat - total.fat)],
-                borderWidth: 0,
-                backgroundColor: [
-                    '#fa6b6b',
-                    '#ebebeb'
-                ],
-                hoverBackgroundColor: [
-                    '#fa6b6b',
-                    '#ebebeb'
-                ]
-            }]
-        };
-    }
-
-    new Chart(document.getElementById('fat-chart'), {
-        type: 'doughnut',
-        data: fatChartData,
-        options: options
+        data,
+        options
     });
 }

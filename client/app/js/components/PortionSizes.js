@@ -3,7 +3,6 @@ import React from 'react';
 export default function PortionSizes(props) {
     var portionSizes = props.portionSizes;
     var foodId = props.foodId;
-
     var portions = Object.keys(portionSizes).map((portion) => {
         var portionAmount = portionSizes[portion];
 

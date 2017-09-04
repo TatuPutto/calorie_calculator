@@ -1,13 +1,10 @@
-var round = require('./round-to-one-decimal');
-var findIndexOfObjectId = require('./find-index-of-object-id');
 var fs = require('fs');
-
-var foodList = fs.readFileSync('foods-with-portion-sizes.json', 'utf8');
-foodList = JSON.parse(foodList);
+var findIndexOfObjectId = require('./find-index-of-object-id');
+var foodList = JSON.parse(fs.readFileSync('foods-with-portion-sizes.json', 'utf8'));
 
 function findMatchingFoodsByName(input) {
-    input = input.toLowerCase().trim();
     var matchingFoods = [];
+    input = input.toLowerCase().trim();
 
     for(foodId in foodList) {
         var food = foodList[foodId];
@@ -28,6 +25,7 @@ function findMatchingFoodsByName(input) {
             });
         }
     }
+
     return sortAlphabeticallyAndByRelevance(matchingFoods).slice(0, 100);
 }
 
@@ -71,6 +69,7 @@ function findMatchingFoodsByIds(ids) {
             });
         }
     }
+
     return matchingFoods.sort();
 }
 
@@ -89,9 +88,9 @@ function calculateNutritionValues(consumedFoods) {
 
         // calculate nutrition values in amount
         var energyInAmount = Math.round((erergyIn100Grams / 100) * food.amount);
-        var proteinInAmount = round((proteinIn100Grams / 100) * food.amount);
-        var carbohydratesInAmount = round((carbsIn100Grams / 100) * food.amount);
-        var fatInAmount = round((fatIn100Grams / 100) * food.amount);
+        var proteinInAmount = Math.round((proteinIn100Grams / 100) * food.amount);
+        var carbohydratesInAmount = Math.round((carbsIn100Grams / 100) * food.amount);
+        var fatInAmount = Math.round((fatIn100Grams / 100) * food.amount);
 
         nutritionValues.push({
             consumptionId: food.consumptionId,
@@ -105,6 +104,7 @@ function calculateNutritionValues(consumedFoods) {
             carbs: carbohydratesInAmount
         });
     }
+
     return nutritionValues;
 }
 
@@ -124,9 +124,9 @@ function calcTotalNutritionValues(nutritionValuesPerItem) {
 
     return {
         energy: Math.round(energyInTotal),
-        protein: round(proteinInTotal),
-        fat: round(fatInTotal),
-        carbs: round(carbsInTotal)
+        protein: Math.round(proteinInTotal * 10) / 10,
+        fat: Math.round(fatInTotal * 10) / 10,
+        carbs: Math.round(carbsInTotal * 10) / 10
     };
 }
 

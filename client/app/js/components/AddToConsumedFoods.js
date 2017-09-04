@@ -16,15 +16,15 @@ export default function AddToConsumedFoods(props) {
 
     return (
         <div className='add-to-consumed-foods'>
-            <PortionSizes
-                portionSizes={food.portionSizes}
-                foodId={food.id}
-                addToDiary={addToDiary}
-            />
             <AddCustomAmountOfFood
                 foodId={food.id}
                 selectedFoodAmount={selectedFoodAmount}
                 setSelectedFoodAmount={setSelectedFoodAmount}
+                addToDiary={addToDiary}
+            />
+            <PortionSizes
+                portionSizes={food.portionSizes}
+                foodId={food.id}
                 addToDiary={addToDiary}
             />
         </div>
