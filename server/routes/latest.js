@@ -16,24 +16,23 @@ router.use(function (req, res, next) {
 });
 
 router.get('/', function (req, res) {
-    getLatestConsumedFoods(req.session.user.id)
-        .then(function (latestConsumedFoods) {
-            var matchingFoods = findMatchingFoodsByIds(latestConsumedFoods);
+    Promise.all([
+        getLatestConsumedFoods(req.session.user.id),
+        getFavoriteFoods(req.session.user.id)
+    ])
+    .then(function (values) {
+        var latest = values[0];
+        var favorites = values[1];
+        var matchingFoods = findMatchingFoodsByIds(latest);
+        matchingFoods = markFoodsAsFavorites(favorites, matchingFoods, false);
 
-            // determine which of the foods are in users favorites
-            getFavoriteFoods(req.session.user.id)
-                .then(function(favorites) {
-                    matchingFoods = markFoodsAsFavorites(favorites, matchingFoods);
-
-                    res.writeHead(200, {'Content-Type': 'application/json'});
-                    res.end(JSON.stringify(matchingFoods));
-                }).catch(function(err) {
-                    console.log(err);
-                    res.end(err);
-                });
-        }).catch(function (err) {
-            res.end(JSON.stringify(err));
-        });
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(matchingFoods));
+    })
+    .catch(function(err) {
+        console.log(err);
+        res.status(400).end(err);
+    });
 });
 
 module.exports = router;

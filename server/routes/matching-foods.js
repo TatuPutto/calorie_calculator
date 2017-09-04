@@ -13,29 +13,27 @@ router.get('/:food', function (req, res) {
     var matchingFoods = findMatchingFoodsByName(req.params.food);
     // get favorite foods if user is logged in
     if(req.session.user) {
-        // determine which of the foods user has lately consumed
-        getLatestConsumedFoods(req.session.user.id)
-            .then(function (latest) {
-                matchingFoods = markFoodsAsLatelyConsumed(latest, matchingFoods);
-    
-                // determine which of the foods are in users favorites (database)
-                getFavoriteFoods(req.session.user.id)
-                    .then(function(favorites) {
-                        matchingFoods = markFoodsAsFavorites(
-                            favorites,
-                            matchingFoods,
-                            true
-                        );
-                        //console.log(matchingFoods);
-                        res.writeHead(200, {'Content-Type': 'application/json'});
-                        res.end(JSON.stringify(matchingFoods));
-                    }).catch(function(err) {
-                        console.log(err);
-                        res.end(err);
-                    });
-        });
+        Promise.all([
+            getLatestConsumedFoods(req.session.user.id),
+            getFavoriteFoods(req.session.user.id)
+        ])
+        .then(function (values) {
+            var latest = values[0];
+            var favorites = values[1];
 
+            matchingFoods = markFoodsAsLatelyConsumed(latest, matchingFoods);
+            matchingFoods = markFoodsAsFavorites(
+                favorites,
+                matchingFoods,
+                true
+            );
 
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(matchingFoods));
+        })
+        .catch(function (err) {
+            res.status(400).end(err);
+        })
     } else {
         // determine which of the foods are in users favorites (cookie)
         var favoriteFoodsCookie = req.cookies['favorites'];

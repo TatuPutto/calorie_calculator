@@ -8,11 +8,11 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var router = express.Router();
 
+// use cookies to store consumed foods if user isn't logged in
 router.use(function (req, res, next) {
     if(req.session.user) {
         next();
     } else {
-        // use cookies to store consumed foods if user isn't logged in
         activeEntryCookieFallback(req, res);
     }
 });

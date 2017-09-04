@@ -28,6 +28,7 @@ export default function ConsumedFoodsTable(props) {
                         />
                     );
                 })}
+
             </tbody>
         </table>
     );

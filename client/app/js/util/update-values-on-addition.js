@@ -12,6 +12,7 @@ function updateValuesOnConsumedFoodAddition(foodId, foodAmount, foods, consumedF
 
     addedFood['consumptionId'] = new Date().getTime().toString();
     addedFood['amount'] = foodAmount;
+    addedFood['latelyConsumed'] = true;
     consumedFoods.push(addedFood);
 
     totalConsumption.energy = Math.round(totalConsumption.energy + energyInAmount);

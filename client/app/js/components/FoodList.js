@@ -45,21 +45,29 @@ export default function FoodList(props) {
                 if(food.favorite && !favoritesCategorySeparated) {
                     favoritesCategorySeparated = true;
                     foodItems.push(
-                        <li key='favorites' className='category-separator'>
+                        <li key={'favorites-separator'} key='favorites' className='category-separator'>
                             <i className='fa fa-star' />Suosikit
                         </li>
                     );
                 } else if(!food.favorite && food.latelyConsumed && !latestCategorySeparated) {
                     latestCategorySeparated = true;
                     foodItems.push(
-                        <li key='lately-consumed' className='category-separator'>
+                        <li key={'latest-separator'} className='category-separator'>
                             <i className='fa fa-history' />Viimeaikaiset
+                        </li>
+                    );
+                } else if(!food.favorite && !food.latelyConsumed &&
+                          !latestCategorySeparated && !regularResultsSeparated) {
+                    regularResultsSeparated = true;
+                    foodItems.push(
+                        <li key={'best-match-separator'} className='category-separator'>
+                            <i className='fa fa-search' />Osuvimmat hakutulokset
                         </li>
                     );
                 } else if(!food.latelyConsumed && latestCategorySeparated && !regularResultsSeparated) {
                     regularResultsSeparated = true;
                     foodItems.push(
-                        <li key='search-results' className='category-separator'>
+                        <li key={'best-match-separator'} className='category-separator'>
                             <i className='fa fa-search' />Osuvimmat hakutulokset
                         </li>
                     );

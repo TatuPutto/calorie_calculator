@@ -261,19 +261,11 @@ export default class CurrentEntry extends React.Component {
 
     copyEntry(entry) {
         var date = new Date();
-        //var tempEntry = JSON.parse(JSON.stringify(entry));
-        var tempEntry = JSON.parse(JSON.stringify(entry));
-        var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
-
-        tempEntry.consumptionId = date.getTime().toString();
-        tempEntry.timeOfConsumption = date;
-        tempConsumedFoods.push(tempEntry);
-        this.setState({consumedFoods: tempConsumedFoods});
 
         post('/active-entry', {
-            consumptionId: tempEntry.consumptionId,
-            foodId: tempEntry.id,
-            foodAmount: tempEntry.amount
+            consumptionId: date.getTime().toString(),
+            foodId: entry.id,
+            foodAmount: entry.amount
         })
             .then(() => this.getConsumedFoods())
             .catch((err) => console.error(err));
