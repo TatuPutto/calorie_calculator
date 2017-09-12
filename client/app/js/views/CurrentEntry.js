@@ -18,8 +18,10 @@ export default class CurrentEntry extends React.Component {
         super(props);
         this.state = {
             dailyGoal: null,
-            consumedFoods: [],
-            currentMeal: 'Ateria #1',
+            //consumedFoods: [],
+            consumedMeals: [],
+            consumedCourses: [],
+            activeMeal: 'Ateria #1',
             foods: [],
             shownResultsOffset: 0,
             totalConsumption: null,
@@ -114,14 +116,14 @@ export default class CurrentEntry extends React.Component {
         get('/active-entry')
             .then((res) => res.json())
             .then((data) => {
-                var meals = Object.keys(data);
+                var meals = data[0];
+                var courses = data[1]
 
                 this.setState({
-                    consumedFoods: data,
-                    currentMeal: meals.length > 0 ?
+                    consumedMeals: meals,
+                    consumedCourses: courses,
+                    activeMeal: meals.length > 0 ?
                             meals[meals.length - 1] : 'Ateria #1',
-                    //consumedFoods: data.nutritionValuesPerItem,
-                    //totalConsumption: data.nutritionValuesInTotal,
                     isFetchingConsumedFoods: false
                 });
             }).catch((err) => {
@@ -241,12 +243,13 @@ export default class CurrentEntry extends React.Component {
         var updatedValues = updateValuesOnAddition(
             foodId,
             foodAmount,
-            this.state.currentMeal,
+            3,
+            this.state.activeMeal,
             JSON.parse(JSON.stringify(this.state.foods)),
-            JSON.parse(JSON.stringify(this.state.consumedFoods)),
+            JSON.parse(JSON.stringify(this.state.consumedCourses)),
             JSON.parse(JSON.stringify(this.state.totalConsumption))
         );
-        var consumedFoods = updatedValues.consumedFoods;
+        var consumedCourses = updatedValues.consumedCourses;
         var totalConsumption = updatedValues.totalConsumption;
         /*var content = {
             consumptionId: consumedFoods[consumedFoods.length - 1].consumptionId,
@@ -258,7 +261,7 @@ export default class CurrentEntry extends React.Component {
             .catch((err) => console.error(err));*/
 
         this.setState({
-            consumedFoods,
+            consumedCourses,
             totalConsumption,
             selectedFoodId: null,
             selectedFood: null,
@@ -326,37 +329,48 @@ export default class CurrentEntry extends React.Component {
     }
 
     addMeal = () => {
-        var nextMeal = `Ateria #${Object.keys(this.state.consumedFoods).length + 1}`;
-        var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
-        tempConsumedFoods[nextMeal] = [];
+        var nextMeal = `Ateria #${Object.keys(this.state.consumedMeals).length + 1}`;
+        var tempConsumedMeals = JSON.parse(JSON.stringify(this.state.consumedMeals));
+        tempConsumedMeals.push(nextMeal);
 
         this.setState({
-            currentMeal: nextMeal,
-            consumedFoods: tempConsumedFoods
+            activeMeal: nextMeal,
+            consumedMeals: tempConsumedMeals
         });
     }
 
     editMealName = (oldName, newName) => {
-        var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
+        // change meal name in meals array
+        var tempConsumedMeals = JSON.parse(JSON.stringify(this.state.consumedMeals));
+        var matchAtIndex = tempConsumedMeals.indexOf(oldName);
+        tempConsumedMeals[matchAtIndex] = newName;
 
-        // copy the content of the meal
-        var mealCourses = tempConsumedFoods[oldName];
-        // delete the old meal
-        delete tempConsumedFoods[oldName];
-        // create new property with new name but old content
-        tempConsumedFoods[newName] = mealCourses;
+        // change meal name in courses array
+        var tempConsumedCourses = JSON.parse(JSON.stringify(this.state.consumedCourses));
+        tempConsumedCourses.forEach((course) => {
+            if(course.mealName == oldName) {
+                course.mealName = newName;
+            }
+        });
 
-        this.setState({consumedFoods: tempConsumedFoods});
+        this.setState({
+            activeMeal: oldName == this.state.activeMeal ? newName : this.state.activeMeal,
+            consumedMeals: tempConsumedMeals,
+            consumedCourses: tempConsumedCourses
+        });
     }
 
     changeActiveMeal = (mealName) => {
+        var meals = this.state.consumedMeals;
+        var latestMeal = meals[meals.length - 1];
+
         // if already active meal is toggled, change active status to the newest meal
-        if(mealName == this.state.currentMeal) {
-            var meals = Object.keys(this.state.consumedFoods);
-            mealName = meals[meals.length - 1];
+        if(mealName == this.state.activeMeal) {
+            if(mealName == latestMeal) return;
+            mealName = latestMeal;
         }
 
-        this.setState({currentMeal: mealName});
+        this.setState({activeMeal: mealName});
     }
 
 
@@ -403,8 +417,10 @@ export default class CurrentEntry extends React.Component {
                 <ConsumedFoods
                     viewportWidth={this.state.viewportWidth}
                     isModifiable={true}
-                    consumedFoods={this.state.consumedFoods}
-                    currentMeal={this.state.currentMeal}
+
+                    consumedMeals={this.state.consumedMeals}
+                    consumedCourses={this.state.consumedCourses}
+                    activeMeal={this.state.activeMeal}
                     addMeal={this.addMeal}
                     changeActiveMeal={this.changeActiveMeal}
                     editMealName={this.editMealName}

@@ -1,9 +1,11 @@
 var getConnection = require('./create-connection');
 
 function addFoodToConsumedFoods(consumptionId, userId, foodId, foodAmount) {
-    var query = 'INSERT INTO consumedFoods ' +
-            '(consumptionId, userId, foodId, foodAmount, timeOfConsumption) ' +
-            'VALUES (?, ?, ?, ?, NOW())';
+    var query = `
+        INSERT INTO consumedFoods
+        (consumptionId, userId, foodId, foodAmount, timeOfConsumption)
+        VALUES (?, ?, ?, ?, NOW())
+    `;
     var data = [consumptionId, userId, foodId, foodAmount];
 
     return new Promise(function (resolve, reject) {

@@ -22,8 +22,8 @@ export default class ConsumedFoodMealRow extends React.Component {
     }
 
     render() {
-        var isActiveMeal = this.props.currentMeal == this.props.meal;
-
+        var isActiveMeal = this.props.activeMeal == this.props.meal;
+        
         return (
             <tr key={this.props.meal} className='consumed-foods-meal'>
                 {!this.state.isBeingEdited ? (

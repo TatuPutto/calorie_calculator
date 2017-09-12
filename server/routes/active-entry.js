@@ -1,6 +1,6 @@
 var createConnection = require('../database/create-connection');
 var getConsumedFoods = require('../database/get-consumed-foods');
-var getEntry = require('../database/get-entry');
+var selectEntriesFromToday = require('../database/select-entries-from-today');
 var addFoodToConsumedFoods = require('../database/add-food-to-consumed-foods');
 var updateConsumedFoodAmount = require('../database/update-consumed-food-amount');
 var removeFoodFromConsumedFoods = require('../database/remove-food-from-consumed-foods');
@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
             res.end(err);
         });*/
 
-        getEntry(1)
+        selectEntriesFromToday(req.session.user.id)
             .then(function (consumedFoods) {
                 res.writeHead(200, {'Content-Type': 'application/json'});
                 res.end(JSON.stringify(consumedFoods));
