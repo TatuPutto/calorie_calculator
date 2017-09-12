@@ -26,31 +26,33 @@ module.exports = function selectEntriesFromToday(userId) {
     .then(function (results) {
         //console.log(results);
         var meals = [];
-        var courses = [];
+        var latestMeal;
 
         results.forEach(function (row) {
-            if(meals.indexOf(row.mealName) === -1) {
-                meals.push(row.mealName);
+            // find all the different types of meals in results
+            if(row.mealName != latestMeal) {
+                meals.push({
+                    mealId: row.mealId,
+                    mealName: row.mealName,
+                    mealCourses: []
+                });
+
+                latestMeal = row.mealName;
             }
 
-            //console.log(meals[0][row.mealName]);
+            var matchAtIndex = meals.findIndex(function (meal) {
+                return meal.mealId === row.mealId;
+            })
 
-            //console.log(index);
-
-            //console.log(meals[]);
-
-            courses.push(calcNutritionValues({
+            meals[matchAtIndex].mealCourses.push(calcNutritionValues({
                 consumptionId: row.consumptionId,
                 id: row.foodId,
                 amount: row.foodAmount,
                 timeOfConsumption: row.timeOfConsumption
             }));
-            courses[courses.length - 1]['mealId'] = row.mealId;
-            courses[courses.length - 1]['mealName'] = row.mealName;
-            //console.log(meals);
         });
 
-        return [meals, courses];
+        return meals;
     })
     .catch(function (err) {
         console.log(err);

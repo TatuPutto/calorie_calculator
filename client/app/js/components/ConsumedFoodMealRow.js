@@ -15,7 +15,7 @@ export default class ConsumedFoodMealRow extends React.Component {
     toggleEditing = (e) => {
         if(this.state.isBeingEdited) {
             var newName = e.currentTarget.value;
-            this.props.editMealName(this.props.meal, newName);
+            this.props.editMealName(this.props.index, this.props.meal, newName);
         }
 
         this.setState({isBeingEdited: !this.state.isBeingEdited});
@@ -23,7 +23,7 @@ export default class ConsumedFoodMealRow extends React.Component {
 
     render() {
         var isActiveMeal = this.props.activeMeal == this.props.meal;
-        
+
         return (
             <tr key={this.props.meal} className='consumed-foods-meal'>
                 {!this.state.isBeingEdited ? (

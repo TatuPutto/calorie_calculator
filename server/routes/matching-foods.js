@@ -10,7 +10,17 @@ var router = express.Router();
 router.use(cookieParser());
 
 router.get('/:food', function (req, res) {
+
+    var startTime = new Date();
     var matchingFoods = findMatchingFoodsByName(req.params.food);
+    var endTime = new Date();
+
+    var difference = endTime.getTime() - startTime.getTime();
+    console.log(endTime.getTime());
+    console.log(startTime.getTime());
+    console.log(difference);
+
+
     // get favorite foods if user is logged in
     if(req.session.user) {
         Promise.all([

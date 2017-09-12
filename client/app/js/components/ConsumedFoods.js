@@ -6,15 +6,14 @@ import TotalNutritionValuesTable from './TotalNutritionValuesTable';
 import Loading from './Loading';
 
 export default function ConsumedFoods(props) {
-    var {viewportWidth, isFetchingConsumedFoods, consumedMeals, consumedCourses} = props;
+    var {viewportWidth, isFetchingConsumedFoods, consumedFoods} = props;
     var consumedFoodsOutput = null;
     var consumedFoodsClass = 'consumed-foods ' +
             (props.isModifiable ? 'col-md-10 col-md-offset-2' : '');
 
     if(isFetchingConsumedFoods) {
         consumedFoodsOutput = <Loading />;
-    } else if(consumedMeals.length === 0 && consumedCourses.length === 0 &&
-              !isFetchingConsumedFoods) {
+    } else if(consumedFoods.length === 0 && !isFetchingConsumedFoods) {
         consumedFoodsOutput = (
             <div style={{padding: '10px', fontSize: '14px'}}>Ei merkintöjä</div>
         );

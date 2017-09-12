@@ -14,26 +14,28 @@ export default function ConsumedFoodsTable(props) {
     );
     var rows = [];
 
-    /*Object.keys(props.consumedFoods).forEach((meal) => {
-        var foods = props.consumedFoods[meal];
+    props.consumedFoods.forEach((meal, i) => {
+        var courses = meal.mealCourses;
 
         // push row representing the meal
         rows.push(
             <ConsumedFoodMealRow
-                meal={meal}
-                currentMeal={props.currentMeal}
+                key={meal.mealId}
+                index={i}
+                meal={meal.mealName}
+                activeMeal={props.activeMeal}
                 changeActiveMeal={props.changeActiveMeal}
                 editMealName={props.editMealName}
             />
         );
 
         // create rows for each course of the meal
-        if(foods.length > 0) {
-            var foodRows = foods.map((food) => {
+        if(courses.length > 0) {
+            var courseRows = courses.map((course) => {
                 return (
                     <RowWrapper
-                        key={food.consumptionId}
-                        food={food}
+                        key={course.consumptionId}
+                        food={course}
                         isModifiable={props.isModifiable}
                         copyEntry={props.copyEntry}
                         removeFromDiary={props.removeFromDiary}
@@ -42,92 +44,19 @@ export default function ConsumedFoodsTable(props) {
                 );
             });
 
-            rows.push(foodRows);
+            rows.push(courseRows);
         }
-
-    });*/
-    console.log(props.consumedCourses);
-    var continueFromIndex = 0;
-    props.consumedMeals.forEach((meal) => {
-        // push row representing the meal
-        rows.push(
-            <ConsumedFoodMealRow
-                key={meal}
-                meal={meal}
-                activeMeal={props.activeMeal}
-                changeActiveMeal={props.changeActiveMeal}
-                editMealName={props.editMealName}
-            />
-        );
-
-
-        // props.consumedCourses
-
-        for(var i = continueFromIndex; i < props.consumedCourses.length; i++) {
-            var course = props.consumedCourses[i];
-
-            // create row for course if the name of the meal matches
-            if(course.mealName == meal) {
-                // create rows for each course of the meal
-                //if(props.consumedCourses.length > 0) {
-                    //var foodRows = props.consumedCourses.map((course) => {
-                        //return (
-                            rows.push(
-                                <RowWrapper
-                                    key={course.consumptionId}
-                                    food={course}
-                                    isModifiable={props.isModifiable}
-                                    copyEntry={props.copyEntry}
-                                    removeFromDiary={props.removeFromDiary}
-                                    updateDiaryEntry={props.updateDiaryEntry}
-                                />
-                            );
-                        //);
-                    //});
-
-                    //rows.push(foodRows);
-                //}
-
-            } else {
-                continueFromIndex = i;
-                break;
-            }
-        }
-
-
-        //var foods = props.consumedFoods[meal];
-
-
     });
 
-
-    rows.push(<tr><td colSpan={7} onClick={props.addMeal}>Lisää ateria</td></tr>);
-    console.log(rows);
-/*
-
-    console.log(Object.keys(props.consumedFoods));
-    Object.keys(props.consumedFoods).map((meal) => console.log(meal));
-    console.log(props.consumedFoods[Object.keys(props.consumedFoods)[0]]);
-    var rows = Object.keys(props.consumedFoods).forEach().map((food) => {
-        console.log(food);
-        return (
-            <RowWrapper
-                key={food.consumptionId}
-                food={food}
-                isModifiable={props.isModifiable}
-                copyEntry={props.copyEntry}
-                removeFromDiary={props.removeFromDiary}
-                updateDiaryEntry={props.updateDiaryEntry}
-            />
-        );
-    });
-*/
 
     return (
         <table className='consumed-foods-table'>
             {/*}<ConsumedFoodsTableHeader {...props} />*/}
             <tbody>
                 {rows}
+                <tr>
+                    <td colSpan={7} onClick={props.addMeal}>Lisää ateria</td>
+                </tr>
             </tbody>
         </table>
     );
