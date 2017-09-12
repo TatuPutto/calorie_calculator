@@ -73,6 +73,28 @@ function findMatchingFoodsByIds(ids) {
     return matchingFoods.sort();
 }
 
+
+function calculateNutritionValues1(consumedFoodItem) {
+    var foodToCalc = foodList[consumedFoodItem.id];
+    var erergyIn100Grams = foodToCalc.energy;
+    var proteinIn100Grams = foodToCalc.protein;
+    var fatIn100Grams = foodToCalc.fat;
+    var carbsIn100Grams = foodToCalc.carbohydrates;
+    consumedFoodItem['name'] = foodToCalc.name;
+    consumedFoodItem['energy'] = Math.round((erergyIn100Grams / 100) * consumedFoodItem.amount),
+    consumedFoodItem['protein'] = Math.round((proteinIn100Grams / 100) * consumedFoodItem.amount);
+    consumedFoodItem['carbs'] = Math.round((carbsIn100Grams / 100) * consumedFoodItem.amount);
+    consumedFoodItem['fat'] = Math.round((fatIn100Grams / 100) * consumedFoodItem.amount);
+    
+    return consumedFoodItem;
+    // var energyInAmount = Math.round((erergyIn100Grams / 100) * consumedFoodItem.amount);
+    // var proteinInAmount = Math.round((proteinIn100Grams / 100) * consumedFoodItem.amount);
+    // var carbohydratesInAmount = Math.round((carbsIn100Grams / 100) * consumedFoodItem.amount);
+    // var fatInAmount = Math.round((fatIn100Grams / 100) * consumedFoodItem.amount);
+
+
+}
+
 function calculateNutritionValues(consumedFoods) {
     var nutritionValues = [];
 
@@ -132,5 +154,5 @@ function calcTotalNutritionValues(nutritionValuesPerItem) {
 
 module.exports.findMatchingFoodsByName = findMatchingFoodsByName;
 module.exports.findMatchingFoodsByIds = findMatchingFoodsByIds;
-module.exports.calculateNutritionValues = calculateNutritionValues;
+module.exports.calculateNutritionValues = calculateNutritionValues1;
 module.exports.calcTotalNutritionValues = calcTotalNutritionValues;

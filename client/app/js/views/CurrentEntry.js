@@ -19,6 +19,7 @@ export default class CurrentEntry extends React.Component {
         this.state = {
             dailyGoal: null,
             consumedFoods: [],
+            currentMeal: 'Ateria #1',
             foods: [],
             shownResultsOffset: 0,
             totalConsumption: null,
@@ -113,9 +114,14 @@ export default class CurrentEntry extends React.Component {
         get('/active-entry')
             .then((res) => res.json())
             .then((data) => {
+                var meals = Object.keys(data);
+
                 this.setState({
-                    consumedFoods: data.nutritionValuesPerItem,
-                    totalConsumption: data.nutritionValuesInTotal,
+                    consumedFoods: data,
+                    currentMeal: meals.length > 0 ?
+                            meals[meals.length - 1] : 'Ateria #1',
+                    //consumedFoods: data.nutritionValuesPerItem,
+                    //totalConsumption: data.nutritionValuesInTotal,
                     isFetchingConsumedFoods: false
                 });
             }).catch((err) => {
@@ -235,20 +241,21 @@ export default class CurrentEntry extends React.Component {
         var updatedValues = updateValuesOnAddition(
             foodId,
             foodAmount,
+            this.state.currentMeal,
             JSON.parse(JSON.stringify(this.state.foods)),
             JSON.parse(JSON.stringify(this.state.consumedFoods)),
             JSON.parse(JSON.stringify(this.state.totalConsumption))
         );
         var consumedFoods = updatedValues.consumedFoods;
         var totalConsumption = updatedValues.totalConsumption;
-        var content = {
+        /*var content = {
             consumptionId: consumedFoods[consumedFoods.length - 1].consumptionId,
             foodId,
             foodAmount
-        };
+        };*/
 
-        post('/active-entry', content)
-            .catch((err) => console.error(err));
+        /*post('/active-entry', content)
+            .catch((err) => console.error(err));*/
 
         this.setState({
             consumedFoods,
@@ -318,13 +325,48 @@ export default class CurrentEntry extends React.Component {
         this.setState({foods});
     }
 
+    addMeal = () => {
+        var nextMeal = `Ateria #${Object.keys(this.state.consumedFoods).length + 1}`;
+        var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
+        tempConsumedFoods[nextMeal] = [];
+
+        this.setState({
+            currentMeal: nextMeal,
+            consumedFoods: tempConsumedFoods
+        });
+    }
+
+    editMealName = (oldName, newName) => {
+        var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
+
+        // copy the content of the meal
+        var mealCourses = tempConsumedFoods[oldName];
+        // delete the old meal
+        delete tempConsumedFoods[oldName];
+        // create new property with new name but old content
+        tempConsumedFoods[newName] = mealCourses;
+
+        this.setState({consumedFoods: tempConsumedFoods});
+    }
+
+    changeActiveMeal = (mealName) => {
+        // if already active meal is toggled, change active status to the newest meal
+        if(mealName == this.state.currentMeal) {
+            var meals = Object.keys(this.state.consumedFoods);
+            mealName = meals[meals.length - 1];
+        }
+
+        this.setState({currentMeal: mealName});
+    }
+
+
     render() {
         var {isFetchingConsumedFoods, isFetchingDailyGoal} = this.state;
 
         return (
             <div className='current-entry'>
                 <div className='row'>
-                    {!isFetchingConsumedFoods && !isFetchingDailyGoal ? (
+                    {/*}<{!isFetchingConsumedFoods && !isFetchingDailyGoal ? (
                         <DailyGoal
                             dailyGoal={this.state.dailyGoal}
                             totalConsumption={this.state.totalConsumption}
@@ -335,7 +377,7 @@ export default class CurrentEntry extends React.Component {
                         <div className='col-md-2'>
                             <Loading />
                         </div>
-                    )}
+                    )}*/}
                     <FoodSelection
                         fetchMethod={this.state.fetchMethod}
                         changeFetchMethod={this.changeFetchMethod}
@@ -362,6 +404,10 @@ export default class CurrentEntry extends React.Component {
                     viewportWidth={this.state.viewportWidth}
                     isModifiable={true}
                     consumedFoods={this.state.consumedFoods}
+                    currentMeal={this.state.currentMeal}
+                    addMeal={this.addMeal}
+                    changeActiveMeal={this.changeActiveMeal}
+                    editMealName={this.editMealName}
                     totalConsumption={this.state.totalConsumption}
                     copyEntry={this.copyEntry}
                     removeFromDiary={this.removeFromDiary}

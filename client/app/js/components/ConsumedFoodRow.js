@@ -64,14 +64,29 @@ export default function ConsumedFoodRow(props) {
             {isModifiable && !isBeingEdited &&
                 <td className='consumed-food-amount'>
                     <a onClick={() => copyEntry(food)}>{food.amount} g</a>
-                    <br />
-                    <a onClick={toggleEditing}>Muokkaa</a>
+                    <a onClick={toggleEditing} style={{marginLeft: '10px'}}>
+                        <i className='fa fa-pencil'
+                                data-tooltip-text='Muokkaa merkintää' />
+                    </a>
+                    {/*}<br />
+                    <a onClick={toggleEditing}>Muokkaa</a>*/}
                 </td>
             }
             <td className='consumed-food-energy-amount'>{food.energy} kcal</td>
             <td className={proteinClass}>{food.protein} g</td>
             <td className={carbClass}>{food.carbs} g</td>
             <td className={fatClass}>{food.fat} g</td>
+            {/*}<td>
+                <div className='consumed-food-row-actions'>
+                    <i
+                        className='fa fa-chevron-up'
+                        data-tooltip-text='Siirrä merkintä edelliseen ateriaan'
+                        onClick={() => moveToPreviousMeal(food.consumptionId)}
+                    />
+                    <i className='fa fa-chevron-down'
+                            data-tooltip-text='Siirrä merkintä seuraavaan ateriaan' />
+                </div>
+            </td>*/}
         </tr>
     );
 }

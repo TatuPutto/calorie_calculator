@@ -1,4 +1,4 @@
-function updateValuesOnConsumedFoodAddition(foodId, foodAmount, foods, consumedFoods, totalConsumption) {
+function updateValuesOnConsumedFoodAddition(foodId, foodAmount, currentMeal, foods, consumedFoods, totalConsumption) {
     var addedFood = foods.filter((food) => food.id == foodId)[0];
     var energyInAmount = addedFood.energy / 100 * foodAmount;
     var proteinInAmount = addedFood.protein / 100 * foodAmount;
@@ -6,19 +6,19 @@ function updateValuesOnConsumedFoodAddition(foodId, foodAmount, foods, consumedF
     var fatInAmount = addedFood.fat / 100 * foodAmount;
 
     addedFood.energy = Math.round(energyInAmount);
-    addedFood.protein = Math.round(proteinInAmount * 10) / 10;
-    addedFood.carbs = Math.round(carbsInAmount * 10) / 10;
-    addedFood.fat = Math.round(fatInAmount * 10) / 10;
+    addedFood.protein = Math.roundToOneDecimal(proteinInAmount);
+    addedFood.carbs = Math.roundToOneDecimal(carbsInAmount);
+    addedFood.fat = Math.roundToOneDecimal(fatInAmount);
 
     addedFood['consumptionId'] = new Date().getTime().toString();
     addedFood['amount'] = foodAmount;
     addedFood['latelyConsumed'] = true;
-    consumedFoods.push(addedFood);
+    consumedFoods[currentMeal].push(addedFood);
 
-    totalConsumption.energy = Math.round(totalConsumption.energy + energyInAmount);
+    /*totalConsumption.energy = Math.round(totalConsumption.energy + energyInAmount);
     totalConsumption.protein = Math.round((totalConsumption.protein + proteinInAmount) * 10) / 10;
     totalConsumption.carbs = Math.round((totalConsumption.carbs + carbsInAmount) * 10) / 10;
-    totalConsumption.fat = Math.round((totalConsumption.fat + fatInAmount) * 10) / 10;
+    totalConsumption.fat = Math.round((totalConsumption.fat + fatInAmount) * 10) / 10;*/
 
     return {consumedFoods, totalConsumption};
 }

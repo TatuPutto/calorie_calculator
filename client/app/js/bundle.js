@@ -16,6 +16,10 @@ if(!window.Promise) {
   window.Promise = Promise;
 }
 
+Math.roundToOneDecimal = (num) => {
+    return Math.round(num * 10) / 10;
+}
+
 render(
     <BrowserRouter>
         <div className='container-fluid'>

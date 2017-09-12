@@ -24,11 +24,11 @@ export default function ConsumedFoods(props) {
                     <h3>Merkinnät</h3>
                 </div>
                 <ConsumedFoodsTable {...props} />
-                {props.isModifiable &&
+                {/*}{props.isModifiable &&
                     <TotalNutritionValuesTable
                         totalConsumption={props.totalConsumption}
                     />
-                }
+                }*/}
             </div>
         );
     }

@@ -1,5 +1,6 @@
 var createConnection = require('../database/create-connection');
 var getConsumedFoods = require('../database/get-consumed-foods');
+var getEntry = require('../database/get-entry');
 var addFoodToConsumedFoods = require('../database/add-food-to-consumed-foods');
 var updateConsumedFoodAmount = require('../database/update-consumed-food-amount');
 var removeFoodFromConsumedFoods = require('../database/remove-food-from-consumed-foods');
@@ -19,14 +20,23 @@ router.use(function (req, res, next) {
 
 // return list of consumed foods for today
 router.get('/', function (req, res) {
-    getConsumedFoods(req.session.user.id)
+    /*getConsumedFoods(req.session.user.id)
         .then(function (consumedFoods) {
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(consumedFoods));
         }).catch(function (err) {
             res.status(400);
             res.end(err);
-        });
+        });*/
+
+        getEntry(1)
+            .then(function (consumedFoods) {
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify(consumedFoods));
+            }).catch(function (err) {
+                res.status(400);
+                res.end(err);
+            });
 });
 
 router.use(bodyParser.json());
