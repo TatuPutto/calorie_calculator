@@ -6,7 +6,7 @@ import ConsumedFoods from '../components/ConsumedFoods';
 import DailyGoal from '../components/DailyGoal';
 import Loading from '../components/Loading';
 
-import {get, post, patch, remove} from '../util/fetch';
+import {checkStatus, readJson, get, post, patch, remove} from '../util/fetch';
 import updateValuesOnAddition from '../util/update-values-on-addition';
 import updateValuesOnRemove from '../util/update-values-on-remove';
 import getCurrentDate from '../util/get-current-date';
@@ -47,10 +47,10 @@ export default class CurrentEntry extends React.Component {
         this.showMoreResults = this.showMoreResults.bind(this);
         this.selectFood = this.selectFood.bind(this);
         this.setSelectedFoodAmount = this.setSelectedFoodAmount.bind(this);
-        this.addToDiary = this.addToDiary.bind(this);
+        this.addEntry = this.addEntry.bind(this);
         this.copyEntry = this.copyEntry.bind(this);
-        this.removeFromDiary = this.removeFromDiary.bind(this);
-        this.updateDiaryEntry = this.updateDiaryEntry.bind(this);
+        this.removeEntry = this.removeEntry.bind(this);
+        this.updateEntry = this.updateEntry.bind(this);
         this.addToFavorites = this.addToFavorites.bind(this);
         this.removeFromFavorites = this.removeFromFavorites.bind(this);
         this.toggleFavoriteIcon = this.toggleFavoriteIcon.bind(this);
@@ -95,7 +95,7 @@ export default class CurrentEntry extends React.Component {
         get(`/daily-goal/${getCurrentDate()}`)
             .then((res) => res.json())
             .then((data) => {
-                this.setState({ dailyGoal: data, isFetchingDailyGoal: false});
+                this.setState({dailyGoal: data, isFetchingDailyGoal: false});
                 this.getConsumedFoods();
             }).catch((err) => {
                 console.error(err);
@@ -115,14 +115,23 @@ export default class CurrentEntry extends React.Component {
             .then((res) => res.json())
             .then((data) => {
                 var meals = Object.keys(data);
-                var amountOfMeals = meals.length;
+                var latestMeal = data[meals.length - 1];
+                var activeMeal = null;
+
+                if(meals.length > 0) {
+                    activeMeal = {
+                        mealId: latestMeal.mealId,
+                        mealName: latestMeal.mealName
+                    };
+                } else {
+                    this.addMeal();
+                }
 
                 this.setState({
                     consumedFoods: data,
-                    activeMeal: amountOfMeals > 0 ?
-                            data[amountOfMeals - 1].mealName : 'Ateria #1',
+                    activeMeal: activeMeal,
                     isFetchingConsumedFoods: false
-                });setTimeout(() => console.log(this.state.activeMeal),500)
+                });
             }).catch((err) => {
                 this.setState({isFetchingConsumedFoods: false});
                 console.error(err);
@@ -235,9 +244,9 @@ export default class CurrentEntry extends React.Component {
         }
     }
 
-    addToDiary(foodId, foodAmount) {
+    addEntry(foodId, foodAmount) {
         // update consumed foods and total values optimistically on addition
-        var updatedValues = updateValuesOnAddition(
+        /*var updatedValues = updateValuesOnAddition(
             foodId,
             foodAmount,
             this.state.activeMeal,
@@ -246,55 +255,64 @@ export default class CurrentEntry extends React.Component {
             JSON.parse(JSON.stringify(this.state.totalConsumption))
         );
         var consumedFoods = updatedValues.consumedFoods;
-        var totalConsumption = updatedValues.totalConsumption;
-        /*var content = {
-            consumptionId: consumedFoods[consumedFoods.length - 1].consumptionId,
-            foodId,
-            foodAmount
-        };*/
+        var totalConsumption = updatedValues.totalConsumption;*/
 
-        /*post('/active-entry', content)
-            .catch((err) => console.error(err));*/
 
-        this.setState({
+            /*for(var i = 0; i < this.state.consumedFoods; i++) {
+                if(this.state.consumedFoods[i].mealName == this.state.activeMeal) {
+                    activeMealId = this.state.consumedFoods[i].mealId;
+                }
+            }*/
+
+            var entryDetails = {
+                foodId,
+                foodAmount,
+                mealId: this.state.activeMeal.mealId
+            };
+
+            post('/active-entry/add-entry', entryDetails)
+                .catch((err) => console.error(err));
+
+
+        /*this.setState({
             consumedFoods,
             totalConsumption,
             selectedFoodId: null,
             selectedFood: null,
             selectedFoodAmount: null
-        });
+        });*/
     }
 
-    copyEntry(entry) {
-        var date = new Date();
+    copyEntry(foodId, foodAmount) {
+        var entryContent = {
+            mealId: this.state.activeMeal.mealId,
+            foodId,
+            foodAmount
+        };
 
-        post('/active-entry', {
-            consumptionId: date.getTime().toString(),
-            foodId: entry.id,
-            foodAmount: entry.amount
-        })
+        post('/active-entry/add-entry', entryContent)
             .then(() => this.getConsumedFoods())
             .catch((err) => console.error(err));
     }
 
-    removeFromDiary(consumptionId) {
+    removeEntry(consumptionId) {
         // update consumed foods and total values optimistically on removal
-        var updatedValues = updateValuesOnRemove(
+        /*var updatedValues = updateValuesOnRemove(
             consumptionId,
             JSON.parse(JSON.stringify(this.state.consumedFoods)),
             JSON.parse(JSON.stringify(this.state.totalConsumption))
-        );
+        );*/
 
         remove(`/active-entry?consumptionId=${consumptionId}`)
             .catch((err) => console.error(err));
 
-        this.setState({
+        /*this.setState({
             consumedFoods: updatedValues.consumedFoods,
             totalConsumption: updatedValues.totalConsumption
-        });
+        });*/
     }
 
-    updateDiaryEntry(consumptionId, foodAmount) {
+    updateEntry(consumptionId, foodAmount) {
         patch('/active-entry', {consumptionId, foodAmount})
             .then(() => this.getConsumedFoods())
             .catch((err) => console.error(err));
@@ -324,21 +342,26 @@ export default class CurrentEntry extends React.Component {
         this.setState({foods});
     }
 
-    addMeal = () => {
+    addMeal = () => {console.log('jp');
         var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
-        var nextMealId = tempConsumedFoods[tempConsumedFoods.length - 1].mealId + 1;
         var nextMealName = `Ateria #${Object.keys(this.state.consumedFoods).length + 1}`;
 
-        tempConsumedFoods.push({
-            mealId: nextMealId,
-            mealName: nextMealName,
-            mealCourses: []
-        });
+        post('/active-entry/add-meal', {mealName: nextMealName})
+            .then(checkStatus)
+            .then(readJson)
+            .then((createdMeal) => {
+                tempConsumedFoods.push({
+                    mealId: createdMeal.mealId,
+                    mealName: createdMeal.mealName,
+                    mealCourses: []
+                });
 
-        this.setState({
-            activeMeal: nextMealName,
-            consumedFoods: tempConsumedFoods
-        });
+                this.setState({
+                    activeMeal: createdMeal,
+                    consumedFoods: tempConsumedFoods
+                });
+            })
+            .catch((err) => console.log(err));
     }
 
     editMealName = (index, oldName, newName) => {
@@ -351,17 +374,22 @@ export default class CurrentEntry extends React.Component {
         });
     }
 
-    changeActiveMeal = (nextMealName) => {
+    changeActiveMeal = (nextActiveMealId, nextActiveMealName) => {
         var consumedFoods = this.state.consumedFoods;
-        var latestMeal = consumedFoods[consumedFoods.length - 1].mealName;
+        var latestMealId = consumedFoods[consumedFoods.length - 1].mealId;
 
         // if already active meal is toggled, change active status to the newest meal
-        if(nextMealName == this.state.activeMeal) {
-            if(nextMealName == latestMeal) return;
-            nextMealName = latestMeal;
+        if(nextActiveMealId == this.state.activeMeal.mealId) {
+            if(nextActiveMealId == latestMealId) return;
+            nextActiveMealId = latestMealId;
         }
 
-        this.setState({activeMeal: nextMealName});
+        this.setState({
+            activeMeal: {
+                mealId: nextActiveMealId,
+                mealName: nextActiveMealName
+            }
+        });
     }
 
 
@@ -398,7 +426,7 @@ export default class CurrentEntry extends React.Component {
                         setSelectedFoodAmount={this.setSelectedFoodAmount}
                         isFetchingMatchingFoods={this.state.isFetchingMatchingFoods}
                         selectFood={this.selectFood}
-                        addToDiary={this.addToDiary}
+                        addEntry={this.addEntry}
                         addToFavorites={this.addToFavorites}
                         removeFromFavorites={this.removeFromFavorites}
                         fetchMethod={this.state.fetchMethod}
@@ -415,8 +443,8 @@ export default class CurrentEntry extends React.Component {
                     editMealName={this.editMealName}
                     totalConsumption={this.state.totalConsumption}
                     copyEntry={this.copyEntry}
-                    removeFromDiary={this.removeFromDiary}
-                    updateDiaryEntry={this.updateDiaryEntry}
+                    removeEntry={this.removeEntry}
+                    updateEntry={this.updateEntry}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
             </div>

@@ -30,10 +30,11 @@ export default function ConsumedFoodRowWrapper(Component) {
         }
 
         update(consumptionId) {
+            var consumptionId = this.props.food.consumptionId;
             var foodAmount = this.state.foodAmount.trim();
 
             if(foodAmount && foodAmount > 0) {
-                this.props.updateDiaryEntry(this.props.food.consumptionId, foodAmount)
+                this.props.updateEntry(consumptionId, foodAmount);
             }
         }
 

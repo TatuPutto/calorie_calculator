@@ -15,7 +15,7 @@ export default function ConsumedFoodRowCompactLayout(props) {
         update,
         copyEntry,
         removeFromDiary,
-        updateDiaryEntry
+        removeEntry
     } = props;
     var dominantMacro = calcDominantMacro(food.protein, food.carbs, food.fat);
     var proteinClass = 'consumed-food-protein-amount ' +
@@ -57,7 +57,7 @@ export default function ConsumedFoodRowCompactLayout(props) {
             }
             {isModifiable && !isBeingEdited &&
                 <td className='consumed-food-amount'>
-                    <a onClick={() => copyEntry(food)}>
+                    <a onClick={() => copyEntry(food.id, food.amount)}>
                         {food.amount} g
                     </a>
                     <br />

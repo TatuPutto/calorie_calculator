@@ -1,8 +1,9 @@
 var fs = require('fs');
-var round = require('./round-to-one-decimal');
+//var round = require('./round-to-one-decimal');
+var createConnection = require('../database/create-connection');
 
-var foods = fs.readFileSync('./server/ruuat.csv', 'utf8').split('\n');
-var foodNames = [];
+//var foods = fs.readFileSync('./server/ruuat.csv', 'utf8').split('\n');
+/*var foodNames = [];
 for(var i = 1; i < foods.length; i++) {
     var name = foods[i].split(';')[1];
    foodNames.push(name);
@@ -19,34 +20,71 @@ function getFoodName(id) {
             return foods[i].split(';')[1];
         }
     }
-}
+}*/
 
 module.exports = function convertToJson() {
-    var json = {};
+    var nutritionValues = fs.readFileSync('./foods-with-portion-sizes.json', 'utf8');
+    var parsed = JSON.parse(nutritionValues);
+
+
+    var mysql      = require('mysql');
+    var connection = mysql.createConnection({
+      host     : 'localhost',
+      user     : 'root',
+      password : '',
+      database : 'fooddiary'
+    });
+
+    connection.connect();
+    var i = 0;
+    for(var id in parsed) {
+        var food = parsed[id];
+        var name = food.name;
+        var energy = food.energy;
+        var protein = food.protein;
+        var carbs = food.carbohydrates;
+        var fat = food.fat;
+
+        var query = `
+            INSERT INTO foods (foodId, foodName, energy, protein, carbs, fat)
+            VALUES (${id}, "${name}", "${energy}", "${protein}", "${carbs}", "${fat}")
+        `;
+
+
+
+        connection.query(query);
+
+        i++;
+
+    }
+    connection.end();
+
+        return ;
+    /*var json = {};
     var breakI = 1;
     var breakP = 1;
     //34306
     for(var i = 1; i <= 34306; i++) {
     //for(var i = 1; i <= 1000; i++) {
         var nutritionVal = asd(i, breakI);
-        var portions = portion(i, breakP);
-        console.log(portions);
+        //var portions = portion(i, breakP);
+        //console.log(portions);
         obj = nutritionVal[0];
 
 
         breakI = nutritionVal[1];
-        breakP = portions[1];
+        //breakP = portions[1];
 
         if(Object.keys(nutritionVal[0]).length > 0) {
             obj['name'] = getFoodName(i);
-            obj['portionSizes'] = portions[0];
+            //obj['portionSizes'] = portions[0];
             console.log(obj);
             json[i] = obj;
         }
 
-    }
+    }*/
 
-    fs.writeFileSync('foods-with-portion-sizes.json', JSON.stringify(json), 'utf8');
+    //fs.writeFileSync('foods-with-portion-sizes.json', JSON.stringify(json), 'utf8');
 }
 
 function portion(num, breakP) {
@@ -95,8 +133,6 @@ function asd(num, breakI) {
                 if(prop == 'CHOAVL') type = 'carbohydrates';
                 if(prop == 'PROT') type = 'protein';
                 if(prop == 'FAT') type = 'fat';
-
-
                 if(type == 'energy') {
                     value = nutritionValues[i].split(';')[2].replace(',', '.');
                     value = Math.round(value / 4.184);

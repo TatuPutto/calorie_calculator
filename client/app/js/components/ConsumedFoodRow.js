@@ -15,7 +15,7 @@ export default function ConsumedFoodRow(props) {
         update,
         copyEntry,
         removeFromDiary,
-        updateDiaryEntry
+        removeEntry
     } = props;
     var dominantMacro = calcDominantMacro(food.protein, food.carbs, food.fat);
     var proteinClass = 'consumed-food-protein-amount ' +
@@ -27,11 +27,11 @@ export default function ConsumedFoodRow(props) {
     var invalidInputStyle = {borderColor: 'red', boxShadow: '0px 0px 5px red'};
 
     return (
-        <tr key={food.consumptionId}>
+        <tr className='consumed-food'>
             {isModifiable &&
                 <td
                     className='consumed-food-remove'
-                    onClick={() => removeFromDiary(food.consumptionId)}
+                    onClick={() => removeEntry(food.consumptionId)}
                 >
                     <i className='fa fa-remove' />
                 </td>
@@ -63,7 +63,7 @@ export default function ConsumedFoodRow(props) {
             }
             {isModifiable && !isBeingEdited &&
                 <td className='consumed-food-amount'>
-                    <a onClick={() => copyEntry(food)}>{food.amount} g</a>
+                    <a onClick={() => copyEntry(food.id, food.amount)}>{food.amount} g</a>
                     <a onClick={toggleEditing} style={{marginLeft: '10px'}}>
                         <i className='fa fa-pencil'
                                 data-tooltip-text='Muokkaa merkintää' />
@@ -95,5 +95,5 @@ ConsumedFoodRow.propTypes = {
     food: PropTypes.object.isRequired,
     addToDiary: PropTypes.func,
     removeFromDiary: PropTypes.func,
-    updateDiaryEntry: PropTypes.func
+    removeEntry: PropTypes.func
 };

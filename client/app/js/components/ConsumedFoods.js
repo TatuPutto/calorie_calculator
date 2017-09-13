@@ -10,13 +10,17 @@ export default function ConsumedFoods(props) {
     var consumedFoodsOutput = null;
     var consumedFoodsClass = 'consumed-foods ' +
             (props.isModifiable ? 'col-md-10 col-md-offset-2' : '');
+    var hasEntries = false;
+
+    // does consumedfoods contains any entries
+    for(var i = 0; i < consumedFoods.length; i++) {
+        if(consumedFoods[i].mealCourses.length > 0) hasEntries = true;
+    }
 
     if(isFetchingConsumedFoods) {
         consumedFoodsOutput = <Loading />;
-    } else if(consumedFoods.length === 0 && !isFetchingConsumedFoods) {
-        consumedFoodsOutput = (
-            <div style={{padding: '10px', fontSize: '14px'}}>Ei merkintöjä</div>
-        );
+    } else if(!hasEntries && !isFetchingConsumedFoods) {
+        consumedFoodsOutput = <div className='no-entries'>Ei merkintöjä</div>;
     } else {
         consumedFoodsOutput = (
             <div>

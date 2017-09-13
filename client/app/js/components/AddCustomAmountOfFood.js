@@ -11,12 +11,12 @@ export default class AddCustomAmountOfFood extends React.Component {
             foodId,
             selectedFoodAmount,
             setSelectedFoodAmount,
-            addToDiary
+            addEntry
         } = this.props;
 
         return (
             <div className='add-custom-amount'>
-                <form onSubmit={() => addToDiary(foodId, selectedFoodAmount)}>
+                <form onSubmit={() => addEntry(foodId, selectedFoodAmount)}>
                     <input
                         ref={input => this.amountInput = input}
                         type='text'
@@ -26,7 +26,7 @@ export default class AddCustomAmountOfFood extends React.Component {
                     />
                     <button
                         className='btn btn-info'
-                        onClick={() => addToDiary(foodId, selectedFoodAmount)}
+                        onClick={() => addEntry(foodId, selectedFoodAmount)}
                         style={{
                             background: '#4692d2',
                             borderColor: '#4692d2',

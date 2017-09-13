@@ -1,8 +1,8 @@
 import React from 'react';
 
 export default class ConsumedFoodMealRow extends React.Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {isBeingEdited: false};
     }
 
@@ -15,24 +15,24 @@ export default class ConsumedFoodMealRow extends React.Component {
     toggleEditing = (e) => {
         if(this.state.isBeingEdited) {
             var newName = e.currentTarget.value;
-            this.props.editMealName(this.props.index, this.props.meal, newName);
+            this.props.editMealName(this.props.arrayIndex, this.props.mealName, newName);
         }
 
         this.setState({isBeingEdited: !this.state.isBeingEdited});
     }
 
     render() {
-        var isActiveMeal = this.props.activeMeal == this.props.meal;
+        var isActiveMeal = this.props.activeMealId == this.props.mealId;
 
         return (
-            <tr key={this.props.meal} className='consumed-foods-meal'>
+            <tr key={this.props.mealId} className='consumed-foods-meal'>
                 {!this.state.isBeingEdited ? (
                     <td colSpan={7}>
                         <label className='toggle-active-meal'>
                             <input
                                 type='checkbox'
                                 checked={isActiveMeal}
-                                onChange={() => this.props.changeActiveMeal(this.props.meal)}
+                                onChange={() => this.props.changeActiveMeal(this.props.mealId, this.props.mealName)}
                             />
                             <span className='slider round'></span>
                         </label>
@@ -41,7 +41,7 @@ export default class ConsumedFoodMealRow extends React.Component {
                             :
                             <i onClick={() => this.props.changeActiveMeal(this.props.meal)} className='fa fa-lock' style={{float: 'left', color: '#fff', width: '4%', position: 'absolute', left: '15px', fontSize: '18px'}} />
                         }*/}
-                        {this.props.meal}
+                        {this.props.mealName}
                         <button className='btn btn-ghost' style={{color: '#fff', position: 'absolute', padding: '0 10px'}}>
                             <i className='fa fa-pencil' onClick={this.toggleEditing} />
                         </button>

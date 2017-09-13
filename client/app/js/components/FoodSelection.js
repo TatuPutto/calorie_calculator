@@ -32,7 +32,7 @@ FoodSelection.propTypes = {
     changeSearchTerm: PropTypes.func.isRequired,
     doSearch: PropTypes.func.isRequired,
     showMoreResults: PropTypes.func.isRequired,
-    addToDiary: PropTypes.func.isRequired,
+    addEntry: PropTypes.func.isRequired,
     addToFavorites: PropTypes.func.isRequired,
     removeFromFavorites: PropTypes.func.isRequired,
     selectFood: PropTypes.func.isRequired,

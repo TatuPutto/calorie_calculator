@@ -9,6 +9,18 @@ var defaultParams = {
     }
 };
 
+export function checkStatus(res) {
+    if(res.ok) {
+        return Promise.resolve(res);
+    } else {
+        throw res.status;
+    }
+}
+
+export function readJson(res) {
+    return res.json();
+}
+
 export function get(url) {
     return fetch(url, defaultParams);
 }

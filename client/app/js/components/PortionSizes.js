@@ -1,13 +1,11 @@
 import React from 'react';
 
-export default function PortionSizes(props) {
-    var portionSizes = props.portionSizes;
-    var foodId = props.foodId;
+export default function PortionSizes({foodId, portionSizes, addEntry}) {
     var portions = Object.keys(portionSizes).map((portion) => {
         var portionAmount = portionSizes[portion];
 
         return (
-            <li key={portion} onClick={() => props.addToDiary(foodId, portionAmount)}>
+            <li key={portion} onClick={() => addEntry(foodId, portionAmount)}>
                 <a>{portion} ({portionAmount} g)</a>
             </li>
         );

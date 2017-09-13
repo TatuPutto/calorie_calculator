@@ -21,11 +21,12 @@ export default function ConsumedFoodsTable(props) {
         rows.push(
             <ConsumedFoodMealRow
                 key={meal.mealId}
-                index={i}
-                meal={meal.mealName}
-                activeMeal={props.activeMeal}
+                mealId={meal.mealId}
+                mealName={meal.mealName}
+                activeMealId={props.activeMeal.mealId}
                 changeActiveMeal={props.changeActiveMeal}
                 editMealName={props.editMealName}
+                arrayIndex={i}
             />
         );
 
@@ -38,8 +39,8 @@ export default function ConsumedFoodsTable(props) {
                         food={course}
                         isModifiable={props.isModifiable}
                         copyEntry={props.copyEntry}
-                        removeFromDiary={props.removeFromDiary}
-                        updateDiaryEntry={props.updateDiaryEntry}
+                        updateEntry={props.updateEntry}
+                        removeEntry={props.removeEntry}
                     />
                 );
             });
@@ -48,10 +49,8 @@ export default function ConsumedFoodsTable(props) {
         }
     });
 
-
     return (
         <table className='consumed-foods-table'>
-            {/*}<ConsumedFoodsTableHeader {...props} />*/}
             <tbody>
                 {rows}
                 <tr>
@@ -68,5 +67,5 @@ ConsumedFoodsTable.propTypes = {
     consumedFoods: PropTypes.array.isRequired,
     addToDiary: PropTypes.func,
     removeFromDiary: PropTypes.func,
-    updateDiaryEntry: PropTypes.func
+    removeEntry: PropTypes.func
 };

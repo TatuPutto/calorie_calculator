@@ -10,7 +10,7 @@ export default function AddToConsumedFoods(props) {
         selectedFoodId,
         selectedFoodAmount,
         setSelectedFoodAmount,
-        addToDiary,
+        addEntry,
         portionSizes,
     } = props;
 
@@ -20,12 +20,12 @@ export default function AddToConsumedFoods(props) {
                 foodId={food.id}
                 selectedFoodAmount={selectedFoodAmount}
                 setSelectedFoodAmount={setSelectedFoodAmount}
-                addToDiary={addToDiary}
+                addEntry={addEntry}
             />
             <PortionSizes
                 portionSizes={food.portionSizes}
                 foodId={food.id}
-                addToDiary={addToDiary}
+                addEntry={addEntry}
             />
         </div>
     );
