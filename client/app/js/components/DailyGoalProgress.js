@@ -35,7 +35,7 @@ export default function DailyGoalProgress({total, goal}) {
                     <canvas id='carbs-chart' />
                 </div>
                 <p className='macro-total'>
-                    {Math.round(total.carbs)} g / {goal.carbohydrates} g
+                    {Math.round(total.carbs)} g / {goal.carbs} g
                 </p>
             </div>
             <div className='fat-goal'>

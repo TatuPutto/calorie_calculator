@@ -1,8 +1,8 @@
 var getConnection = require('./create-connection');
 
-module.exports = function setDailyGoal(userId, energy, protein, carbs, fat) {
+module.exports = function insertGoalForToday(userId, energy, protein, carbs, fat) {
     var query = 'INSERT INTO dailyGoals ' +
-            '(userId, energy, protein, carbohydrates, fat, setAt)' +
+            '(userId, energy, protein, carbs, fat, setAt)' +
             'VALUES (?, ?, ?, ?, ?, NOW())';
     var data = [userId, energy, protein, carbs, fat];
 

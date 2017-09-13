@@ -18,9 +18,10 @@ export default function FoodItemCompactLayout(props) {
         protein,
         carbs,
         fat,
-        favorite : isInfavorites,
+        isInFavorites,
     } = food;
-    var favoriteToggleFunction = isInfavorites ?
+
+    var favoriteToggleFunction = isInFavorites ?
             removeFromFavorites : addToFavorites;
             var dominantMacro = calcDominantMacro(protein, carbs, fat);
     var proteinClass = 'food-protein-amount ' +
@@ -45,7 +46,7 @@ export default function FoodItemCompactLayout(props) {
                         className='food-add-to-favorites'
                         onClick={() => favoriteToggleFunction(id)}
                     >
-                        <i className={isInfavorites ? 'fa fa-star' : 'fa fa-star-o'} />
+                        <i className={isInFavorites ? 'fa fa-star' : 'fa fa-star-o'} />
                     </button>
                 </span>
                 <span className='food-energy-amount'>{energy} kcal</span>

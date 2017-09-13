@@ -1,9 +1,11 @@
 var getConnection = require('./create-connection');
 
-function updateConsumedFoodAmount(consumptionId, userId, foodAmount) {
-    var query = 'UPDATE consumedFoods SET foodAmount=? ' +
-            'WHERE userId=? AND consumptionId=?';
+module.exports = function updateEntry(consumptionId, userId, foodAmount) {
     var data = [foodAmount, userId, consumptionId];
+    var query = `
+        UPDATE consumedFoods SET foodAmount=?
+        WHERE userId=? AND consumptionId=?
+    `;
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
@@ -18,5 +20,3 @@ function updateConsumedFoodAmount(consumptionId, userId, foodAmount) {
         throw err;
     });
 }
-
-module.exports = updateConsumedFoodAmount;

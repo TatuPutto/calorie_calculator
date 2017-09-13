@@ -3,18 +3,40 @@ var getLatestConsumedFoods = require('../database/get-latest-consumed-foods');
 var markFoodsAsLatelyConsumed = require('../util/mark-foods-as-lately-consumed');
 var getFavoriteFoods = require('../database/get-favorite-foods');
 var markFoodsAsFavorites = require('../util/mark-foods-as-favorites');
+
+var selectMatchingFoodsAndPrioritize =
+        require('../database/select-matching-foods-and-prioritize');
+
 var cookieParser = require('cookie-parser');
 var express = require('express');
 var router = express.Router();
 
 router.use(cookieParser());
 
-router.get('/:food', function (req, res) {
-    var matchingFoods = findMatchingFoodsByName(req.params.food);
+router.get('/:searchTerm', function (req, res) {
+    var searchTerm = req.params.searchTerm;
+    var userId = req.session.user.id;
+    var matchingFoods = [];
+    //var matchingFoods = findMatchingFoodsByName(req.params.food);
 
     // get favorite foods if user is logged in
     if(req.session.user) {
-        Promise.all([
+        // find foods matching the search term and prioritize the results by
+        // users history and wheter or not food is in users favorites
+
+        selectMatchingFoodsAndPrioritize(searchTerm, userId)
+            .then(function (matchingFoods) {console.log(matchingFoods);
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify(matchingFoods));
+            })
+            .catch(function (err) {
+                res.status(400);
+                res.end();
+            })
+
+
+
+        /*Promise.all([
             getLatestConsumedFoods(req.session.user.id),
             getFavoriteFoods(req.session.user.id)
         ])
@@ -34,7 +56,7 @@ router.get('/:food', function (req, res) {
         })
         .catch(function (err) {
             res.status(400).end(err);
-        })
+        })*/
     } else {
         // determine which of the foods are in users favorites (cookie)
         var favoriteFoodsCookie = req.cookies['favorites'];

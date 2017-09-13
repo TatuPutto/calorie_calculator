@@ -1,10 +1,12 @@
 var getConnection = require('./create-connection');
 
-module.exports = function getDailyGoal(userId, date) {
-    var query = 'SELECT energy, protein, carbohydrates as carbs, fat ' +
-            'FROM dailyGoals WHERE userId=? AND ' +
-            'setAt <= STR_TO_DATE(?, "%d-%m-%Y") + INTERVAL 1 DAY ' +
-            'ORDER BY setAt DESC';
+module.exports = function selectGoalFromDate(userId, date) {
+    var query = `
+        SELECT energy, protein, carbs, fat
+        FROM dailyGoals WHERE userId = ?
+        AND setAt <= STR_TO_DATE(?, "%d-%m-%Y") + INTERVAL 1 DAY
+        ORDER BY setAt DESC
+    `;
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
@@ -19,7 +21,8 @@ module.exports = function getDailyGoal(userId, date) {
                 }
             });
         })
-    }).catch(function (err) {
+    })
+    .catch(function (err) {
         console.log(err);
         throw err;
     });

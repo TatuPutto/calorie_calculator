@@ -22,66 +22,9 @@
     border-bottom: @border;
 }
 
-.consumed-foods-table tr:hover {
-    background: #e8f2ff;
-}
-
 .consumed-foods-meal {
     background: #666;
     color: #fff;
-}
-
-.consumed-foods-meal:hover {
-    background: #666 !important;
-}
-
-.consumed-food-row-actions {
-    opacity: 0;
-    position: absolute;
-    //width: ~"calc(100% - 30px)";
-    left: 50%;
-    height: 40px;
-    line-height: 40px;
-    margin-top: -20px;
-    //background: rgba(0, 0, 0, 0.6);
-    transform: translateX(-50%);
-}
-
-
-.consumed-foods-table tr:hover .consumed-food-row-actions {
-    opacity: 1;
-}
-
-.consumed-food-row-actions > i {
-    //color: #fff;
-    font-size: 18px;
-    vertical-align: middle;
-}
-
-.consumed-food-row-actions > i:first-child {
-    margin-right: 10px;
-}
-
-
-.consumed-food-row-actions > i::after {
-    content: attr(data-tooltip-text);
-    position: absolute;
-    font-family: 'Roboto', arial;
-    font-size: 13px;
-    white-space: nowrap;
-    color: #fff;
-    top: -38px;
-    background: #000;
-    margin-left: -8px;
-    padding: 12px 12px 12px 4px;
-    border-bottom: 8px solid #e8f2ff;
-    border-left: 8px solid #000;
-    background: #000;
-    display: none;
-}
-
-.consumed-food-row-actions > i:hover::after {
-    display: inherit;
 }
 
 input[type="checkbox"] {

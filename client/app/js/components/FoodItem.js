@@ -19,9 +19,10 @@ export default function FoodItem(props) {
         protein,
         carbs,
         fat,
-        favorite : isInfavorites,
+        isInFavorites
     } = food;
-    var favoriteToggleFunction = isInfavorites ?
+
+    var favoriteToggleFunction = isInFavorites ?
             removeFromFavorites : addToFavorites;
     var selectedIndicatorClass = 'food-selected-indicator fa fa-caret-right ' +
             (selectedFoodId == id ? 'open' : 'closed')
@@ -49,7 +50,7 @@ export default function FoodItem(props) {
                         className='food-add-to-favorites'
                         onClick={() => favoriteToggleFunction(id)}
                     >
-                        <i className={isInfavorites ? 'fa fa-star' : 'fa fa-star-o'} />
+                        <i className={isInFavorites ? 'fa fa-star' : 'fa fa-star-o'} />
                     </button>
                 </span>
                 <span className='food-energy-amount'>{energy} kcal</span>
@@ -57,9 +58,9 @@ export default function FoodItem(props) {
                 <span className={carbClass}>{carbs} g</span>
                 <span className={fatClass}>{fat} g</span>
             </div>
-            {selectedFoodId == id &&
+            {/*}{selectedFoodId == id &&
                 <AddToConsumedFoods {...props} />
-            }
+            }*/}
         </li>
     );
 }
@@ -70,5 +71,4 @@ FoodItem.propTypes = {
     selectFood: PropTypes.func.isRequired,
     addToFavorites: PropTypes.func.isRequired,
     removeFromFavorites: PropTypes.func.isRequired,
-
 };

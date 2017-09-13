@@ -41,7 +41,6 @@ export default class DailyGoal extends React.Component {
                 <div className='daily-goal-wrapper'>
                     <div className='daily-goal-header'>
                         <h3>Päivätavoite</h3>
-
                         <button className='configure-daily-goals'
                             data-toggle='modal'
                             data-target='#set-daily-goal'

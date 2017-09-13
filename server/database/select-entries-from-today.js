@@ -28,8 +28,13 @@ module.exports = function selectEntriesFromToday(userId) {
         });
     })
     .then(function (results) {
+        var energyInTotal = 0;
+        var proteinInTotal = 0;
+        var carbsInTotal = 0;
+        var fatInTotal = 0;
         var meals = [];
         var latestMeal;
+
 
         results.forEach(function (row) {
             // find all the different types of meals in results
@@ -49,20 +54,38 @@ module.exports = function selectEntriesFromToday(userId) {
                 return meal.mealId === row.mealId;
             });
 
+            var energyInAmount = Math.round((row.energy / 100) * row.foodAmount);
+            var proteinInAmount = Math.round((row.protein / 100) * row.foodAmount * 10) / 10;
+            var carbsInAmount = Math.round((row.carbs / 100) * row.foodAmount * 10) / 10;
+            var fatInAmount = Math.round((row.fat / 100) * row.foodAmount * 10) / 10;
+
             // add course to meal
             meals[matchAtIndex].mealCourses.push({
                 consumptionId: row.consumptionId,
                 id: row.foodId,
                 name: row.foodName,
                 amount: row.foodAmount,
-                energy: Math.round((row.energy / 100) * row.foodAmount),
-                carbs: Math.round((row.carbs / 100) * row.foodAmount * 10) / 10,
-                protein: Math.round((row.protein / 100) * row.foodAmount * 10) / 10,
-                fat: Math.round((row.fat / 100) * row.foodAmount * 10) / 10
+                energy: energyInAmount,
+                protein: proteinInAmount,
+                carbs: carbsInAmount,
+                fat: fatInAmount
             });
+
+            // add row values towards the total
+            energyInTotal += energyInAmount;
+            proteinInTotal += proteinInAmount;
+            carbsInTotal += carbsInAmount;
+            fatInTotal += fatInAmount;
         });
 
-        return meals;
+        var nutritionValuesInTotal = {
+            energy: energyInTotal,
+            protein: proteinInTotal,
+            carbs: carbsInTotal,
+            fat: fatInTotal
+        };
+
+        return {meals, nutritionValuesInTotal};
     })
     .catch(function (err) {
         console.log(err);

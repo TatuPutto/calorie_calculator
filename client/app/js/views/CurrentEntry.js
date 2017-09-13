@@ -51,6 +51,9 @@ export default class CurrentEntry extends React.Component {
         this.copyEntry = this.copyEntry.bind(this);
         this.removeEntry = this.removeEntry.bind(this);
         this.updateEntry = this.updateEntry.bind(this);
+        this.addMeal = this.addMeal.bind(this);
+        this.editMealName = this.editMealName.bind(this);
+        this.changeActiveMeal = this.changeActiveMeal.bind(this);
         this.addToFavorites = this.addToFavorites.bind(this);
         this.removeFromFavorites = this.removeFromFavorites.bind(this);
         this.toggleFavoriteIcon = this.toggleFavoriteIcon.bind(this);
@@ -93,11 +96,13 @@ export default class CurrentEntry extends React.Component {
 
     getDailyGoal() {
         get(`/daily-goal/${getCurrentDate()}`)
-            .then((res) => res.json())
+            .then(checkStatus)
+            .then(readJson)
             .then((data) => {
                 this.setState({dailyGoal: data, isFetchingDailyGoal: false});
                 this.getConsumedFoods();
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 console.error(err);
                 this.setState({isFetchingDailyGoal: false});
             });
@@ -112,10 +117,11 @@ export default class CurrentEntry extends React.Component {
         });
 
         get('/active-entry')
-            .then((res) => res.json())
+            .then(checkStatus)
+            .then(readJson)
             .then((data) => {
-                var meals = Object.keys(data);
-                var latestMeal = data[meals.length - 1];
+                var meals = Object.keys(data.meals);
+                var latestMeal = data.meals[meals.length - 1];
                 var activeMeal = null;
 
                 if(meals.length > 0) {
@@ -128,11 +134,13 @@ export default class CurrentEntry extends React.Component {
                 }
 
                 this.setState({
-                    consumedFoods: data,
+                    consumedFoods: data.meals,
+                    totalConsumption: data.nutritionValuesInTotal,
                     activeMeal: activeMeal,
                     isFetchingConsumedFoods: false
                 });
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 this.setState({isFetchingConsumedFoods: false});
                 console.error(err);
             });
@@ -165,14 +173,16 @@ export default class CurrentEntry extends React.Component {
         });
 
         get(url)
-            .then((res) => res.json())
+            .then(checkStatus)
+            .then(readJson)
             .then((data) => {
                 this.setState({
                     foods: data,
                     isFetchingMatchingFoods: false,
                     fetchError: null
                 });
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 this.setState({
                     fetchError: `Haussa tapahtui virhe (${err})`,
                     isFetchingMatchingFoods: false,
@@ -291,6 +301,7 @@ export default class CurrentEntry extends React.Component {
         };
 
         post('/active-entry/add-entry', entryContent)
+            .then(checkStatus)
             .then(() => this.getConsumedFoods())
             .catch((err) => console.error(err));
     }
@@ -313,7 +324,8 @@ export default class CurrentEntry extends React.Component {
     }
 
     updateEntry(consumptionId, foodAmount) {
-        patch('/active-entry', {consumptionId, foodAmount})
+        patch('/active-entry/update-entry', {consumptionId, foodAmount})
+            .then(checkStatus)
             .then(() => this.getConsumedFoods())
             .catch((err) => console.error(err));
     }
@@ -342,7 +354,7 @@ export default class CurrentEntry extends React.Component {
         this.setState({foods});
     }
 
-    addMeal = () => {console.log('jp');
+    addMeal() {
         var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
         var nextMealName = `Ateria #${Object.keys(this.state.consumedFoods).length + 1}`;
 
@@ -364,17 +376,25 @@ export default class CurrentEntry extends React.Component {
             .catch((err) => console.log(err));
     }
 
-    editMealName = (index, oldName, newName) => {
+    editMealName(arrayIndex, oldName, newName) {
+        if(newName.trim().length === 0) return;
+
         var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
-        tempConsumedFoods[index].mealName = newName;
+        tempConsumedFoods[arrayIndex].mealName = newName;
 
         this.setState({
             activeMeal: oldName == this.state.activeMeal ? newName : this.state.activeMeal,
             consumedFoods: tempConsumedFoods,
         });
+
+        patch('/active-entry/update-meal', {
+            mealId: tempConsumedFoods[arrayIndex].mealId,
+            mealName: newName
+        })
+            .catch((err) => console.log(err));
     }
 
-    changeActiveMeal = (nextActiveMealId, nextActiveMealName) => {
+    changeActiveMeal(nextActiveMealId, nextActiveMealName) {
         var consumedFoods = this.state.consumedFoods;
         var latestMealId = consumedFoods[consumedFoods.length - 1].mealId;
 
@@ -399,7 +419,7 @@ export default class CurrentEntry extends React.Component {
         return (
             <div className='current-entry'>
                 <div className='row'>
-                    {/*}<{!isFetchingConsumedFoods && !isFetchingDailyGoal ? (
+                    {!isFetchingConsumedFoods && !isFetchingDailyGoal ? (
                         <DailyGoal
                             dailyGoal={this.state.dailyGoal}
                             totalConsumption={this.state.totalConsumption}
@@ -410,7 +430,7 @@ export default class CurrentEntry extends React.Component {
                         <div className='col-md-2'>
                             <Loading />
                         </div>
-                    )}*/}
+                    )}
                     <FoodSelection
                         fetchMethod={this.state.fetchMethod}
                         changeFetchMethod={this.changeFetchMethod}

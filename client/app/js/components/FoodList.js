@@ -42,21 +42,21 @@ export default function FoodList(props) {
 
         foods.forEach((food, i) => {
             if(fetchMethod == 'search') {
-                if(food.favorite && !favoritesCategorySeparated) {
+                if(food.isInFavorites && !favoritesCategorySeparated) {
                     favoritesCategorySeparated = true;
                     foodItems.push(
                         <li key={'favorites-separator'} key='favorites' className='category-separator'>
                             <i className='fa fa-star' />Suosikit
                         </li>
                     );
-                } else if(!food.favorite && food.latelyConsumed && !latestCategorySeparated) {
+                } else if(!food.isInFavorites && food.history > 0 && !latestCategorySeparated) {
                     latestCategorySeparated = true;
                     foodItems.push(
                         <li key={'latest-separator'} className='category-separator'>
                             <i className='fa fa-history' />Viimeaikaiset
                         </li>
                     );
-                } else if(!food.favorite && !food.latelyConsumed &&
+                } else if(!food.isInFavorites && food.history === 0 &&
                           !latestCategorySeparated && !regularResultsSeparated) {
                     regularResultsSeparated = true;
                     foodItems.push(
@@ -64,7 +64,7 @@ export default function FoodList(props) {
                             <i className='fa fa-search' />Osuvimmat hakutulokset
                         </li>
                     );
-                } else if(!food.latelyConsumed && latestCategorySeparated && !regularResultsSeparated) {
+                } else if(food.history === 0 && latestCategorySeparated && !regularResultsSeparated) {
                     regularResultsSeparated = true;
                     foodItems.push(
                         <li key={'best-match-separator'} className='category-separator'>

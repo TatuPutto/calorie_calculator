@@ -43,7 +43,7 @@ export default class AddCustomAmountOfFood extends React.Component {
 
 AddCustomAmountOfFood.propTypes = {
     foodId: PropTypes.string.isRequired,
-    selectedFoodAmount: PropTypes.number,
+    selectedFoodAmount: PropTypes.string,
     setSelectedFoodAmount: PropTypes.func.isRequired,
-    addToDiary: PropTypes.func.isRequired
+    addEntry: PropTypes.func.isRequired
 };
