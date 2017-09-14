@@ -11,6 +11,7 @@ export default function ConsumedFoodRowWrapper(Component) {
                 foodAmount: this.props.food.amount,
                 validInput: true
             };
+
             this.toggleEditing = this.toggleEditing.bind(this);
             this.changeFoodAmount = this.changeFoodAmount.bind(this);
             this.update = this.update.bind(this);
@@ -20,8 +21,8 @@ export default function ConsumedFoodRowWrapper(Component) {
             this.setState({isBeingEdited: !this.state.isBeingEdited});
         }
 
-        changeFoodAmount(event) {
-            var foodAmount = event.currentTarget.value.trim();
+        changeFoodAmount(e) {
+            var foodAmount = e.currentTarget.value.trim();
 
             this.setState({
                 foodAmount: foodAmount,
@@ -31,17 +32,20 @@ export default function ConsumedFoodRowWrapper(Component) {
 
         update(consumptionId) {
             var consumptionId = this.props.food.consumptionId;
-            var foodAmount = this.state.foodAmount.trim();
+            var foodAmount = this.state.foodAmount;
 
-            if(foodAmount && foodAmount > 0) {
+            if(foodAmount && foodAmount > 0 && foodAmount !== this.props.food.amount) {
                 this.props.updateEntry(consumptionId, foodAmount);
             }
+
+            this.toggleEditing();
         }
 
         render() {
             return (
                 <Component
                     {...this.props}
+                    ref={(child) => this.child = child}
                     isBeingEdited={this.state.isBeingEdited}
                     foodAmount={this.state.foodAmount}
                     validInput={this.state.validInput}

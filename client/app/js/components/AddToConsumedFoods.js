@@ -33,7 +33,7 @@ export default function AddToConsumedFoods(props) {
 
 AddToConsumedFoods.propTypes = {
     food: PropTypes.object.isRequired,
-    selectedFoodId: PropTypes.string,
+    selectedFoodId: PropTypes.number,
     selectedFoodAmount: PropTypes.string,
     setSelectedFoodAmount: PropTypes.func.isRequired,
     addEntry: PropTypes.func.isRequired

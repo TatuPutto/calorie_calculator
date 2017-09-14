@@ -1,17 +1,17 @@
 var fs = require('fs');
 //var round = require('./round-to-one-decimal');
 var createConnection = require('../database/create-connection');
+var foods = fs.readFileSync('./food.csv', 'utf8').split('\n');
+var nutritionValues = fs.readFileSync('./component_value.csv', 'utf8').split('\n');
+//var portionSizes = fs.readFileSync('./foodaddunit.csv', 'utf8').split('\n');
+var foodNames = [];
 
-//var foods = fs.readFileSync('./server/ruuat.csv', 'utf8').split('\n');
-/*var foodNames = [];
+
 for(var i = 1; i < foods.length; i++) {
     var name = foods[i].split(';')[1];
    foodNames.push(name);
 }
 
-var nutritionValues = fs.readFileSync('./server/ravintoarvot.csv', 'utf8').split('\n');
-
-var portionSizes = fs.readFileSync('./server/foodaddunit.csv', 'utf8').split('\n');
 
 
 function getFoodName(id) {
@@ -20,25 +20,23 @@ function getFoodName(id) {
             return foods[i].split(';')[1];
         }
     }
-}*/
+}
 
-module.exports = function convertToJson() {
+module.exports = function addFoodsAndPortionSizesToDatabase() {
     var nutritionValues = fs.readFileSync('./foods-with-portion-sizes.json', 'utf8');
-    var parsed = JSON.parse(nutritionValues);
-
-
-    var mysql      = require('mysql');
+    var parsedNutritionVaues = JSON.parse(nutritionValues);
+    var mysql = require('mysql');
     var connection = mysql.createConnection({
-      host     : 'localhost',
-      user     : 'root',
-      password : '',
-      database : 'fooddiary'
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'fooddiary'
     });
 
     connection.connect();
-    var i = 0;
-    for(var id in parsed) {
-        var food = parsed[id];
+
+    for(var id in parsedNutritionVaues) {
+        var food = parsedNutritionVaues[id];
         var name = food.name;
         var energy = food.energy;
         var protein = food.protein;
@@ -52,14 +50,16 @@ module.exports = function convertToJson() {
         `;
 
         connection.query(query);
-
-        i++;
-
     }
+
     connection.end();
 
-        return ;
-    /*var json = {};
+    return;
+}
+
+
+function createJSONfoodlist() {
+    var json = {};
     var breakI = 1;
     var breakP = 1;
     //34306
@@ -81,10 +81,37 @@ module.exports = function convertToJson() {
             json[i] = obj;
         }
 
-    }*/
+    }
 
-    //fs.writeFileSync('foods-with-portion-sizes.json', JSON.stringify(json), 'utf8');
+    fs.writeFileSync('foods.json', JSON.stringify(json), 'utf8');
 }
+
+createJSONfoodlist();
+
+function createJSONfoodlistWithPortionSizes() {
+    var json = {};
+    var breakI = 1;
+
+    //34306
+    for(var i = 1; i <= 34306; i++) {
+    //for(var i = 1; i <= 1000; i++) {
+        var nutritionVal = asd(i, breakI);
+        obj = nutritionVal[0];
+
+
+        breakI = nutritionVal[1];
+
+        if(Object.keys(nutritionVal[0]).length > 0) {
+            obj['name'] = getFoodName(i);
+            console.log(obj);
+            json[i] = obj;
+        }
+    }
+
+    fs.writeFileSync('foods-with-portion-sizes.json', JSON.stringify(json), 'utf8');
+
+}
+
 
 function portion(num, breakP) {
     var portions = {};
@@ -122,14 +149,11 @@ function asd(num, breakI) {
             var prop = nutritionValues[i].split(';')[1];
             if(nutritionValues[i].split(';')[0] == num && prop == 'ENERC' ||
                 prop == 'CHOAVL' || prop == 'FAT' || prop == 'PROT') {
-
                 var type;
                 var value;
+                
                 if(prop == 'ENERC') type = 'energy';
-
-
-
-                if(prop == 'CHOAVL') type = 'carbohydrates';
+                if(prop == 'CHOAVL') type = 'carbs';
                 if(prop == 'PROT') type = 'protein';
                 if(prop == 'FAT') type = 'fat';
                 if(type == 'energy') {
@@ -137,7 +161,7 @@ function asd(num, breakI) {
                     value = Math.round(value / 4.184);
                 } else {
                     value = nutritionValues[i].split(';')[2].replace(',', '.');
-                    value = round(value);
+                    value = Math.round(value * 10) / 10;
                 }
 
                 all[type] = value;

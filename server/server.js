@@ -40,14 +40,6 @@ app.use(express.static(path.join(__dirname, './public')));
 // after login has been visited and cookies are accepted
 app.use(firstVisit);
 
-
-app.use('/add-to-db', function () {
-    var convertToJson = require('./util/convert-to-json');
-    convertToJson();
-    console.log(convertToJson);
-})
-
-
 app.use('/accept-cookies', acceptCookies);
 app.use('/login', login);
 app.use('/logout', logout);

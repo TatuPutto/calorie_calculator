@@ -46,8 +46,9 @@ router.post('/add-meal', function (req, res) {
     } else {
         insertMealForToday(mealName, userId)
             .then(function (createdMeal) {
+                var consumptionId = new Date().getTime().toString();
                 // create placeholder entry
-                insertEntryForToday(99999, 1, createdMeal.mealId, userId)
+                insertEntryForToday(consumptionId, 99999, 1, createdMeal.mealId, userId)
                     .then(function () {
                         res.writeHead(200, {'Content-Type': 'application/json'});
                         res.end(JSON.stringify(createdMeal));
@@ -64,15 +65,16 @@ router.post('/add-meal', function (req, res) {
 // add new entry for today
 router.post('/add-entry', function (req, res) {
     var userId = req.session.user.id;
+    var consumptionId = req.body.consumptionId;
     var foodId = req.body.foodId;
     var foodAmount = req.body.foodAmount;
     var mealId = req.body.mealId;
 
-    if(!foodId || !foodAmount || !mealId) {
+    if(!consumptionId || !foodId || !foodAmount || !mealId) {
         res.status(422);
         res.end();
     } else {
-        insertEntryForToday(foodId, foodAmount, mealId, userId)
+        insertEntryForToday(consumptionId, foodId, foodAmount, mealId, userId)
             .then(function () {
                 res.status(200);
                 res.end();

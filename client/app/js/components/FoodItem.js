@@ -67,7 +67,7 @@ export default function FoodItem(props) {
 
 FoodItem.propTypes = {
     food: PropTypes.object.isRequired,
-    selectedFoodId: PropTypes.string,
+    selectedFoodId: PropTypes.number,
     selectFood: PropTypes.func.isRequired,
     addToFavorites: PropTypes.func.isRequired,
     removeFromFavorites: PropTypes.func.isRequired,

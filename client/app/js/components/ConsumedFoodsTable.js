@@ -38,7 +38,7 @@ export default function ConsumedFoodsTable(props) {
                         key={course.consumptionId}
                         food={course}
                         isModifiable={props.isModifiable}
-                        copyEntry={props.copyEntry}
+                        addEntry={props.addEntry}
                         updateEntry={props.updateEntry}
                         removeEntry={props.removeEntry}
                     />
