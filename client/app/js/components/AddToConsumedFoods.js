@@ -11,7 +11,7 @@ export default function AddToConsumedFoods(props) {
         selectedFoodAmount,
         setSelectedFoodAmount,
         addEntry,
-        portionSizes,
+        portionSizes
     } = props;
 
     return (

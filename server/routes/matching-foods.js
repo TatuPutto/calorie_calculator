@@ -25,7 +25,7 @@ router.get('/:searchTerm', function (req, res) {
         // users history and wheter or not food is in users favorites
 
         selectMatchingFoodsAndPrioritize(searchTerm, userId)
-            .then(function (matchingFoods) {console.log(matchingFoods);
+            .then(function (matchingFoods) {
                 res.writeHead(200, {'Content-Type': 'application/json'});
                 res.end(JSON.stringify(matchingFoods));
             })

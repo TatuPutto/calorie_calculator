@@ -44,13 +44,12 @@ module.exports = function convertToJson() {
         var protein = food.protein;
         var carbs = food.carbohydrates;
         var fat = food.fat;
+        var portionSizes = food.portionSizes ? JSON.stringify(food.portionSizes) : null;
 
         var query = `
-            INSERT INTO foods (foodId, foodName, energy, protein, carbs, fat)
-            VALUES (${id}, "${name}", "${energy}", "${protein}", "${carbs}", "${fat}")
+            INSERT INTO foods (foodId, foodName, energy, protein, carbs, fat, portionSizes)
+            VALUES (${id}, "${name}", "${energy}", "${protein}", "${carbs}", "${fat}", '${portionSizes}')
         `;
-
-
 
         connection.query(query);
 

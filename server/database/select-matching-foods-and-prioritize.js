@@ -1,7 +1,7 @@
 var getConnection = require('./create-connection');
 
 module.exports = function selectMatchingFoodsAndPrioritize(searchTerm, userId) {
-    var data = [userId, userId, searchTerm];
+    var data = [userId, userId, searchTerm, searchTerm, searchTerm];
     var query = `
         SELECT foods.*, COUNT(consumedFoods.foodId) AS history,
         COUNT(favorites.foodId) > 0 AS isInFavorites
@@ -13,8 +13,10 @@ module.exports = function selectMatchingFoodsAndPrioritize(searchTerm, userId) {
         WHERE foods.foodName LIKE "%"?"%"
         GROUP BY foods.foodId
         ORDER BY isInFavorites DESC, history DESC,
-        (CASE WHEN foodName = 'maitorahka' THEN 1 WHEN
-                foodName LIKE 'maitorahka%' then 2 ELSE 3 END) DESC
+        (CASE WHEN foods.foodName LIKE ""?"%" THEN 1
+              WHEN foods.foodName LIKE "%"?"" THEN 3
+              ELSE 2 END
+        )
         LIMIT 100
     `;
 
@@ -38,7 +40,7 @@ module.exports = function selectMatchingFoodsAndPrioritize(searchTerm, userId) {
                 protein: row.protein,
                 carbs: row.carbs,
                 fat: row.fat,
-                //portionSizes: food.portionSizes,
+                portionSizes: JSON.parse(row.portionSizes),
                 isInFavorites: row.isInFavorites ? true : false,
                 history: row.history
             });

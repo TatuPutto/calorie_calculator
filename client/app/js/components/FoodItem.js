@@ -58,9 +58,9 @@ export default function FoodItem(props) {
                 <span className={carbClass}>{carbs} g</span>
                 <span className={fatClass}>{fat} g</span>
             </div>
-            {/*}{selectedFoodId == id &&
+            {selectedFoodId == id &&
                 <AddToConsumedFoods {...props} />
-            }*/}
+            }
         </li>
     );
 }

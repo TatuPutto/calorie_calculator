@@ -14,7 +14,7 @@ module.exports = function selectEntriesFromToday(userId) {
         AND meals.userId = ? AND active = 1
         AND meals.timeOfConsumption >= CURDATE()
         AND meals.timeOfConsumption < CURDATE() + INTERVAL 1 DAY
-        ORDER BY meals.mealId ASC
+        ORDER BY meals.mealId, consumedFoods.timeOfConsumption
     `;
 
     return new Promise(function (resolve, reject) {
