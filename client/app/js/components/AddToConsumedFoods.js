@@ -17,14 +17,14 @@ export default function AddToConsumedFoods(props) {
     return (
         <div className='add-to-consumed-foods'>
             <AddCustomAmountOfFood
-                foodId={food.id}
+                food={food}
                 selectedFoodAmount={selectedFoodAmount}
                 setSelectedFoodAmount={setSelectedFoodAmount}
                 addEntry={addEntry}
             />
             <PortionSizes
+                food={food}
                 portionSizes={food.portionSizes}
-                foodId={food.id}
                 addEntry={addEntry}
             />
         </div>

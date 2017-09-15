@@ -39,6 +39,9 @@ export default class ConsumedFoodMealRow extends React.Component {
                         <button className='btn' onClick={this.toggleEditing}>
                             <i className='fa fa-pencil' />
                         </button>
+                        <button className='btn' onClick={() => this.props.removeMeal(this.props.mealId, this.props.mealName, this.props.arrayIndex)} style={{right: '2%'}}>
+                            <i className='fa fa-ellipsis-v' />
+                        </button>
                     </td>
                 ) : (
                     <td colSpan={7}>

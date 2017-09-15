@@ -24,6 +24,7 @@ export default function ConsumedFoodsTable(props) {
                 mealId={meal.mealId}
                 mealName={meal.mealName}
                 activeMealId={props.activeMeal.mealId}
+                removeMeal={props.removeMeal}
                 changeActiveMeal={props.changeActiveMeal}
                 editMealName={props.editMealName}
                 arrayIndex={i}

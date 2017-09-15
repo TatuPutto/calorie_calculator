@@ -10,8 +10,8 @@ module.exports = function selectEntriesFromToday(userId) {
         foods.protein, foods.carbs, foods.fat
         FROM meals, consumedFoods, foods
         WHERE meals.mealId = consumedFoods.mealId
-        AND consumedFoods.foodId = foods.foodId
-        AND meals.userId = ? AND active = 1
+        AND consumedFoods.foodId = foods.foodId AND consumedFoods.active = 1
+        AND meals.userId = ? AND meals.active = 1 
         AND meals.timeOfConsumption >= CURDATE()
         AND meals.timeOfConsumption < CURDATE() + INTERVAL 1 DAY
         ORDER BY meals.mealId, consumedFoods.timeOfConsumption

@@ -1,19 +1,26 @@
-var foods = require('../../../../foods.json');
+function updateValuesOnAddition(food, newAmount, activeMealId, consumedFoods, total) {
+    var oldAmount = food.amount || 100;
+    var energyInAmount = food.energy;
+    var proteinInAmount = food.protein;
+    var carbsInAmount = food.carbs;
+    var fatInAmount = food.fat;
 
-function updateValuesOnAddition(foodId, foodAmount, activeMealId, consumedFoods, total) {
-    var foodToAdd = foods[foodId];
-    var energyInAmount = foodToAdd.energy / 100 * foodAmount;
-    var proteinInAmount = foodToAdd.protein / 100 * foodAmount;
-    var carbsInAmount = foodToAdd.carbs / 100 * foodAmount;
-    var fatInAmount = foodToAdd.fat / 100 * foodAmount;
+    if(oldAmount !== newAmount) {
+        energyInAmount = energyInAmount / oldAmount * newAmount;
+        proteinInAmount = proteinInAmount / oldAmount * newAmount;
+        carbsInAmount = carbsInAmount / oldAmount * newAmount;
+        fatInAmount = fatInAmount / oldAmount * newAmount;
+    }
 
-    foodToAdd.energy = Math.round(energyInAmount);
-    foodToAdd.protein = Math.roundToOneDecimal(proteinInAmount);
-    foodToAdd.carbs = Math.roundToOneDecimal(carbsInAmount);
-    foodToAdd.fat = Math.roundToOneDecimal(fatInAmount);
+    var foodToAdd = {};
     foodToAdd['consumptionId'] = new Date().getTime().toString();
-    foodToAdd['id'] = foodId;
-    foodToAdd['amount'] = foodAmount;
+    foodToAdd['id'] = food.id;
+    foodToAdd['name'] = food.name;
+    foodToAdd['amount'] = newAmount;
+    foodToAdd['energy'] = Math.round(energyInAmount);
+    foodToAdd['protein'] = Math.roundToOneDecimal(proteinInAmount);
+    foodToAdd['carbs'] = Math.roundToOneDecimal(carbsInAmount);
+    foodToAdd['fat'] = Math.roundToOneDecimal(fatInAmount);
 
     total.energy = Math.round(total.energy + energyInAmount);
     total.protein = Math.roundToOneDecimal(total.protein + proteinInAmount);
@@ -34,15 +41,13 @@ function updateValuesOnAddition(foodId, foodAmount, activeMealId, consumedFoods,
     };
 }
 
-function updateValuesOnRemove(consumptionId, foodId, activeMealId, consumedFoods, total) {
-    var foodToRemove = foods[foodId];
-
+function updateValuesOnRemove(foodToRemove, consumedFoods, total) {
     for(var i = 0; i < consumedFoods.length; i++) {
-        if(consumedFoods[i].mealId == activeMealId) {
-            consumedFoods[i].mealCourses = consumedFoods[i].mealCourses.filter((course) => {
-                return course.consumptionId !== consumptionId;
-            });
-            break;
+        var courses = consumedFoods[i].mealCourses;
+        for(var j = 0; j < courses.length; j++) {
+            if(courses[j].consumptionId === foodToRemove.consumptionId) {
+                consumedFoods[i].mealCourses.splice(j, 1);
+            }
         }
     }
 

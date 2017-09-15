@@ -5,7 +5,8 @@ var insertEntryForToday = require('../database/insert-entry-for-today');
 var insertMealForToday = require('../database/insert-meal-for-today');
 var updateEntry = require('../database/update-entry');
 var updateMealName = require('../database/update-meal-name');
-var removeFoodFromConsumedFoods = require('../database/remove-food-from-consumed-foods');
+var setMealAsInactive = require('../database/set-meal-as-inactive');
+var setEntryAsInactive = require('../database/set-entry-as-inactive');
 var activeEntryCookieFallback = require('./active-entry-cookie-fallback');
 var bodyParser = require('body-parser');
 var express = require('express');
@@ -130,13 +131,32 @@ router.patch('/update-entry', function (req, res) {
     }
 });
 
+// set meal and all the entries associated with it as inactive
+router.patch('/remove-meal', function (req, res) {
+    if(!req.query.mealId) {
+        res.status(400);
+        res.end(err);
+    }
 
-// remove entry
-router.delete('/', function (req, res) {
-    var userId = req.session.user.id;
-    var consumptionId = req.query.consumptionId;
+    setMealAsInactive(req.query.mealId)
+        .then(function () {
+            res.status(200);
+            res.end();
+        })
+        .catch(function (err) {
+            res.status(400);
+            res.end(err);
+        });
+});
 
-    removeFoodFromConsumedFoods(userId, consumptionId)
+// set single entry as inactive
+router.patch('/remove-entry', function (req, res) {
+    if(!req.query.consumptionId) {
+        res.status(400);
+        res.end(err);
+    }
+
+    setEntryAsInactive(req.query.consumptionId)
         .then(function () {
             res.status(200);
             res.end();
