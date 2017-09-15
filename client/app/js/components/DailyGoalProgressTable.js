@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function DailyGoalProgressTable({entry}) {
+export default function DailyGoalProgressTable(props) {
     var {
         energy: energyInTotal,
         protein: proteinInTotal,
         carbs: carbsInTotal,
         fat: fatInTotal
-    } = entry.nutritionValuesInTotal;
+    } = props.totalConsumption;
     var {
         energy: energyGoal,
         protein: proteinGoal,
         carbs: carbGoal,
         fat: fatGoal
-    } = entry.goal;
+    } = props.dailyGoal;
+
     var energyInRelationToGoal = Math.round(energyInTotal - energyGoal);
     var proteinInRelationToGoal = Math.round(proteinInTotal - proteinGoal);
     var carbsInRelationToGoal = Math.round(carbsInTotal - carbGoal);

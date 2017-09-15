@@ -1,5 +1,5 @@
 var createConnection = require('../database/create-connection');
-var getEntryFromDate = require('../database/get-entry-from-date');
+var selectEntriesFromDate = require('../database/select-entries-from-date');
 var express = require('express');
 var router = express.Router();
 
@@ -12,11 +12,12 @@ router.use(function (req, res, next) {
 });
 
 router.get('/:entryDate', function (req, res) {
-    getEntryFromDate(req.session.user.id, req.params.entryDate)
+    selectEntriesFromDate(req.session.user.id, req.params.entryDate)
         .then(function (entry) {
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(entry));
-        }).catch(function (err) {
+        })
+        .catch(function (err) {
             res.status(400);
             res.end(err);
         });

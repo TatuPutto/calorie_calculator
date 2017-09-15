@@ -5,7 +5,7 @@ import DiaryEntrySelection from '../components/DiaryEntrySelection';
 import EntryDetails from '../components/EntryDetails';
 import Loading from '../components/Loading';
 
-import {get} from '../util/fetch';
+import {checkStatus, readJson, get} from '../util/fetch';
 import drawMacroChart from '../util/draw-macro-chart';
 
 export default class Diary extends React.Component {
@@ -15,7 +15,9 @@ export default class Diary extends React.Component {
             diaryEntries: [],
             isFetchingdiaryEntries: true,
             diaryEntriesFetchError: null,
-            entry: null,
+            consumedFoods: [],
+            totalConsumption: {},
+            dailyGoal: {},
             isFetchingEntry: false,
             entryFetchError: null,
             detailsVisible: false,
@@ -78,21 +80,30 @@ export default class Diary extends React.Component {
         this.setState({entry: null, isFetchingEntry: true});
 
         get(`entry/${entryDate}`)
-            .then((res) => res.json())
-            .then((entry) => {
+            .then(checkStatus)
+            .then(readJson)
+            .then((data) => {
+                console.log(data);
                 get(`daily-goal/${entryDate}`)
-                    .then((res) => res.json())
+                    .then(checkStatus)
+                    .then(readJson)
                     .then((goal) => {
-                        entry['goal'] = goal;
-
                         this.setState({
-                            entry,
+                            consumedFoods: data.meals,
+                            totalConsumption: data.nutritionValuesInTotal,
+                            dailyGoal: goal,
                             isFetchingEntry: false,
                             entryFetchError: null,
                             detailsVisible: false
+                        }, () => {
+                            console.log(this.state);
                         });
-                    }).catch((err) => console.error(err));
-            }).catch((err) => this.setState({
+
+
+                    })
+                    .catch((err) => console.error(err));
+            })
+            .catch((err) => this.setState({
                 isFetchingEntry: false,
                 entryFetchError: err
             }));
@@ -119,9 +130,14 @@ export default class Diary extends React.Component {
 
         if(isFetchingEntry) {
             entryDetails = <Loading />;
-        } else if(!isFetchingEntry && entry && entry.nutritionValuesPerItem.length > 0) {
+        } else if(!isFetchingEntry && this.state.consumedFoods.length > 0) {
             entryDetails = (
-                <EntryDetails entry={entry} viewportWidth={this.state.viewportWidth} />
+                <EntryDetails
+                    totalConsumption={this.state.totalConsumption}
+                    dailyGoal={this.state.dailyGoal}
+                    consumedFoods={this.state.consumedFoods}
+                    viewportWidth={this.state.viewportWidth}
+                />
             );
         } else {
             entryDetails = (

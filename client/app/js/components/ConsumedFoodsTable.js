@@ -23,18 +23,20 @@ export default function ConsumedFoodsTable(props) {
                 key={meal.mealId}
                 mealId={meal.mealId}
                 mealName={meal.mealName}
-                activeMealId={props.activeMeal.mealId}
+                activeMealId={props.isModifiable ? props.activeMeal.mealId : null}
                 removeMeal={props.removeMeal}
                 changeActiveMeal={props.changeActiveMeal}
                 editMealName={props.editMealName}
+                isModifiable={props.isModifiable}
                 arrayIndex={i}
             />
         );
 
-        // create rows for each course of the meal
         if(courses.length > 0) {
             var courseRows = courses
+                // filter out placeholder courses
                 .filter((course) => course.id !== 99999)
+                // create rows for each course of the meal
                 .map((course) => {
                     return (
                         <RowWrapper
@@ -57,7 +59,11 @@ export default function ConsumedFoodsTable(props) {
             <tbody>
                 {rows}
                 <tr>
-                    <td colSpan={7} onClick={props.addMeal}>Lisää ateria</td>
+                    {props.isModifiable &&
+                        <td colSpan={7} onClick={props.addMeal}>
+                            Lisää ateria
+                        </td>
+                    }
                 </tr>
             </tbody>
         </table>

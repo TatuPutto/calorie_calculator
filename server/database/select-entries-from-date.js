@@ -2,7 +2,7 @@ var getConnection = require('./create-connection');
 var calcNutritionValues = require('../util/query-json').calculateNutritionValues;
 var calcTotalNutritionValues = require('../util/query-json').calcTotalNutritionValues;
 
-module.exports = function selectEntriesFromToday(userId) {
+module.exports = function selectEntriesFromDate(userId, date) {
     var query = `
         SELECT meals.mealId, meals.mealName,
         consumedFoods.consumptionId, consumedFoods.foodAmount,
@@ -12,22 +12,22 @@ module.exports = function selectEntriesFromToday(userId) {
         WHERE meals.mealId = consumedFoods.mealId
         AND consumedFoods.foodId = foods.foodId AND consumedFoods.active = 1
         AND meals.userId = ? AND meals.active = 1
-        AND meals.timeOfConsumption >= CURDATE()
-        AND meals.timeOfConsumption < CURDATE() + INTERVAL 1 DAY
+        AND meals.timeOfConsumption >= STR_TO_DATE(?, "%d-%m-%Y")
+        AND meals.timeOfConsumption < STR_TO_DATE(?, "%d-%m-%Y") + INTERVAL 1 DAY
         ORDER BY meals.mealId, consumedFoods.timeOfConsumption
     `;
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
             if(err) reject(err);
-            connection.query(query, [userId], function (err, results) {
+            connection.query(query, [userId, date, date], function (err, results) {
                 connection.release();
                 if(err) reject(err);
                 resolve(results);
             });
         });
     })
-    .then(function (results) {
+    .then(function (results) {console.log(results);
         var energyInTotal = 0;
         var proteinInTotal = 0;
         var carbsInTotal = 0;
@@ -88,5 +88,6 @@ module.exports = function selectEntriesFromToday(userId) {
     })
     .catch(function (err) {
         console.log(err);
+        throw err;
     });
 }

@@ -23,12 +23,16 @@ export default function EntryDetails(props) {
                     </div>
                 </div>
                 <div className='tables-wrapper col-sm-10'>
-                    <DailyGoalProgressTable entry={entry} isModifiable={false} />
+                    <DailyGoalProgressTable
+                        dailyGoal={props.dailyGoal}
+                        totalConsumption={props.totalConsumption}
+                        isModifiable={false}
+                    />
                     <ConsumedFoods
                         viewportWidth={viewportWidth}
                         isModifiable={false}
                         isFetchingConsumedFoods={false}
-                        consumedFoods={entry.nutritionValuesPerItem}
+                        consumedFoods={props.consumedFoods}
                     />
                 </div>
             </div>

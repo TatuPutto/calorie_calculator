@@ -24,24 +24,32 @@ export default class ConsumedFoodMealRow extends React.Component {
             <tr className='consumed-foods-meal'>
                 {!this.state.isBeingEdited ? (
                     <td colSpan={7}>
-                        <label className='toggle-active-meal'>
-                            <input
-                                type='checkbox'
-                                checked={isActiveMeal}
-                                onChange={() => this.props.changeActiveMeal(
-                                    this.props.mealId,
-                                    this.props.mealName
-                                )}
-                            />
-                            <span className='slider' />
-                        </label>
+                        {this.props.isModifiable &&
+                            <label className='toggle-active-meal'>
+                                <input
+                                    type='checkbox'
+                                    checked={isActiveMeal}
+                                    onChange={() => this.props.changeActiveMeal(
+                                        this.props.mealId,
+                                        this.props.mealName
+                                    )}
+                                />
+                                <span className='slider' />
+                            </label>
+                        }
+
                         {this.props.mealName}
-                        <button className='btn' onClick={this.toggleEditing}>
-                            <i className='fa fa-pencil' />
-                        </button>
-                        <button className='btn' onClick={() => this.props.removeMeal(this.props.mealId, this.props.mealName, this.props.arrayIndex)} style={{right: '2%'}}>
-                            <i className='fa fa-ellipsis-v' />
-                        </button>
+
+                        {this.props.isModifiable &&
+                            <button className='btn' onClick={this.toggleEditing}>
+                                <i className='fa fa-pencil' />
+                            </button>
+                        }
+                        {this.props.isModifiable &&
+                            <button className='btn' onClick={() => this.props.removeMeal(this.props.mealId, this.props.mealName, this.props.arrayIndex)} style={{right: '2%'}}>
+                                <i className='fa fa-ellipsis-v' />
+                            </button>
+                        }
                     </td>
                 ) : (
                     <td colSpan={7}>
