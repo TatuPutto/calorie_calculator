@@ -1,18 +1,9 @@
 var selectFavoriteFoods = require('../database/select-favorite-foods');
 var insertFoodToFavorites = require('../database/insert-food-to-favorites');
 var deleteFoodFromFavorites = require('../database/delete-food-from-favorites');
-var favoritesCookieFallback = require('./favorites-cookie-fallback');
 var express = require('express');
 var router = express.Router();
 
-// fallback to using cookies if no session is present
-router.use(function (req, res, next) {
-    if(req.session.user) {
-        next();
-    } else {
-        favoritesCookieFallback(req, res);
-    }
-});
 
 router.get('/', function (req, res) {
     selectFavoriteFoods(req.session.user.id)

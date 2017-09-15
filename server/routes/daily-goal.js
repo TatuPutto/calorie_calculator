@@ -1,19 +1,10 @@
 var getConnection = require('../database/create-connection');
 var insertGoalForToday = require('../database/insert-goal-for-today');
 var selectGoalFromDate = require('../database/select-goal-from-date');
-var dailyGoalCookieFallback = require('./daily-goal-cookie-fallback');
 var bodyParser = require('body-parser');
 var express = require('express');
 var router = express.Router();
 
-// fallback to using cookies if no session is present
-router.use(function (req, res, next) {
-    if(req.session.user) {
-        next();
-    } else {
-        dailyGoalCookieFallback(req, res);
-    }
-});
 
 // get goal set for date X
 router.get('/:date', function (req, res) {

@@ -118,14 +118,15 @@ export default class CurrentEntry extends React.Component {
             isFetchingConsumedFoods: true
         });
 
-        get('/active-entry')
+        get('/today')
             .then(checkStatus)
             .then(readJson)
             .then((data) => {
+                console.log(data);
                 var meals = Object.keys(data.meals);
                 var latestMeal = data.meals[meals.length - 1];
                 var activeMeal = null;
-
+                console.log(meals);
                 if(meals.length > 0) {
                     activeMeal = {
                         mealId: latestMeal.mealId,
@@ -281,7 +282,7 @@ export default class CurrentEntry extends React.Component {
             foodAmount: newAmount
         };
 
-        post('/active-entry/add-entry', entryContent)
+        post('/today/add-entry', entryContent)
             .catch((err) => console.error(err));
     }
 
@@ -298,12 +299,12 @@ export default class CurrentEntry extends React.Component {
             totalConsumption: updatedValues.totalConsumption
         });
 
-        patch(`/active-entry/remove-entry?consumptionId=${food.consumptionId}`)
+        patch(`/today/remove-entry?consumptionId=${food.consumptionId}`)
             .catch((err) => console.error(err));
     }
 
     updateEntry(consumptionId, foodAmount) {
-        patch('/active-entry/update-entry', {consumptionId, foodAmount})
+        patch('/today/update-entry', {consumptionId, foodAmount})
             .then(checkStatus)
             .then(() => this.getConsumedFoods())
             .catch((err) => console.error(err));
@@ -313,7 +314,7 @@ export default class CurrentEntry extends React.Component {
         var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
         var nextMealName = `Ateria #${Object.keys(this.state.consumedFoods).length + 1}`;
 
-        post('/active-entry/add-meal', {mealName: nextMealName})
+        post('/today/add-meal', {mealName: nextMealName})
             .then(checkStatus)
             .then(readJson)
             .then((createdMeal) => {
@@ -342,7 +343,7 @@ export default class CurrentEntry extends React.Component {
             consumedFoods: tempConsumedFoods,
         });
 
-        patch('/active-entry/update-meal', {
+        patch('/today/update-meal', {
             mealId: tempConsumedFoods[arrayIndex].mealId,
             mealName: newName
         })
@@ -366,7 +367,7 @@ export default class CurrentEntry extends React.Component {
                 }
             });
 
-            patch(`/active-entry/remove-meal?mealId=${mealId}`)
+            patch(`/today/remove-meal?mealId=${mealId}`)
         }
     }
 

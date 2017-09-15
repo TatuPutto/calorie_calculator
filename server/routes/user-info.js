@@ -4,7 +4,7 @@ var router = express.Router();
 router.get('/', function (req, res) {
     var userInfo = {};
     if(req.session.user) {
-        userInfo['loggedIn'] = true;
+        userInfo['loggedIn'] = req.session.user.loggedIn;
         userInfo['username'] = req.session.user.username;
     } else {
         userInfo['loggedIn'] = false;

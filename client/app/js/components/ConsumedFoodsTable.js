@@ -33,18 +33,20 @@ export default function ConsumedFoodsTable(props) {
 
         // create rows for each course of the meal
         if(courses.length > 0) {
-            var courseRows = courses.map((course) => {
-                return (
-                    <RowWrapper
-                        key={course.consumptionId}
-                        food={course}
-                        isModifiable={props.isModifiable}
-                        addEntry={props.addEntry}
-                        updateEntry={props.updateEntry}
-                        removeEntry={props.removeEntry}
-                    />
-                );
-            });
+            var courseRows = courses
+                .filter((course) => course.id !== 99999)
+                .map((course) => {
+                    return (
+                        <RowWrapper
+                            key={course.consumptionId}
+                            food={course}
+                            isModifiable={props.isModifiable}
+                            addEntry={props.addEntry}
+                            updateEntry={props.updateEntry}
+                            removeEntry={props.removeEntry}
+                        />
+                    );
+                });
 
             rows.push(courseRows);
         }

@@ -12,9 +12,12 @@ export default function ConsumedFoods(props) {
             (props.isModifiable ? 'col-md-10 col-md-offset-2' : '');
     var hasEntries = false;
 
-    // does consumedfoods contains any entries
+    // check if consumedfoods contains any valid entries
     for(var i = 0; i < consumedFoods.length; i++) {
-        if(consumedFoods[i].mealCourses.length > 0) hasEntries = true;
+        if(consumedFoods[i].mealCourses.length > 0 &&
+           consumedFoods[i].mealCourses[0].id !== 99999) {
+            hasEntries = true;
+        }
     }
 
     if(isFetchingConsumedFoods) {

@@ -6,19 +6,10 @@ var updateEntry = require('../database/update-entry');
 var updateMealName = require('../database/update-meal-name');
 var setMealAsInactive = require('../database/set-meal-as-inactive');
 var setEntryAsInactive = require('../database/set-entry-as-inactive');
-var activeEntryCookieFallback = require('./active-entry-cookie-fallback');
 var bodyParser = require('body-parser');
 var express = require('express');
 var router = express.Router();
 
-// use cookies to store consumed foods if user isn't logged in
-router.use(function (req, res, next) {
-    if(req.session.user) {
-        next();
-    } else {
-        activeEntryCookieFallback(req, res);
-    }
-});
 
 // return list of entries for today
 router.get('/', function (req, res) {
@@ -60,7 +51,6 @@ router.post('/add-meal', function (req, res) {
             });
     }
 });
-
 
 // add new entry for today
 router.post('/add-entry', function (req, res) {

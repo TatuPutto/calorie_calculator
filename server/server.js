@@ -1,10 +1,11 @@
 var path = require('path');
 var url = require('url');
+var cookieParser = require('cookie-parser');
 var express = require('express')
 var session = require('client-sessions');
-var cookieParser = require('cookie-parser');
 var checkUseragent = require('./middleware/check-useragent');
 var firstVisit = require('./middleware/first-visit');
+var identifyAnonymousUser = require('./middleware/identify-anonymous-user');
 var redirect = require('./middleware/redirect');
 var acceptCookies = require('./routes/accept-cookies');
 var login = require('./routes/login');
@@ -15,7 +16,7 @@ var userInfo = require('./routes/user-info');
 var clientRoutes = require('./routes/client-routes');
 var matchingFoods = require('./routes/matching-foods');
 var dailyGoal = require('./routes/daily-goal');
-var entriesForToday = require('./routes/entries-for-today');
+var today = require('./routes/today');
 var favorites = require('./routes/favorites');
 var latest = require('./routes/latest');
 var diaryEntries = require('./routes/diary-entries');
@@ -36,10 +37,12 @@ app.use(session({
 app.use(redirect);
 app.use(express.static(path.join(__dirname, '../client/app')));
 app.use(express.static(path.join(__dirname, './public')));
+
 // only allow user to access the page
 // after login has been visited and cookies are accepted
 app.use(firstVisit);
 
+app.use(identifyAnonymousUser);
 app.use('/accept-cookies', acceptCookies);
 app.use('/login', login);
 app.use('/logout', logout);
@@ -50,7 +53,7 @@ app.use('/matching-foods', matchingFoods);
 app.use('/daily-goal', dailyGoal);
 app.use('/favorites', favorites);
 app.use('/latest', latest);
-app.use('/active-entry', entriesForToday);
+app.use('/today', today);
 app.use('/entry', getEntry);
 app.use('/diary-entries', diaryEntries);
 app.use('*', clientRoutes);
