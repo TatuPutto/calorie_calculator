@@ -1,12 +1,11 @@
 var findMatchingFoodsByName = require('../util/query-json').findMatchingFoodsByName;
-var getLatestConsumedFoods = require('../database/get-latest-consumed-foods');
+var selectLatestConsumedfoods = require('../database/select-latest-consumed-foods');
 var markFoodsAsLatelyConsumed = require('../util/mark-foods-as-lately-consumed');
-var getFavoriteFoods = require('../database/get-favorite-foods');
+var selectFavoriteFoods = require('../database/select-favorite-foods');
 var markFoodsAsFavorites = require('../util/mark-foods-as-favorites');
-
-var selectMatchingFoodsAndPrioritize =
-        require('../database/select-matching-foods-and-prioritize');
-
+var selectMatchingFoodsAndPrioritize = require(
+    '../database/select-matching-foods-and-prioritize'
+);
 var cookieParser = require('cookie-parser');
 var express = require('express');
 var router = express.Router();
@@ -38,7 +37,7 @@ router.get('/:searchTerm', function (req, res) {
 
         /*Promise.all([
             getLatestConsumedFoods(req.session.user.id),
-            getFavoriteFoods(req.session.user.id)
+            selectFavoriteFoods(req.session.user.id)
         ])
         .then(function (values) {
             var latest = values[0];

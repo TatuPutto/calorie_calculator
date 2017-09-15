@@ -1,5 +1,4 @@
 var createConnection = require('../database/create-connection');
-var getConsumedFoods = require('../database/get-consumed-foods');
 var selectEntriesFromToday = require('../database/select-entries-from-today');
 var insertEntryForToday = require('../database/insert-entry-for-today');
 var insertMealForToday = require('../database/insert-meal-for-today');

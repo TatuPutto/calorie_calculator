@@ -1,11 +1,11 @@
-var findMatchingFoodsByIds = require('../util/query-json').findMatchingFoodsByIds;
-var getFavoriteFoods = require('../database/get-favorite-foods');
-var addFoodToFavorites = require('../database/add-food-to-favorites');
-var removeFoodFromFavorites = require('../database/remove-food-from-favorites');
+var selectFavoriteFoods = require('../database/select-favorite-foods');
+var insertFoodToFavorites = require('../database/insert-food-to-favorites');
+var deleteFoodFromFavorites = require('../database/delete-food-from-favorites');
 var favoritesCookieFallback = require('./favorites-cookie-fallback');
 var express = require('express');
 var router = express.Router();
 
+// fallback to using cookies if no session is present
 router.use(function (req, res, next) {
     if(req.session.user) {
         next();
@@ -15,23 +15,20 @@ router.use(function (req, res, next) {
 });
 
 router.get('/', function (req, res) {
-    getFavoriteFoods(req.session.user.id)
-        .then(function (favorites) {
-            var matchingFoods = findMatchingFoodsByIds(favorites);
-            matchingFoods.forEach(function (food) {
-                return food['favorite'] = true;
-            });
-
+    selectFavoriteFoods(req.session.user.id)
+        .then(function (favoriteFoods) {
             res.writeHead(200, {'Content-Type': 'application/json'});
-            res.end(JSON.stringify(matchingFoods));
+            res.end(JSON.stringify(favoriteFoods));
         })
         .catch(function (err) {
-            res.end(JSON.stringify(err));
+            console.log(err);
+            res.status(400);
+            res.end();
         });
 });
 
 router.post('/:foodId', function (req, res) {
-    addFoodToFavorites(req.session.user.id, req.params.foodId)
+    insertFoodToFavorites(req.session.user.id, req.params.foodId)
         .then(function () {
             res.status(200);
             res.end();
@@ -42,7 +39,7 @@ router.post('/:foodId', function (req, res) {
 });
 
 router.delete('/:foodId', function (req, res) {
-    removeFoodFromFavorites(req.session.user.id, req.params.foodId)
+    deleteFoodFromFavorites(req.session.user.id, req.params.foodId)
         .then(function () {
             res.status(200);
             res.end();

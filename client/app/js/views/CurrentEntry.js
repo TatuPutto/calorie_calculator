@@ -403,13 +403,14 @@ export default class CurrentEntry extends React.Component {
     }
 
     toggleFavoriteIcon(foodId, isInFavorites) {
-        var foods = JSON.parse(JSON.stringify(this.state.foods));
-        var food = foods.forEach((food, i) => {
-            if(food.id == foodId) {
-                foods[i]['isInFavorites'] = isInFavorites;
+        var tempFoods = JSON.parse(JSON.stringify(this.state.foods));
+        for(var i = 0; i < tempFoods.length; i++) {
+            if(tempFoods[i].id === foodId) {
+                tempFoods[i]['isInFavorites'] = isInFavorites;
             }
-        });
-        this.setState({foods});
+        }
+
+        this.setState({foods: tempFoods});
     }
 
     render() {

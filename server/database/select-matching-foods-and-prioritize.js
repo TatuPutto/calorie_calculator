@@ -14,9 +14,8 @@ module.exports = function selectMatchingFoodsAndPrioritize(searchTerm, userId) {
         GROUP BY foods.foodId
         ORDER BY isInFavorites DESC, history DESC,
         (CASE WHEN foods.foodName LIKE ""?"%" THEN 1
-              WHEN foods.foodName LIKE "%"?"" THEN 3
-              ELSE 2 END
-        )
+                WHEN foods.foodName LIKE "%"?"" THEN 3
+                ELSE 2 END)
         LIMIT 100
     `;
 
@@ -31,9 +30,8 @@ module.exports = function selectMatchingFoodsAndPrioritize(searchTerm, userId) {
         })
     })
     .then(function (results) {
-        var matchingFoods = [];
-        results.forEach(function (row) {
-            matchingFoods.push({
+        return results.map(function (row) {
+            return {
                 id: row.foodId,
                 name: row.foodName,
                 energy: row.energy,
@@ -43,10 +41,8 @@ module.exports = function selectMatchingFoodsAndPrioritize(searchTerm, userId) {
                 portionSizes: JSON.parse(row.portionSizes),
                 isInFavorites: row.isInFavorites ? true : false,
                 history: row.history
-            });
+            }
         });
-
-        return matchingFoods;
     })
     .catch(function (err) {
         console.log(err);
