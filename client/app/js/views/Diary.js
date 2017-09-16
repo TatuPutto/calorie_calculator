@@ -66,11 +66,11 @@ export default class Diary extends React.Component {
     }
 
     componentDidUpdate() {
-        var {isFetching, entry} = this.state;
+        var {isFetching, consumedFoods, totalConsumption} = this.state;
 
-        if(!isFetching && entry && entry.nutritionValuesPerItem.length > 0) {
+        if(!isFetching && consumedFoods.length > 0) {
             window.requestAnimationFrame(() => {
-                drawMacroChart(entry.nutritionValuesInTotal);
+                drawMacroChart(totalConsumption);
             });
         }
     }

@@ -35,9 +35,11 @@ export default class Header extends React.Component {
     }
 
     render() {
+        var location = window.location.pathname;
+
         return (
             <div className='header'>
-                    <div className='header-content'>
+                <div className={'header-content ' + (location == '/diary' ? 'narrow' : '')}>
                     <NavMenu loggedIn={this.state.loggedIn} />
                     <UserInfo loggedIn={this.state.loggedIn} />
                 </div>

@@ -1,11 +1,11 @@
-export default function drawChart(entry) {
-    var protein = entry.protein;
-    var carbs = entry.carbs;
-    var fat = entry.fat;
-    var macroTotal = protein + carbs + fat;
-    var proteinPercentage = Math.round(protein / macroTotal * 100);
-    var carbPercentage = Math.round(carbs / macroTotal * 100);
-    var fatPercentage = Math.round(fat / macroTotal * 100);
+export default function drawChart(total) {
+    var proteinInTotal = total.protein;
+    var carbsInTotal = total.carbs;
+    var fatInTotal = total.fat;
+    var macrosInTotal = proteinInTotal + carbsInTotal + fatInTotal;
+    var proteinPercentage = Math.round(proteinInTotal / macrosInTotal * 100);
+    var carbPercentage = Math.round(carbsInTotal / macrosInTotal * 100);
+    var fatPercentage = Math.round(fatInTotal / macrosInTotal * 100);
 
     CanvasJS.addColorSet('macros', ['#47de83', '#5da5da', '#ea5450']);
 
@@ -19,17 +19,16 @@ export default function drawChart(entry) {
         markerBorderColor: "#fff",
     	data: [{
 			type: 'pie',
+            startAngle: 0,
 			indexLabelFontFamily: 'Roboto',
-			indexLabelFontSize: 16,
+			indexLabelFontSize: 14,
 			indexLabelFontWeight: 'normal',
-			startAngle: 0,
 			indexLabelFontColor: '#fff',
 			indexLabelPlacement: 'inside',
-			indexLabel: '#percent%',
 			dataPoints: [
-				{y: proteinPercentage},
-				{y: carbPercentage},
-				{y: fatPercentage}
+				{y: proteinPercentage, indexLabel: `${Math.round(proteinInTotal)} g (${proteinPercentage}%)`},
+				{y: carbPercentage, indexLabel: `${Math.round(carbsInTotal)} g (${carbPercentage}%)`},
+				{y: fatPercentage, indexLabel: `${Math.round(fatInTotal)} g (${fatPercentage}%)`},
 			]
         }]
 	});
