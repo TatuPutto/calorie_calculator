@@ -5,6 +5,7 @@ import ConsumedFoods from '../components/ConsumedFoods';
 
 export default function EntryDetails(props) {
     var {
+        showSingleEntry,
         entry,
         detailsVisible,
         viewportWidth,
@@ -24,9 +25,6 @@ export default function EntryDetails(props) {
                 </div>
                 <div className='macronutrient-split col-sm-4'>
                     <div className='macronutrient-split-wrapper'>
-                        {/*}<div className='macronutrient-split-header'>
-                            <h3>Makrojakauma</h3>
-                        </div>*/}
                         <div id='macronutrient-split-chart-container'></div>
                     </div>
                 </div>

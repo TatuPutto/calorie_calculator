@@ -43,3 +43,50 @@
         font-size: 15px;
     }
 }
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.toggle-diary-view-mode {
+    display: inline-block;
+    position: relative;
+    width: 54px;
+    height: 14px;
+    top: 3px;
+    margin: 0 20px;
+}
+
+.toggle-diary-view-mode .slider {
+    width: 100%;
+    height: 100%;
+    //background: #005398;
+    background: @secondary-blue;
+    box-shadow: 0 0 9px #003663 inset;
+    border-radius: 50px;
+    transition: 0.3s;
+}
+
+.toggle-diary-view-mode .slider::before {
+    content: "";
+    background: #fff;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    position: absolute;
+    top: 8px;
+    left: 3px;
+    transition: 0.3s;
+}
+
+input:checked + .slider {
+    background-color: @secondary-blue;
+}
+
+input:checked + .slider::before {
+    transform: translateX(22px);
+}
+
+.diary input:checked + .slider::before {
+    transform: translateX(30px);
+}

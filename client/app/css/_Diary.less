@@ -9,6 +9,92 @@
     font-size: 18px;
 }
 
+.entries-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    //display: flex;
+    //justify-content: center;
+}
+
+.entry-plain-wrapper {
+    //box-shadow: @module-shadow;
+    margin-bottom: 30px;
+}
+
+.entry-plain {
+    text-align: center;
+    background: #fff;
+    padding: 0;
+    font-size: 16px;
+    text-align: center;
+    background: #fff;
+
+    h2 {
+        font-size: 18px;
+    }
+}
+
+.plain-chart-container {
+    max-height: 150px;
+    max-width: 150px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.entry-plain-header {
+    background: #4692d2;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+    //border-top-right-radius: 3px;
+    //border-top-left-radius: 3px;
+    margin-bottom: 10px;
+
+    button {
+        border: none;
+        position: absolute;
+        right: 15px;
+        color: #fff;
+        font-size: 18px;
+        top: 8px;
+        background: transparent;
+    }
+
+    i {
+        color: #fff;
+    }
+}
+
+.entry-plain-content {
+    padding-bottom: 15px;
+}
+
+.entry-plain-energy {
+    color: @energy-color;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.entry-plain-protein,
+.entry-plain-carbs,
+.entry-plain-fat {
+    display: inline;
+    margin-left: 10px;
+    margin-right: 10px
+}
+
+.entry-plain-protein {
+    color: @protein-color;
+}
+
+.entry-plain-carbs {
+    color: @carb-color;
+}
+
+.entry-plain-fat {
+    color: @fat-color;
+}
+
 @media @tablet {
     .diary td {
         margin-bottom: 10px;

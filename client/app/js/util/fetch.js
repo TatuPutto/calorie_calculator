@@ -17,8 +17,8 @@ export function checkStatus(res) {
     }
 }
 
-export function readJson(res) {
-    return res.json();
+export function readJson(responses) {
+    return responses.json();
 }
 
 export function get(url) {

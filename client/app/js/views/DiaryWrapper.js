@@ -9,17 +9,31 @@ var viewportWidth = Math.max(
 );
 
 export default function DiaryWrapper(props) {
-    var activeEntryDate = null;
+    var isInSingleEntryState = true;
+    var date, week;
+
     if(props.location.search) {
-        activeEntryDate = props.location.search.split('=')[1];
+        var query = props.location.search.split('=');
+
+        if(query[0] == '?week') {
+            isInSingleEntryState = false
+            week = query[1];
+        } else if(query[0] == '?date') {
+            isInSingleEntryState = true;
+            date = query[1];
+        } else {
+            date = getCurrentDate();
+        }
     } else {
-        activeEntryDate = getCurrentDate();
+        date = getCurrentDate();
     }
 
     return (
         <Diary
             viewportWidth={viewportWidth}
-            activeEntryDate={activeEntryDate}
+            isInSingleEntryState={isInSingleEntryState}
+            date={date}
+            from={week}
         />
     );
 }

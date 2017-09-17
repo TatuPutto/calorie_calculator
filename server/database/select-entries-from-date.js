@@ -2,7 +2,7 @@ var getConnection = require('./create-connection');
 var calcNutritionValues = require('../util/query-json').calculateNutritionValues;
 var calcTotalNutritionValues = require('../util/query-json').calcTotalNutritionValues;
 
-module.exports = function selectEntriesFromDate(userId, date) {
+module.exports = function selectEntriesFromDate(date, userId) {
     var query = `
         SELECT meals.mealId, meals.mealName,
         consumedFoods.consumptionId, consumedFoods.foodAmount,
@@ -27,7 +27,7 @@ module.exports = function selectEntriesFromDate(userId, date) {
             });
         });
     })
-    .then(function (results) {console.log(results);
+    .then(function (results) {
         var energyInTotal = 0;
         var proteinInTotal = 0;
         var carbsInTotal = 0;
