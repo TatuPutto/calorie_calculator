@@ -7,7 +7,7 @@ import DailyGoal from '../components/DailyGoal';
 import Loading from '../components/Loading';
 
 import {checkStatus, readJson, get, post, patch, remove} from '../util/fetch';
-import getCurrentDate from '../util/get-current-date';
+import {getCurrentDate} from '../util/date-functions';
 import {
     updateValuesOnAddition,
     updateValuesOnRemove
@@ -126,7 +126,7 @@ export default class CurrentEntry extends React.Component {
                 var meals = Object.keys(data.meals);
                 var latestMeal = data.meals[meals.length - 1];
                 var activeMeal = null;
-                console.log(meals);
+
                 if(meals.length > 0) {
                     activeMeal = {
                         mealId: latestMeal.mealId,

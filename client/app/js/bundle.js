@@ -7,7 +7,6 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import CurrentEntryWrapper from './views/CurrentEntryWrapper';
 import DiaryWrapper from './views/DiaryWrapper';
-import getCurrentDate from './util/get-current-date';
 
 require('../css/styles.less');
 

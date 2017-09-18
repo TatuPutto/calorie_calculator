@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Diary from './Diary';
-import getCurrentDate from '../util/get-current-date';
+import {getCurrentDate} from '../util/date-functions';
 
 var viewportWidth = Math.max(
     document.documentElement.clientWidth,
@@ -9,17 +9,18 @@ var viewportWidth = Math.max(
 );
 
 export default function DiaryWrapper(props) {
-    var isInSingleEntryState = true;
-    var date, week;
+    var isInDayView = true;
+    var date = null
+    var week = null;
 
     if(props.location.search) {
         var query = props.location.search.split('=');
 
         if(query[0] == '?week') {
-            isInSingleEntryState = false
-            week = query[1];
+            isInDayView = false
+            week = +query[1];
         } else if(query[0] == '?date') {
-            isInSingleEntryState = true;
+            isInDayView = true;
             date = query[1];
         } else {
             date = getCurrentDate();
@@ -31,9 +32,9 @@ export default function DiaryWrapper(props) {
     return (
         <Diary
             viewportWidth={viewportWidth}
-            isInSingleEntryState={isInSingleEntryState}
+            isInDayView={isInDayView}
             date={date}
-            from={week}
+            week={week}
         />
     );
 }

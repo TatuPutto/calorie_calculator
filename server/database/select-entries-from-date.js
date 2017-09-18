@@ -14,7 +14,7 @@ module.exports = function selectEntriesFromDate(date, userId) {
         AND meals.userId = ? AND meals.active = 1
         AND meals.timeOfConsumption >= STR_TO_DATE(?, "%d-%m-%Y")
         AND meals.timeOfConsumption < STR_TO_DATE(?, "%d-%m-%Y") + INTERVAL 1 DAY
-        ORDER BY meals.mealId, consumedFoods.timeOfConsumption
+        ORDER BY meals.mealId, consumedFoods.consumptionId
     `;
 
     return new Promise(function (resolve, reject) {

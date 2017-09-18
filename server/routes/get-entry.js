@@ -28,7 +28,6 @@ router.get('/single/:date', function (req, res) {
 router.get('/multiple/:week', function (req, res) {
     selectNutritionValuesFromDateRange(req.params.week, req.session.user.id)
         .then(function (nutritionValues) {
-            console.log(nutritionValues);
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(nutritionValues));
         })

@@ -21,7 +21,6 @@ module.exports = function insertMealForToday(mealName, userId) {
                     if(err) reject(err);
                     connection.query(select, [userId], function (err, results) {
                         if(err) reject(err);
-                        console.log('täälläpä: \n' + results[0]);
                         resolve(results[0]);
                     });
                 });

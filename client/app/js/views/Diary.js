@@ -8,17 +8,16 @@ import Loading from '../components/Loading';
 
 import {checkStatus, readJson, get} from '../util/fetch';
 import drawMacroChart from '../util/draw-macro-chart';
-import getCurrentDate from '../util/get-current-date';
+import {getCurrentDate, getCurrentWeek} from '../util/date-functions';
 
 
 export default class Diary extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isInSingleEntryState: this.props.isInSingleEntryState,
+            isInDayView: this.props.isInDayView,
             nutritionDetailsForMultipleEntries: [],
-
-            diaryEntries: [],
+            entries: [],
             isFetchingdiaryEntries: true,
             diaryEntriesFetchError: null,
             consumedFoods: [],
@@ -33,7 +32,8 @@ export default class Diary extends React.Component {
         this.getEntryFromDate = this.getEntryFromDate.bind(this);
         this.getEntriesFromDateRange = this.getEntriesFromDateRange.bind(this);
         this.changeEntry = this.changeEntry.bind(this);
-        this.toggleDetails = this.toggleDetails.bind(this);
+        this.showDetailedView = this.showDetailedView.bind(this);
+        this.toggleViewMode = this.toggleViewMode.bind(this);
     }
 
     componentWillMount() {
@@ -41,16 +41,16 @@ export default class Diary extends React.Component {
             .then((res) => res.json())
             .then((diaryEntries) => {
                 // get entry specified by query param
-                if(this.state.isInSingleEntryState) {
-                    this.getEntryFromDate(this.props.activeEntryDate);
+                if(this.state.isInDayView) {
+                    this.getEntryFromDate(this.props.date);
                 } else {
-                    this.getEntriesFromDateRange(this.props.from, this.props.to);
+                    this.getEntriesFromDateRange(this.props.week);
                 }
 
                 this.setState({
-                    diaryEntries,
+                    entries,
                     isFetchingdiaryEntries: false,
-                    activeEntryDate: this.props.activeEntryDate
+                    date: this.props.date
                 });
             }).catch((err) => this.setState({
                 isFetchingdiaryEntries: false,
@@ -74,41 +74,41 @@ export default class Diary extends React.Component {
 
     // get next entry when query params are pushed
     componentWillReceiveProps(nextProps) {
-        if(nextProps.isInSingleEntryState) {
+        if(nextProps.isInDayView) {
             this.getEntryFromDate(nextProps.date);
         } else {
-            this.getEntriesFromDateRange(nextProps.from, nextProps.to);
+            this.getEntriesFromDateRange(nextProps.week);
         }
     }
 
     componentDidUpdate() {
         var {
-            isFetching,
+            isFetchingEntry,
             consumedFoods,
             totalConsumption,
-            isInSingleEntryState
+            isInDayView
         } = this.state;
 
-        if(!isFetching && consumedFoods.length > 0 && isInSingleEntryState) {
+        if(!isFetchingEntry && consumedFoods.length > 0 && isInDayView) {
             window.requestAnimationFrame(() => {
                 drawMacroChart(totalConsumption);
             });
         }
     }
 
-    getEntryFromDate(entryDate) {
-        document.title = entryDate.replace(/[-]/g, '.');
+    getEntryFromDate(date) {
+        document.title = date.replace(/[-]/g, '.');
         this.setState({entry: null, isFetchingEntry: true});
 
         // fetch entry details and goal from date X
         Promise.all([
-            get(`entry/single/${entryDate}`),
-            get(`daily-goal/${entryDate}`)
+            get(`entry/single/${date}`),
+            get(`daily-goal/${date}`)
         ])
         .then((responses) => Promise.all(responses.map(readJson)))
         .then((data) => {
             this.setState({
-                isInSingleEntryState: true,
+                isInDayView: true,
                 consumedFoods: data[0].meals,
                 totalConsumption: data[0].nutritionValuesInTotal,
                 dailyGoal: data[1],
@@ -129,7 +129,7 @@ export default class Diary extends React.Component {
             .then(readJson)
             .then((data) => {
                 this.setState({
-                    isInSingleEntryState: false,
+                    isInDayView: false,
                     nutritionDetailsForMultipleEntries: data,
                     isFetchingEntry: false,
                     entryFetchError: null,
@@ -142,23 +142,24 @@ export default class Diary extends React.Component {
             }));
     }
 
-
     changeEntry(direction) {
-        var date = this.props.date;
-        var diaryEntries = this.state.diaryEntries;
-        var currentIndex = diaryEntries.indexOf(date);
-        var indexOfNextEntry = (direction == 'next') ?
-                currentIndex - 1 : currentIndex + 1;
-        var nextEntry = diaryEntries[indexOfNextEntry];
+        if(this.state.isInDayView) {
+            var date = this.props.date;
+            var diaryEntries = this.state.diaryEntries;
+            var currentIndex = diaryEntries.indexOf(date);
+            var indexOfNextEntry = (direction == 'next') ?
+                    currentIndex - 1 : currentIndex + 1;
+            var nextEntry = diaryEntries[indexOfNextEntry];
 
-        this.context.router.history.push(`?date=${nextEntry}`);
+            this.context.router.history.push(`?date=${nextEntry}`);
+        } else {
+            var week = +this.props.week;
+            var goToWeek = (direction == 'next') ? week + 1 : week - 1;
+            this.context.router.history.push(`?week=${goToWeek}`);
+        }
     }
 
-    toggleDetails() {
-        this.setState({detailsVisible: !this.state.detailsVisible});
-    }
-
-    showDetailedView = (date) => {
+    showDetailedView(date) {
         date = new Date(date);
         var day = date.getDate();
         var month = date.getMonth() + 1;
@@ -168,49 +169,51 @@ export default class Diary extends React.Component {
         this.context.router.history.push(`?date=${dateStr}`);
     }
 
-    toggleViewMode = () => {
-        console.log(this.state.isInSingleEntryState);
-        if(this.state.isInSingleEntryState) {
-            var now = new Date();
-            var start = new Date(now.getFullYear(), 0, 0);
-            var diff = now - start;
-            var oneDay = 1000 * 60 * 60 * 24;
-            var day = Math.floor(diff / oneDay);
-            console.log('täällä');
-            this.context.router.history.push(`?week=${Math.round(day / 7)}`);
-        } else {
+    toggleViewMode(viewMode) {
+        if(viewMode == 'weekView') {
+            this.context.router.history.push(`?week=${getCurrentWeek()}`);
+        } else if(viewMode == 'dayView') {
             this.context.router.history.push(`?date=${getCurrentDate()}`);
         }
     }
 
     render() {
-        var {isFetchingEntry, entry} = this.state;
-        var entryDetails = null;
+        var {
+            isFetchingEntry,
+            nutritionDetailsForMultipleEntries,
+            consumedFoods,
+            totalConsumption,
+            dailyGoal,
+            isInDayView,
+            viewportWidth
+        } = this.state;
+
+        var output = null;
         var hasEntries = false;
 
-        if(this.state.isInSingleEntryState) {
-            for(var food of this.state.consumedFoods) {
+        if(isInDayView) {
+            for(var food of consumedFoods) {
                 if(food.mealCourses.length > 0) hasEntries = true;
             }
         }
 
         if(isFetchingEntry) {
-            entryDetails = <Loading />;
-        } else if(!isFetchingEntry && this.state.consumedFoods.length > 0 &&
-                  hasEntries && this.state.isInSingleEntryState) {
-            entryDetails = (
+            output = <Loading />;
+        } else if(!isFetchingEntry && consumedFoods.length > 0 &&
+                  hasEntries && isInDayView) {
+            output = (
                 <EntryDetails
-                    totalConsumption={this.state.totalConsumption}
-                    dailyGoal={this.state.dailyGoal}
-                    consumedFoods={this.state.consumedFoods}
-                    viewportWidth={this.state.viewportWidth}
+                    totalConsumption={totalConsumption}
+                    dailyGoal={dailyGoal}
+                    consumedFoods={consumedFoods}
+                    viewportWidth={viewportWidth}
                 />
             );
-        } else if(!isFetchingEntry && this.state.nutritionDetailsForMultipleEntries.length > 0 &&
-                  !this.state.isInSingleEntryState) {
-            entryDetails = (
+        } else if(!isFetchingEntry && nutritionDetailsForMultipleEntries.length > 0 &&
+                  !isInDayView) {
+            output = (
                 <div className='row entries-container'>
-                    {this.state.nutritionDetailsForMultipleEntries.map((details, i) => {
+                    {nutritionDetailsForMultipleEntries.map((details, i) => {
                         return (
                             <EntryDetailsPlain
                                 key={i.toString()}
@@ -227,9 +230,9 @@ export default class Diary extends React.Component {
                 </div>
             );
         } else {
-            entryDetails = (
+            output = (
                 <div className='no-entry-found'>
-                    {this.state.isInSingleEntryState ? (
+                    {isInDayView ? (
                         <p>Tältä päivältä ei löytynyt merkintöjä.</p>
                     ) : (
                         <p>Tältä viikolta ei löytynyt merkintöjä.</p>
@@ -241,13 +244,14 @@ export default class Diary extends React.Component {
         return (
             <div className='diary'>
                 <DiaryEntrySelection
-                    isInSingleEntryState={this.state.isInSingleEntryState}
-                    date={this.props.date || 'Viikko X'}
-                    diaryEntries={this.state.diaryEntries}
+                    isInDayView={isInDayView}
+                    date={this.props.date}
+                    week={this.props.week}
+                    entries={this.state.entries}
                     changeEntry={this.changeEntry}
                     toggleViewMode={this.toggleViewMode}
                 />
-                {entryDetails}
+                {output}
             </div>
         );
     }
@@ -257,5 +261,6 @@ Diary.contextTypes = {router: PropTypes.object.isRequired};
 
 Diary.propTypes = {
     viewportWidth: PropTypes.number.isRequired,
-    date: PropTypes.string.isRequired
+    date: PropTypes.string,
+    week: PropTypes.number
 };

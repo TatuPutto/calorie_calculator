@@ -3,11 +3,9 @@ var getConnection = require('./create-connection');
 
 
 module.exports = function selectNutritionValuesFromDateRange(week, userId) {
-    var from = week * 7;
-    console.log(from);
-    var to = from - 6;
-    console.log(to);
     var year = new Date().getFullYear();
+    var from = week * 7;
+    var to = from - 6;
     var data = [year, from, year, to, userId];
     var query = `
         SELECT
