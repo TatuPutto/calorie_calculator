@@ -10,14 +10,14 @@
 }
 
 .entries-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     max-width: 1000px;
     margin: 50px auto;
-    //display: flex;
-    //justify-content: center;
 }
 
 .entry-plain-wrapper {
-    //box-shadow: @module-shadow;
     margin-bottom: 30px;
 }
 
@@ -28,6 +28,8 @@
     font-size: 16px;
     text-align: center;
     background: #fff;
+    box-shadow: @module-shadow;
+    border-radius: 3px;
 
     h2 {
         font-size: 18px;
@@ -46,9 +48,9 @@
     padding: 15px;
     color: #fff;
     text-align: left;
-    //border-top-right-radius: 3px;
-    //border-top-left-radius: 3px;
-    margin-bottom: 10px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    margin-bottom: 20px;
 
     button {
         border: none;
@@ -94,6 +96,31 @@
 .entry-plain-fat {
     color: @fat-color;
 }
+
+.blank-entry {
+    min-height: 313px;
+    box-shadow: 0 0 10px #cacaca inset;
+    border-radius: 5px;
+    background: #ececec;
+    text-align: center;
+
+    h2 {
+        font-size: 18px;
+    }
+}
+
+.blank-entry-header {
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #7b7b7b;
+}
+
+.blank-entry-content {
+    position: relative;
+    top: 80px;
+    color: #7b7b7b;
+}
+
 
 @media @tablet {
     .diary td {

@@ -9,6 +9,15 @@ export function getCurrentDate() {
     return `${day}-${month}-${year}`;
 }
 
+export function formatDate(date) {
+    var d = new Date(date);
+    var day = pad(d.getDate());
+    var month = pad(d.getMonth() + 1);
+    var year = pad(d.getFullYear());
+
+    return `${day}-${month}-${year}`;
+}
+
 export function getCurrentWeek() {
     var now = new Date();
     var start = new Date(now.getFullYear(), 0, 0);

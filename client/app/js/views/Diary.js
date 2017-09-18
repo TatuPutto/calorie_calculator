@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import DiaryEntrySelection from '../components/DiaryEntrySelection';
 import EntryDetails from '../components/EntryDetails';
 import EntryDetailsPlain from '../components/EntryDetailsPlain';
+import BlankEntry from '../components/BlankEntry';
 import Loading from '../components/Loading';
 
 import {checkStatus, readJson, get} from '../util/fetch';
 import drawMacroChart from '../util/draw-macro-chart';
-import {getCurrentDate, getCurrentWeek} from '../util/date-functions';
+import {getCurrentDate, formatDate, getCurrentWeek} from '../util/date-functions';
 
 
 export default class Diary extends React.Component {
@@ -91,7 +92,11 @@ export default class Diary extends React.Component {
 
         if(!isFetchingEntry && consumedFoods.length > 0 && isInDayView) {
             window.requestAnimationFrame(() => {
-                drawMacroChart(totalConsumption);
+                drawMacroChart(
+                    'macronutrient-split-chart-container',
+                    totalConsumption,
+                    isInDayView
+                );
             });
         }
     }
@@ -153,26 +158,20 @@ export default class Diary extends React.Component {
 
             this.context.router.history.push(`?date=${nextEntry}`);
         } else {
-            var week = +this.props.week;
+            var week = this.props.week;
             var goToWeek = (direction == 'next') ? week + 1 : week - 1;
             this.context.router.history.push(`?week=${goToWeek}`);
         }
     }
 
     showDetailedView(date) {
-        date = new Date(date);
-        var day = date.getDate();
-        var month = date.getMonth() + 1;
-        var year = date.getFullYear();
-        var dateStr =`${day}-${month}-${year}`;
-
-        this.context.router.history.push(`?date=${dateStr}`);
+        this.context.router.history.push(`?date=${formatDate(date)}`);
     }
 
     toggleViewMode(viewMode) {
-        if(viewMode == 'weekView') {
+        if(viewMode == 'weekView' && this.state.isInDayView) {
             this.context.router.history.push(`?week=${getCurrentWeek()}`);
-        } else if(viewMode == 'dayView') {
+        } else if(viewMode == 'dayView' && !this.state.isInDayView) {
             this.context.router.history.push(`?date=${getCurrentDate()}`);
         }
     }
@@ -187,7 +186,7 @@ export default class Diary extends React.Component {
             isInDayView,
             viewportWidth
         } = this.state;
-
+        console.log(nutritionDetailsForMultipleEntries.length);
         var output = null;
         var hasEntries = false;
 
@@ -214,18 +213,22 @@ export default class Diary extends React.Component {
             output = (
                 <div className='row entries-container'>
                     {nutritionDetailsForMultipleEntries.map((details, i) => {
-                        return (
-                            <EntryDetailsPlain
-                                key={i.toString()}
-                                canvasId={i.toString()}
-                                date={details.date}
-                                energy={details.energy}
-                                protein={details.protein}
-                                carbs={details.carbs}
-                                fat={details.fat}
-                                showDetailedView={this.showDetailedView}
-                            />
-                        );
+                        if(details.hasOwnProperty('energy')) {
+                            return (
+                                <EntryDetailsPlain
+                                    key={i.toString()}
+                                    canvasId={i.toString()}
+                                    date={details.date}
+                                    energy={details.energy}
+                                    protein={details.protein}
+                                    carbs={details.carbs}
+                                    fat={details.fat}
+                                    showDetailedView={this.showDetailedView}
+                                />
+                            );
+                        } else {
+                            return <BlankEntry date={details.date} />;
+                        }
                     })}
                 </div>
             );

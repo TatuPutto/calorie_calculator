@@ -1,9 +1,15 @@
 import React from 'react';
 
+import drawMacroChart from '../util/draw-macro-chart';
+
 export default class EntryDetailsPlain extends React.Component {
     componentDidMount() {
         window.requestAnimationFrame(() => {
-            createPlainMacroChart(this.props.canvasId, this.props.protein, this.props.carbs, this.props.fat);
+            drawMacroChart(this.props.canvasId, {
+                protein: this.props.protein,
+                carbs: this.props.carbs,
+                fat: this.props.fat
+            });
         });
     }
 
@@ -23,7 +29,7 @@ export default class EntryDetailsPlain extends React.Component {
 
 
         return (
-            <div className='col-xs-3 entry-plain-wrapper'>
+            <div className='col-xs-10 col-sm-5 col-md-3 entry-plain-wrapper'>
                 <div className='entry-plain'>
                     <div className='entry-plain-header'>
                         <h2>{dateStr}</h2>
@@ -34,8 +40,8 @@ export default class EntryDetailsPlain extends React.Component {
                             <i className='fa fa-external-link' />
                         </button>
                     </div>
-                    <div className="plain-chart-container">
-                        <canvas id={this.props.canvasId} />
+                    <div id={this.props.canvasId} className='plain-chart-container'>
+                        {/*}<canvas id={this.props.canvasId} />*/}
                     </div>
                     <div className='entry-plain-content'>
                         <h3 className='entry-plain-energy'>{this.props.energy} kcal</h3>
@@ -47,7 +53,6 @@ export default class EntryDetailsPlain extends React.Component {
             </div>
         );
     }
-
 }
 
 function createPlainMacroChart(canvasId, protein, carbs, fat) {

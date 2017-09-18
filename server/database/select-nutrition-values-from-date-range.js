@@ -20,7 +20,7 @@ module.exports = function selectNutritionValuesFromDateRange(week, userId) {
         AND consumedFoods.timeOfConsumption > MAKEDATE(?, ?)
         AND consumedFoods.foodId != 99999
         AND consumedFoods.userId = ? AND consumedFoods.active = 1
-        GROUP BY DATE(consumedFoods.timeOfConsumption) DESC
+        GROUP BY DATE(consumedFoods.timeOfConsumption)
     `;
 
     return new Promise(function (resolve, reject) {
@@ -34,7 +34,30 @@ module.exports = function selectNutritionValuesFromDateRange(week, userId) {
         })
     })
     .then(function (results) {
-        return results;
+        var asd = [];
+        var daysOfYear = [];
+        var dateRange = [];
+        var i = 1;
+
+        while(i <= 7) {
+            // alustetaan uusi vuosi 1.1.2017
+            var date = new Date(year, 0);
+
+            // lisätään aloitus piste
+            var d = new Date(date.setDate((to + i)));
+            i++;
+            var matchingDateFound = false;
+            for(var j = 0; j < results.length; j++) {
+                if(results[j].date.toString().split(' ')[2] == d.toString().split(' ')[2]) {
+                    asd.push(results[j]);
+                    matchingDateFound = true;
+                }
+            }
+
+            if(!matchingDateFound) asd.push({date: d});
+        }
+
+        return asd
     })
     .catch(function (err) {
         console.log(err);
