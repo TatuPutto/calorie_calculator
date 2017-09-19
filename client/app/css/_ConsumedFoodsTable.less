@@ -17,16 +17,43 @@
 }
 
 .consumed-foods-table td {
-    height: 36px;
+    height: 40px;
     border-right: @border;
     border-bottom: @border;
 }
 
+.consumed-foods-day-total {
+    td {
+        padding: 8px 0;
+        border-top: 2px solid @border-color;
+        font-weight: bold;
+    }
+
+    td:nth-child(2) {
+        color: @energy-color
+    }
+
+    td:nth-child(3) {
+        color: @protein-color
+    }
+
+    td:nth-child(4) {
+        color: @carb-color
+    }
+
+    td:nth-child(5) {
+        color: @fat-color
+    }
+}
+
 .consumed-foods-meal {
     background: #f7f7f7;
+    font-weight: bold;
+    text-align: left;
 
     td {
-        height: 34px;
+        height: 40px;
+        padding-left: 6px;
     }
 
     button {
@@ -35,11 +62,25 @@
         padding: 0 12px;
         background: transparent;
         border: none;
+        opacity: 0;
     }
 
     input[type="text"] {
         color: #fff;
         height: 26px;
+    }
+
+    &:hover {
+        background: #757575;
+        color: #fff;
+
+        button {
+            opacity: 1;
+
+            i {
+                color: #fff;
+            }
+        }
     }
 }
 
@@ -53,7 +94,7 @@ input[type="checkbox"] {
     width: 46px;
     height: 22px;
     margin-top: -2px;
-    left: 20px;
+    right: 20px;
     cursor: pointer;
 }
 
@@ -283,9 +324,4 @@ input:checked + .slider::before {
             padding: 6px 0;
         }
     }
-
-
-
-
-
 }

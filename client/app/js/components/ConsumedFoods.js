@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ConsumedFoodsTable from './ConsumedFoodsTable';
-import TotalNutritionValuesTable from './TotalNutritionValuesTable';
 import Loading from './Loading';
 
 export default function ConsumedFoods(props) {
@@ -31,11 +30,6 @@ export default function ConsumedFoods(props) {
                     <h3>Merkinnät</h3>
                 </div>
                 <ConsumedFoodsTable {...props} />
-                {/*}{props.isModifiable &&
-                    <TotalNutritionValuesTable
-                        totalConsumption={props.totalConsumption}
-                    />
-                }*/}
             </div>
         );
     }

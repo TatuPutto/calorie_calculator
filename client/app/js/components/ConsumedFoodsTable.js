@@ -6,6 +6,8 @@ import ConsumedFoodMealRow from './ConsumedFoodMealRow';
 import ConsumedFoodRowWrapper from './ConsumedFoodRowWrapper';
 import ConsumedFoodRow from './ConsumedFoodRow';
 import ConsumedFoodRowCompactLayout from './ConsumedFoodRowCompactLayout';
+import TotalNutritionValuesTable from './TotalNutritionValuesTable';
+import ConsumedFoodMealTotalNutritionValues from './ConsumedFoodMealTotalNutritionValues';
 
 export default function ConsumedFoodsTable(props) {
     // create HOC for handling ConsumedFoodRow and ConsumedFoodRowCompactLayout state
@@ -16,6 +18,7 @@ export default function ConsumedFoodsTable(props) {
 
     props.consumedFoods.forEach((meal, i) => {
         var courses = meal.mealCourses;
+        var energy = 0, protein = 0, carbs = 0, fat = 0;
 
         // push row representing the meal
         rows.push(
@@ -38,6 +41,11 @@ export default function ConsumedFoodsTable(props) {
                 .filter((course) => course.id !== 99999)
                 // create rows for each course of the meal
                 .map((course) => {
+                    energy += course.energy;
+                    protein += course.protein;
+                    carbs += course.carbs;
+                    fat += course.fat;
+
                     return (
                         <RowWrapper
                             key={course.consumptionId}
@@ -52,19 +60,32 @@ export default function ConsumedFoodsTable(props) {
 
             rows.push(courseRows);
         }
+
+        // show nutrition values in total for meal
+        // if there is more than 2 courses on that meal
+        if(courses.length > 1) {
+            rows.push(
+                <ConsumedFoodMealTotalNutritionValues
+                    total={{energy, protein, carbs, fat}}
+                />
+            );
+        }
     });
 
     return (
         <table className='consumed-foods-table'>
             <tbody>
                 {rows}
-                <tr>
-                    {props.isModifiable &&
+                <TotalNutritionValuesTable
+                    totalConsumption={props.totalConsumption}
+                />
+                {props.isModifiable &&
+                    <tr>
                         <td colSpan={7} onClick={props.addMeal}>
                             Lisää ateria
                         </td>
-                    }
-                </tr>
+                    </tr>
+                }
             </tbody>
         </table>
     );

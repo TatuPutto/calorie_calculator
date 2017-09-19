@@ -16,7 +16,7 @@ module.exports = function selectNutritionValuesFromDateRange(week, userId) {
         DATE(consumedFoods.timeOfConsumption) AS date
         FROM consumedFoods
         LEFT JOIN foods ON foods.foodId = consumedFoods.foodId
-        WHERE consumedFoods.timeOfConsumption <= MAKEDATE(?, ?) + INTERVAL 1 DAY
+        WHERE consumedFoods.timeOfConsumption <= MAKEDATE(?, ?) + INTERVAL 2 DAY
         AND consumedFoods.timeOfConsumption > MAKEDATE(?, ?)
         AND consumedFoods.foodId != 99999
         AND consumedFoods.userId = ? AND consumedFoods.active = 1
@@ -34,6 +34,9 @@ module.exports = function selectNutritionValuesFromDateRange(week, userId) {
         })
     })
     .then(function (results) {
+        if(results.length === 0) {
+            return [];
+        }
         var asd = [];
         var daysOfYear = [];
         var dateRange = [];

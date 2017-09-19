@@ -18,6 +18,14 @@ export function formatDate(date) {
     return `${day}-${month}-${year}`;
 }
 
+export function padDate(date, delimiter) {
+    return date.split(delimiter).map((datePart) => {
+        if(datePart.length < 2) datePart = pad(datePart);
+
+        return datePart;
+    }).join('-');
+}
+
 export function getCurrentWeek() {
     var now = new Date();
     var start = new Date(now.getFullYear(), 0, 0);

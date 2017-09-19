@@ -78,10 +78,10 @@ module.exports = function selectEntriesFromToday(userId) {
         });
 
         var nutritionValuesInTotal = {
-            energy: energyInTotal,
-            protein: proteinInTotal,
-            carbs: carbsInTotal,
-            fat: fatInTotal
+            energy: Math.round(energyInTotal),
+            protein: Math.round(proteinInTotal),
+            carbs: Math.round(carbsInTotal),
+            fat: Math.round(fatInTotal)
         };
 
         return {meals, nutritionValuesInTotal};

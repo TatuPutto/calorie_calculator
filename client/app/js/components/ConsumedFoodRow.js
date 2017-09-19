@@ -48,24 +48,25 @@ export default function ConsumedFoodRow(props) {
             }
             {isModifiable && !isBeingEdited &&
                 <td className='consumed-food-amount'>
-                    <a onClick={() => addEntry(food, food.amount)}>{food.amount} g</a>
+                    {food.amount} g
+                    {/*<a onClick={() => addEntry(food, food.amount)}>{food.amount} g</a>
                     <a onClick={toggleEditing} style={{marginLeft: '10px'}}>
                         <i className='fa fa-pencil' data-tooltip-text='Muokkaa merkintää' />
-                    </a>
+                    </a>*/}
                 </td>
             }
             <td className='consumed-food-energy-amount'>{food.energy} kcal</td>
             <td className={proteinClass}>{food.protein} g</td>
             <td className={carbClass}>{food.carbs} g</td>
             <td className={fatClass}>{food.fat} g</td>
-            {isModifiable &&
+            {/*}{isModifiable &&
                 <td
                     className='consumed-food-remove'
                     onClick={() => removeEntry(food)}
                 >
                     <i className='fa fa-remove' />
                 </td>
-            }
+            }*/}
         </tr>
     );
 }

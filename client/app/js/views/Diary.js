@@ -18,7 +18,7 @@ export default class Diary extends React.Component {
         this.state = {
             isInDayView: this.props.isInDayView,
             nutritionDetailsForMultipleEntries: [],
-            entries: [],
+            entryDates: [],
             isFetchingdiaryEntries: true,
             diaryEntriesFetchError: null,
             consumedFoods: [],
@@ -40,7 +40,7 @@ export default class Diary extends React.Component {
     componentWillMount() {
         get('diary-entries')
             .then((res) => res.json())
-            .then((diaryEntries) => {
+            .then((entryDates) => {
                 // get entry specified by query param
                 if(this.state.isInDayView) {
                     this.getEntryFromDate(this.props.date);
@@ -49,7 +49,7 @@ export default class Diary extends React.Component {
                 }
 
                 this.setState({
-                    entries,
+                    entryDates,
                     isFetchingdiaryEntries: false,
                     date: this.props.date
                 });
@@ -150,11 +150,11 @@ export default class Diary extends React.Component {
     changeEntry(direction) {
         if(this.state.isInDayView) {
             var date = this.props.date;
-            var diaryEntries = this.state.diaryEntries;
-            var currentIndex = diaryEntries.indexOf(date);
+            var entryDates = this.state.entryDates;
+            var currentIndex = entryDates.indexOf(date);
             var indexOfNextEntry = (direction == 'next') ?
                     currentIndex - 1 : currentIndex + 1;
-            var nextEntry = diaryEntries[indexOfNextEntry];
+            var nextEntry = entryDates[indexOfNextEntry];
 
             this.context.router.history.push(`?date=${nextEntry}`);
         } else {
@@ -186,7 +186,7 @@ export default class Diary extends React.Component {
             isInDayView,
             viewportWidth
         } = this.state;
-        console.log(nutritionDetailsForMultipleEntries.length);
+
         var output = null;
         var hasEntries = false;
 
@@ -198,8 +198,7 @@ export default class Diary extends React.Component {
 
         if(isFetchingEntry) {
             output = <Loading />;
-        } else if(!isFetchingEntry && consumedFoods.length > 0 &&
-                  hasEntries && isInDayView) {
+        } else if(!isFetchingEntry && consumedFoods.length > 0 && hasEntries && isInDayView) {
             output = (
                 <EntryDetails
                     totalConsumption={totalConsumption}
@@ -208,8 +207,7 @@ export default class Diary extends React.Component {
                     viewportWidth={viewportWidth}
                 />
             );
-        } else if(!isFetchingEntry && nutritionDetailsForMultipleEntries.length > 0 &&
-                  !isInDayView) {
+        } else if(!isFetchingEntry && !isInDayView && nutritionDetailsForMultipleEntries.length > 0) {
             output = (
                 <div className='row entries-container'>
                     {nutritionDetailsForMultipleEntries.map((details, i) => {
@@ -250,7 +248,7 @@ export default class Diary extends React.Component {
                     isInDayView={isInDayView}
                     date={this.props.date}
                     week={this.props.week}
-                    entries={this.state.entries}
+                    entryDates={this.state.entryDates}
                     changeEntry={this.changeEntry}
                     toggleViewMode={this.toggleViewMode}
                 />

@@ -13,8 +13,11 @@ var router = express.Router();
 
 // return list of entries for today
 router.get('/', function (req, res) {
+    console.log('tööllö');
+    console.log(req.session.user.id);
     selectEntriesFromToday(req.session.user.id)
         .then(function (results) {
+            console.log(results);
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(results));
         })

@@ -6,7 +6,9 @@ import ConsumedFoods from '../components/ConsumedFoods';
 export default function EntryDetails(props) {
     var {
         showSingleEntry,
-        entry,
+        consumedFoods,
+        totalConsumption,
+        dailyGoal,
         detailsVisible,
         viewportWidth,
         toggleDetails
@@ -18,8 +20,8 @@ export default function EntryDetails(props) {
             <div className='row'>
                 <div className='col-sm-8'>
                     <DailyGoalProgressTable
-                        dailyGoal={props.dailyGoal}
-                        totalConsumption={props.totalConsumption}
+                        dailyGoal={dailyGoal}
+                        totalConsumption={totalConsumption}
                         isModifiable={false}
                     />
                 </div>
@@ -35,7 +37,8 @@ export default function EntryDetails(props) {
                         viewportWidth={viewportWidth}
                         isModifiable={false}
                         isFetchingConsumedFoods={false}
-                        consumedFoods={props.consumedFoods}
+                        consumedFoods={consumedFoods}
+                        totalConsumption={totalConsumption}
                     />
                 </div>
             </div>

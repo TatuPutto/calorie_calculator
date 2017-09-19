@@ -27,7 +27,7 @@ module.exports = function selectEntriesFromDate(date, userId) {
             });
         });
     })
-    .then(function (results) {
+    .then(function (results) {console.log(results);
         var energyInTotal = 0;
         var proteinInTotal = 0;
         var carbsInTotal = 0;

@@ -2,11 +2,13 @@ var getConnection = require('./create-connection');
 var calcNutritionValues = require('../util/query-json').calculateNutritionValues;
 var calcTotalNutritionValues = require('../util/query-json').calcTotalNutritionValues;
 
-module.exports = function getEntryDates(userId) {
-    var query = 'SELECT consumptionId, foodId, foodAmount, ' +
-            'DATE_FORMAT(timeOfConsumption, "%d-%m-%Y") AS timeOfConsumption ' +
-            'FROM consumedFoods WHERE userId=? AND active=1 ' +
-            'ORDER BY timeOfConsumption DESC';
+module.exports = function selectAllEntryContainingDates(userId) {
+    var query = `
+        SELECT DISTINCT(DATE_FORMAT(timeOfConsumption, "%d-%m-%Y"))
+        AS timeOfConsumption
+        FROM consumedFoods WHERE userId = ? AND active = 1
+        ORDER BY timeOfConsumption DESC
+    `;
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
@@ -17,15 +19,10 @@ module.exports = function getEntryDates(userId) {
                 resolve(results);
             });
         });
-    }).then(function (consumedFoods) {
-        var entries = [];
-        var consumedFoods = consumedFoods.forEach(function (food) {
-            if(entries.indexOf(food.timeOfConsumption) === -1) {
-                entries.push(food.timeOfConsumption);
-            }
+    }).then(function (dates) {
+        return dates.map(function (date) {
+            return date.timeOfConsumption;
         });
-
-        return entries;
     }).catch(function (err) {
         console.log(err);
         throw err;

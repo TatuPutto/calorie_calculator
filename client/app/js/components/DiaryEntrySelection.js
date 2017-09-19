@@ -11,13 +11,13 @@ export default function DiaryEntrySelection(props) {
         isInDayView,
         date,
         week,
-        entries,
+        entryDates,
         changeEntry
     } = props;
 
     // conditions for showing next and previous indicators in day view
-    var thereIsPreviousEntry = date != entries[entries.length - 1] && entries.length > 0;
-    var thereIsNextEntry = date != getCurrentDate() && date != entries[0] && entries.length > 0;
+    var thereIsPreviousEntry = date != entryDates[entryDates.length - 1] && entryDates.length > 0;
+    var thereIsNextEntry = date != getCurrentDate() && date != entryDates[0] && entryDates.length > 0;
 
     // conditions for showing next indicator in week view
     var notCurrentWeek = (week + 1) <= getCurrentWeek();
