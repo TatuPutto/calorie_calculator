@@ -65,6 +65,7 @@ body {
     overflow-y: scroll;
     font-family: 'Monserrat', 'Roboto', sans-serif;
     background: #f9f9f9;
+    overflow-y: hidden;
 }
 
 span {
@@ -131,6 +132,25 @@ button:disabled {
 .btn-ghost {
     border: none;
     background: transparent;
+}
+
+.sticky-action-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 50%;
+    color: #fff;
+    padding: 0;
+    background: #2cca2c;
+    height: 40px;
+    width: 40px;
+    box-shadow: 0px 1px 4px #383838;
+
+    i {
+        color: #fff;
+        font-size: 22px;
+        vertical-align: middle;
+    }
 }
 
 @media @tablet {

@@ -24,34 +24,80 @@
     font-size: 16px;
 }
 
-@media @laptopAndUp {
+.energy-goal {
+    min-width: 150px;
+    color: @energy-color;
+    font-size: 14px;
+}
+
+.protein-goal {
+    min-width: 150px;
+    color: @protein-color;
+    font-size: 14px;
+}
+
+.carb-goal {
+    min-width: 150px;
+    color: @carb-color;
+    font-size: 14px;
+}
+
+.fat-goal {
+    min-width: 150px;
+    color: @fat-color;
+    font-size: 14px;
+}
+
+@media @tablet {
     .energy-goal {
-        min-width: 150px;
+        min-width: 120px;
         color: @energy-color;
         font-size: 14px;
     }
 
     .protein-goal {
-        min-width: 150px;
+        min-width: 120px;
         color: @protein-color;
         font-size: 14px;
     }
 
     .carb-goal {
-        min-width: 150px;
+        min-width: 120px;
         color: @carb-color;
         font-size: 14px;
     }
 
     .fat-goal {
-        min-width: 150px;
+        min-width: 120px;
         color: @fat-color;
         font-size: 14px;
     }
 }
 
-@media @tablet {
+@media screen and (max-width: 519px) {
     .energy-goal {
+        flex-basis: 50%;
+        margin-left: 0;
+    }
+
+    .protein-goal {
+        flex-basis: 50%;
+        margin-right: 0;
+    }
+
+    .carb-goal {
+        flex-basis: 50%;
+        margin-left: 0;
+    }
+
+    .fat-goal {
+        flex-basis: 50%;
+        margin-right: 0;
+    }
+}
+
+//@media screen and (min-width: 520px, max-width: 639px) {
+    /*.energy-goal {
         min-width: 130px;
         color: #fcb93d;
         flex-basis: 35%;
@@ -77,9 +123,35 @@
         color: #fa6b6b;
         flex-basis: 35%;
         margin-right: 15%;
+    }*/
+/*
+    .energy-goal {
+        min-width: 120px;
+        color: @energy-color;
+        font-size: 14px;
+    }
+
+    .protein-goal {
+        min-width: 120px;
+        color: @protein-color;
+        font-size: 14px;
+    }
+
+    .carb-goal {
+        min-width: 120px;
+        color: @carb-color;
+        font-size: 14px;
+    }
+
+    .fat-goal {
+        min-width: 120px;
+        color: @fat-color;
+        font-size: 14px;
     }
 }
+*/
 
+/*
 @media @smartphone {
     .energy-goal {
         flex-basis: 50%;
@@ -101,3 +173,4 @@
         margin-right: 0;
     }
 }
+*/

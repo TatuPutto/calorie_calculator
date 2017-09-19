@@ -358,8 +358,8 @@ export default class CurrentEntry extends React.Component {
             this.setState({consumedFoods: tempConsumedFoods}, () => {
                 // if removed meal is active, move active status to latest meal if one exists
                 if(this.state.activeMeal.mealId === mealId && tempConsumedFoods.length > 0) {
-                    var mealId = tempConsumedFoods[tempConsumedFoods.length - 1].mealId;
-                    var mealName = tempConsumedFoods[tempConsumedFoods.length - 1].mealName;
+                    mealId = tempConsumedFoods[tempConsumedFoods.length - 1].mealId;
+                    mealName = tempConsumedFoods[tempConsumedFoods.length - 1].mealName;
                     this.changeActiveMeal(mealId, mealName);
                 // if no meals are left after removal, create new one and move active status to that
                 } else if(this.state.activeMeal.mealId === mealId && tempConsumedFoods.length === 0) {
@@ -469,6 +469,11 @@ export default class CurrentEntry extends React.Component {
                     updateEntry={this.updateEntry}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
+                {this.state.viewportWidth < 768 &&
+                    <button className='btn sticky-action-btn'>
+                        <i className='fa fa-plus' />
+                    </button>
+                }
             </div>
         );
     }

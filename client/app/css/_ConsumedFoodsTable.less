@@ -192,11 +192,11 @@ input:checked + .slider::before {
     opacity: 1;
 
 }*/
-
+/*
 .diary .consumed-foods-table td {
     padding-top: 8px;
     padding-bottom: 8px;
-}
+}*/
 
 .consumed-foods-table td:last-child {
     border-right: none;
@@ -350,7 +350,8 @@ input:checked + .slider::before {
 
 @media @tablet {
     .consumed-foods-table {
-        font-size: 14px;
+        //font-size: 14px;
+        font-size: 13px;
         border-collapse: collapse;
     }
 
@@ -359,15 +360,30 @@ input:checked + .slider::before {
     }
 
     .consumed-foods-table td {
+        height: initial;
         display: inline-block;
-        padding: 0;
-        margin-top: 10px;
+        //padding: 0;
+        //padding: 20px 0;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        //margin-top: 10px;
         border: none;
     }
 
+    .consumed-foods-meal td {
+        padding: 0 10px;
+        width: 100%;
+    }
+
+    .toggle-active-meal {
+        right: 0;
+    }
+
     .consumed-food-name {
+        padding-left: 8px;
         color: @text-color;
         width: 96%;
+        width: 88%;
         height: initial;
     }
 
@@ -377,6 +393,9 @@ input:checked + .slider::before {
     .consumed-food-carb-amount,
     .consumed-food-fat-amount {
         width: 20%;
+        width: 12%;
+        text-align: right;
+        padding-right: 8px;
     }
 
     .consumed-food-remove {

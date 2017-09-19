@@ -17,7 +17,7 @@ export default function ConsumedFoodRowCompactLayout(props) {
         removeFromDiary,
         removeEntry
     } = props;
-    
+
     var dominantMacro = calcDominantMacro(food.protein, food.carbs, food.fat);
     var proteinClass = 'consumed-food-protein-amount ' +
             (dominantMacro == 'protein' ? 'dominant' : '');
@@ -29,7 +29,7 @@ export default function ConsumedFoodRowCompactLayout(props) {
 
     return (
         <tr>
-            <td className='consumed-food-name'>{food.name}</td>
+            <td className='consumed-food-name'>{food.name} ({food.amount} g)</td>
             {!isModifiable &&
                 <td className='consumed-food-amount'>{food.amount} g</td>
             }
@@ -56,7 +56,7 @@ export default function ConsumedFoodRowCompactLayout(props) {
                     </button>
                 </td>
             }
-            {isModifiable && !isBeingEdited &&
+            {/*}{isModifiable && !isBeingEdited &&
                 <td className='consumed-food-amount'>
                     <a onClick={() => addEntry(food.id, food.amount)}>
                         {food.amount} g
@@ -66,12 +66,13 @@ export default function ConsumedFoodRowCompactLayout(props) {
                         Muokkaa
                     </a>
                 </td>
-            }
-            <td className='consumed-food-energy-amount'>{food.energy} kcal</td>
-            <td className={proteinClass}>{food.protein} g</td>
+            }*/}
+            <td className='consumed-food-energy-amount'>{food.energy}</td>
+
+            {/*}<td className={proteinClass}>{food.protein} g</td>
             <td className={carbClass}>{food.carbs} g</td>
             <td className={fatClass}>{food.fat} g</td>
-            {isModifiable &&
+            {/*}{isModifiable &&
                 <td className='consumed-food-remove'>
                     <button
                         className='btn btn-default'
@@ -80,7 +81,7 @@ export default function ConsumedFoodRowCompactLayout(props) {
                         <i className='fa fa-trash' />
                     </button>
                 </td>
-            }
+            }*/}
         </tr>
     );
 }

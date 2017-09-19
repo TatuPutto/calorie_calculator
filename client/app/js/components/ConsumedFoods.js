@@ -29,7 +29,7 @@ export default function ConsumedFoods(props) {
                 <div className='consumed-foods-header'>
                     {props.isModifiable &&
                         <button className='btn btn-ghost' onClick={props.addMeal}>
-                            <i className='fa fa-plus-square' /> Lisää ateria
+                            <i className='fa fa-plus-square-o' /> Lisää ateria
                         </button>
                     }
                     <h3>Merkinnät</h3>

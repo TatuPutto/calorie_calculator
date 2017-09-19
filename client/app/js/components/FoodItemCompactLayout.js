@@ -38,21 +38,21 @@ export default function FoodItemCompactLayout(props) {
                 onClick={() => selectFood(id, name)}
                 style={{background: selectedFoodId == id ? '#e8f2ff' : '#fff'}}
             >
-                <span className='food-name-wrapper' style={{height: '40px'}}>
+                {/*<span className='food-name-wrapper' style={{height: '40px'}}>*/}
                 <span className='food-name'>{name}</span>
-                </span>
-                <span className='food-favorite-status'>
+                {/*</span>*/}
+                {/*<span className='food-favorite-status'>
                     <button
                         className='food-add-to-favorites'
                         onClick={() => favoriteToggleFunction(id)}
                     >
                         <i className={isInFavorites ? 'fa fa-star' : 'fa fa-star-o'} />
                     </button>
-                </span>
-                <span className='food-energy-amount'>{energy} kcal</span>
-                <span className={proteinClass}>{protein} g</span>
+                </span>*/}
+                <span className='food-energy-amount'>{energy}</span>
+                {/*}<span className={proteinClass}>{protein} g</span>
                 <span className={carbClass}>{carbs} g</span>
-                <span className={fatClass}>{fat} g</span>
+                <span className={fatClass}>{fat} g</span>*/}
             </div>
             {selectedFoodId == id &&
                 <AddToConsumedFoods {...props} />
