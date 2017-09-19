@@ -30,7 +30,16 @@ export default function ConsumedFoodRow(props) {
 
     return (
         <tr className='consumed-food'>
-            <td className='consumed-food-name'>{food.name}</td>
+            <td className='consumed-food-name'>
+                {isModifiable &&
+                    <i className='fa fa-remove'
+                        onClick={() => removeEntry(food)}
+                        title='Poista merkintä'
+                        style={{marginRight: '5px'}}
+                    />
+                }
+                {food.name}
+            </td>
             {!isModifiable &&
                 <td className='consumed-food-amount'>{food.amount} g</td>
             }
@@ -47,18 +56,45 @@ export default function ConsumedFoodRow(props) {
                 </td>
             }
             {isModifiable && !isBeingEdited &&
-                <td className='consumed-food-amount'>
-                    {food.amount} g
-                    {/*<a onClick={() => addEntry(food, food.amount)}>{food.amount} g</a>
-                    <a onClick={toggleEditing} style={{marginLeft: '10px'}}>
-                        <i className='fa fa-pencil' data-tooltip-text='Muokkaa merkintää' />
+                <td className='consumed-food-amount' onClick={toggleEditing} title='Muuta määrää klikkaamalla'>
+                    {/*{food.amount} g*/}
+                    {/*}<a onClick={() => addEntry(food, food.amount)}>{food.amount} g</a>
+                    <br />
+                    <a onClick={toggleEditing}>
+                        Muokkaa
                     </a>*/}
+                    <a title='Kopioi merkintä' className='copy-entry' onClick={() => addEntry(food, food.amount)}>{food.amount} g</a>
+                    <a className='consumed-food-toggle-edit'>
+                        <i className='fa fa-pencil' data-tooltip-text='Muokkaa merkintää' />
+                    </a>
                 </td>
             }
             <td className='consumed-food-energy-amount'>{food.energy} kcal</td>
             <td className={proteinClass}>{food.protein} g</td>
             <td className={carbClass}>{food.carbs} g</td>
             <td className={fatClass}>{food.fat} g</td>
+            {/*}<td className='consumed-food-actions'>
+                <div className='consumed-food-actions-container'>
+                    <button
+                        className='btn btn-success'
+                        onClick={() => addEntry(food, food.amount)}
+                    >
+                        Kopioi
+                    </button>
+                    <button
+                        className='btn btn-success'
+                        onClick={toggleEditing}
+                    >
+                        Muokkaa
+                    </button>
+                    <button
+                        className='btn btn-success'
+                        onClick={() => removeEntry(food)}
+                    >
+                        Poista
+                    </button>
+                </div>
+            </td>*/}
             {/*}{isModifiable &&
                 <td
                     className='consumed-food-remove'

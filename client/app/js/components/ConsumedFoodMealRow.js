@@ -17,50 +17,62 @@ export default class ConsumedFoodMealRow extends React.Component {
         this.setState({isBeingEdited: !this.state.isBeingEdited});
     }
 
-    render() {
-        var isActiveMeal = this.props.activeMealId == this.props.mealId;
+    rowContent = () => {
+        var {
+            mealId,
+            mealName,
+            arrayIndex,
+            activeMealId,
+            isModifiable,
+            removeMeal,
+            changeActiveMeal
+        } = this.props;
+        var isActiveMeal = activeMealId == mealId;
 
+        if(this.state.isBeingEdited && isModifiable) {
+            return (
+                <td colSpan={7}>
+                    <input style={{color: '#000'}}
+                        type='text'
+                        defaultValue={mealName}
+                        onBlur={this.toggleEditing}
+                        autoFocus
+                    />
+                </td>
+            );
+        } else if(isModifiable) {
+            return (
+                <td colSpan={7}>
+                    {mealName}
+                    <button className='btn toggle-meal-name-editing' onClick={this.toggleEditing}>
+                        <i className='fa fa-pencil' />
+                    </button>
+                    <button
+                        className='btn'
+                        onClick={() => removeMeal(mealId, mealName,arrayIndex)}
+                    >
+                        <i className='fa fa-remove' />
+                    </button>
+
+                    <label className='toggle-active-meal'>
+                        <input
+                            type='checkbox'
+                            checked={isActiveMeal}
+                            onChange={() => changeActiveMeal(mealId, mealName)}
+                        />
+                        <span className='slider' />
+                    </label>
+                </td>
+            );
+        } else {
+            return <td colSpan={7}>{mealName}</td>;
+        }
+    }
+
+    render() {
         return (
             <tr className='consumed-foods-meal'>
-                {!this.state.isBeingEdited ? (
-                    <td colSpan={7}>
-                        {this.props.isModifiable &&
-                            <label className='toggle-active-meal'>
-                                <input
-                                    type='checkbox'
-                                    checked={isActiveMeal}
-                                    onChange={() => this.props.changeActiveMeal(
-                                        this.props.mealId,
-                                        this.props.mealName
-                                    )}
-                                />
-                                <span className='slider' />
-                            </label>
-                        }
-
-                        {this.props.mealName}
-
-                        {this.props.isModifiable &&
-                            <button className='btn' onClick={this.toggleEditing}>
-                                <i className='fa fa-pencil' />
-                            </button>
-                        }
-                        {this.props.isModifiable &&
-                            <button className='btn' onClick={() => this.props.removeMeal(this.props.mealId, this.props.mealName, this.props.arrayIndex)} style={{right: '2%'}}>
-                                <i className='fa fa-ellipsis-v' />
-                            </button>
-                        }
-                    </td>
-                ) : (
-                    <td colSpan={7}>
-                        <input style={{color: '#000'}}
-                            type='text'
-                            defaultValue={this.props.mealName}
-                            onBlur={this.toggleEditing}
-                            autoFocus
-                        />
-                    </td>
-                )}
+                {this.rowContent()}
             </tr>
         );
     }

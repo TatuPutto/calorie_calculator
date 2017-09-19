@@ -76,15 +76,10 @@ export default function ConsumedFoodsTable(props) {
         <table className='consumed-foods-table'>
             <tbody>
                 {rows}
-                <TotalNutritionValuesTable
-                    totalConsumption={props.totalConsumption}
-                />
-                {props.isModifiable &&
-                    <tr>
-                        <td colSpan={7} onClick={props.addMeal}>
-                            Lisää ateria
-                        </td>
-                    </tr>
+                {props.consumedFoods.length > 1 &&
+                    <TotalNutritionValuesTable
+                        totalConsumption={props.totalConsumption}
+                    />
                 }
             </tbody>
         </table>

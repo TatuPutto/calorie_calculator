@@ -27,6 +27,11 @@ export default function ConsumedFoods(props) {
         consumedFoodsOutput = (
             <div>
                 <div className='consumed-foods-header'>
+                    {props.isModifiable &&
+                        <button className='btn btn-ghost' onClick={props.addMeal}>
+                            <i className='fa fa-plus-square' /> Lisää ateria
+                        </button>
+                    }
                     <h3>Merkinnät</h3>
                 </div>
                 <ConsumedFoodsTable {...props} />

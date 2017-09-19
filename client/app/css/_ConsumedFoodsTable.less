@@ -16,6 +16,28 @@
     height: 24px;
 }
 
+.consumed-foods-table tr:hover {
+    background: #d6d6d6;
+
+    .copy-entry {
+        color: #337ab7;
+    }
+
+    i {
+        color: #525252;
+    }
+
+    .consumed-food-toggle-edit {
+        opacity: 1;
+    }
+}
+
+.consumed-food-toggle-edit {
+    position: absolute;
+    margin-left: 8px;
+    opacity: 0;
+}
+
 .consumed-foods-table td {
     height: 40px;
     border-right: @border;
@@ -24,8 +46,10 @@
 
 .consumed-foods-day-total {
     td {
-        padding: 8px 0;
-        border-top: 2px solid @border-color;
+        height: 50px;
+        //border-top: 2px solid @border-color;
+        border-left: none;
+        border-right: none;
         font-weight: bold;
     }
 
@@ -52,17 +76,20 @@
     text-align: left;
 
     td {
-        height: 40px;
+        line-height: 40px;
         padding-left: 6px;
     }
 
     button {
         color: #fff;
-        position: absolute;
-        padding: 0 12px;
+        padding: 0 8px;
         background: transparent;
         border: none;
         opacity: 0;
+    }
+
+    .toggle-meal-name-editing {
+        margin-left: 6px;
     }
 
     input[type="text"] {
@@ -71,14 +98,13 @@
     }
 
     &:hover {
-        background: #757575;
-        color: #fff;
+        background: #d6d6d6;
 
         button {
             opacity: 1;
 
             i {
-                color: #fff;
+                color: #525252;
             }
         }
     }
@@ -90,11 +116,12 @@ input[type="checkbox"] {
 
 .toggle-active-meal {
     display: inline-block;
-    position: absolute;
+    position: relative;
+    float: right;
     width: 46px;
     height: 22px;
-    margin-top: -2px;
-    right: 20px;
+    top: 7px;
+    right: 6px;
     cursor: pointer;
 }
 
@@ -104,7 +131,7 @@ input[type="checkbox"] {
     color: #fff;
     font-size: 13px;
     position: absolute;
-    top: 3px;
+    top: -6px;
 }
 
 .toggle-active-meal::before {
@@ -133,7 +160,7 @@ input[type="checkbox"] {
     height: 16px;
     border-radius: 50%;
     position: absolute;
-    top: 3px;
+    top: 5px;
     left: 4px;
     transition: 0.3s;
 }
@@ -234,9 +261,45 @@ input:checked + .slider::before {
     }
 }
 
+.copy-entry {
+    color: @text-color;
+}
+
+.consumed-food-actions-container {
+    position: absolute;
+    left: 15px;
+    line-height: 40px;
+    width: ~"calc(100% - 30px)";
+    margin-top: -20px;
+    padding-right: 6px;
+    text-align: right;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    button {
+        color: #fff;
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+        margin-left: 3px;
+        margin-right: 3px;
+        line-height: 13px;
+    }
+
+
+}
 
 @media @laptopAndUp {
-    .consumed-food-amount, .consumed-food-energy-amount {
+    .consumed-food-amount {
+        width: 9%;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .consumed-food-energy-amount {
         width: 9%;
     }
 
@@ -253,7 +316,8 @@ input:checked + .slider::before {
 
         .consumed-food-name {
             padding-left: 6px;
-            width: 54%;
+            //width: 54%;
+            width: 58%;
         }
     }
 
