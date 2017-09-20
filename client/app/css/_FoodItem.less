@@ -89,7 +89,8 @@
 @media @tablet {
     .food-item {
         text-align: left;
-        line-height: 70px;
+        //line-height: 70px;
+        line-height: 50px;
     }
 
     .food-name-wrapper {
@@ -107,12 +108,30 @@
         vertical-align: middle;
     }
 
+    .food-favorite-action-container {
+        line-height: initial;
+        border-top: 1px solid #dedede;
+        margin-top: 15px;
+        /* padding-top: 6px; */
+        height: 43px;
+        padding-top: 10px;
+    }
+
     .food-favorite-status {
-        width: 33px;
+        /*width: 33px;
         margin-top: -5px;
         height: 40px;
         vertical-align: top;
-        text-align: right;
+        text-align: right;*/
+        width: 100%;
+    }
+
+    .food-add-to-favorites {
+        //border: 2px solid #4692d2;
+        border: 1px solid #d2d2d2;
+        width: 100%;
+        border-radius: 4px;
+        font-size: 14px;
     }
 
     .food-energy-amount {

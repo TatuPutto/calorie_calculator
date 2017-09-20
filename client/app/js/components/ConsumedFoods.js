@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ConsumedFoodsHeader from './ConsumedFoodsHeader';
 import ConsumedFoodsTable from './ConsumedFoodsTable';
 import Loading from './Loading';
 
@@ -26,14 +27,13 @@ export default function ConsumedFoods(props) {
     } else {
         consumedFoodsOutput = (
             <div>
-                <div className='consumed-foods-header'>
-                    {props.isModifiable &&
-                        <button className='btn btn-ghost' onClick={props.addMeal}>
-                            <i className='fa fa-plus-square-o' /> Lisää ateria
-                        </button>
-                    }
-                    <h3>Merkinnät</h3>
-                </div>
+                <ConsumedFoodsHeader
+                    isModifiable={props.isModifiable}
+                    viewportWidth={props.viewportWidth}
+                    shownNutritionValue={props.shownNutritionValue}
+                    changeShownNutritionValue={props.changeShownNutritionValue}
+                    addMeal={props.addMeal}
+                />
                 <ConsumedFoodsTable {...props} />
             </div>
         );

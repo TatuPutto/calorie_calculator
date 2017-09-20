@@ -12,8 +12,10 @@ export default function PortionSizes({food, portionSizes, addEntry}) {
     });
 
     return (
-        <ul className='portion-sizes'>
-            {portions}
-        </ul>
+        <div className='portion-sizes'>
+            <ul>
+                {portions}
+            </ul>
+        </div>
     );
 }

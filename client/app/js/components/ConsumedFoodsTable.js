@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ConsumedFoodsTableHeader from './ConsumedFoodsTableHeader';
+//import ConsumedFoodsTableHeader from './ConsumedFoodsTableHeader';
 import ConsumedFoodMealRow from './ConsumedFoodMealRow';
 import ConsumedFoodRowWrapper from './ConsumedFoodRowWrapper';
 import ConsumedFoodRow from './ConsumedFoodRow';
@@ -50,6 +50,7 @@ export default function ConsumedFoodsTable(props) {
                         <RowWrapper
                             key={course.consumptionId}
                             food={course}
+                            shownNutritionValue={props.shownNutritionValue}
                             isModifiable={props.isModifiable}
                             addEntry={props.addEntry}
                             updateEntry={props.updateEntry}
@@ -67,20 +68,32 @@ export default function ConsumedFoodsTable(props) {
             rows.push(
                 <ConsumedFoodMealTotalNutritionValues
                     total={{energy, protein, carbs, fat}}
+                    viewportWidth={props.viewportWidth}
                 />
             );
         }
     });
 
+    if(props.consumedFoods.length > 1) {
+        rows.push(
+            <tr>
+                <td className='total-consumption-separator' colSpan={7}>
+                    Yhteensä
+                </td>
+            </tr>
+        );
+        rows.push(
+            <TotalNutritionValuesTable
+                totalConsumption={props.totalConsumption}
+                viewportWidth={props.viewportWidth}
+            />
+        );
+    }
+
     return (
         <table className='consumed-foods-table'>
             <tbody>
                 {rows}
-                {props.consumedFoods.length > 1 &&
-                    <TotalNutritionValuesTable
-                        totalConsumption={props.totalConsumption}
-                    />
-                }
             </tbody>
         </table>
     );

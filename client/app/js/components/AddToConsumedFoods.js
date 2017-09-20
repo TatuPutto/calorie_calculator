@@ -27,6 +27,17 @@ export default function AddToConsumedFoods(props) {
                 portionSizes={food.portionSizes}
                 addEntry={addEntry}
             />
+            <div className='food-favorite-action-container'>
+                <span className='food-favorite-status'>
+                    <button
+                        className='food-add-to-favorites'
+
+                    >
+                        <i className={food.isInFavorites ? 'fa fa-star' : 'fa fa-star-o'} />
+                        {food.isInFavorites ? ' Poista suosikeista' : ' Lisää suosikkeihin'}
+                    </button>
+                </span>
+            </div>
         </div>
     );
 }

@@ -10,6 +10,8 @@ export default function FoodSelectionHeader(props) {
             <SearchTypes
                 fetchMethod={props.fetchMethod}
                 changeFetchMethod={props.changeFetchMethod}
+                toggleFoodSelection={props.toggleFoodSelection}
+                viewportWidth={props.viewportWidth}
             />
             {props.fetchMethod == 'search' &&
                 <SearchPane

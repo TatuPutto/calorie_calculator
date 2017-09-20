@@ -44,6 +44,15 @@
     border-bottom: @border;
 }
 
+.total-consumption-separator {
+    background: #ffcb7c;
+    font-weight: bold;
+    text-align: left;
+    padding: 0 10px !important;
+    line-height: 40px;
+    width: 100%;
+}
+
 .consumed-foods-day-total {
     td {
         height: 50px;
@@ -51,21 +60,22 @@
         border-left: none;
         border-right: none;
         font-weight: bold;
+        width: 20%;
     }
 
-    td:nth-child(2) {
+    .total-energy {
         color: @energy-color
     }
 
-    td:nth-child(3) {
+    .total-protein {
         color: @protein-color
     }
 
-    td:nth-child(4) {
+    .total-carbs {
         color: @carb-color
     }
 
-    td:nth-child(5) {
+    .total-fat {
         color: @fat-color
     }
 }
@@ -265,32 +275,6 @@ input:checked + .slider::before {
     color: @text-color;
 }
 
-.consumed-food-actions-container {
-    position: absolute;
-    left: 15px;
-    line-height: 40px;
-    width: ~"calc(100% - 30px)";
-    margin-top: -20px;
-    padding-right: 6px;
-    text-align: right;
-    background: rgba(0, 0, 0, 0.6);
-    opacity: 0;
-
-    &:hover {
-        opacity: 1;
-    }
-
-    button {
-        color: #fff;
-        background-color: #5cb85c;
-        border-color: #4cae4c;
-        margin-left: 3px;
-        margin-right: 3px;
-        line-height: 13px;
-    }
-
-
-}
 
 @media @laptopAndUp {
     .consumed-food-amount {
@@ -361,7 +345,7 @@ input:checked + .slider::before {
 
     .consumed-foods-table td {
         height: initial;
-        display: inline-block;
+        //display: inline-block;
         //padding: 0;
         //padding: 20px 0;
         padding-top: 20px;
@@ -370,8 +354,17 @@ input:checked + .slider::before {
         border: none;
     }
 
+    .consumed-foods-day-total td {
+        width: 20%;
+    }
+
+    .consumed-foods-day-total td:first-child,
+    .consumed-foods-day-total td:last-child {
+        width: 10%;
+    }
+
     .consumed-foods-meal td {
-        padding: 0 10px;
+        padding: 0 8px;
         width: 100%;
     }
 
@@ -387,6 +380,7 @@ input:checked + .slider::before {
         height: initial;
     }
 
+    .consumed-food-nutrition-value-amount,
     .consumed-food-amount,
     .consumed-food-energy-amount,
     .consumed-food-protein-amount,

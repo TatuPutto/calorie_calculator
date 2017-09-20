@@ -65,7 +65,6 @@ body {
     overflow-y: scroll;
     font-family: 'Monserrat', 'Roboto', sans-serif;
     background: #f9f9f9;
-    overflow-y: hidden;
 }
 
 span {
@@ -141,10 +140,11 @@ button:disabled {
     border-radius: 50%;
     color: #fff;
     padding: 0;
-    background: #2cca2c;
+    background: #00ab00;
     height: 40px;
     width: 40px;
-    box-shadow: 0px 1px 4px #383838;
+    //box-shadow: 0px 1px 4px #383838;
+    box-shadow: 1px 2px 8px #adadad;
 
     i {
         color: #fff;
@@ -152,6 +152,23 @@ button:disabled {
         vertical-align: middle;
     }
 }
+
+.energy {
+    color: @energy-color;
+}
+
+.protein {
+    color: @protein-color;
+}
+
+.carbs {
+    color: @carb-color;
+}
+
+.fat {
+    color: @fat-color;
+}
+
 
 @media @tablet {
     div[class*="col"] {

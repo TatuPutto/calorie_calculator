@@ -55,5 +55,32 @@
 @media @tablet {
     .search-types {
         font-size: 13px;
+        line-height: 30px;
+        text-align: center;
+
+        .active {
+            padding: 0;
+            background: #fff;
+            color: @text-color;
+            top: 0;
+            height: 28px;
+            border-bottom: 3px solid #4692d2;
+
+            &::before {
+                display: none;
+            }
+
+            i {
+                color: #919191;
+            }
+        }
     }
+
+    .close-food-selection {
+        width: 30px;
+        position: absolute;
+        left: 0;
+    }
+
+
 }

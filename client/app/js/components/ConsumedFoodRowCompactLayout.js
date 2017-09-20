@@ -7,6 +7,7 @@ export default function ConsumedFoodRowCompactLayout(props) {
     var {
         food,
         foodAmount,
+        shownNutritionValue,
         isBeingEdited,
         validInput,
         isModifiable,
@@ -29,7 +30,9 @@ export default function ConsumedFoodRowCompactLayout(props) {
 
     return (
         <tr>
-            <td className='consumed-food-name'>{food.name} ({food.amount} g)</td>
+            <td className='consumed-food-name' colSpan={5}>
+                {food.name} ({food.amount} g)
+            </td>
             {!isModifiable &&
                 <td className='consumed-food-amount'>{food.amount} g</td>
             }
@@ -67,7 +70,9 @@ export default function ConsumedFoodRowCompactLayout(props) {
                     </a>
                 </td>
             }*/}
-            <td className='consumed-food-energy-amount'>{food.energy}</td>
+            <td className={'consumed-food-nutrition-value-amount ' + shownNutritionValue}>
+                {food[shownNutritionValue]}
+            </td>
 
             {/*}<td className={proteinClass}>{food.protein} g</td>
             <td className={carbClass}>{food.carbs} g</td>

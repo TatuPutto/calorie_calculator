@@ -38,7 +38,7 @@ export default function FoodList(props) {
         var latestCategorySeparated = false;
         var regularResultsSeparated = false;
         var Component = viewportWidth > 768 ? FoodItem : FoodItemCompactLayout;
-        foods = viewportWidth > 768 ? foods : foods.slice(0, (offset + 10));
+        //foods = viewportWidth > 768 ? foods : foods.slice(0, (offset + 10));
 
         foods.forEach((food, i) => {
             if(fetchMethod == 'search') {
@@ -87,12 +87,12 @@ export default function FoodList(props) {
                 fetchMethod={props.fetchMethod}
             />
             {matchingFoodsOutput}
-            <ShowMoreResults
+            {/*}<ShowMoreResults
                 viewportWidth={viewportWidth}
                 foodsAmount={props.foods.length}
                 offset={offset}
                 showMoreResults={showMoreResults}
-            />
+            />*/}
         </div>
     );
 }

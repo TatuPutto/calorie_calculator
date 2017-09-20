@@ -34,7 +34,9 @@ export default class CurrentEntry extends React.Component {
             searchTerm: this.props.searchTerm,
             fetchMethod: this.props.fetchMethod,
             fetchError: null,
-            viewportWidth: this.props.viewportWidth
+            viewportWidth: this.props.viewportWidth,
+            foodSelectionVisible: this.props.viewportWidth > 768 ? true : false,
+            shownNutritionValue: 'energy'
         };
 
         this.getDailyGoal = this.getDailyGoal.bind(this);
@@ -414,6 +416,36 @@ export default class CurrentEntry extends React.Component {
         this.setState({foods: tempFoods});
     }
 
+    toggleFoodSelection = () => {
+        this.setState({foodSelectionVisible: !this.state.foodSelectionVisible}, () => {
+            // hide overflow-y when foodselection is visible
+            var body = document.querySelector('body');
+            body.style.overflowY = this.state.foodSelectionVisible ? 'hidden' : 'scroll';
+        });
+    }
+
+    changeShownNutritionValue = (e) => {
+        var nutritionValue;
+
+        switch(e.currentTarget.value) {
+            case 'kcal':
+                nutritionValue = 'energy';
+                break;
+            case 'Proteiini':
+                nutritionValue = 'protein';
+                break;
+            case 'Hiilihydraatti':
+                nutritionValue = 'carbs';
+                break;
+            case 'Rasva':
+                nutritionValue = 'fat';
+                break;
+
+        }
+
+        this.setState({shownNutritionValue: nutritionValue});
+    }
+
     render() {
         var {isFetchingConsumedFoods, isFetchingDailyGoal} = this.state;
 
@@ -433,6 +465,8 @@ export default class CurrentEntry extends React.Component {
                         </div>
                     )}
                     <FoodSelection
+                        toggleFoodSelection={this.toggleFoodSelection}
+                        foodSelectionVisible={this.state.foodSelectionVisible}
                         fetchMethod={this.state.fetchMethod}
                         changeFetchMethod={this.changeFetchMethod}
                         viewportWidth={this.state.viewportWidth}
@@ -463,14 +497,16 @@ export default class CurrentEntry extends React.Component {
                     removeMeal={this.removeMeal}
                     changeActiveMeal={this.changeActiveMeal}
                     editMealName={this.editMealName}
+                    shownNutritionValue={this.state.shownNutritionValue}
+                    changeShownNutritionValue={this.changeShownNutritionValue}
                     totalConsumption={this.state.totalConsumption}
                     addEntry={this.addEntry}
                     removeEntry={this.removeEntry}
                     updateEntry={this.updateEntry}
                     isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
                 />
-                {this.state.viewportWidth < 768 &&
-                    <button className='btn sticky-action-btn'>
+                {this.state.viewportWidth < 768 && !this.state.foodSelectionVisible &&
+                    <button className='btn sticky-action-btn' onClick={this.toggleFoodSelection}>
                         <i className='fa fa-plus' />
                     </button>
                 }
