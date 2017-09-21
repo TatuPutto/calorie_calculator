@@ -56,31 +56,32 @@
     .search-types {
         font-size: 13px;
         line-height: 30px;
-        text-align: center;
+
 
         .active {
             padding: 0;
             background: #fff;
-            color: @text-color;
+            color: @secondary-blue;
             top: 0;
             height: 28px;
-            border-bottom: 3px solid #4692d2;
+            //border-bottom: 3px solid #4692d2;
 
             &::before {
                 display: none;
             }
 
             i {
-                color: #919191;
+                color: @secondary-blue;
             }
+        }
+
+        .close-food-selection {
+            padding: 0 8px;
+            margin-right: 0;
         }
     }
 
-    .close-food-selection {
-        width: 30px;
-        position: absolute;
-        left: 0;
-    }
+
 
 
 }

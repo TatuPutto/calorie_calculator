@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function DailyGoalProgress({total, goal}) {
-    console.log(total);
     var energyConsumed = Math.round(total.energy / goal.energy * 100) + '%';
     var proteinConsumed = Math.round(total.protein / goal.protein * 100) + '%';
     var carbsConsumed = Math.round(total.carbs / goal.carbs * 100) + '%';

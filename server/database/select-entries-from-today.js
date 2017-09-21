@@ -1,6 +1,4 @@
 var getConnection = require('./create-connection');
-var calcNutritionValues = require('../util/query-json').calculateNutritionValues;
-var calcTotalNutritionValues = require('../util/query-json').calcTotalNutritionValues;
 
 module.exports = function selectEntriesFromToday(userId) {
     var query = `

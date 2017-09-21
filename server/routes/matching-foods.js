@@ -1,8 +1,5 @@
-var findMatchingFoodsByName = require('../util/query-json').findMatchingFoodsByName;
 var selectLatestConsumedfoods = require('../database/select-latest-consumed-foods');
-var markFoodsAsLatelyConsumed = require('../util/mark-foods-as-lately-consumed');
 var selectFavoriteFoods = require('../database/select-favorite-foods');
-var markFoodsAsFavorites = require('../util/mark-foods-as-favorites');
 var selectMatchingFoods = require('../database/select-matching-foods');
 var selectMatchingFoodsAndPrioritize = require(
     '../database/select-matching-foods-and-prioritize'

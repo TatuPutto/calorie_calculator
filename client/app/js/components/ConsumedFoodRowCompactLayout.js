@@ -18,75 +18,71 @@ export default function ConsumedFoodRowCompactLayout(props) {
         removeFromDiary,
         removeEntry
     } = props;
-
-    var dominantMacro = calcDominantMacro(food.protein, food.carbs, food.fat);
-    var proteinClass = 'consumed-food-protein-amount ' +
-            (dominantMacro == 'protein' ? 'dominant' : '');
-    var carbClass = 'consumed-food-carb-amount ' +
-            (dominantMacro == 'carb' ? 'dominant' : '');
-    var fatClass = 'consumed-food-fat-amount ' +
-            (dominantMacro == 'fat' ? 'dominant' : '');
     var invalidInputStyle = {borderColor: 'red', boxShadow: '0px 0px 5px red'};
+    var rows = [];
 
-    return (
-        <tr>
-            <td className='consumed-food-name' colSpan={5}>
+    if(!props.isBeingEdited && !props.actionsVisible) {
+        rows.push(
+            <td key='consumedFoodName' className='consumed-food-name' colSpan={5}>
                 {food.name} ({food.amount} g)
             </td>
-            {!isModifiable &&
-                <td className='consumed-food-amount'>{food.amount} g</td>
+        );
+        rows.push(
+            <td key='consumedFoodNutrtionValue' className={'consumed-food-nutrition-value-amount ' +
+                    shownNutritionValue}>
+                {food[shownNutritionValue]}
+            </td>
+        );
+    }
+
+    return (
+        <tr onClick={!props.actionsVisible ? props.showActions : () => {}}>
+            {props.actionsVisible && !props.isBeingEdited && isModifiable &&
+                <td colSpan={8} className='consumed-food-actions'>
+                    <button className='btn btn-success'
+                            onClick={props.toggleEditing}>
+                        <i className='fa fa-pencil' />
+                    </button>
+                    <button className='btn btn-info'
+                            onClick={() => addEntry(food, food.amount)}>
+                        <i className='fa fa-copy' />
+                    </button>
+                    <button className='btn btn-danger'
+                            onClick={() => removeEntry(food)}>
+                        <i className='fa fa-trash' />
+                    </button>
+                    <button className='btn btn-default'
+                            onClick={props.hideActions}>
+                        <i className='fa fa-close' style={{color: '#919191'}} />
+                    </button>
+                </td>
             }
-            {isModifiable && isBeingEdited &&
-                <td className='consumed-food-amount'>
+            {props.isBeingEdited && isModifiable &&
+                <td colSpan={8} className='consumed-food-edit'>
                     <input
                         type='text'
                         className='edit-input'
                         value={foodAmount}
                         onChange={changeFoodAmount}
                         style={!validInput ? invalidInputStyle : null}
+                        autoFocus
                     />
                     <button
-                        className='consumed-food-edit-amount btn btn-default'
+                        className='btn btn-primary'
                         onClick={update}
                     >
-                        <i className='fa fa-check' />
+                        Tallenna
                     </button>
                     <button
-                        className='consumed-food-cancel-edit btn btn-default'
+                        className='btn btn-default'
                         onClick={toggleEditing}
                     >
-                        <i className='fa fa-close' />
+                        Peruuta
                     </button>
                 </td>
             }
-            {/*}{isModifiable && !isBeingEdited &&
-                <td className='consumed-food-amount'>
-                    <a onClick={() => addEntry(food.id, food.amount)}>
-                        {food.amount} g
-                    </a>
-                    <br />
-                    <a onClick={toggleEditing}>
-                        Muokkaa
-                    </a>
-                </td>
-            }*/}
-            <td className={'consumed-food-nutrition-value-amount ' + shownNutritionValue}>
-                {food[shownNutritionValue]}
-            </td>
 
-            {/*}<td className={proteinClass}>{food.protein} g</td>
-            <td className={carbClass}>{food.carbs} g</td>
-            <td className={fatClass}>{food.fat} g</td>
-            {/*}{isModifiable &&
-                <td className='consumed-food-remove'>
-                    <button
-                        className='btn btn-default'
-                        onClick={() => removeFromDiary(food.consumptionId)}
-                    >
-                        <i className='fa fa-trash' />
-                    </button>
-                </td>
-            }*/}
+            {rows}
         </tr>
     );
 }

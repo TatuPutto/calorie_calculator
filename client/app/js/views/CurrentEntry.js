@@ -124,7 +124,6 @@ export default class CurrentEntry extends React.Component {
             .then(checkStatus)
             .then(readJson)
             .then((data) => {
-                console.log(data);
                 var meals = Object.keys(data.meals);
                 var latestMeal = data.meals[meals.length - 1];
                 var activeMeal = null;

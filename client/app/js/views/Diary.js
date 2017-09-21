@@ -27,6 +27,7 @@ export default class Diary extends React.Component {
             isFetchingEntry: false,
             entryFetchError: null,
             detailsVisible: false,
+            shownNutritionValue: 'energy',
             viewportWidth: this.props.viewportWidth
         };
 
@@ -176,6 +177,29 @@ export default class Diary extends React.Component {
         }
     }
 
+    changeShownNutritionValue = (e) => {
+        var nutritionValue;
+
+        switch(e.currentTarget.value) {
+            case 'kcal':
+                nutritionValue = 'energy';
+                break;
+            case 'Proteiini':
+                nutritionValue = 'protein';
+                break;
+            case 'Hiilihydraatti':
+                nutritionValue = 'carbs';
+                break;
+            case 'Rasva':
+                nutritionValue = 'fat';
+                break;
+
+        }
+
+        this.setState({shownNutritionValue: nutritionValue});
+    }
+
+
     render() {
         var {
             isFetchingEntry,
@@ -205,6 +229,8 @@ export default class Diary extends React.Component {
                     dailyGoal={dailyGoal}
                     consumedFoods={consumedFoods}
                     viewportWidth={viewportWidth}
+                    shownNutritionValue={this.state.shownNutritionValue}
+                    changeShownNutritionValue={this.changeShownNutritionValue}
                 />
             );
         } else if(!isFetchingEntry && !isInDayView && nutritionDetailsForMultipleEntries.length > 0) {
@@ -233,11 +259,11 @@ export default class Diary extends React.Component {
         } else {
             output = (
                 <div className='no-entry-found'>
-                    {isInDayView ? (
+                    {isInDayView ?
                         <p>Tältä päivältä ei löytynyt merkintöjä.</p>
-                    ) : (
+                        :
                         <p>Tältä viikolta ei löytynyt merkintöjä.</p>
-                    )}
+                    }
                 </div>
             );
         }

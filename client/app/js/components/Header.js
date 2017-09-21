@@ -3,6 +3,8 @@ import React from 'react';
 import NavMenu from './NavMenu';
 import UserInfo from './UserInfo';
 
+import {checkStatus, readJson} from '../util/fetch';
+
 var viewportWidth = Math.max(
     document.documentElement.clientWidth,
     window.innerWidth || 0
@@ -21,14 +23,16 @@ export default class Header extends React.Component {
 
     componentWillMount() {
         fetch('/user-info', {method: 'GET', credentials: 'same-origin'})
-            .then((res) => res.json())
+            .then(checkStatus)
+            .then(readJson)
             .then((userInfo) => {
                 this.setState({
                     loggedIn: userInfo.loggedIn,
                     username: userInfo.username,
                     isFetchingUserInfo: false
                 });
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 this.setState({isFetchingUserInfo: false});
                 console.error(err);
             });

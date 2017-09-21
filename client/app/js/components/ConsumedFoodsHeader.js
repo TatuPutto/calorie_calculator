@@ -10,9 +10,9 @@ export default function ConsumedFoodsHeader(props) {
                 </button>
             }
             <h3>Merkinnät</h3>
-            {props.isModifiable && props.viewportWidth < 768 &&
+            {props.viewportWidth < 768 &&
                 <select onChange={props.changeShownNutritionValue}>
-                    <option selected={true}>kcal</option>
+                    <option defaultValue>kcal</option>
                     <option>Proteiini</option>
                     <option>Hiilihydraatti</option>
                     <option>Rasva</option>

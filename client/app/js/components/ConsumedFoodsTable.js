@@ -67,6 +67,7 @@ export default function ConsumedFoodsTable(props) {
         if(courses.length > 1) {
             rows.push(
                 <ConsumedFoodMealTotalNutritionValues
+                    key={i.toString()}
                     total={{energy, protein, carbs, fat}}
                     viewportWidth={props.viewportWidth}
                 />
@@ -76,7 +77,7 @@ export default function ConsumedFoodsTable(props) {
 
     if(props.consumedFoods.length > 1) {
         rows.push(
-            <tr>
+            <tr key='totalConsumptionSeparator'>
                 <td className='total-consumption-separator' colSpan={7}>
                     Yhteensä
                 </td>
@@ -84,6 +85,7 @@ export default function ConsumedFoodsTable(props) {
         );
         rows.push(
             <TotalNutritionValuesTable
+                key='totalConsumption'
                 totalConsumption={props.totalConsumption}
                 viewportWidth={props.viewportWidth}
             />

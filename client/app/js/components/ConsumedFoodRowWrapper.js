@@ -8,17 +8,31 @@ export default function ConsumedFoodRowWrapper(Component) {
             super(props);
             this.state = {
                 isBeingEdited: false,
+                actionsVisible: false,
                 foodAmount: this.props.food.amount,
                 validInput: true
             };
 
             this.toggleEditing = this.toggleEditing.bind(this);
+            this.showActions = this.showActions.bind(this);
+            this.hideActions = this.hideActions.bind(this);
             this.changeFoodAmount = this.changeFoodAmount.bind(this);
-            this.update = this.update.bind(this);
+            this.updateAmount = this.updateAmount.bind(this);
         }
 
         toggleEditing() {
-            this.setState({isBeingEdited: !this.state.isBeingEdited});
+            this.setState({
+                isBeingEdited: !this.state.isBeingEdited,
+                actionsVisible: this.state.isBeingEdited ? false : true
+            });
+        }
+
+        showActions() {
+            this.setState({actionsVisible: true, isBeingEdited: false});
+        }
+
+        hideActions() {
+            this.setState({actionsVisible: false, isBeingEdited: false});
         }
 
         changeFoodAmount(e) {
@@ -30,7 +44,7 @@ export default function ConsumedFoodRowWrapper(Component) {
             });
         }
 
-        update(consumptionId) {
+        updateAmount(consumptionId) {
             var consumptionId = this.props.food.consumptionId;
             var foodAmount = this.state.foodAmount;
 
@@ -45,13 +59,15 @@ export default function ConsumedFoodRowWrapper(Component) {
             return (
                 <Component
                     {...this.props}
-                    ref={(child) => this.child = child}
                     isBeingEdited={this.state.isBeingEdited}
                     foodAmount={this.state.foodAmount}
                     validInput={this.state.validInput}
                     toggleEditing={this.toggleEditing}
                     changeFoodAmount={this.changeFoodAmount}
-                    update={this.update}
+                    updateAmount={this.update}
+                    actionsVisible={this.state.actionsVisible}
+                    showActions={this.showActions}
+                    hideActions={this.hideActions}
                 />
             );
         }

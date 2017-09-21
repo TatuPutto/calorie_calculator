@@ -1,15 +1,7 @@
 var selectLatestConsumedfoods = require('../database/select-latest-consumed-foods');
-var latestCookieFallback = require('./latest-cookie-fallback');
 var express = require('express');
 var router = express.Router();
 
-router.use(function (req, res, next) {
-    if(req.session.user) {
-        next();
-    } else {
-        latestCookieFallback(req, res);
-    }
-});
 
 router.get('/', function (req, res) {
     selectLatestConsumedfoods(req.session.user.id)

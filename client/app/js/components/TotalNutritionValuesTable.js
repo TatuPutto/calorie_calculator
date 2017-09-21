@@ -13,19 +13,19 @@ export default function TotalNutritionValuesTable(props) {
             <td colSpan={viewportWidth > 768 ? 2 : 1} />
             <td className='total-energy'>{total.energy} kcal</td>
             <td className='total-protein'>
-                {total.protein} g
+                {Math.round(total.protein)} g
                 <br />
-                {proteinPercentage}%
+                {proteinPercentage} %
             </td>
             <td className='total-carbs'>
-                {total.carbs} g
+                {Math.round(total.carbs)} g
                 <br />
-                {carbPercentage}%
+                {carbPercentage} %
             </td>
             <td className='total-fat'>
-                {total.fat} g
+                {Math.round(total.fat)} g
                 <br />
-                {fatPercentage}%
+                {fatPercentage} %
             </td>
             <td />
         </tr>

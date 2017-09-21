@@ -18,7 +18,7 @@ export default function EntryDetails(props) {
         <div className='entry-details'>
 
             <div className='row'>
-                <div className='col-sm-8'>
+                <div className='daily-progress-table-container col-sm-8'>
                     <DailyGoalProgressTable
                         dailyGoal={dailyGoal}
                         totalConsumption={totalConsumption}
@@ -39,6 +39,8 @@ export default function EntryDetails(props) {
                         isFetchingConsumedFoods={false}
                         consumedFoods={consumedFoods}
                         totalConsumption={totalConsumption}
+                        shownNutritionValue={props.shownNutritionValue}
+                        changeShownNutritionValue={props.changeShownNutritionValue}
                     />
                 </div>
             </div>

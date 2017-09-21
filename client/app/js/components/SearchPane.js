@@ -9,11 +9,12 @@ export default function SearchPane({searchTerm, changeSearchTerm, doSearch}) {
                     placeholder='Hae ruokaa tai raaka-ainetta'
                     value={searchTerm || ''}
                     onChange={changeSearchTerm}
+                    autoFocus
                 />
                 {/*<button className='do-search' onClick={doSearch}>
                     <i className='fa fa-search' />
                 </button>*/}
-            
+
         </div>
     );
 }

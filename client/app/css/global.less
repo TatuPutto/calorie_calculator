@@ -11,6 +11,7 @@
 //@secondary-blue: #60bcff;
 @secondary-blue: #4692d2;
 @text-color: #4e4d4d;
+@icon-color: #919191;
 @table-header-line-heigh: 24px;
 @table-header-border: 1px solid #fff;
 @energy-color: #f9a200;
@@ -103,7 +104,11 @@ p {
 i {
     color: #919191;
 }
-
+/*
+button i {
+    color: #fff;
+}
+*/
 input[type="text"] {
     padding-left: 5px;
     padding-right: 5px;
@@ -128,6 +133,34 @@ button:disabled {
     font-weight: bold;
 }
 */
+.btn-white {
+    color: @text-color;
+    border: 1px solid #4cae4c;
+    background: #5cb85c;
+    box-shadow: 0px 1px 0px #84ea84 inset;
+}
+
+.btn-green {
+    color: #fff;
+    border: 1px solid #4cae4c;
+    background: #5cb85c;
+    box-shadow: 0px 1px 0px #84ea84 inset;
+}
+
+.btn-blue {
+    color: #fff;
+    border: 1px solid #077fd4;
+    background: #25a2fb;
+    box-shadow: 0px 1px 0px #a4d9ff inset;
+}
+
+.btn-red {
+    color: #fff;
+    border: 1px solid #d43f3a;
+    background: #d9534f;
+    box-shadow: 0px 1px 0px #ff9a97 inset;
+}
+
 .btn-ghost {
     border: none;
     background: transparent;
@@ -145,6 +178,7 @@ button:disabled {
     width: 40px;
     //box-shadow: 0px 1px 4px #383838;
     box-shadow: 1px 2px 8px #adadad;
+    z-index: 99999;
 
     i {
         color: #fff;

@@ -1,6 +1,4 @@
 var getConnection = require('./create-connection');
-var calcNutritionValues = require('../util/query-json').calculateNutritionValues;
-var calcTotalNutritionValues = require('../util/query-json').calcTotalNutritionValues;
 
 module.exports = function selectEntriesFromDate(date, userId) {
     var query = `
@@ -27,7 +25,7 @@ module.exports = function selectEntriesFromDate(date, userId) {
             });
         });
     })
-    .then(function (results) {console.log(results);
+    .then(function (results) {
         var energyInTotal = 0;
         var proteinInTotal = 0;
         var carbsInTotal = 0;
