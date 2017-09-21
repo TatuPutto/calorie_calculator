@@ -1,16 +1,20 @@
 var getConnection = require('./create-connection');
 
-module.exports = function addUser(username, password) {
+module.exports = function addUser(userId, username, password) {
     // TODO encryption for password
-    var query = 'INSERT INTO users (username, password) VALUES (?, ?)';
-    var data = [username, password];
+    var data = [userId, username, password];
+    var query = 'INSERT INTO users (userId, username, password) VALUES (?, ?, ?)';
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
             connection.query(query, data, function (err, result) {
                 connection.release();
                 if(err) reject(err);
-                resolve();
+                resolve({
+                    id: userId,
+                    username: username,
+                    loggedIn: true
+                });
             });
         });
     });

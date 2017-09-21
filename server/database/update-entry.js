@@ -3,7 +3,7 @@ var getConnection = require('./create-connection');
 module.exports = function updateEntry(consumptionId, userId, foodAmount) {
     var data = [foodAmount, userId, consumptionId];
     var query = `
-        UPDATE consumedFoods SET foodAmount=?
+        UPDATE consumedfoods SET foodAmount=?
         WHERE userId=? AND consumptionId=?
     `;
 

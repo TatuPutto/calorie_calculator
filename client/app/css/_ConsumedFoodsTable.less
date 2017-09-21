@@ -61,6 +61,7 @@
         border-right: none;
         //font-weight: bold;
         width: 20%;
+
     }
 
     .total-energy {
@@ -345,6 +346,11 @@ input:checked + .slider::before {
 
     .consumed-foods-table tr {
         border-bottom: @border;
+        line-height: 50px;
+    }
+
+    .consumed-foods-table tr:hover {
+        background: #fff;
     }
 
     .consumed-foods-table td {
@@ -352,14 +358,16 @@ input:checked + .slider::before {
         //display: inline-block;
         //padding: 0;
         //padding: 20px 0;
-        padding-top: 20px;
-        padding-bottom: 20px;
+        //padding-top: 20px;
+        //padding-bottom: 20px;
         //margin-top: 10px;
         border: none;
     }
 
     .consumed-foods-day-total td {
         width: 20%;
+        line-height: 20px;
+        padding: 20px 0;
     }
 
     .consumed-foods-day-total td:first-child,
@@ -377,6 +385,8 @@ input:checked + .slider::before {
     }
 
     .consumed-food-name {
+
+        line-height: 20px;
         padding-left: 8px;
         padding-right: 14px;
         color: @text-color;
@@ -412,6 +422,8 @@ input:checked + .slider::before {
     }
 
     .consumed-foods-table .consumed-foods-meal:hover {
+        background: #d6d6d6;
+
         i {
             color: #525252;
         }
@@ -419,16 +431,18 @@ input:checked + .slider::before {
 
     .consumed-food-actions {
         text-align: left;
-        padding-left: 8px;
-        padding-right: 8px;
+        padding-left: 4px;
+        padding-right: 4px;
 
         button {
             margin-left: 4px;
             margin-right: 4px;
+            vertical-align: initial;
         }
 
-        button:last-child {
+        span:last-child {
             float: right;
+            line-height: 50px;
         }
 
         i {
@@ -451,5 +465,13 @@ input:checked + .slider::before {
         button {
             margin-left: 2%;
         }
+    }
+
+    .toggle-active-meal::before, .toggle-active-meal::after {
+        top: -7px;
+    }
+
+    .slider::before {
+        top: 4px;
     }
 }

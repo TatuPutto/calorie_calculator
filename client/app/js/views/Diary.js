@@ -19,8 +19,8 @@ export default class Diary extends React.Component {
             isInDayView: this.props.isInDayView,
             nutritionDetailsForMultipleEntries: [],
             entryDates: [],
+            fetchError: null,
             isFetchingdiaryEntries: true,
-            diaryEntriesFetchError: null,
             consumedFoods: [],
             totalConsumption: {},
             dailyGoal: {},
@@ -39,10 +39,10 @@ export default class Diary extends React.Component {
     }
 
     componentWillMount() {
-        get('diary-entries')
-            .then((res) => res.json())
+        get('entries/dates-containing-entries')
+            .then(checkStatus)
+            .then(readJson)
             .then((entryDates) => {
-                // get entry specified by query param
                 if(this.state.isInDayView) {
                     this.getEntryFromDate(this.props.date);
                 } else {
@@ -54,9 +54,10 @@ export default class Diary extends React.Component {
                     isFetchingdiaryEntries: false,
                     date: this.props.date
                 });
-            }).catch((err) => this.setState({
+            })
+            .catch((err) => this.setState({
                 isFetchingdiaryEntries: false,
-                diaryEntriesFetchError: err
+                entryDatesFetchError: 'Merkintöjä ei onnistuttu hakemaan.'
             }));
     }
 
@@ -108,9 +109,10 @@ export default class Diary extends React.Component {
 
         // fetch entry details and goal from date X
         Promise.all([
-            get(`entry/single/${date}`),
+            get(`entries/day/${date}`),
             get(`daily-goal/${date}`)
         ])
+        .then((responses) => Promise.all(responses.map(checkStatus)))
         .then((responses) => Promise.all(responses.map(readJson)))
         .then((data) => {
             this.setState({
@@ -123,14 +125,19 @@ export default class Diary extends React.Component {
                 detailsVisible: false
             });
         })
-        .catch((err) => this.setState({isFetchingEntry: false, entryFetchError: err}))
+        .catch((err) => {
+            this.setState({
+                isFetchingEntry: false,
+                fetchError: 'Merkintöjä ei onnistuttu hakemaan.'
+            });
+        });
     }
 
     getEntriesFromDateRange(week) {
         document.title = 'Viikko ' + week;
         this.setState({entry: null, isFetchingEntry: true});
 
-        get(`entry/multiple/${week}`)
+        get(`entries/week/${week}`)
             .then(checkStatus)
             .then(readJson)
             .then((data) => {
@@ -142,10 +149,12 @@ export default class Diary extends React.Component {
                     detailsVisible: false
                 });
             })
-            .catch((err) => this.setState({
-                isFetchingEntry: false,
-                entryFetchError: err
-            }));
+            .catch((err) => {
+                this.setState({
+                    isFetchingEntry: false,
+                    fetchError: 'Merkintöjä ei onnistuttu hakemaan.'
+                })
+            });
     }
 
     changeEntry(direction) {
@@ -208,6 +217,7 @@ export default class Diary extends React.Component {
             totalConsumption,
             dailyGoal,
             isInDayView,
+            fetchError,
             viewportWidth
         } = this.state;
 
@@ -220,9 +230,8 @@ export default class Diary extends React.Component {
             }
         }
 
-        if(isFetchingEntry) {
-            output = <Loading />;
-        } else if(!isFetchingEntry && consumedFoods.length > 0 && hasEntries && isInDayView) {
+        // day view output
+        if(!isFetchingEntry && consumedFoods.length > 0 && hasEntries && isInDayView) {
             output = (
                 <EntryDetails
                     totalConsumption={totalConsumption}
@@ -233,6 +242,7 @@ export default class Diary extends React.Component {
                     changeShownNutritionValue={this.changeShownNutritionValue}
                 />
             );
+        // week view output
         } else if(!isFetchingEntry && !isInDayView && nutritionDetailsForMultipleEntries.length > 0) {
             output = (
                 <div className='row entries-container'>
@@ -256,9 +266,17 @@ export default class Diary extends React.Component {
                     })}
                 </div>
             );
+        } else if(isFetchingEntry) {
+            output = <Loading />;
+        } else if(fetchError) {
+            output = (
+                <div className='failed-to-fetch'>
+                    <p>Merkintöjä ei onnistuttu hakemaan.</p>
+                </div>
+            );
         } else {
             output = (
-                <div className='no-entry-found'>
+                <div className='no-entries-found'>
                     {isInDayView ?
                         <p>Tältä päivältä ei löytynyt merkintöjä.</p>
                         :

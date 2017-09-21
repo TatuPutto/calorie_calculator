@@ -3,11 +3,11 @@ var getConnection = require('./create-connection');
 module.exports = function selectMatchingFoodsAndPrioritize(searchTerm, userId) {
     var data = [userId, userId, searchTerm, searchTerm, searchTerm];
     var query = `
-        SELECT foods.*, COUNT(consumedFoods.foodId) AS history,
+        SELECT foods.*, COUNT(consumedfoods.foodId) AS history,
         COUNT(favorites.foodId) > 0 AS isInFavorites
         FROM foods
-        LEFT JOIN consumedFoods
-        ON foods.foodId = consumedFoods.foodId AND consumedFoods.userId = ?
+        LEFT JOIN consumedfoods
+        ON foods.foodId = consumedfoods.foodId AND consumedfoods.userId = ?
         LEFT JOIN favorites
         ON foods.foodId = favorites.foodId AND favorites.userId = ?
         WHERE foods.foodName LIKE "%"?"%"

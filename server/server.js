@@ -19,8 +19,7 @@ var dailyGoal = require('./routes/daily-goal');
 var today = require('./routes/today');
 var favorites = require('./routes/favorites');
 var latest = require('./routes/latest');
-var diaryEntries = require('./routes/diary-entries');
-var getEntry = require('./routes/get-entry');
+var getEntries = require('./routes/get-entries');
 var port = process.env.PORT || 3000;
 var app = express();
 
@@ -37,25 +36,23 @@ app.use(session({
 app.use(redirect);
 app.use(express.static(path.join(__dirname, '../client/app')));
 app.use(express.static(path.join(__dirname, './public')));
-
 // only allow user to access the page
 // after login has been visited and cookies are accepted
 app.use(firstVisit);
-
 app.use(identifyAnonymousUser);
+
 app.use('/accept-cookies', acceptCookies);
-app.use('/login', login);
-app.use('/logout', logout);
 app.use('/username-available', usernameAvailability);
 app.use('/register', register);
+app.use('/login', login);
+app.use('/logout', logout);
 app.use('/user-info', userInfo);
 app.use('/matching-foods', matchingFoods);
 app.use('/daily-goal', dailyGoal);
 app.use('/favorites', favorites);
 app.use('/latest', latest);
 app.use('/today', today);
-app.use('/entry', getEntry);
-app.use('/diary-entries', diaryEntries);
+app.use('/entries', getEntries);
 app.use('*', clientRoutes);
 
 app.listen(port, () => console.log('Listening at port ' + port));

@@ -24,7 +24,7 @@ export default function ConsumedFoodRowCompactLayout(props) {
     if(!props.isBeingEdited && !props.actionsVisible) {
         rows.push(
             <td key='consumedFoodName' className='consumed-food-name' colSpan={5}>
-                {food.name} ({food.amount} g)
+                {food.name} ({food.amount}g)
             </td>
         );
         rows.push(
@@ -36,25 +36,27 @@ export default function ConsumedFoodRowCompactLayout(props) {
     }
 
     return (
-        <tr onClick={!props.actionsVisible ? props.showActions : () => {}}>
+        <tr onClick={!props.actionsVisible && props.isModifiable ? props.showActions : () => {}}>
             {props.actionsVisible && !props.isBeingEdited && isModifiable &&
                 <td colSpan={8} className='consumed-food-actions'>
-                    <button className='btn btn-success'
-                            onClick={props.toggleEditing}>
-                        <i className='fa fa-pencil' />
+                    <button className='btn btn-danger'
+                            onClick={() => removeEntry(food)}>
+                        <i className='fa fa-trash' />
                     </button>
                     <button className='btn btn-info'
                             onClick={() => addEntry(food, food.amount)}>
                         <i className='fa fa-copy' />
                     </button>
-                    <button className='btn btn-danger'
-                            onClick={() => removeEntry(food)}>
-                        <i className='fa fa-trash' />
+                    <button className='btn btn-success'
+                            onClick={props.toggleEditing}>
+                        <i className='fa fa-pencil' />
                     </button>
-                    <button className='btn btn-default'
-                            onClick={props.hideActions}>
-                        <i className='fa fa-close' style={{color: '#919191'}} />
-                    </button>
+                    <span>
+                        <button className='btn btn-default'
+                                onClick={props.hideActions}>
+                            <i className='fa fa-close' style={{color: '#919191'}} />
+                        </button>
+                    </span>
                 </td>
             }
             {props.isBeingEdited && isModifiable &&

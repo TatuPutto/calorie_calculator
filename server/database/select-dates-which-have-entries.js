@@ -1,10 +1,10 @@
 var getConnection = require('./create-connection');
 
-module.exports = function selectAllEntryContainingDates(userId) {
+module.exports = function selectDatesWhichHaveEntries(userId) {
     var query = `
         SELECT DISTINCT(DATE_FORMAT(timeOfConsumption, "%d-%m-%Y"))
         AS timeOfConsumption
-        FROM consumedFoods WHERE userId = ? AND active = 1
+        FROM consumedfoods WHERE userId = ? AND active = 1
         ORDER BY timeOfConsumption DESC
     `;
 
@@ -17,11 +17,13 @@ module.exports = function selectAllEntryContainingDates(userId) {
                 resolve(results);
             });
         });
-    }).then(function (dates) {
+    })
+    .then(function (dates) {
         return dates.map(function (date) {
             return date.timeOfConsumption;
         });
-    }).catch(function (err) {
+    })
+    .catch(function (err) {
         console.log(err);
         throw err;
     });

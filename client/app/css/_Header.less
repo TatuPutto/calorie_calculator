@@ -108,6 +108,11 @@
 }
 
 @media @tablet {
+    .header {
+        line-height: 50px;
+        height: 50px;
+    }
+
     .header-content {
         margin: 0;
         padding-left: 10px !important;
@@ -115,10 +120,11 @@
     }
 
     .header button {
-        font-size: 12px;
+        font-size: 13px;
+        margin-top: 0;
     }
 
-    .nav-menu {
+    /*.nav-menu {
         line-height: 35px;
         width: 100px;
         position: absolute;
@@ -149,8 +155,13 @@
         border-radius: 3px;
         box-shadow: @module-shadow;
     }
-
+*/
     .nav-menu a {
-        color: black;
+        color: @text-color;
+        font-size: 14px;
+    }
+
+    .nav-menu a:hover {
+        font-weight: normal;
     }
 }

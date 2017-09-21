@@ -3,16 +3,16 @@ var getConnection = require('./create-connection');
 module.exports = function selectEntriesFromToday(userId) {
     var query = `
         SELECT meals.mealId, meals.mealName,
-        consumedFoods.consumptionId, consumedFoods.foodAmount,
+        consumedfoods.consumptionId, consumedfoods.foodAmount,
         foods.foodId, foods.foodName, foods.energy,
         foods.protein, foods.carbs, foods.fat
-        FROM meals, consumedFoods, foods
-        WHERE meals.mealId = consumedFoods.mealId
-        AND consumedFoods.foodId = foods.foodId AND consumedFoods.active = 1
+        FROM meals, consumedfoods, foods
+        WHERE meals.mealId = consumedfoods.mealId
+        AND consumedfoods.foodId = foods.foodId AND consumedfoods.active = 1
         AND meals.userId = ? AND meals.active = 1
         AND meals.timeOfConsumption >= CURDATE()
         AND meals.timeOfConsumption < CURDATE() + INTERVAL 1 DAY
-        ORDER BY meals.mealId, consumedFoods.timeOfConsumption
+        ORDER BY meals.mealId, consumedfoods.timeOfConsumption
     `;
 
     return new Promise(function (resolve, reject) {

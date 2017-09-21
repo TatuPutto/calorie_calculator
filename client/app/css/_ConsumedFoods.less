@@ -60,6 +60,7 @@
         }
 
         select {
+            background: #fff;
             position: absolute;
             top: 47px;
             font-size: 13px;
@@ -67,12 +68,17 @@
             right: 2px;
             text-align-last: right;
         }
+
+        button:focus, button:active, select:focus, select:active {
+            outline: none;
+        }
     }
 
     .diary .consumed-foods-header {
         height: 50px;
 
         select {
+            background: #fff;
             top: 57px;
         }
     }

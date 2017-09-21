@@ -3,7 +3,7 @@ var getConnection = require('./create-connection');
 function insertEntryForToday(consumptionId, foodId, foodAmount, mealId, userId) {
     var data = [consumptionId, foodId, foodAmount, mealId, userId];
     var query = `
-        INSERT INTO consumedFoods
+        INSERT INTO consumedfoods
         (consumptionId, foodId, foodAmount, timeOfConsumption, mealId, userId)
         VALUES (?, ?, ?, NOW(), ?, ?)
     `;

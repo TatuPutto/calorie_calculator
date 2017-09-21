@@ -8,7 +8,7 @@ var pool = mysql.createPool({
 });
 
 module.exports = function getConnection(callback) {
-    pool.getConnection(function(err, connection) {
+    pool.getConnection(function (err, connection) {
         callback(err, connection);
     });
 };

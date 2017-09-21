@@ -3,12 +3,12 @@ var getConnection = require('./create-connection');
 module.exports = function selectLatestConsumedfoods(userId) {
     var query = `
         SELECT foods.*, COUNT(favorites.foodId) > 0 AS isInFavorites
-        FROM consumedFoods
-        INNER JOIN foods ON consumedFoods.foodId = foods.foodId
-        LEFT JOIN favorites ON consumedFoods.foodId = favorites.foodId
-        WHERE consumedFoods.userId = ? AND consumedFoods.foodId != 99999
-        GROUP BY foods.foodId
-        ORDER BY consumedFoods.timeOfConsumption DESC
+        FROM consumedfoods
+        INNER JOIN foods ON consumedfoods.foodId = foods.foodId
+        LEFT JOIN favorites ON consumedfoods.foodId = favorites.foodId
+        WHERE consumedfoods.userId = ? AND consumedfoods.foodId != 99999
+        GROUP BY consumedfoods.foodId, consumedfoods.timeOfConsumption
+        ORDER BY consumedfoods.timeOfConsumption DESC
         LIMIT 20
     `;
 
@@ -21,7 +21,8 @@ module.exports = function selectLatestConsumedfoods(userId) {
             });
             connection.release();
         });
-    }).then(function (results) {
+    })
+    .then(function (results) {
         return results.map(function (row) {
             return {
                 id: row.foodId,
@@ -34,7 +35,8 @@ module.exports = function selectLatestConsumedfoods(userId) {
                 isInFavorites: row.isInFavorites ? true : false,
             }
         });
-    }).catch(function (err) {
+    })
+    .catch(function (err) {
         console.log(err);
         throw err;
     });

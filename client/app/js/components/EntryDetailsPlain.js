@@ -54,22 +54,3 @@ export default class EntryDetailsPlain extends React.Component {
         );
     }
 }
-
-function createPlainMacroChart(canvasId, protein, carbs, fat) {
-    var data = {
-        datasets: [
-            {data: [protein, carbs, fat],
-            backgroundColor: ['#47de83', '#5da5da', '#ea5450'],
-            borderWidth: 1
-        }]
-    };
-
-
-    var myPieChart = new Chart(canvasId, {
-        type: 'pie',
-        data: data,
-        options: {animation : false}
-    });
-
-
-}

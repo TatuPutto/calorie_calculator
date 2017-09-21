@@ -1,4 +1,6 @@
 var createConnection = require('../database/create-connection');
+var selectDatesWhichHaveEntries =
+        require('../database/select-dates-which-have-entries');
 var selectEntriesFromDate = require('../database/select-entries-from-date');
 var selectNutritionValuesFromDateRange =
         require('../database/select-nutrition-values-from-date-range');
@@ -13,7 +15,19 @@ router.use(function (req, res, next) {
     }
 });
 
-router.get('/single/:date', function (req, res) {
+router.get('/dates-containing-entries', function (req, res) {
+    selectDatesWhichHaveEntries(req.session.user.id)
+        .then(function (dates) {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(dates));
+        })
+        .catch(function (err) {
+            res.status(400);
+            res.end();
+        });
+});
+
+router.get('/day/:date', function (req, res) {
     selectEntriesFromDate(req.params.date, req.session.user.id)
         .then(function (entry) {
             res.writeHead(200, {'Content-Type': 'application/json'});
@@ -21,20 +35,19 @@ router.get('/single/:date', function (req, res) {
         })
         .catch(function (err) {
             res.status(400);
-            res.end(err);
+            res.end();
         });
 });
 
-router.get('/multiple/:week', function (req, res) {
+router.get('/week/:week', function (req, res) {
     selectNutritionValuesFromDateRange(req.params.week, req.session.user.id)
         .then(function (nutritionValues) {
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(nutritionValues));
         })
         .catch(function (err) {
-            console.log(err);
             res.status(400);
-            res.end(err);
+            res.end();
         });
 });
 

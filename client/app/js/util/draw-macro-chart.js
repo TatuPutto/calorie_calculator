@@ -11,7 +11,7 @@ export default function drawChart(ctx, total, isInDayView) {
 
     var chart = new CanvasJS.Chart(ctx, {
         height: isInDayView ? 260 : 150,
-        animationEnabled: isInDayView,
+        animationEnabled: false,
         animationDuration: 400,
         interactivityEnabled: false,
         colorSet: 'macros',
@@ -20,7 +20,7 @@ export default function drawChart(ctx, total, isInDayView) {
 			type: 'pie',
             startAngle: 0,
 			indexLabelFontFamily: 'Roboto',
-			indexLabelFontSize: 14,
+			indexLabelFontSize: isInDayView ? 14 : 12,
 			indexLabelFontWeight: 'normal',
 			indexLabelFontColor: '#fff',
 			indexLabelPlacement: 'inside',

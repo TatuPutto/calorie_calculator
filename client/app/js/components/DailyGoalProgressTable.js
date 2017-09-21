@@ -2,21 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function DailyGoalProgressTable(props) {
+    if(props.dailyGoal) {
+        var goal = props.dailyGoal;
+        var energyGoal = goal.energy;
+        var proteinGoal = goal.protein;
+        var carbGoal = goal.carbs;
+        var fatGoal = goal.fat;
+    } else {
+        var energyGoal = 0;
+        var proteinGoal =  0;
+        var carbGoal =  0;
+        var fatGoal = 0;
+    }
+
     var {
         energy: energyInTotal,
         protein: proteinInTotal,
         carbs: carbsInTotal,
         fat: fatInTotal
     } = props.totalConsumption;
-    var {
-        energy: energyGoal,
-        protein: proteinGoal,
-        carbs: carbGoal,
-        fat: fatGoal
-    } = props.dailyGoal;
+
 
     var energyInRelationToGoal = Math.round(energyInTotal - energyGoal);
-    var proteinInRelationToGoal = Math.round(proteinInTotal - proteinGoal);
+    var proteinInRelationToGoal = Math.round(proteinInTotal- proteinGoal);
     var carbsInRelationToGoal = Math.round(carbsInTotal - carbGoal);
     var fatInRelationToGoal = Math.round(fatInTotal - fatGoal);
 
@@ -42,7 +50,7 @@ export default function DailyGoalProgressTable(props) {
                         </td>
                         <td>{proteinGoal}</td>
                         <td>
-                        {proteinInRelationToGoal >= 0 ? (
+                        {proteinInRelationToGoal >= 0 && goal ? (
                             <span className='over-goal'>
                                 -{proteinInRelationToGoal} g
                             </span>
@@ -61,7 +69,7 @@ export default function DailyGoalProgressTable(props) {
                         </td>
                         <td>{carbGoal}</td>
                         <td>
-                            {carbsInRelationToGoal >= 0 ? (
+                            {carbsInRelationToGoal >= 0 && goal ? (
                                 <span className='over-goal'>
                                     -{carbsInRelationToGoal} g
                                 </span>
@@ -80,7 +88,7 @@ export default function DailyGoalProgressTable(props) {
                         </td>
                         <td>{fatGoal}</td>
                         <td>
-                            {fatInRelationToGoal >= 0 ? (
+                            {fatInRelationToGoal >= 0 && goal ? (
                                 <span className='over-goal'>
                                     -{fatInRelationToGoal} g
                                 </span>
@@ -95,7 +103,7 @@ export default function DailyGoalProgressTable(props) {
                         <td> kcal ({Math.round(energyInTotal)} kcal)</td>
                         <td>{energyGoal}</td>
                         <td>
-                            {energyInRelationToGoal >= 0 ? (
+                            {energyInRelationToGoal >= 0 && goal ? (
                                 <span className='over-goal'>
                                     -{energyInRelationToGoal} kcal
                                 </span>

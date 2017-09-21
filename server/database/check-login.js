@@ -17,7 +17,7 @@ module.exports = function checkLogin(username, password) {
                         loggedIn: true
                     });
                 } else {
-                    reject('No matches');
+                    reject();
                 }
             });
         });

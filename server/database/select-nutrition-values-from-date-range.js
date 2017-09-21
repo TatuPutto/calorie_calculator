@@ -9,18 +9,18 @@ module.exports = function selectNutritionValuesFromDateRange(week, userId) {
     var data = [year, from, year, to, userId];
     var query = `
         SELECT
-        ROUND(SUM(foods.energy / 100 * consumedFoods.foodAmount)) AS energy,
-        ROUND(SUM(foods.protein / 100 * consumedFoods.foodAmount)) AS protein,
-        ROUND(SUM(foods.carbs / 100 * consumedFoods.foodAmount)) AS carbs,
-        ROUND(SUM(foods.fat / 100 * consumedFoods.foodAmount)) AS fat,
-        DATE(consumedFoods.timeOfConsumption) AS date
-        FROM consumedFoods
-        LEFT JOIN foods ON foods.foodId = consumedFoods.foodId
-        WHERE consumedFoods.timeOfConsumption <= MAKEDATE(?, ?) + INTERVAL 2 DAY
-        AND consumedFoods.timeOfConsumption > MAKEDATE(?, ?)
-        AND consumedFoods.foodId != 99999
-        AND consumedFoods.userId = ? AND consumedFoods.active = 1
-        GROUP BY DATE(consumedFoods.timeOfConsumption)
+        ROUND(SUM(foods.energy / 100 * consumedfoods.foodAmount)) AS energy,
+        ROUND(SUM(foods.protein / 100 * consumedfoods.foodAmount)) AS protein,
+        ROUND(SUM(foods.carbs / 100 * consumedfoods.foodAmount)) AS carbs,
+        ROUND(SUM(foods.fat / 100 * consumedfoods.foodAmount)) AS fat,
+        DATE(consumedfoods.timeOfConsumption) AS date
+        FROM consumedfoods
+        LEFT JOIN foods ON foods.foodId = consumedfoods.foodId
+        WHERE consumedfoods.timeOfConsumption <= MAKEDATE(?, ?) + INTERVAL 2 DAY
+        AND consumedfoods.timeOfConsumption > MAKEDATE(?, ?)
+        AND consumedfoods.foodId != 99999
+        AND consumedfoods.userId = ? AND consumedfoods.active = 1
+        GROUP BY DATE(consumedfoods.timeOfConsumption)
     `;
 
     return new Promise(function (resolve, reject) {
@@ -34,35 +34,34 @@ module.exports = function selectNutritionValuesFromDateRange(week, userId) {
         })
     })
     .then(function (results) {
-        if(results.length === 0) {
-            return [];
-        }
-        var asd = [];
-        var daysOfYear = [];
-        var dateRange = [];
-        var i = 1;
+        if(results.length === 0) return [];
+        var fullWeek = [];
 
-        while(i <= 7) {
-            // alustetaan uusi vuosi 1.1.2017
-            var date = new Date(year, 0);
-
-            // lisätään aloitus piste
-            var d = new Date(date.setDate((to + i)));
-            i++;
+        // iterate through the days of given week e.g 18.9 - 24.9
+        for(var i = 1; i <= 7; i++) {
             var matchingDateFound = false;
+            var freshYear = new Date(year, 0);
+            var date = new Date(freshYear.setDate((to + i)));
+            var dateToCheck = date.toString().split(' ')[2];
+
+            // push entries to matching week day
             for(var j = 0; j < results.length; j++) {
-                if(results[j].date.toString().split(' ')[2] == d.toString().split(' ')[2]) {
-                    asd.push(results[j]);
+                var resultDate = results[j].date.toString().split(' ')[2];
+
+                if(resultDate == dateToCheck) {
+                    fullWeek.push(results[j]);
                     matchingDateFound = true;
                 }
             }
 
-            if(!matchingDateFound) asd.push({date: d});
+            // leave current week day blank if there was no entries
+            if(!matchingDateFound) fullWeek.push({date: date});
         }
 
-        return asd
+        return fullWeek;
     })
     .catch(function (err) {
         console.log(err);
-    })
+        throw err;
+    });
 }

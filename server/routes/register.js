@@ -1,5 +1,5 @@
 var checkUsernameAvailability = require('../database/check-username-availability');
-var addUser = require('../database/add-user');
+var createUser = require('../database/create-user');
 var path = require('path');
 var bodyParser = require('body-parser');
 var express = require('express');
@@ -14,19 +14,21 @@ router.use(bodyParser.urlencoded({extended: false}));
 router.post('/', function (req, res) {
     checkUsernameAvailability(req.body.username)
         .then(function () {
-            addUser(req.body.username, req.body.password)
+            var userId = Math.floor(Math.random() * 1000000000);
+
+            createUser(userId, req.body.username, req.body.password)
                 .then(function (userInfo) {
-                    res.end('Rekisteröityminen onnistui');
+                    req.session.user = userInfo;
+                    res.redirect('/current-entry');
                 })
                 .catch(function (err) {
-                    res.status(400);
-                    res.end('Rekisteröityminen epäonnistui.');
+                    throw err;
                 });
         })
         .catch(function (err) {
-            res.end('Rekisteröityminen epäonnistui.');
+            res.send('Rekisteröityminen epäonnistui.');
+            res.end();
         });
-
 });
 
 module.exports = router;

@@ -506,7 +506,7 @@ export default class CurrentEntry extends React.Component {
                 />
                 {this.state.viewportWidth < 768 && !this.state.foodSelectionVisible &&
                     <button className='btn sticky-action-btn' onClick={this.toggleFoodSelection}>
-                        <i className='fa fa-plus' />
+                    +
                     </button>
                 }
             </div>

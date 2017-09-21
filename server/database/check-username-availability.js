@@ -1,7 +1,7 @@
 var getConnection = require('./create-connection');
 
 module.exports = function checkUsernameAvailability(username) {
-    var query = 'SELECT * FROM users WHERE username=?';
+    var query = 'SELECT * FROM users WHERE username = ?';
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
