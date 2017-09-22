@@ -1,4 +1,4 @@
-var getConnection = require('./create-connection');
+var executeQuery = require('../database-util/execute-query');
 
 module.exports = function getFavoriteFoods(userId) {
     var query = `
@@ -10,14 +10,13 @@ module.exports = function getFavoriteFoods(userId) {
     `;
 
     return new Promise(function (resolve, reject) {
-        getConnection(function (err, connection) {
-            connection.release();
-            if(err) return reject(err);
-            connection.query(query, [userId], function (err, results) {
-                if(err) return reject(err);
+        executeQuery(query, [userId])
+            .then(function (results) {
                 return resolve(results);
-            });
-        });
+            })
+            .catch(function (err) {
+                return reject(err);
+            })
     })
     .then(function (results) {
         return results.map(function (row) {

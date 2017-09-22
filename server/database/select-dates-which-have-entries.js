@@ -1,4 +1,4 @@
-var getConnection = require('./create-connection');
+var executeQuery = require('../database-util/execute-query');
 
 module.exports = function selectDatesWhichHaveEntries(userId) {
     var query = `
@@ -9,14 +9,13 @@ module.exports = function selectDatesWhichHaveEntries(userId) {
     `;
 
     return new Promise(function (resolve, reject) {
-        getConnection(function (err, connection) {
-            connection.release();
-            if(err) return reject(err);
-            connection.query(query, [userId], function (err, results) {
-                if(err) return reject(err);
+        executeQuery(query, [userId])
+            .then(function (results) {
                 return resolve(results);
-            });
-        });
+            })
+            .catch(function (err) {
+                return reject(err);
+            })
     })
     .then(function (dates) {
         return dates.map(function (date) {

@@ -1,4 +1,4 @@
-var getConnection = require('./create-connection');
+var executeQuery = require('../database-util/execute-query');
 
 module.exports = function selectEntriesFromDate(date, userId) {
     var query = `
@@ -16,14 +16,13 @@ module.exports = function selectEntriesFromDate(date, userId) {
     `;
 
     return new Promise(function (resolve, reject) {
-        getConnection(function (err, connection) {
-            connection.release();
-            if(err) return reject(err);
-            connection.query(query, [userId, date, date], function (err, results) {
-                if(err) return reject(err);
+        executeQuery(query, [userId, date, date])
+            .then(function (results) {
                 return resolve(results);
-            });
-        });
+            })
+            .catch(function (err) {
+                return reject(err);
+            })
     })
     .then(function (results) {
         var energyInTotal = 0;

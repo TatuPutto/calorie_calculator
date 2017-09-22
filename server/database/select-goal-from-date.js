@@ -1,4 +1,4 @@
-var getConnection = require('./create-connection');
+var executeQuery = require('../database-util/execute-query');
 
 module.exports = function selectGoalFromDate(userId, date) {
     var query = `
@@ -9,18 +9,17 @@ module.exports = function selectGoalFromDate(userId, date) {
     `;
 
     return new Promise(function (resolve, reject) {
-        getConnection(function (err, connection) {
-            connection.release();
-            if(err) return reject(err);
-            connection.query(query, [userId, date], function (err, results) {
-                if(err) return reject(err);
+        executeQuery(query, [userId, date])
+            .then(function (results) {
                 if(results.length > 0) {
                     return resolve(results[0]);
                 } else {
                     return resolve(null);
                 }
-            });
-        })
+            })
+            .catch(function (err) {
+                return reject(err);
+            })
     })
     .catch(function (err) {
         console.log(err);

@@ -1,4 +1,3 @@
-var getConnection = require('../database/create-connection');
 var insertGoalForToday = require('../database/insert-goal-for-today');
 var selectGoalFromDate = require('../database/select-goal-from-date');
 var bodyParser = require('body-parser');

@@ -1,4 +1,3 @@
-var createConnection = require('../database/create-connection');
 var selectDatesWhichHaveEntries =
         require('../database/select-dates-which-have-entries');
 var selectEntriesFromDate = require('../database/select-entries-from-date');

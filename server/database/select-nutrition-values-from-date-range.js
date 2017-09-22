@@ -1,6 +1,4 @@
-var getConnection = require('./create-connection');
-
-
+var executeQuery = require('../database-util/execute-query');
 
 module.exports = function selectNutritionValuesFromDateRange(week, userId) {
     var year = new Date().getFullYear();
@@ -24,14 +22,13 @@ module.exports = function selectNutritionValuesFromDateRange(week, userId) {
     `;
 
     return new Promise(function (resolve, reject) {
-        getConnection(function (err, connection) {
-            connection.release();
-            if(err) return reject(err);
-            connection.query(query, data, function (err, results) {
-                if(err) return reject(err);
+        executeQuery(query, data)
+            .then(function (results) {
                 return resolve(results);
-            });
-        })
+            })
+            .catch(function (err) {
+                return reject(err);
+            })
     })
     .then(function (results) {
         if(results.length === 0) return [];

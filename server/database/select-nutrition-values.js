@@ -1,17 +1,16 @@
-var getConnection = require('./create-connection');
+var executeQuery = require('../database-util/execute-query');
 
 module.exports = function selectNutritionValues(ids) {
     var query = 'SELECT * from foods where foodId IN (?)';
 
     return new Promise(function (resolve, reject) {
-        getConnection(function (err, connection) {
-            connection.release();
-            if(err) return reject(err);
-            connection.query(query, [ids], function (err, results) {
-                if(err) return reject(err);
+        executeQuery(query, [ids])
+            .then(function (results) {
                 return resolve(results);
-            });
-        })
+            })
+            .catch(function (err) {
+                return reject(err);
+            })
     })
     .then(function (results) {
         return results.map(function (row) {

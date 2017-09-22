@@ -1,15 +1,11 @@
-var getConnection = require('./create-connection');
+var executeQuery = require('../database-util/execute-query');
 
 module.exports = function checkLogin(username, password) {
     var query = 'SELECT * FROM users WHERE username = ? AND password = ? LIMIT 1';
-    var data = [username, password];
 
     return new Promise(function (resolve, reject) {
-        getConnection(function (err, connection) {
-            connection.release();
-            if(err) return reject(err);
-            connection.query(query, data, function (err, results) {
-                if(err) return reject(err);
+        executeQuery(query, [username, password])
+            .then(function (results) {
                 if(results.length > 0) {
                     return resolve({
                         id: results[0].userId,
@@ -19,8 +15,10 @@ module.exports = function checkLogin(username, password) {
                 } else {
                     return reject();
                 }
-            });
-        });
+            })
+            .catch(function (err) {
+                return reject(err);
+            })
     })
     .catch(function (err) {
         console.log(err);

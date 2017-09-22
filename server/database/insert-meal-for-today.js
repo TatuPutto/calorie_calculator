@@ -1,7 +1,7 @@
-var getConnection = require('./create-connection');
+var executeQuery = require('../database-util/execute-query');
 
 module.exports = function insertMealForToday(mealName, userId) {
-    var query = `
+    var insert = `
         INSERT INTO meals (mealName, timeOfConsumption, userId)
         VALUES (?, NOW(), ?)
     `;
@@ -11,22 +11,21 @@ module.exports = function insertMealForToday(mealName, userId) {
     `;
 
     return new Promise(function (resolve, reject) {
-        getConnection(function (err, connection) {
-            connection.release();
-            if(err) return reject(err);
-            connection.query(query, [mealName, userId], function (err, results) {
-                if(err) return reject(err);
-
-                getConnection(function (err, connection) {
-                    connection.release();
-                    if(err) return reject(err);
-                    connection.query(select, [userId], function (err, results) {
-                        if(err) return reject(err);
+        // insert new meal
+        executeQuery(insert, [mealName, userId])
+            .then(function () {
+                // select created meal
+                executeQuery(select, [userId])
+                    .then(function (results) {
                         return resolve(results[0]);
-                    });
-                });
+                    })
+                    .catch(function (err) {
+                        return reject(err);
+                    })
+            })
+            .catch(function (err) {
+                return reject(err);
             });
-        });
     })
     .catch(function (err) {
         console.log(err);

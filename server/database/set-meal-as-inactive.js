@@ -1,4 +1,4 @@
-var getConnection = require('./create-connection');
+var executeQuery = require('../database-util/execute-query');
 
 module.exports = function setMealAsInactive(mealId) {
     var query = `
@@ -8,14 +8,13 @@ module.exports = function setMealAsInactive(mealId) {
     `;
 
     return new Promise(function (resolve, reject) {
-        getConnection(function (err, connection) {
-            connection.release();
-            if(err) return reject(err);
-            connection.query(query, [mealId, mealId], function (err) {
-                if(err) return reject(err);
+        executeQuery(query, data)
+            .then(function () {
                 return resolve();
-            });
-        });
+            })
+            .catch(function (err) {
+                return reject(err);
+            })
     })
     .catch(function (err) {
         throw err;

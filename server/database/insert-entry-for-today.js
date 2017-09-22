@@ -1,4 +1,4 @@
-var getConnection = require('./create-connection');
+var executeQuery = require('../database-util/execute-query');
 
 function insertEntryForToday(consumptionId, foodId, foodAmount, mealId, userId) {
     var data = [consumptionId, foodId, foodAmount, mealId, userId];
@@ -9,14 +9,13 @@ function insertEntryForToday(consumptionId, foodId, foodAmount, mealId, userId) 
     `;
 
     return new Promise(function (resolve, reject) {
-        getConnection(function (err, connection) {
-            connection.release();
-            if(err) return reject(err);
-            connection.query(query, data, function (err, results) {
-                if(err) return reject(err);
+        executeQuery(query, data)
+            .then(function () {
                 return resolve();
-            });
-        });
+            })
+            .catch(function (err) {
+                return reject(err);
+            })
     })
     .catch(function (err) {
         throw err;
