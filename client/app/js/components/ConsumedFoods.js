@@ -5,8 +5,14 @@ import ConsumedFoodsHeader from './ConsumedFoodsHeader';
 import ConsumedFoodsTable from './ConsumedFoodsTable';
 import Loading from './Loading';
 
+
 export default function ConsumedFoods(props) {
-    var {viewportWidth, isFetchingConsumedFoods, consumedFoods} = props;
+    var {
+        isFetchingEntries,
+        entriesFetchError,
+        consumedFoods,
+        viewportWidth
+    } = props;
     var consumedFoodsOutput = null;
     var consumedFoodsClass = 'consumed-foods ' +
             (props.isModifiable ? 'col-md-10 col-md-offset-2' : '');
@@ -14,16 +20,25 @@ export default function ConsumedFoods(props) {
 
     // check if consumedfoods contains any valid entries
     for(var i = 0; i < consumedFoods.length; i++) {
-        if(consumedFoods[i].mealCourses.length > 0 &&
-           consumedFoods[i].mealCourses[0].id !== 99999) {
+        if(consumedFoods[i].foods.length > 0 && consumedFoods[i].foods[0].id !== 99999) {
             hasEntries = true;
         }
     }
 
-    if(isFetchingConsumedFoods) {
+    if(isFetchingEntries) {
         consumedFoodsOutput = <Loading />;
-    } else if(!hasEntries && !isFetchingConsumedFoods) {
-        consumedFoodsOutput = <div className='no-entries'>Ei merkintöjä</div>;
+    } else if(!isFetchingEntries && entriesFetchError) {
+        consumedFoodsOutput = (
+            <div className='failed-to-fetch'>
+                {entriesFetchError}
+            </div>
+        );
+    } else if(!isFetchingEntries && !hasEntries) {
+        consumedFoodsOutput = (
+            <div className='no-entries'>
+                Ei merkintöjä
+            </div>
+        );
     } else {
         consumedFoodsOutput = (
             <div>
@@ -51,6 +66,6 @@ export default function ConsumedFoods(props) {
 ConsumedFoods.propTypes = {
     viewportWidth: PropTypes.number.isRequired,
     isModifiable: PropTypes.bool.isRequired,
-    isFetchingConsumedFoods: PropTypes.bool.isRequired,
+    isFetchingEntries: PropTypes.bool.isRequired,
     consumedFoods: PropTypes.array.isRequired
 };

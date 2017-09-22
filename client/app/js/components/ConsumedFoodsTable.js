@@ -9,6 +9,7 @@ import ConsumedFoodRowCompactLayout from './ConsumedFoodRowCompactLayout';
 import TotalNutritionValuesTable from './TotalNutritionValuesTable';
 import ConsumedFoodMealTotalNutritionValues from './ConsumedFoodMealTotalNutritionValues';
 
+
 export default function ConsumedFoodsTable(props) {
     // create HOC for handling ConsumedFoodRow and ConsumedFoodRowCompactLayout state
     var RowWrapper = ConsumedFoodRowWrapper(
@@ -17,54 +18,54 @@ export default function ConsumedFoodsTable(props) {
     var rows = [];
 
     props.consumedFoods.forEach((meal, i) => {
-        var courses = meal.mealCourses;
         var energy = 0, protein = 0, carbs = 0, fat = 0;
 
         // push row representing the meal
         rows.push(
             <ConsumedFoodMealRow
-                key={meal.mealId}
-                mealId={meal.mealId}
-                mealName={meal.mealName}
-                activeMealId={props.isModifiable ? props.activeMeal.mealId : null}
+                key={meal.id}
+                id={meal.id}
+                name={meal.name}
+                activeMealId={props.isModifiable ? props.activeMeal.id : null}
                 removeMeal={props.removeMeal}
                 changeActiveMeal={props.changeActiveMeal}
                 editMealName={props.editMealName}
+                mealNumber={i}
                 isModifiable={props.isModifiable}
-                arrayIndex={i}
             />
         );
 
-        if(courses.length > 0) {
-            var courseRows = courses
+        if(meal.foods.length > 0) {
+            var foodRows = meal.foods
                 // filter out placeholder courses
-                .filter((course) => course.id !== 99999)
+                .filter((food) => food.id !== 99999)
                 // create rows for each course of the meal
-                .map((course) => {
-                    energy += course.energy;
-                    protein += course.protein;
-                    carbs += course.carbs;
-                    fat += course.fat;
+                .map((food) => {
+                    // add nutrition values towards the total of currently iterated meal
+                    energy += food.energy;
+                    protein += food.protein;
+                    carbs += food.carbs;
+                    fat += food.fat;
 
                     return (
                         <RowWrapper
-                            key={course.consumptionId}
-                            food={course}
+                            key={food.consumptionId}
+                            food={food}
                             shownNutritionValue={props.shownNutritionValue}
-                            isModifiable={props.isModifiable}
                             addEntry={props.addEntry}
                             updateEntry={props.updateEntry}
                             removeEntry={props.removeEntry}
+                            isModifiable={props.isModifiable}
                         />
                     );
                 });
 
-            rows.push(courseRows);
+            rows.push(foodRows);
         }
 
         // show nutrition values in total for meal
         // if there is more than 2 courses on that meal
-        if(courses.length > 1) {
+        if(meal.foods.length > 1) {
             rows.push(
                 <ConsumedFoodMealTotalNutritionValues
                     key={i.toString()}
@@ -86,7 +87,7 @@ export default function ConsumedFoodsTable(props) {
         rows.push(
             <TotalNutritionValuesTable
                 key='totalConsumption'
-                totalConsumption={props.totalConsumption}
+                total={props.total}
                 viewportWidth={props.viewportWidth}
             />
         );
@@ -103,9 +104,9 @@ export default function ConsumedFoodsTable(props) {
 
 ConsumedFoodsTable.propTypes = {
     viewportWidth: PropTypes.number.isRequired,
-    isModifiable: PropTypes.bool.isRequired,
     consumedFoods: PropTypes.array.isRequired,
     addToDiary: PropTypes.func,
     removeFromDiary: PropTypes.func,
-    removeEntry: PropTypes.func
+    removeEntry: PropTypes.func,
+    isModifiable: PropTypes.bool.isRequired
 };

@@ -12,30 +12,24 @@ export default function ConsumedFoodRowWrapper(Component) {
                 foodAmount: this.props.food.amount,
                 validInput: true
             };
-
-            this.toggleEditing = this.toggleEditing.bind(this);
-            this.showActions = this.showActions.bind(this);
-            this.hideActions = this.hideActions.bind(this);
-            this.changeFoodAmount = this.changeFoodAmount.bind(this);
-            this.updateAmount = this.updateAmount.bind(this);
         }
 
-        toggleEditing() {
+        toggleEditing = () => {
             this.setState({
                 isBeingEdited: !this.state.isBeingEdited,
                 actionsVisible: this.state.isBeingEdited ? false : true
             });
         }
 
-        showActions() {
+        showActions = () => {
             this.setState({actionsVisible: true, isBeingEdited: false});
         }
 
-        hideActions() {
+        hideActions = () => {
             this.setState({actionsVisible: false, isBeingEdited: false});
         }
 
-        changeFoodAmount(e) {
+        changeFoodAmount = (e) => {
             var foodAmount = e.currentTarget.value.trim();
 
             this.setState({
@@ -44,7 +38,7 @@ export default function ConsumedFoodRowWrapper(Component) {
             });
         }
 
-        updateAmount(consumptionId) {
+        updateAmount = (consumptionId) => {
             var consumptionId = this.props.food.consumptionId;
             var foodAmount = this.state.foodAmount;
 

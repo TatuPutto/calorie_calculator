@@ -18,9 +18,9 @@ router.get('/', function (req, res) {
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(results));
         })
-        .catch(function (err) {
+        .catch(function () {
             res.status(400);
-            res.end(err);
+            res.end();
         });
 });
 
@@ -29,7 +29,7 @@ router.use(bodyParser.json());
 // add new meal for today
 router.post('/add-meal', function (req, res) {
     var userId = req.session.user.id;
-    var mealName = req.body.mealName;
+    var mealName = req.body.name;
 
     if(!mealName) {
         res.status(422);
@@ -38,8 +38,9 @@ router.post('/add-meal', function (req, res) {
         insertMealForToday(mealName, userId)
             .then(function (createdMeal) {
                 var consumptionId = new Date().getTime().toString();
+
                 // create placeholder entry
-                insertEntryForToday(consumptionId, 99999, 1, createdMeal.mealId, userId)
+                insertEntryForToday(consumptionId, 99999, 1, createdMeal.id, userId)
                     .then(function () {
                         res.writeHead(200, {'Content-Type': 'application/json'});
                         res.end(JSON.stringify(createdMeal));
@@ -69,9 +70,9 @@ router.post('/add-entry', function (req, res) {
                 res.status(200);
                 res.end();
             })
-            .catch(function (err) {
+            .catch(function () {
                 res.status(400);
-                res.end(err);
+                res.end();
             });
     }
 });
@@ -91,9 +92,9 @@ router.patch('/update-meal', function (req, res) {
                 res.status(200);
                 res.end();
             })
-            .catch(function (err) {
+            .catch(function () {
                 res.status(400);
-                res.end(err);
+                res.end();
             });
     }
 });
@@ -113,9 +114,9 @@ router.patch('/update-entry', function (req, res) {
                 res.status(200);
                 res.end();
             })
-            .catch(function (err) {
+            .catch(function () {
                 res.status(400);
-                res.end(err);
+                res.end();
             });
     }
 });

@@ -5,19 +5,19 @@ module.exports = function selectGoalFromDate(userId, date) {
         SELECT energy, protein, carbs, fat
         FROM dailygoals WHERE userId = ?
         AND setAt <= STR_TO_DATE(?, "%d-%m-%Y") + INTERVAL 1 DAY
-        ORDER BY setAt DESC
+        ORDER BY setAt DESC LIMIT 1
     `;
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
-            if(err) reject(err);
+            connection.release();
+            if(err) return reject(err);
             connection.query(query, [userId, date], function (err, results) {
-                connection.release();
-                if(err) reject(err);
+                if(err) return reject(err);
                 if(results.length > 0) {
-                    resolve(results[0]);
+                    return resolve(results[0]);
                 } else {
-                    resolve(null);
+                    return resolve(null);
                 }
             });
         })

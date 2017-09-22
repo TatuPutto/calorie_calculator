@@ -9,11 +9,11 @@ module.exports = function setMealAsInactive(mealId) {
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
-            if(err) reject(err);
+            connection.release();
+            if(err) return reject(err);
             connection.query(query, [mealId, mealId], function (err) {
-                connection.release();
-                if(err) reject(err);
-                resolve();
+                if(err) return reject(err);
+                return resolve();
             });
         });
     })

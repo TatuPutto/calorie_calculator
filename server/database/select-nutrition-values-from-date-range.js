@@ -25,11 +25,11 @@ module.exports = function selectNutritionValuesFromDateRange(week, userId) {
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
-            if(err) reject(err);
             connection.release();
+            if(err) return reject(err);
             connection.query(query, data, function (err, results) {
-                if(err) reject(err);
-                resolve(results);
+                if(err) return reject(err);
+                return resolve(results);
             });
         })
     })

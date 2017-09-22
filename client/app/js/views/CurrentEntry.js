@@ -19,48 +19,27 @@ export default class CurrentEntry extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dailyGoal: null,
+            goal: null,
+            total: null,
             consumedFoods: [],
             activeMeal: {},
             foods: [],
             shownResultsOffset: 0,
-            totalConsumption: null,
+
             selectedFoodId: null,
             selectedFood: null,
             selectedFoodAmount: null,
             isFetchingDailyGoal: true,
-            isFetchingConsumedFoods: true,
+            isFetchingEntries: true,
             isFetchingMatchingFoods: true,
             searchTerm: this.props.searchTerm,
             fetchMethod: this.props.fetchMethod,
             fetchError: null,
+            entriesFetchError: null,
             viewportWidth: this.props.viewportWidth,
             foodSelectionVisible: this.props.viewportWidth > 768 ? true : false,
             shownNutritionValue: 'energy'
         };
-
-        this.getDailyGoal = this.getDailyGoal.bind(this);
-        this.getConsumedFoods = this.getConsumedFoods.bind(this);
-        this.getMatchingFoods = this.getMatchingFoods.bind(this);
-        this.getFavoriteFoods = this.getFavoriteFoods.bind(this);
-        this.getLatestConsumedFoods = this.getLatestConsumedFoods.bind(this);
-        this.fetchFoods = this.fetchFoods.bind(this);
-        this.changeFetchMethod = this.changeFetchMethod.bind(this);
-        this.changeSearchTerm = this.changeSearchTerm.bind(this);
-        this.doSearch = this.doSearch.bind(this);
-        this.showMoreResults = this.showMoreResults.bind(this);
-        this.selectFood = this.selectFood.bind(this);
-        this.setSelectedFoodAmount = this.setSelectedFoodAmount.bind(this);
-        this.addEntry = this.addEntry.bind(this);
-        this.removeEntry = this.removeEntry.bind(this);
-        this.updateEntry = this.updateEntry.bind(this);
-        this.addMeal = this.addMeal.bind(this);
-        this.removeMeal = this.removeMeal.bind(this);
-        this.editMealName = this.editMealName.bind(this);
-        this.changeActiveMeal = this.changeActiveMeal.bind(this);
-        this.addToFavorites = this.addToFavorites.bind(this);
-        this.removeFromFavorites = this.removeFromFavorites.bind(this);
-        this.toggleFavoriteIcon = this.toggleFavoriteIcon.bind(this);
     }
 
     componentWillMount() {
@@ -71,13 +50,15 @@ export default class CurrentEntry extends React.Component {
         } else {
             this.getLatestConsumedFoods()
         }
-        this.getDailyGoal();
+
+        this.getConsumedFoods();
     }
 
     componentDidMount() {
         var resizeTimeout = null;
         window.addEventListener('resize', (e) => {
             if(!resizeTimeout) clearTimeout(resizeTimeout);
+
             resizeTimeout = setTimeout(() => {
                 var viewportWidth = Math.max(
                     document.documentElement.clientWidth,
@@ -88,7 +69,7 @@ export default class CurrentEntry extends React.Component {
         });
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps = (nextProps) => {
         if(nextProps.fetchMethod == 'search') {
             this.getMatchingFoods(nextProps.searchTerm);
         } else if(nextProps.fetchMethod == 'favorites') {
@@ -98,59 +79,58 @@ export default class CurrentEntry extends React.Component {
         }
     }
 
-    getDailyGoal() {
+    getDailyGoal = () => {
         get(`/daily-goal/${getCurrentDate()}`)
             .then(checkStatus)
             .then(readJson)
-            .then((data) => {
-                this.setState({dailyGoal: data, isFetchingDailyGoal: false});
-                this.getConsumedFoods();
-            })
-            .catch((err) => {
-                console.error(err);
-                this.setState({isFetchingDailyGoal: false});
+            .then((goal) => this.setState({goal, isFetchingDailyGoal: false}))
+            .catch(() => {
+                this.setState({
+                    isFetchingDailyGoal: false,
+                    dailyGoalFetchError: 'Päivätavoitetta ei onnistuttu hakemaan.'
+                });
             });
     }
 
-    getConsumedFoods() {
+    getConsumedFoods = () => {
         this.setState({
             selectedFoodId: null,
             selectFood: null,
             selectedFoodAmount: null,
-            isFetchingConsumedFoods: true
+            isFetchingEntries: true
         });
 
         get('/today')
             .then(checkStatus)
             .then(readJson)
             .then((data) => {
-                var meals = Object.keys(data.meals);
-                var latestMeal = data.meals[meals.length - 1];
-                var activeMeal = null;
+                var amountOfMeals = Object.keys(data[0]).length;
+                var latestMeal = data[0][amountOfMeals - 1];
 
-                if(meals.length > 0) {
-                    activeMeal = {
-                        mealId: latestMeal.mealId,
-                        mealName: latestMeal.mealName
-                    };
+                if(amountOfMeals > 0) {
+                    var activeMeal = {id: latestMeal.id, name: latestMeal.name};
                 } else {
                     this.addMeal();
                 }
 
                 this.setState({
-                    consumedFoods: data.meals,
-                    totalConsumption: data.nutritionValuesInTotal,
-                    activeMeal: activeMeal,
-                    isFetchingConsumedFoods: false
+                    consumedFoods: data[0],
+                    total: data[1],
+                    activeMeal: activeMeal || null,
+                    isFetchingEntries: false
                 });
+
+                this.getDailyGoal();
             })
-            .catch((err) => {
-                this.setState({isFetchingConsumedFoods: false});
-                console.error(err);
+            .catch(() => {
+                this.setState({
+                    isFetchingEntries: false,
+                    entriesFetchError: 'Merkintöjä ei onnistuttu hakemaan.'
+                });
             });
     }
 
-    getMatchingFoods(searchTerm) {
+    getMatchingFoods = (searchTerm) => {
         searchTerm = searchTerm.trim();
         if(!searchTerm) {
             return this.setState({foods: [], isFetchingMatchingFoods: false});
@@ -158,15 +138,15 @@ export default class CurrentEntry extends React.Component {
         this.fetchFoods(`/matching-foods/${searchTerm}`);
     }
 
-    getFavoriteFoods() {
+    getFavoriteFoods = () => {
         this.fetchFoods('/favorites');
     }
 
-    getLatestConsumedFoods() {
+    getLatestConsumedFoods = () => {
         this.fetchFoods('/latest');
     }
 
-    fetchFoods(url) {
+    fetchFoods = (url) => {
         this.setState({
             foods: [],
             selectedFoodId: null,
@@ -194,7 +174,7 @@ export default class CurrentEntry extends React.Component {
             });
     }
 
-    changeFetchMethod(fetchMethod) {
+    changeFetchMethod = (fetchMethod) => {
         this.setState({fetchMethod});
         if(fetchMethod == 'search') {
             this.context.router.history.push(`?sort=search&q=${this.state.searchTerm}`);
@@ -205,7 +185,7 @@ export default class CurrentEntry extends React.Component {
         }
     }
 
-    changeSearchTerm(event) {
+    changeSearchTerm = (event) => {
         var searchTerm = event.currentTarget.value;
         this.setState({searchTerm, isFetchingMatchingFoods: true});
 
@@ -218,11 +198,7 @@ export default class CurrentEntry extends React.Component {
         searchTimeout = setTimeout(() => this.doSearch(searchTerm), 500);
     }
 
-    doSearch(searchTerm) {
-        /*event.preventDefault();
-        if(this.state.searchTerm.trim()) {
-            this.context.router.history.push(`?q=${this.state.searchTerm}`);
-        }*/
+    doSearch = (searchTerm) => {
         if(searchTerm.trim()) {
             this.context.router.history.push(`?sort=search&q=${searchTerm}`);
         } else {
@@ -230,11 +206,11 @@ export default class CurrentEntry extends React.Component {
         }
     }
 
-    showMoreResults() {
+    showMoreResults = () => {
         this.setState({shownResultsOffset: this.state.shownResultsOffset + 10});
     }
 
-    selectFood(foodId) {
+    selectFood = (foodId) => {
         if(this.state.selectedFoodId == foodId) {
             this.setState({
                 selectedFoodId: null,
@@ -250,68 +226,68 @@ export default class CurrentEntry extends React.Component {
         }
     }
 
-    setSelectedFoodAmount(event) {
-        var value = event.currentTarget.value;
+    setSelectedFoodAmount = (e) => {
+        var value = e.currentTarget.value;
 
         if(value.length < 5 && !isNaN(value)) {
-            this.setState({selectedFoodAmount: event.currentTarget.value});
+            this.setState({selectedFoodAmount: value});
         }
     }
 
-    addEntry(food, newAmount) {
+    addEntry = (foodToAdd, newAmount) => {
         // update consumed foods and total values optimistically on addition
         var updatedValues = updateValuesOnAddition(
-            food,
+            foodToAdd,
             newAmount,
-            this.state.activeMeal.mealId,
+            this.state.activeMeal.id,
             JSON.parse(JSON.stringify(this.state.consumedFoods)),
-            JSON.parse(JSON.stringify(this.state.totalConsumption))
+            JSON.parse(JSON.stringify(this.state.total))
         );
 
         this.setState({
             consumedFoods: updatedValues.consumedFoods,
-            totalConsumption: updatedValues.totalConsumption,
+            total: updatedValues.total,
             selectedFoodId: null,
             selectedFood: null,
             selectedFoodAmount: null
         });
 
         var entryContent = {
-            mealId: this.state.activeMeal.mealId,
+            mealId: this.state.activeMeal.id,
             consumptionId: updatedValues.consumptionId,
-            foodId: food.id,
+            foodId: foodToAdd.id,
             foodAmount: newAmount
         };
 
-        post('/today/add-entry', entryContent)
-            .catch((err) => console.error(err));
+        post('/today/add-entry', entryContent);
+            //.catch((err) => console.error(err));
     }
 
-    removeEntry(food) {
+    removeEntry = (foodToRemove) => {
         // update consumed foods and total values optimistically on removal
         var updatedValues = updateValuesOnRemove(
-            food,
+            foodToRemove,
             JSON.parse(JSON.stringify(this.state.consumedFoods)),
-            JSON.parse(JSON.stringify(this.state.totalConsumption))
+            JSON.parse(JSON.stringify(this.state.total))
         );
 
         this.setState({
             consumedFoods: updatedValues.consumedFoods,
-            totalConsumption: updatedValues.totalConsumption
+            total: updatedValues.total
         });
 
-        patch(`/today/remove-entry?consumptionId=${food.consumptionId}`)
-            .catch((err) => console.error(err));
+        patch(`/today/remove-entry?consumptionId=${food.consumptionId}`);
+            //.catch((err) => console.error(err));
     }
 
-    updateEntry(consumptionId, foodAmount) {
-        patch('/today/update-entry', {consumptionId, foodAmount})
+    updateEntry = (consumptionId, newAmount) => {
+        patch('/today/update-entry', {consumptionId, newAmount})
             .then(checkStatus)
-            .then(() => this.getConsumedFoods())
-            .catch((err) => console.error(err));
+            .then(() => this.getConsumedFoods());
+            //.catch((err) => console.error(err));
     }
 
-    addMeal() {
+    addMeal = () => {
         var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
         var nextMealName = `Ateria #${Object.keys(this.state.consumedFoods).length + 1}`;
 
@@ -320,20 +296,20 @@ export default class CurrentEntry extends React.Component {
             .then(readJson)
             .then((createdMeal) => {
                 tempConsumedFoods.push({
-                    mealId: createdMeal.mealId,
-                    mealName: createdMeal.mealName,
-                    mealCourses: []
+                    id: createdMeal.id,
+                    name: createdMeal.name,
+                    foods: []
                 });
 
                 this.setState({
                     activeMeal: createdMeal,
                     consumedFoods: tempConsumedFoods
                 });
-            })
-            .catch((err) => console.log(err));
+            });
+            //.catch((err) => console.log(err));
     }
 
-    editMealName(arrayIndex, oldName, newName) {
+    editMealName = (arrayIndex, oldName, newName) => {
         if(newName.trim().length === 0) return;
 
         var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
@@ -348,10 +324,10 @@ export default class CurrentEntry extends React.Component {
             mealId: tempConsumedFoods[arrayIndex].mealId,
             mealName: newName
         })
-            .catch((err) => console.log(err));
+            //.catch((err) => console.log(err));
     }
 
-    removeMeal(mealId, mealName, arrayIndex) {
+    removeMeal = (mealId, mealName, arrayIndex) => {
         if(confirm(`Haluatko varmasti poistaa tämän aterian (${mealName})?`)) {
             var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
             tempConsumedFoods.splice(arrayIndex, 1);
@@ -368,11 +344,11 @@ export default class CurrentEntry extends React.Component {
                 }
             });
 
-            patch(`/today/remove-meal?mealId=${mealId}`)
+            patch(`/today/remove-meal?mealId=${mealId}`);
         }
     }
 
-    changeActiveMeal(nextActiveMealId, nextActiveMealName) {
+    changeActiveMeal = (nextActiveMealId, nextActiveMealName) => {
         var consumedFoods = this.state.consumedFoods;
         var latestMealId = consumedFoods[consumedFoods.length - 1].mealId;
 
@@ -390,21 +366,21 @@ export default class CurrentEntry extends React.Component {
         });
     }
 
-    addToFavorites(foodId) {
+    addToFavorites = (foodId) => {
         this.toggleFavoriteIcon(foodId, true);
 
-        post(`/favorites/${foodId}`)
-            .catch((err) => console.error(err));
+        post(`/favorites/${foodId}`);
+            //.catch((err) => console.error(err));
     }
 
-    removeFromFavorites(foodId) {
+    removeFromFavorites = (foodId) => {
         this.toggleFavoriteIcon(foodId, false);
 
-        remove(`/favorites/${foodId}`)
-            .catch((err) => console.error(err));
+        remove(`/favorites/${foodId}`);
+            //.catch((err) => console.error(err));
     }
 
-    toggleFavoriteIcon(foodId, isInFavorites) {
+    toggleFavoriteIcon = (foodId, isInFavorites) => {
         var tempFoods = JSON.parse(JSON.stringify(this.state.foods));
         for(var i = 0; i < tempFoods.length; i++) {
             if(tempFoods[i].id === foodId) {
@@ -446,17 +422,17 @@ export default class CurrentEntry extends React.Component {
     }
 
     render() {
-        var {isFetchingConsumedFoods, isFetchingDailyGoal} = this.state;
+        var {isFetchingEntries, isFetchingDailyGoal} = this.state;
 
         return (
             <div className='current-entry'>
                 <div className='row'>
-                    {!isFetchingConsumedFoods && !isFetchingDailyGoal ? (
+                    {!isFetchingEntries && !isFetchingDailyGoal ? (
                         <DailyGoal
-                            dailyGoal={this.state.dailyGoal}
-                            totalConsumption={this.state.totalConsumption}
+                            goal={this.state.goal}
+                            total={this.state.total}
                             isFetchingDailyGoal={isFetchingDailyGoal}
-                            isFetchingConsumedFoods={isFetchingConsumedFoods}
+                            dailyGoalFetchError={this.state.dailyGoalFetchError}
                         />
                     ) : (
                         <div className='col-md-2'>
@@ -464,6 +440,9 @@ export default class CurrentEntry extends React.Component {
                         </div>
                     )}
                     <FoodSelection
+                        foods={this.state.foods}
+                        fetchMethod={this.state.fetchMethod}
+                        fetchError={this.state.fetchError}
                         toggleFoodSelection={this.toggleFoodSelection}
                         foodSelectionVisible={this.state.foodSelectionVisible}
                         fetchMethod={this.state.fetchMethod}
@@ -472,9 +451,6 @@ export default class CurrentEntry extends React.Component {
                         searchTerm={this.state.searchTerm}
                         changeSearchTerm={this.changeSearchTerm}
                         doSearch={this.doSearch}
-                        foods={this.state.foods}
-                        offset={this.state.shownResultsOffset}
-                        showMoreResults={this.showMoreResults}
                         selectedFoodId={this.state.selectedFoodId}
                         selectedFoodAmount={this.state.selectedFoodAmount}
                         setSelectedFoodAmount={this.setSelectedFoodAmount}
@@ -483,14 +459,13 @@ export default class CurrentEntry extends React.Component {
                         addEntry={this.addEntry}
                         addToFavorites={this.addToFavorites}
                         removeFromFavorites={this.removeFromFavorites}
-                        fetchMethod={this.state.fetchMethod}
-                        fetchError={this.state.fetchError}
                     />
                 </div>
                 <ConsumedFoods
-                    viewportWidth={this.state.viewportWidth}
-                    isModifiable={true}
                     consumedFoods={this.state.consumedFoods}
+                    entriesFetchError={this.state.entriesFetchError}
+                    isFetchingEntries={this.state.isFetchingEntries}
+                    total={this.state.total}
                     activeMeal={this.state.activeMeal}
                     addMeal={this.addMeal}
                     removeMeal={this.removeMeal}
@@ -498,11 +473,11 @@ export default class CurrentEntry extends React.Component {
                     editMealName={this.editMealName}
                     shownNutritionValue={this.state.shownNutritionValue}
                     changeShownNutritionValue={this.changeShownNutritionValue}
-                    totalConsumption={this.state.totalConsumption}
                     addEntry={this.addEntry}
                     removeEntry={this.removeEntry}
                     updateEntry={this.updateEntry}
-                    isFetchingConsumedFoods={this.state.isFetchingConsumedFoods}
+                    isModifiable={true}
+                    viewportWidth={this.state.viewportWidth}
                 />
                 {this.state.viewportWidth < 768 && !this.state.foodSelectionVisible &&
                     <button className='btn sticky-action-btn' onClick={this.toggleFoodSelection}>

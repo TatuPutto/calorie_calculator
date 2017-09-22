@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function TotalNutritionValuesTable(props) {
-    var {totalConsumption: total, viewportWidth} = props;
+export default function TotalNutritionValuesTable({total, viewportWidth}) {
     var macroTotal = total.protein + total.carbs + total.fat;
     var proteinPercentage = Math.round(total.protein / macroTotal * 100);
     var carbPercentage = Math.round(total.carbs / macroTotal * 100);
@@ -13,17 +12,17 @@ export default function TotalNutritionValuesTable(props) {
             <td colSpan={viewportWidth > 768 ? 2 : 1} />
             <td className='total-energy'>{total.energy} kcal</td>
             <td className='total-protein'>
-                {Math.round(total.protein)} g
+                {total.protein} g
                 <br />
                 {proteinPercentage} %
             </td>
             <td className='total-carbs'>
-                {Math.round(total.carbs)} g
+                {total.carbs} g
                 <br />
                 {carbPercentage} %
             </td>
             <td className='total-fat'>
-                {Math.round(total.fat)} g
+                {total.fat} g
                 <br />
                 {fatPercentage} %
             </td>
@@ -33,5 +32,6 @@ export default function TotalNutritionValuesTable(props) {
 }
 
 TotalNutritionValuesTable.propTypes = {
-    totalConsumption: PropTypes.object.isRequired,
+    total: PropTypes.object.isRequired,
+    viewportWidth: PropTypes.number.isRequired,
 };

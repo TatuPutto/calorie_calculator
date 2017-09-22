@@ -6,10 +6,11 @@ module.exports = function createTemporaryUser(userId) {
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
+            connection.release();
+            if(err) return reject();
             connection.query(query, data, function (err, result) {
-                connection.release();
-                if(err) reject(err);
-                resolve();
+                if(err) return reject(err);
+                return resolve();
             });
         });
     });

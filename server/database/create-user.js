@@ -7,10 +7,11 @@ module.exports = function addUser(userId, username, password) {
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
+            connection.release();
+            if(err) return reject();
             connection.query(query, data, function (err, result) {
-                connection.release();
-                if(err) reject(err);
-                resolve({
+                if(err) return reject();
+                return resolve({
                     id: userId,
                     username: username,
                     loggedIn: true

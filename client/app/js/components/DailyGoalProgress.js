@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 
 export default function DailyGoalProgress({total, goal}) {
-    var energyConsumed = Math.round(total.energy / goal.energy * 100) + '%';
-    var proteinConsumed = Math.round(total.protein / goal.protein * 100) + '%';
-    var carbsConsumed = Math.round(total.carbs / goal.carbs * 100) + '%';
-    var fatConsumed = Math.round(total.fat / goal.fat * 100) + '%';
+    var energyConsumed = Math.round(total.energy / goal.energy * 100) + ' %';
+    var proteinConsumed = Math.round(total.protein / goal.protein * 100) + ' %';
+    var carbsConsumed = Math.round(total.carbs / goal.carbs * 100) + ' %';
+    var fatConsumed = Math.round(total.fat / goal.fat * 100) + ' %';
 
     return (
         <div className='goal-progress'>
@@ -51,3 +53,8 @@ export default function DailyGoalProgress({total, goal}) {
         </div>
     );
 }
+
+DailyGoalProgress.propTypes = {
+    total: PropTypes.object.isRequired,
+    goal: PropTypes.object.isRequired
+};

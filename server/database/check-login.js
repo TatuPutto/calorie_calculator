@@ -6,18 +6,18 @@ module.exports = function checkLogin(username, password) {
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
-            if(err) reject(err);
+            connection.release();
+            if(err) return reject(err);
             connection.query(query, data, function (err, results) {
-                connection.release();
-                if(err) reject(err);
+                if(err) return reject(err);
                 if(results.length > 0) {
-                    resolve({
+                    return resolve({
                         id: results[0].userId,
                         username: results[0].username,
                         loggedIn: true
                     });
                 } else {
-                    reject();
+                    return reject();
                 }
             });
         });

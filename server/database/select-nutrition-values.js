@@ -5,11 +5,11 @@ module.exports = function selectNutritionValues(ids) {
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
-            if(err) reject(err);
+            connection.release();
+            if(err) return reject(err);
             connection.query(query, [ids], function (err, results) {
-                connection.release();
-                if(err) reject(err);
-                resolve(results);
+                if(err) return reject(err);
+                return resolve(results);
             });
         })
     })

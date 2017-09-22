@@ -1,14 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 
 export default class ConsumedFoodMealRow extends React.Component {
     constructor() {
         super();
         this.state = {isBeingEdited: false};
-
-        this.toggleEditing = this.toggleEditing.bind(this);
     }
 
-    toggleEditing(e) {
+    toggleEditing = (e) => {
         if(this.state.isBeingEdited) {
             var newName = e.currentTarget.value;
             this.props.editMealName(this.props.arrayIndex, this.props.mealName, newName);
@@ -19,22 +19,23 @@ export default class ConsumedFoodMealRow extends React.Component {
 
     rowContent = () => {
         var {
-            mealId,
-            mealName,
-            arrayIndex,
+            id,
+            name,
+            mealNumber,
             activeMealId,
-            isModifiable,
+            changeActiveMeal,
             removeMeal,
-            changeActiveMeal
+            isModifiable
         } = this.props;
-        var isActiveMeal = activeMealId == mealId;
+        var isActiveMeal = activeMealId == id;
+
 
         if(this.state.isBeingEdited && isModifiable) {
             return (
                 <td colSpan={7}>
                     <input style={{color: '#000'}}
                         type='text'
-                        defaultValue={mealName}
+                        defaultValue={name}
                         onBlur={this.toggleEditing}
                         autoFocus
                     />
@@ -43,13 +44,13 @@ export default class ConsumedFoodMealRow extends React.Component {
         } else if(isModifiable) {
             return (
                 <td colSpan={7}>
-                    {mealName}
+                    {name}
                     <button className='btn toggle-meal-name-editing' onClick={this.toggleEditing}>
                         <i className='fa fa-pencil' />
                     </button>
                     <button
                         className='btn'
-                        onClick={() => removeMeal(mealId, mealName,arrayIndex)}
+                        onClick={() => removeMeal(id, name, mealNumber)}
                     >
                         <i className='fa fa-remove' />
                     </button>
@@ -58,14 +59,14 @@ export default class ConsumedFoodMealRow extends React.Component {
                         <input
                             type='checkbox'
                             checked={isActiveMeal}
-                            onChange={() => changeActiveMeal(mealId, mealName)}
+                            onChange={() => changeActiveMeal(id, name)}
                         />
                         <span className='slider' />
                     </label>
                 </td>
             );
         } else {
-            return <td colSpan={7}>{mealName}</td>;
+            return <td colSpan={7}>{name}</td>;
         }
     }
 
@@ -77,3 +78,13 @@ export default class ConsumedFoodMealRow extends React.Component {
         );
     }
 }
+
+ConsumedFoodMealRow.propTypes = {
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    mealNumber: PropTypes.number.isRequired,
+    activeMealId: PropTypes.number.isRequired,
+    changeActiveMeal: PropTypes.func,
+    removeMeal: PropTypes.func,
+    isModifiable: PropTypes.bool.isRequired,
+};

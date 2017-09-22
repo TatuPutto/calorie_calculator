@@ -17,11 +17,11 @@ module.exports = function selectEntriesFromToday(userId) {
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
-            if(err) reject(err);
+            connection.release();
+            if(err) return reject(err);
             connection.query(query, [userId], function (err, results) {
-                connection.release();
-                if(err) reject(err);
-                resolve(results);
+                if(err) return reject(err);
+                return resolve(results);
             });
         });
     })
@@ -38,9 +38,9 @@ module.exports = function selectEntriesFromToday(userId) {
             if(row.mealName != latestMeal) {
                 latestMeal = row.mealName;
                 meals.push({
-                    mealId: row.mealId,
-                    mealName: row.mealName,
-                    mealCourses: []
+                    id: row.mealId,
+                    name: row.mealName,
+                    foods: []
                 });
             }
 
@@ -48,7 +48,7 @@ module.exports = function selectEntriesFromToday(userId) {
             if(row.foodId === 99999) return;
 
             var matchAtIndex = meals.findIndex(function (meal) {
-                return meal.mealId === row.mealId;
+                return meal.id === row.mealId;
             });
 
             var energyInAmount = Math.round((row.energy / 100) * row.foodAmount);
@@ -57,7 +57,7 @@ module.exports = function selectEntriesFromToday(userId) {
             var fatInAmount = Math.round((row.fat / 100) * row.foodAmount * 10) / 10;
 
             // add course to meal
-            meals[matchAtIndex].mealCourses.push({
+            meals[matchAtIndex].foods.push({
                 consumptionId: row.consumptionId,
                 id: row.foodId,
                 name: row.foodName,
@@ -75,16 +75,18 @@ module.exports = function selectEntriesFromToday(userId) {
             fatInTotal += fatInAmount;
         });
 
-        var nutritionValuesInTotal = {
+        var total = {
             energy: Math.round(energyInTotal),
             protein: Math.round(proteinInTotal),
             carbs: Math.round(carbsInTotal),
             fat: Math.round(fatInTotal)
         };
-
-        return {meals, nutritionValuesInTotal};
+        
+        return [meals, total];
     })
     .catch(function (err) {
+        console.log('täällä');
         console.log(err);
+        throw err;
     });
 }

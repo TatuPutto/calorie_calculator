@@ -28,25 +28,21 @@ function updateValuesOnAddition(food, newAmount, activeMealId, consumedFoods, to
     total.fat = Math.roundToOneDecimal(total.fat + fatInAmount);
 
     for(var i = 0; i < consumedFoods.length; i++) {
-        if(consumedFoods[i].mealId == activeMealId) {
-            consumedFoods[i].mealCourses.push(foodToAdd);
+        if(consumedFoods[i].id == activeMealId) {
+            consumedFoods[i].foods.push(foodToAdd);
             break;
         }
     }
 
-    return {
-        consumedFoods,
-        totalConsumption: total,
-        consumptionId: foodToAdd['consumptionId']
-    };
+    return {consumedFoods, total, consumptionId: foodToAdd.consumptionId};
 }
 
 function updateValuesOnRemove(foodToRemove, consumedFoods, total) {
     for(var i = 0; i < consumedFoods.length; i++) {
-        var courses = consumedFoods[i].mealCourses;
-        for(var j = 0; j < courses.length; j++) {
-            if(courses[j].consumptionId === foodToRemove.consumptionId) {
-                consumedFoods[i].mealCourses.splice(j, 1);
+        var foods = consumedFoods[i].foods;
+        for(var j = 0; j < foods.length; j++) {
+            if(foods[j].consumptionId === foodToRemove.consumptionId) {
+                consumedFoods[i].foods.splice(j, 1);
             }
         }
     }
@@ -56,7 +52,7 @@ function updateValuesOnRemove(foodToRemove, consumedFoods, total) {
     total.carbs = Math.roundToOneDecimal(total.carbs - foodToRemove.carbs);
     total.fat = Math.roundToOneDecimal(total.fat - foodToRemove.fat);
 
-    return {consumedFoods, totalConsumption: total};
+    return {consumedFoods, total};
 }
 
 

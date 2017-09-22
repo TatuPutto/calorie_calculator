@@ -14,12 +14,12 @@ module.exports = function selectLatestConsumedfoods(userId) {
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
-            if(err) reject(err);
-            connection.query(query, [userId], function (err, results) {
-              if(err) reject(err);
-              resolve(results);
-            });
             connection.release();
+            if(err) return reject(err);
+            connection.query(query, [userId], function (err, results) {
+              if(err) return reject(err);
+              return resolve(results);
+            });
         });
     })
     .then(function (results) {

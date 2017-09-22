@@ -6,10 +6,10 @@ module.exports = function removeFoodFromFavorites(userId, foodId) {
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
             connection.release();
-            if(err) reject(err);
+            if(err) return reject(err);
             connection.query(query, [userId, foodId], function (err, results) {
-                if(err) reject(err);
-                resolve();
+                if(err) return reject(err);
+                return resolve();
             });
         });
     }).catch(function (err) {

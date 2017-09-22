@@ -30,12 +30,6 @@ export default class Diary extends React.Component {
             shownNutritionValue: 'energy',
             viewportWidth: this.props.viewportWidth
         };
-
-        this.getEntryFromDate = this.getEntryFromDate.bind(this);
-        this.getEntriesFromDateRange = this.getEntriesFromDateRange.bind(this);
-        this.changeEntry = this.changeEntry.bind(this);
-        this.showDetailedView = this.showDetailedView.bind(this);
-        this.toggleViewMode = this.toggleViewMode.bind(this);
     }
 
     componentWillMount() {
@@ -103,7 +97,7 @@ export default class Diary extends React.Component {
         }
     }
 
-    getEntryFromDate(date) {
+    getEntryFromDate = (date) => {
         document.title = date.replace(/[-]/g, '.');
         this.setState({entry: null, isFetchingEntry: true});
 
@@ -133,7 +127,7 @@ export default class Diary extends React.Component {
         });
     }
 
-    getEntriesFromDateRange(week) {
+    getEntriesFromDateRange = (week) => {
         document.title = 'Viikko ' + week;
         this.setState({entry: null, isFetchingEntry: true});
 
@@ -157,7 +151,7 @@ export default class Diary extends React.Component {
             });
     }
 
-    changeEntry(direction) {
+    changeEntry = (direction) => {
         if(this.state.isInDayView) {
             var date = this.props.date;
             var entryDates = this.state.entryDates;
@@ -174,11 +168,11 @@ export default class Diary extends React.Component {
         }
     }
 
-    showDetailedView(date) {
+    showDetailedView = (date) => {
         this.context.router.history.push(`?date=${formatDate(date)}`);
     }
 
-    toggleViewMode(viewMode) {
+    toggleViewMode = (viewMode) => {
         if(viewMode == 'weekView' && this.state.isInDayView) {
             this.context.router.history.push(`?week=${getCurrentWeek()}`);
         } else if(viewMode == 'dayView' && !this.state.isInDayView) {
@@ -276,7 +270,7 @@ export default class Diary extends React.Component {
             );
         } else {
             output = (
-                <div className='no-entries-found'>
+                <div className='no-entries'>
                     {isInDayView ?
                         <p>Tältä päivältä ei löytynyt merkintöjä.</p>
                         :

@@ -9,11 +9,11 @@ module.exports = function insertGoalForToday(userId, energy, protein, carbs, fat
 
     return new Promise(function (resolve, reject) {
         getConnection(function (err, connection) {
-            if(err) reject(err);
+            connection.release();
+            if(err) return reject(err);
             connection.query(query, data, function (err, results) {
-                connection.release();
-                if(err) reject(err);
-                resolve();
+                if(err) return reject(err);
+                return resolve();
             });
         });
     }).catch(function (err) {

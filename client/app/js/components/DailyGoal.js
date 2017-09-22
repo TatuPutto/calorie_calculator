@@ -14,29 +14,29 @@ export default class DailyGoal extends React.Component {
     }
 
     componentDidMount() {
-        if(this.props.dailyGoal) {
+        if(this.props.goal) {
             window.requestAnimationFrame(() => {
-                createCharts(this.props.totalConsumption, this.props.dailyGoal)
+                createCharts(this.props.total, this.props.goal)
             });
         }
     }
 
     componentDidUpdate() {
         window.requestAnimationFrame(() => {
-            createCharts(this.props.totalConsumption, this.props.dailyGoal);
+            createCharts(this.props.total, this.props.goal);
         });
     }
 
     render() {
         var {
-            isFetchingConsumedFoods,
+            total,
+            goal,
             isFetchingDailyGoal,
-            totalConsumption: total,
-            dailyGoal: goal
+            dailyGoalFetchError
         } = this.props;
         var dailyGoalOutput;
 
-        if(goal) {
+        if(goal && !dailyGoalFetchError) {
             dailyGoalOutput = (
                 <div className='daily-goal-wrapper'>
                     <div className='daily-goal-header'>
@@ -52,6 +52,8 @@ export default class DailyGoal extends React.Component {
                     <DailyGoalProgress total={total} goal={goal} />
                 </div>
             );
+        } else if(dailyGoalFetchError) {
+            dailyGoalOutput = <p>{dailyGoalFetchError}</p>;
         } else {
             dailyGoalOutput = (
                 <div className='daily-goal-wrapper'>

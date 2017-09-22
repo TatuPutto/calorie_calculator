@@ -13,7 +13,7 @@ router.get('/:date', function (req, res) {
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(dailyGoal));
         })
-        .catch(function (err) {
+        .catch(function () {
             res.status(400);
             res.end();
         });
