@@ -1,34 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import calcDominantMacro from '../util/calculate-dominant-macronutrient';
 
-export default function ConsumedFoodRowCompactLayout(props) {
+export default function EntriesFoodRowCompact(props) {
     var {
         food,
         foodAmount,
         shownNutritionValue,
         isBeingEdited,
+        actionsVisible,
+        showActions,
+        hideActions,
         validInput,
-        isModifiable,
         toggleEditing,
         changeFoodAmount,
-        update,
+        updateAmount,
         addEntry,
-        removeFromDiary,
-        removeEntry
+        removeEntry,
+        isModifiable
     } = props;
     var invalidInputStyle = {borderColor: 'red', boxShadow: '0px 0px 5px red'};
     var rows = [];
 
-    if(!props.isBeingEdited && !props.actionsVisible) {
+    if(!isBeingEdited && !actionsVisible) {
         rows.push(
-            <td key='consumedFoodName' className='consumed-food-name' colSpan={5}>
+            <td key='entriesFoodName' className='entries__food-name' colSpan={5}>
                 {food.name} ({food.amount}g)
             </td>
         );
         rows.push(
-            <td key='consumedFoodNutrtionValue' className={'consumed-food-nutrition-value-amount ' +
+            <td key='entriesFoodNutritionValue' className={'consumed-food-nutrition-value-amount ' +
                     shownNutritionValue}>
                 {food[shownNutritionValue]}
             </td>
@@ -36,30 +37,26 @@ export default function ConsumedFoodRowCompactLayout(props) {
     }
 
     return (
-        <tr onClick={!props.actionsVisible && props.isModifiable ? props.showActions : () => {}}>
-            {props.actionsVisible && !props.isBeingEdited && isModifiable &&
-                <td colSpan={8} className='consumed-food-actions'>
-                    <button className='btn btn-danger'
-                            onClick={() => removeEntry(food)}>
+        <tr className='entries__food' onClick={!actionsVisible && isModifiable ? showActions : () => {}}>
+            {actionsVisible && !isBeingEdited && isModifiable &&
+                <td className='entries__food-actions' colSpan={8}>
+                    <button className='btn btn-danger' onClick={() => removeEntry(food)}>
                         <i className='fa fa-trash' />
                     </button>
-                    <button className='btn btn-info'
-                            onClick={() => addEntry(food, food.amount)}>
+                    <button className='btn btn-info' onClick={() => addEntry(food, food.amount)}>
                         <i className='fa fa-copy' />
                     </button>
-                    <button className='btn btn-success'
-                            onClick={props.toggleEditing}>
+                    <button className='btn btn-success' onClick={toggleEditing}>
                         <i className='fa fa-pencil' />
                     </button>
                     <span>
-                        <button className='btn btn-default'
-                                onClick={props.hideActions}>
+                        <button className='btn btn-default' onClick={hideActions}>
                             <i className='fa fa-close' style={{color: '#919191'}} />
                         </button>
                     </span>
                 </td>
             }
-            {props.isBeingEdited && isModifiable &&
+            {isBeingEdited && isModifiable &&
                 <td colSpan={8} className='consumed-food-edit'>
                     <input
                         type='text'
@@ -69,16 +66,10 @@ export default function ConsumedFoodRowCompactLayout(props) {
                         style={!validInput ? invalidInputStyle : null}
                         autoFocus
                     />
-                    <button
-                        className='btn btn-primary'
-                        onClick={update}
-                    >
+                    <button className='btn btn-primary' onClick={updateAmount}>
                         Tallenna
                     </button>
-                    <button
-                        className='btn btn-default'
-                        onClick={toggleEditing}
-                    >
+                    <button className='btn btn-default' onClick={toggleEditing}>
                         Peruuta
                     </button>
                 </td>
@@ -89,8 +80,17 @@ export default function ConsumedFoodRowCompactLayout(props) {
     );
 }
 
-ConsumedFoodRowCompactLayout.propTypes = {
+EntriesFoodRowCompact.propTypes = {
     food: PropTypes.object.isRequired,
-    addToDiary: PropTypes.func,
-    removeFromDiary: PropTypes.func
+    validInput: PropTypes.bool.isRequired,
+    isBeingEdited: PropTypes.bool.isRequired,
+    actionsVisible: PropTypes.bool,
+    toggleEditing: PropTypes.func,
+    addEntry: PropTypes.func,
+    removeEntry: PropTypes.func,
+    changeFoodAmount: PropTypes.func,
+    updateAmount: PropTypes.func,
+    showActions: PropTypes.func,
+    hideActions: PropTypes.func,
+    isModifiable: PropTypes.bool.isRequired
 };

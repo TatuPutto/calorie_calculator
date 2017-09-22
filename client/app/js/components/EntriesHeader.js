@@ -1,17 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function ConsumedFoodsHeader(props) {
+
+export default function EntriesHeader(props) {
     return (
-        <div className='consumed-foods-header'>
+        <div className='entries__header'>
             {props.isModifiable &&
-                <button className='btn btn-ghost' onClick={props.addMeal}>
+                <button
+                    className='entries__add-meal btn btn--transparent no-outline'
+                    onClick={props.addMeal}
+                >
                     <i className='fa fa-plus-square-o' /> Lisää ateria
                 </button>
             }
-            <h3>Merkinnät</h3>
+            <h3 className='entries__title'>Merkinnät</h3>
             {props.viewportWidth < 768 &&
-                <select onChange={props.changeShownNutritionValue}>
+                <select className='entries__select no-outline'
+                        onChange={props.changeShownNutritionValue}>
                     <option defaultValue>kcal</option>
                     <option>Proteiini</option>
                     <option>Hiilihydraatti</option>
@@ -22,7 +27,7 @@ export default function ConsumedFoodsHeader(props) {
     );
 }
 
-ConsumedFoodsHeader.propTypes = {
+EntriesHeader.propTypes = {
     viewportWidth: PropTypes.number.isRequired,
     isModifiable: PropTypes.bool.isRequired,
     addMeal: PropTypes.func.isRequired,

@@ -80,12 +80,11 @@ module.exports = function selectEntriesFromToday(userId) {
             protein: Math.round(proteinInTotal),
             carbs: Math.round(carbsInTotal),
             fat: Math.round(fatInTotal)
-        };
-        
-        return [meals, total];
+        };console.log(meals);
+
+        return {entries: meals, total};
     })
     .catch(function (err) {
-        console.log('täällä');
         console.log(err);
         throw err;
     });

@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ConsumedFoodsHeader from './ConsumedFoodsHeader';
-import ConsumedFoodsTable from './ConsumedFoodsTable';
+import EntriesHeader from './EntriesHeader';
+import EntriesTable from './EntriesTable';
 import Loading from './Loading';
 
 
-export default function ConsumedFoods(props) {
+export default function Entries(props) {
     var {
         isFetchingEntries,
         entriesFetchError,
         consumedFoods,
-        viewportWidth
+        viewportWidth,
+        isModifiable
     } = props;
-    var consumedFoodsOutput = null;
-    var consumedFoodsClass = 'consumed-foods ' +
-            (props.isModifiable ? 'col-md-10 col-md-offset-2' : '');
+    var output = null;
     var hasEntries = false;
 
     // check if consumedfoods contains any valid entries
@@ -26,46 +25,58 @@ export default function ConsumedFoods(props) {
     }
 
     if(isFetchingEntries) {
-        consumedFoodsOutput = <Loading />;
+        output = <Loading />;
     } else if(!isFetchingEntries && entriesFetchError) {
-        consumedFoodsOutput = (
+        output = (
             <div className='failed-to-fetch'>
                 {entriesFetchError}
             </div>
         );
     } else if(!isFetchingEntries && !hasEntries) {
-        consumedFoodsOutput = (
+        output = (
             <div className='no-entries'>
                 Ei merkintöjä
             </div>
         );
     } else {
-        consumedFoodsOutput = (
+        output = (
             <div>
-                <ConsumedFoodsHeader
-                    isModifiable={props.isModifiable}
-                    viewportWidth={props.viewportWidth}
+                <EntriesHeader
                     shownNutritionValue={props.shownNutritionValue}
                     changeShownNutritionValue={props.changeShownNutritionValue}
                     addMeal={props.addMeal}
+                    isModifiable={props.isModifiable}
+                    viewportWidth={props.viewportWidth}
                 />
-                <ConsumedFoodsTable {...props} />
+                <EntriesTable {...props} />
             </div>
         );
     }
 
     return (
-        <div className={consumedFoodsClass}>
-            <div className='consumed-foods-wrapper'>
-                {consumedFoodsOutput}
+        <div className={'entries ' + (isModifiable ? 'col-md-10 col-md-offset-2' : '')}>
+            <div className='entries__content-wrapper'>
+                {output}
             </div>
         </div>
     );
 }
 
-ConsumedFoods.propTypes = {
+Entries.propTypes = {
+    consumedFoods: PropTypes.array.isRequired,
+    total: PropTypes.object.isRequired,
+    isFetchingEntries: PropTypes.bool.isRequired,
+    entriesFetchError: PropTypes.string.isRequired,
+    activeMeal: PropTypes.object,
+    addMeal: PropTypes.func,
+    removeMeal: PropTypes.func,
+    shownNutritionValue: PropTypes.string,
+    changeShownNutritionValue: PropTypes.func,
+    addEntry: PropTypes.func,
+    removeEntry: PropTypes.func,
+    updateEntry: PropTypes.func,
+    changeActiveMeal: PropTypes.func,
+    editMealName: PropTypes.func,
     viewportWidth: PropTypes.number.isRequired,
     isModifiable: PropTypes.bool.isRequired,
-    isFetchingEntries: PropTypes.bool.isRequired,
-    consumedFoods: PropTypes.array.isRequired
 };

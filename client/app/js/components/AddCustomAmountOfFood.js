@@ -15,15 +15,15 @@ export default function AddCustomAmountOfFood(props) {
                     autoFocus
                 />
                 <button
+                    type='submit'
                     className='btn btn-info'
-                    onClick={() => addEntry(food, selectedFoodAmount)}
                     style={{
                         background: '#4692d2',
                         borderColor: '#4692d2',
                         boxShadow: '0px 1px 0px #97cfff inset'
                     }}
                 >
-                    Lisää
+                Lisää
                 </button>
             </form>
         </div>

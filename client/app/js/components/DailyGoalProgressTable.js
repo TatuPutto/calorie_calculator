@@ -20,7 +20,7 @@ export default function DailyGoalProgressTable(props) {
         protein: proteinInTotal,
         carbs: carbsInTotal,
         fat: fatInTotal
-    } = props.totalConsumption;
+    } = props.total;
 
 
     var energyInRelationToGoal = Math.round(energyInTotal - energyGoal);

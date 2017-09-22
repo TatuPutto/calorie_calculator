@@ -12,6 +12,7 @@
 @secondary-blue: #4692d2;
 @text-color: #4e4d4d;
 @icon-color: #919191;
+@anchor-color: #337ab7;
 @table-header-line-heigh: 24px;
 @table-header-border: 1px solid #fff;
 @energy-color: #f9a200;
@@ -183,6 +184,12 @@ button:disabled {
     font-size: 42px;
     text-align: center;
     font-family: initial;
+}
+
+.no-outline {
+    &:focus, &:active {
+        outline: none;
+    }
 }
 
 .energy {

@@ -16,7 +16,7 @@ module.exports = function insertMealForToday(mealName, userId) {
             if(err) return reject(err);
             connection.query(query, [mealName, userId], function (err, results) {
                 if(err) return reject(err);
-                //resolve();
+
                 getConnection(function (err, connection) {
                     connection.release();
                     if(err) return reject(err);

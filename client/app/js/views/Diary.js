@@ -22,8 +22,8 @@ export default class Diary extends React.Component {
             fetchError: null,
             isFetchingdiaryEntries: true,
             consumedFoods: [],
-            totalConsumption: {},
-            dailyGoal: {},
+            total: null,
+            dailyGoal: null,
             isFetchingEntry: false,
             entryFetchError: null,
             detailsVisible: false,
@@ -38,7 +38,7 @@ export default class Diary extends React.Component {
             .then(readJson)
             .then((entryDates) => {
                 if(this.state.isInDayView) {
-                    this.getEntryFromDate(this.props.date);
+                    this.getEntriesFromDate(this.props.date);
                 } else {
                     this.getEntriesFromDateRange(this.props.week);
                 }
@@ -47,7 +47,7 @@ export default class Diary extends React.Component {
                     entryDates,
                     isFetchingdiaryEntries: false,
                     date: this.props.date
-                });
+                }, () => this.state.entryDates);
             })
             .catch((err) => this.setState({
                 isFetchingdiaryEntries: false,
@@ -72,7 +72,7 @@ export default class Diary extends React.Component {
     // get next entry when query params are pushed
     componentWillReceiveProps(nextProps) {
         if(nextProps.isInDayView) {
-            this.getEntryFromDate(nextProps.date);
+            this.getEntriesFromDate(nextProps.date);
         } else {
             this.getEntriesFromDateRange(nextProps.week);
         }
@@ -82,7 +82,7 @@ export default class Diary extends React.Component {
         var {
             isFetchingEntry,
             consumedFoods,
-            totalConsumption,
+            total,
             isInDayView
         } = this.state;
 
@@ -90,14 +90,14 @@ export default class Diary extends React.Component {
             window.requestAnimationFrame(() => {
                 drawMacroChart(
                     'macronutrient-split-chart-container',
-                    totalConsumption,
+                    total,
                     isInDayView
                 );
             });
         }
     }
 
-    getEntryFromDate = (date) => {
+    getEntriesFromDate = (date) => {
         document.title = date.replace(/[-]/g, '.');
         this.setState({entry: null, isFetchingEntry: true});
 
@@ -111,8 +111,8 @@ export default class Diary extends React.Component {
         .then((data) => {
             this.setState({
                 isInDayView: true,
-                consumedFoods: data[0].meals,
-                totalConsumption: data[0].nutritionValuesInTotal,
+                consumedFoods: data[0].entries,
+                total: data[0].total,
                 dailyGoal: data[1],
                 isFetchingEntry: false,
                 entryFetchError: null,
@@ -208,7 +208,7 @@ export default class Diary extends React.Component {
             isFetchingEntry,
             nutritionDetailsForMultipleEntries,
             consumedFoods,
-            totalConsumption,
+            total,
             dailyGoal,
             isInDayView,
             fetchError,
@@ -220,7 +220,7 @@ export default class Diary extends React.Component {
 
         if(isInDayView) {
             for(var food of consumedFoods) {
-                if(food.mealCourses.length > 0) hasEntries = true;
+                if(food.foods.length > 0) hasEntries = true;
             }
         }
 
@@ -228,7 +228,7 @@ export default class Diary extends React.Component {
         if(!isFetchingEntry && consumedFoods.length > 0 && hasEntries && isInDayView) {
             output = (
                 <EntryDetails
-                    totalConsumption={totalConsumption}
+                    total={total}
                     dailyGoal={dailyGoal}
                     consumedFoods={consumedFoods}
                     viewportWidth={viewportWidth}

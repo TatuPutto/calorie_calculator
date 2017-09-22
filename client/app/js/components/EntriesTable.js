@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-//import ConsumedFoodsTableHeader from './ConsumedFoodsTableHeader';
-import ConsumedFoodMealRow from './ConsumedFoodMealRow';
-import ConsumedFoodRowWrapper from './ConsumedFoodRowWrapper';
-import ConsumedFoodRow from './ConsumedFoodRow';
-import ConsumedFoodRowCompactLayout from './ConsumedFoodRowCompactLayout';
-import TotalNutritionValuesTable from './TotalNutritionValuesTable';
-import ConsumedFoodMealTotalNutritionValues from './ConsumedFoodMealTotalNutritionValues';
+import EntriesMealRow from './EntriesMealRow';
+import EntriesFoodRowWrapper from './EntriesFoodRowWrapper';
+import EntriesFoodRow from './EntriesFoodRow';
+import EntriesFoodRowCompact from './EntriesFoodRowCompact';
+import EntriesTotalRow from './EntriesTotalRow';
+import EntriesTotalRowWithPercentages from './EntriesTotalRowWithPercentages';
 
 
-export default function ConsumedFoodsTable(props) {
+export default function EntriesTable(props) {
     // create HOC for handling ConsumedFoodRow and ConsumedFoodRowCompactLayout state
-    var RowWrapper = ConsumedFoodRowWrapper(
-        props.viewportWidth > 768 ? ConsumedFoodRow : ConsumedFoodRowCompactLayout
+    var RowWrapper = EntriesFoodRowWrapper(
+        props.viewportWidth > 768 ? EntriesFoodRow : EntriesFoodRowCompact
     );
     var rows = [];
 
@@ -22,7 +21,7 @@ export default function ConsumedFoodsTable(props) {
 
         // push row representing the meal
         rows.push(
-            <ConsumedFoodMealRow
+            <EntriesMealRow
                 key={meal.id}
                 id={meal.id}
                 name={meal.name}
@@ -67,7 +66,7 @@ export default function ConsumedFoodsTable(props) {
         // if there is more than 2 courses on that meal
         if(meal.foods.length > 1) {
             rows.push(
-                <ConsumedFoodMealTotalNutritionValues
+                <EntriesTotalRow
                     key={i.toString()}
                     total={{energy, protein, carbs, fat}}
                     viewportWidth={props.viewportWidth}
@@ -85,7 +84,7 @@ export default function ConsumedFoodsTable(props) {
             </tr>
         );
         rows.push(
-            <TotalNutritionValuesTable
+            <EntriesTotalRowWithPercentages
                 key='totalConsumption'
                 total={props.total}
                 viewportWidth={props.viewportWidth}
@@ -94,7 +93,7 @@ export default function ConsumedFoodsTable(props) {
     }
 
     return (
-        <table className='consumed-foods-table'>
+        <table className='entries__table'>
             <tbody>
                 {rows}
             </tbody>
@@ -102,11 +101,16 @@ export default function ConsumedFoodsTable(props) {
     );
 }
 
-ConsumedFoodsTable.propTypes = {
-    viewportWidth: PropTypes.number.isRequired,
+EntriesTable.propTypes = {
     consumedFoods: PropTypes.array.isRequired,
-    addToDiary: PropTypes.func,
-    removeFromDiary: PropTypes.func,
+    total: PropTypes.object.isRequired,
+    shownNutritionValue: PropTypes.string,
+    activeMeal: PropTypes.object,
+    addEntry: PropTypes.func,
     removeEntry: PropTypes.func,
+    updateEntry: PropTypes.func,
+    changeActiveMeal: PropTypes.func,
+    editMealName: PropTypes.func,
+    viewportWidth: PropTypes.number.isRequired,
     isModifiable: PropTypes.bool.isRequired
 };

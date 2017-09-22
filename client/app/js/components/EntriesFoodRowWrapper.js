@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+
 // state container component for ConsumedFoodRow and ConsumedFoodRowCompactLayout
-export default function ConsumedFoodRowWrapper(Component) {
-    return class ConsumedFoodRowHOC extends React.Component {
+export default function EntriesFoodRowWrapper(Component) {
+    return class EntriesRowHOC extends React.Component {
         constructor(props) {
             super(props);
             this.state = {
@@ -38,7 +39,7 @@ export default function ConsumedFoodRowWrapper(Component) {
             });
         }
 
-        updateAmount = (consumptionId) => {
+        updateAmount = (consumptionId) => {console.log('täällä');
             var consumptionId = this.props.food.consumptionId;
             var foodAmount = this.state.foodAmount;
 
@@ -58,7 +59,7 @@ export default function ConsumedFoodRowWrapper(Component) {
                     validInput={this.state.validInput}
                     toggleEditing={this.toggleEditing}
                     changeFoodAmount={this.changeFoodAmount}
-                    updateAmount={this.update}
+                    updateAmount={this.updateAmount}
                     actionsVisible={this.state.actionsVisible}
                     showActions={this.showActions}
                     hideActions={this.hideActions}
@@ -67,3 +68,12 @@ export default function ConsumedFoodRowWrapper(Component) {
         }
     }
 }
+
+EntriesFoodRowWrapper.propTypes = {
+    food: PropTypes.object.isRequired,
+    shownNutritionValue: PropTypes.string,
+    addEntry: PropTypes.func,
+    removeEntry: PropTypes.func,
+    updateEntry: PropTypes.func,
+    isModifiable: PropTypes.bool.isRequired
+};

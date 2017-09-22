@@ -29,7 +29,7 @@ router.use(bodyParser.json());
 // add new meal for today
 router.post('/add-meal', function (req, res) {
     var userId = req.session.user.id;
-    var mealName = req.body.name;
+    var mealName = req.body.mealName;
 
     if(!mealName) {
         res.status(422);
@@ -40,10 +40,14 @@ router.post('/add-meal', function (req, res) {
                 var consumptionId = new Date().getTime().toString();
 
                 // create placeholder entry
-                insertEntryForToday(consumptionId, 99999, 1, createdMeal.id, userId)
+                insertEntryForToday(consumptionId, 99999, 1, createdMeal.mealId, userId)
                     .then(function () {
                         res.writeHead(200, {'Content-Type': 'application/json'});
-                        res.end(JSON.stringify(createdMeal));
+                        res.end(JSON.stringify({
+                            id: createdMeal.mealId,
+                            name: createdMeal.mealName,
+                            foods: []
+                        }));
                     });
             })
             .catch(function (err) {

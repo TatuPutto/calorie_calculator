@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import FoodSelection from '../components/FoodSelection';
-import ConsumedFoods from '../components/ConsumedFoods';
+import Entries from '../components/Entries';
 import DailyGoal from '../components/DailyGoal';
 import Loading from '../components/Loading';
 
@@ -103,26 +103,26 @@ export default class CurrentEntry extends React.Component {
         get('/today')
             .then(checkStatus)
             .then(readJson)
-            .then((data) => {
-                var amountOfMeals = Object.keys(data[0]).length;
-                var latestMeal = data[0][amountOfMeals - 1];
+            .then((data) => {console.log(data.entries);
+                var amountOfEntries = Object.keys(data.entries).length;
+                var latestMeal = data.entries[amountOfEntries - 1];
 
-                if(amountOfMeals > 0) {
+                if(amountOfEntries > 0) {
                     var activeMeal = {id: latestMeal.id, name: latestMeal.name};
                 } else {
                     this.addMeal();
                 }
 
                 this.setState({
-                    consumedFoods: data[0],
-                    total: data[1],
+                    consumedFoods: data.entries,
+                    total: data.total,
                     activeMeal: activeMeal || null,
                     isFetchingEntries: false
                 });
 
                 this.getDailyGoal();
             })
-            .catch(() => {
+            .catch((err) => {
                 this.setState({
                     isFetchingEntries: false,
                     entriesFetchError: 'Merkintöjä ei onnistuttu hakemaan.'
@@ -235,6 +235,7 @@ export default class CurrentEntry extends React.Component {
     }
 
     addEntry = (foodToAdd, newAmount) => {
+        event.preventDefault();
         // update consumed foods and total values optimistically on addition
         var updatedValues = updateValuesOnAddition(
             foodToAdd,
@@ -276,12 +277,12 @@ export default class CurrentEntry extends React.Component {
             total: updatedValues.total
         });
 
-        patch(`/today/remove-entry?consumptionId=${food.consumptionId}`);
+        patch(`/today/remove-entry?consumptionId=${foodToRemove.consumptionId}`);
             //.catch((err) => console.error(err));
     }
 
     updateEntry = (consumptionId, newAmount) => {
-        patch('/today/update-entry', {consumptionId, newAmount})
+        patch('/today/update-entry', {consumptionId, foodAmount: newAmount})
             .then(checkStatus)
             .then(() => this.getConsumedFoods());
             //.catch((err) => console.error(err));
@@ -295,12 +296,8 @@ export default class CurrentEntry extends React.Component {
             .then(checkStatus)
             .then(readJson)
             .then((createdMeal) => {
-                tempConsumedFoods.push({
-                    id: createdMeal.id,
-                    name: createdMeal.name,
-                    foods: []
-                });
-
+                tempConsumedFoods.push({id: createdMeal.id, name: createdMeal.name, foods: []});
+                console.log(createdMeal);
                 this.setState({
                     activeMeal: createdMeal,
                     consumedFoods: tempConsumedFoods
@@ -309,11 +306,11 @@ export default class CurrentEntry extends React.Component {
             //.catch((err) => console.log(err));
     }
 
-    editMealName = (arrayIndex, oldName, newName) => {
+    editMealName = (mealNumber, oldName, newName) => {
         if(newName.trim().length === 0) return;
 
         var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
-        tempConsumedFoods[arrayIndex].mealName = newName;
+        tempConsumedFoods[mealNumber].name = newName;
 
         this.setState({
             activeMeal: oldName == this.state.activeMeal ? newName : this.state.activeMeal,
@@ -321,49 +318,44 @@ export default class CurrentEntry extends React.Component {
         });
 
         patch('/today/update-meal', {
-            mealId: tempConsumedFoods[arrayIndex].mealId,
+            mealId: tempConsumedFoods[mealNumber].id,
             mealName: newName
         })
             //.catch((err) => console.log(err));
     }
 
-    removeMeal = (mealId, mealName, arrayIndex) => {
-        if(confirm(`Haluatko varmasti poistaa tämän aterian (${mealName})?`)) {
+    removeMeal = (id, name, mealNumber) => {
+        if(confirm(`Haluatko varmasti poistaa tämän aterian (${name})?`)) {
             var tempConsumedFoods = JSON.parse(JSON.stringify(this.state.consumedFoods));
-            tempConsumedFoods.splice(arrayIndex, 1);
+            tempConsumedFoods.splice(mealNumber, 1);
 
             this.setState({consumedFoods: tempConsumedFoods}, () => {
                 // if removed meal is active, move active status to latest meal if one exists
-                if(this.state.activeMeal.mealId === mealId && tempConsumedFoods.length > 0) {
-                    mealId = tempConsumedFoods[tempConsumedFoods.length - 1].mealId;
-                    mealName = tempConsumedFoods[tempConsumedFoods.length - 1].mealName;
-                    this.changeActiveMeal(mealId, mealName);
+                if(this.state.activeMeal.id === id && tempConsumedFoods.length > 0) {
+                    id = tempConsumedFoods[tempConsumedFoods.length - 1].id;
+                    name = tempConsumedFoods[tempConsumedFoods.length - 1].name;
+                    this.changeActiveMeal(id, name);
                 // if no meals are left after removal, create new one and move active status to that
-                } else if(this.state.activeMeal.mealId === mealId && tempConsumedFoods.length === 0) {
+                } else if(this.state.activeMeal.id === id && tempConsumedFoods.length === 0) {
                     this.addMeal();
                 }
             });
 
-            patch(`/today/remove-meal?mealId=${mealId}`);
+            patch(`/today/remove-meal?mealId=${id}`);
         }
     }
 
-    changeActiveMeal = (nextActiveMealId, nextActiveMealName) => {
+    changeActiveMeal = (nextId, nextName) => {
         var consumedFoods = this.state.consumedFoods;
-        var latestMealId = consumedFoods[consumedFoods.length - 1].mealId;
+        var latestMealId = consumedFoods[consumedFoods.length - 1].id;
 
         // if already active meal is toggled, change active status to the newest meal
-        if(nextActiveMealId == this.state.activeMeal.mealId) {
-            if(nextActiveMealId == latestMealId) return;
-            nextActiveMealId = latestMealId;
+        if(nextId == this.state.activeMeal.id) {
+            if(nextId == latestMealId) return;
+            nextId = latestMealId;
         }
 
-        this.setState({
-            activeMeal: {
-                mealId: nextActiveMealId,
-                mealName: nextActiveMealName
-            }
-        });
+        this.setState({activeMeal: {id: nextId, name: nextName}});
     }
 
     addToFavorites = (foodId) => {
@@ -461,7 +453,7 @@ export default class CurrentEntry extends React.Component {
                         removeFromFavorites={this.removeFromFavorites}
                     />
                 </div>
-                <ConsumedFoods
+                <Entries
                     consumedFoods={this.state.consumedFoods}
                     entriesFetchError={this.state.entriesFetchError}
                     isFetchingEntries={this.state.isFetchingEntries}

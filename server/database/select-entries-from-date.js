@@ -38,9 +38,9 @@ module.exports = function selectEntriesFromDate(date, userId) {
             if(row.mealName != latestMeal) {
                 latestMeal = row.mealName;
                 meals.push({
-                    mealId: row.mealId,
-                    mealName: row.mealName,
-                    mealCourses: []
+                    id: row.mealId,
+                    name: row.mealName,
+                    foods: []
                 });
             }
 
@@ -48,7 +48,7 @@ module.exports = function selectEntriesFromDate(date, userId) {
             if(row.foodId === 99999) return;
 
             var matchAtIndex = meals.findIndex(function (meal) {
-                return meal.mealId === row.mealId;
+                return meal.id === row.mealId;
             });
 
             var energyInAmount = Math.round((row.energy / 100) * row.foodAmount);
@@ -57,7 +57,7 @@ module.exports = function selectEntriesFromDate(date, userId) {
             var fatInAmount = Math.round((row.fat / 100) * row.foodAmount * 10) / 10;
 
             // add course to meal
-            meals[matchAtIndex].mealCourses.push({
+            meals[matchAtIndex].foods.push({
                 consumptionId: row.consumptionId,
                 id: row.foodId,
                 name: row.foodName,
@@ -75,14 +75,14 @@ module.exports = function selectEntriesFromDate(date, userId) {
             fatInTotal += fatInAmount;
         });
 
-        var nutritionValuesInTotal = {
-            energy: energyInTotal,
-            protein: proteinInTotal,
-            carbs: carbsInTotal,
-            fat: fatInTotal
+        var total = {
+            energy: Math.round(energyInTotal),
+            protein: Math.round(proteinInTotal),
+            carbs: Math.round(carbsInTotal),
+            fat: Math.round(fatInTotal)
         };
 
-        return {meals, nutritionValuesInTotal};
+        return {entries: meals, total};
     })
     .catch(function (err) {
         console.log(err);

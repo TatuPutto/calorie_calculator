@@ -1,13 +1,13 @@
 import React from 'react';
 
 import DailyGoalProgressTable from '../components/DailyGoalProgressTable';
-import ConsumedFoods from '../components/ConsumedFoods';
+import Entries from '../components/Entries';
 
 export default function EntryDetails(props) {
     var {
         showSingleEntry,
         consumedFoods,
-        totalConsumption,
+        total,
         dailyGoal,
         detailsVisible,
         viewportWidth,
@@ -21,7 +21,7 @@ export default function EntryDetails(props) {
                 <div className='daily-progress-table-container col-sm-8'>
                     <DailyGoalProgressTable
                         dailyGoal={dailyGoal}
-                        totalConsumption={totalConsumption}
+                        total={total}
                         isModifiable={false}
                     />
                 </div>
@@ -33,12 +33,12 @@ export default function EntryDetails(props) {
             </div>
             <div className='row'>
                 <div className='tables-wrapper col-sm-12'>
-                    <ConsumedFoods
+                    <Entries
                         viewportWidth={viewportWidth}
                         isModifiable={false}
                         isFetchingConsumedFoods={false}
                         consumedFoods={consumedFoods}
-                        totalConsumption={totalConsumption}
+                        total={total}
                         shownNutritionValue={props.shownNutritionValue}
                         changeShownNutritionValue={props.changeShownNutritionValue}
                     />

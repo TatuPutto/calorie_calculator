@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function ConsumedFoodMealTotalNutritionValues({total, viewportWidth}) {
+
+export default function EntriesTotalRow({total, viewportWidth}) {
     return (
         <tr className='consumed-foods-day-total'>
             <td colSpan={viewportWidth > 768 ? 2 : 1} />
@@ -14,6 +15,7 @@ export default function ConsumedFoodMealTotalNutritionValues({total, viewportWid
     );
 }
 
-ConsumedFoodMealTotalNutritionValues.propTypes = {
+EntriesTotalRow.propTypes = {
     total: PropTypes.object.isRequired,
+    viewportWidth: PropTypes.number.isRequired
 };
