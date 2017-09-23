@@ -11,13 +11,13 @@ export default function DiaryEntrySelection(props) {
         isInDayView,
         date,
         week,
-        entryDates,
-        changeEntry
+        datesWithEntries: dates,
+        changeDate
     } = props;
 
     // conditions for showing next and previous indicators in day view
-    var thereIsPreviousEntry = date != entryDates[entryDates.length - 1] && entryDates.length > 0;
-    var thereIsNextEntry = date != getCurrentDate() && date != entryDates[0] && entryDates.length > 0;
+    var thereIsPreviousEntry = date != dates[dates.length - 1] && dates.length > 0;
+    var thereIsNextEntry = date != getCurrentDate() && date != dates[0] && dates.length > 0;
 
     // conditions for showing next indicator in week view
     var notCurrentWeek = (week + 1) <= getCurrentWeek();
@@ -38,15 +38,16 @@ export default function DiaryEntrySelection(props) {
                 week={week}
                 canGoForward={canGoForward}
                 canGoBack={canGoBack}
-                changeEntry={changeEntry}
+                changeDate={changeDate}
             />
         </div>
     );
 }
 
 DiaryEntrySelection.propTypes = {
+    isInDayView: PropTypes.bool.isRequired,
     date: PropTypes.string,
     week: PropTypes.number,
-    entries: PropTypes.array.isRequired,
-    changeEntry: PropTypes.func.isRequired
+    datesWithEntries: PropTypes.array.isRequired,
+    changeDate: PropTypes.func.isRequired
 };

@@ -10,16 +10,16 @@ export default function Entries(props) {
     var {
         isFetchingEntries,
         entriesFetchError,
-        consumedFoods,
+        entries,
         viewportWidth,
         isModifiable
     } = props;
     var output = null;
     var hasEntries = false;
 
-    // check if consumedfoods contains any valid entries
-    for(var i = 0; i < consumedFoods.length; i++) {
-        if(consumedFoods[i].foods.length > 0 && consumedFoods[i].foods[0].id !== 99999) {
+    // check if meals contains any valid entries
+    for(var i = 0; i < entries.length; i++) {
+        if(entries[i].foods.length > 0 && entries[i].foods[0].id !== 99999) {
             hasEntries = true;
         }
     }
@@ -63,10 +63,10 @@ export default function Entries(props) {
 }
 
 Entries.propTypes = {
-    consumedFoods: PropTypes.array.isRequired,
-    total: PropTypes.object.isRequired,
+    entries: PropTypes.array.isRequired,
+    total: PropTypes.object,
     isFetchingEntries: PropTypes.bool.isRequired,
-    entriesFetchError: PropTypes.string.isRequired,
+    entriesFetchError: PropTypes.string,
     activeMeal: PropTypes.object,
     addMeal: PropTypes.func,
     removeMeal: PropTypes.func,

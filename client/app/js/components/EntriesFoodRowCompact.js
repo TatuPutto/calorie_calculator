@@ -29,8 +29,10 @@ export default function EntriesFoodRowCompact(props) {
             </td>
         );
         rows.push(
-            <td key='entriesFoodNutritionValue' className={'consumed-food-nutrition-value-amount ' +
-                    shownNutritionValue}>
+            <td
+                key='entriesFoodComponentValue'
+                className={'entries__food-component-amount ' + shownNutritionValue}
+            >
                 {food[shownNutritionValue]}
             </td>
         );
@@ -39,7 +41,7 @@ export default function EntriesFoodRowCompact(props) {
     return (
         <tr className='entries__food' onClick={!actionsVisible && isModifiable ? showActions : () => {}}>
             {actionsVisible && !isBeingEdited && isModifiable &&
-                <td className='entries__food-actions' colSpan={8}>
+                <td className='entries__food-actions' colSpan={6}>
                     <button className='btn btn-danger' onClick={() => removeEntry(food)}>
                         <i className='fa fa-trash' />
                     </button>
@@ -57,7 +59,9 @@ export default function EntriesFoodRowCompact(props) {
                 </td>
             }
             {isBeingEdited && isModifiable &&
-                <td colSpan={8} className='consumed-food-edit'>
+                <td className={'entries__edit-amount ' +
+                        (!validInput ? 'invalid-value': '')} colSpan={6}
+                >
                     <input
                         type='text'
                         className='edit-input'

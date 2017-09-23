@@ -27,21 +27,19 @@ export default function FoodSelection(props) {
 }
 
 FoodSelection.propTypes = {
-    viewportWidth: PropTypes.number.isRequired,
+    foods: PropTypes.array.isRequired,
     fetchMethod: PropTypes.string.isRequired,
     fetchError: PropTypes.string,
     isFetchingMatchingFoods: PropTypes.bool.isRequired,
-    foods: PropTypes.array.isRequired,
-    offset: PropTypes.number.isRequired,
     searchTerm: PropTypes.string,
     changeSearchTerm: PropTypes.func.isRequired,
     doSearch: PropTypes.func.isRequired,
-    showMoreResults: PropTypes.func.isRequired,
     addEntry: PropTypes.func.isRequired,
     addToFavorites: PropTypes.func.isRequired,
     removeFromFavorites: PropTypes.func.isRequired,
     selectFood: PropTypes.func.isRequired,
     setSelectedFoodAmount: PropTypes.func.isRequired,
     selectedFoodId: PropTypes.number,
-    selectedFoodAmount: PropTypes.string
+    selectedFoodAmount: PropTypes.string,
+    viewportWidth: PropTypes.number.isRequired
 };

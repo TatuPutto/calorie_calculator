@@ -1,7 +1,7 @@
 var executeQuery = require('../database-util/execute-query');
 
 module.exports = function setEntryAsInactive(consumptionId) {
-    var query = 'UPDATE consumedfoods SET active = 0 WHERE consumptionId12331 = ?';
+    var query = 'UPDATE consumedfoods SET active = 0 WHERE consumptionId = ?';
 
     return new Promise(function (resolve, reject) {
         executeQuery(query, [consumptionId])

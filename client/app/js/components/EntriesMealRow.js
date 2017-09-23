@@ -39,11 +39,10 @@ export default class EntriesMealRow extends React.Component {
 
         if(this.state.isBeingEdited && isModifiable) {
             return (
-                <td colSpan={7}>
+                <td className='entries__edit-meal-name' colSpan={6}>
                     <form onSubmit={this.toggleEditing}>
                         <input
                             type='text'
-                            className='entries__edit-meal-name'
                             ref={(input) => this.amountInput = input}
                             defaultValue={this.state.name}
                             onBlur={this.toggleEditing}
@@ -54,7 +53,7 @@ export default class EntriesMealRow extends React.Component {
             );
         } else if(isModifiable) {
             return (
-                <td colSpan={7}>
+                <td colSpan={6}>
                     {name}
                     <button className='btn btn--transparent btn--inline-actions'
                             onClick={this.toggleEditing}>
@@ -66,7 +65,7 @@ export default class EntriesMealRow extends React.Component {
                     </button>
                     <span className='entries__select-active-meal'>
                         <span className='switch' onClick={() => changeActiveMeal(id, name)}>
-                            <input type='checkbox' checked={isActiveMeal} />
+                            <input type='checkbox'checked={isActiveMeal} readOnly />
                             <span className='slider' />
                         </span>
                     </span>
@@ -90,7 +89,7 @@ EntriesMealRow.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     mealNumber: PropTypes.number.isRequired,
-    activeMealId: PropTypes.number.isRequired,
+    activeMealId: PropTypes.number,
     changeActiveMeal: PropTypes.func,
     removeMeal: PropTypes.func,
     isModifiable: PropTypes.bool.isRequired,

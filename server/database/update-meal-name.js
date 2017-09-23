@@ -4,7 +4,7 @@ module.exports = function updateMealName(mealId, mealName) {
     var query = 'UPDATE meals SET mealName = ? WHERE mealId = ?';
 
     return new Promise(function (resolve, reject) {
-        executeQuery(query, data)
+        executeQuery(query, [mealName, mealId])
             .then(function () {
                 return resolve();
             })

@@ -6,7 +6,7 @@ import DailyGoalProgress from './DailyGoalProgress';
 export default class DailyGoal extends React.Component {
     // only redraw charts if total consumption has actually changed
     shouldComponentUpdate(nextProps) {
-        if(this.props.totalConsumption !== nextProps.totalConsumption) {
+        if(this.props.total !== nextProps.total) {
             return true;
         }
 

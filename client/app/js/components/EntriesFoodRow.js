@@ -16,7 +16,6 @@ export default function EntriesFoodRow(props) {
         removeEntry
     } = props;
 
-
     return (
         <tr className='entries__food'>
             <td className='entries__food-name'>
@@ -34,17 +33,22 @@ export default function EntriesFoodRow(props) {
                 <td className='entries__food-amount'>{food.amount} g</td>
             }
             {isModifiable && !isBeingEdited ? (
-                <td className='entries__food-amount'
+                <td
+                    className='entries__food-amount'
                     onClick={toggleEditing}
                     title='Muuta määrää klikkaamalla'
                 >
-                    <a title='Kopioi merkintä'
+                    <a
                         className='entries__copy-food'
+                        title='Kopioi merkintä'
                         onClick={() => addEntry(food, food.amount)}
                     >
                         {food.amount} g
                     </a>
-                    <a className='entries__toggle-editing-mode' title='Muokkaa merkintää'>
+                    <a
+                        className='entries__toggle-editing-mode'
+                        title='Muokkaa merkintää'
+                    >
                         <i className='fa fa-pencil' />
                     </a>
                 </td>

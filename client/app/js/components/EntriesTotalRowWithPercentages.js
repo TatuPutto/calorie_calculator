@@ -8,20 +8,20 @@ export default function TotalNutritionValuesTable({total, viewportWidth}) {
     var fatPercentage = Math.round(total.fat / macroTotal * 100);
 
     return (
-        <tr className='consumed-foods-day-total'>
-            <td colSpan={viewportWidth > 768 ? 2 : 1} />
-            <td className='total-energy'>{total.energy} kcal</td>
-            <td className='total-protein'>
+        <tr className='entries__total-with-percentages'>
+            <td colSpan={viewportWidth > 768 ? 2 : null} />
+            <td className='energy'>{total.energy} kcal</td>
+            <td className='protein'>
                 {total.protein} g
                 <br />
                 {proteinPercentage} %
             </td>
-            <td className='total-carbs'>
+            <td className='carbs'>
                 {total.carbs} g
                 <br />
                 {carbPercentage} %
             </td>
-            <td className='total-fat'>
+            <td className='fat'>
                 {total.fat} g
                 <br />
                 {fatPercentage} %

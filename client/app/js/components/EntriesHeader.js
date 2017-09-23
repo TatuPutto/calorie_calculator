@@ -28,9 +28,9 @@ export default function EntriesHeader(props) {
 }
 
 EntriesHeader.propTypes = {
-    viewportWidth: PropTypes.number.isRequired,
-    isModifiable: PropTypes.bool.isRequired,
-    addMeal: PropTypes.func.isRequired,
+    addMeal: PropTypes.func,
     shownNutritionValue: PropTypes.string,
-    changeShownNutritionValue: PropTypes.func
+    changeShownNutritionValue: PropTypes.func,
+    isModifiable: PropTypes.bool.isRequired,
+    viewportWidth: PropTypes.number.isRequired
 };

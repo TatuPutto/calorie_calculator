@@ -1,4 +1,4 @@
-function updateValuesOnAddition(food, newAmount, activeMealId, consumedFoods, total) {
+function updateValuesOnAddition(food, newAmount, activeMealId, entries, total) {
     var oldAmount = food.amount || 100;
     var energyInAmount = food.energy;
     var proteinInAmount = food.protein;
@@ -27,22 +27,22 @@ function updateValuesOnAddition(food, newAmount, activeMealId, consumedFoods, to
     total.carbs = Math.roundToOneDecimal(total.carbs + carbsInAmount);
     total.fat = Math.roundToOneDecimal(total.fat + fatInAmount);
 
-    for(var i = 0; i < consumedFoods.length; i++) {
-        if(consumedFoods[i].id == activeMealId) {
-            consumedFoods[i].foods.push(foodToAdd);
+    for(var i = 0; i < entries.length; i++) {
+        if(entries[i].id == activeMealId) {
+            entries[i].foods.push(foodToAdd);
             break;
         }
     }
 
-    return {consumedFoods, total, consumptionId: foodToAdd.consumptionId};
+    return {entries, total, consumptionId: foodToAdd.consumptionId};
 }
 
-function updateValuesOnRemove(foodToRemove, consumedFoods, total) {
-    for(var i = 0; i < consumedFoods.length; i++) {
-        var foods = consumedFoods[i].foods;
+function updateValuesOnRemove(foodToRemove, entries, total) {
+    for(var i = 0; i < entries.length; i++) {
+        var foods = entries[i].foods;
         for(var j = 0; j < foods.length; j++) {
             if(foods[j].consumptionId === foodToRemove.consumptionId) {
-                consumedFoods[i].foods.splice(j, 1);
+                entries[i].foods.splice(j, 1);
             }
         }
     }
@@ -52,7 +52,7 @@ function updateValuesOnRemove(foodToRemove, consumedFoods, total) {
     total.carbs = Math.roundToOneDecimal(total.carbs - foodToRemove.carbs);
     total.fat = Math.roundToOneDecimal(total.fat - foodToRemove.fat);
 
-    return {consumedFoods, total};
+    return {entries, total};
 }
 
 

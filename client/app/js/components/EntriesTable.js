@@ -16,7 +16,7 @@ export default function EntriesTable(props) {
     );
     var rows = [];
 
-    props.consumedFoods.forEach((meal, i) => {
+    props.entries.forEach((meal, i) => {
         var energy = 0, protein = 0, carbs = 0, fat = 0;
 
         // push row representing the meal
@@ -75,21 +75,31 @@ export default function EntriesTable(props) {
         }
     });
 
-    if(props.consumedFoods.length > 1) {
-        rows.push(
-            <tr key='totalConsumptionSeparator'>
-                <td className='total-consumption-separator' colSpan={7}>
-                    Yhteensä
-                </td>
-            </tr>
-        );
-        rows.push(
-            <EntriesTotalRowWithPercentages
-                key='totalConsumption'
-                total={props.total}
-                viewportWidth={props.viewportWidth}
-            />
-        );
+    // render total row for all the entries combined if there are atleast
+    // two meals containing foods
+    if(props.entries.length > 1) {
+        var mealsWithFoods = 0;
+
+        props.entries.forEach((meal) => {
+            if(meal.foods.length > 0) mealsWithFoods++;
+        });
+
+        if(mealsWithFoods >= 2) {
+            rows.push(
+                <tr key='totalSeparator'>
+                    <td className='entries__total-separator' colSpan={7}>
+                        Yhteensä
+                    </td>
+                </tr>
+            );
+            rows.push(
+                <EntriesTotalRowWithPercentages
+                    key='totalConsumption'
+                    total={props.total}
+                    viewportWidth={props.viewportWidth}
+                />
+            );
+        }
     }
 
     return (
@@ -102,7 +112,7 @@ export default function EntriesTable(props) {
 }
 
 EntriesTable.propTypes = {
-    consumedFoods: PropTypes.array.isRequired,
+    entries: PropTypes.array.isRequired,
     total: PropTypes.object.isRequired,
     shownNutritionValue: PropTypes.string,
     activeMeal: PropTypes.object,

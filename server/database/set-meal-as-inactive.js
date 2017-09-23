@@ -8,7 +8,7 @@ module.exports = function setMealAsInactive(mealId) {
     `;
 
     return new Promise(function (resolve, reject) {
-        executeQuery(query, data)
+        executeQuery(query, [mealId, mealId])
             .then(function () {
                 return resolve();
             })

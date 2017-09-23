@@ -39,7 +39,7 @@ export default function EntriesFoodRowWrapper(Component) {
             });
         }
 
-        updateAmount = (consumptionId) => {console.log('täällä');
+        updateAmount = (consumptionId) => {
             var consumptionId = this.props.food.consumptionId;
             var foodAmount = this.state.foodAmount;
 

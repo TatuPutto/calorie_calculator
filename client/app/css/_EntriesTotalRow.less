@@ -1,0 +1,51 @@
+/* ==========================================================================
+ * EntriesTotalRow / EntriesTotalRowWithPercentages
+ * ========================================================================== */
+
+.entries__total {
+    border-bottom: @border;
+}
+
+.entries__total td,
+.entries__total-with-percentages td {
+    width: 7%;
+    height: 50px;
+    border-top: 2px solid #ffcb7c;
+    border-left: none;
+    border-right: none;
+}
+
+.entries__total-with-percentages td {
+    padding: 14px 0;
+}
+
+.entries__total td:first-child,
+.entries__total-with-percentages td:first-child {
+    width: 9%;
+}
+
+.entries__total-separator {
+    background: #ffcb7c;
+    font-weight: bold;
+    text-align: left;
+    padding: 0 10px !important;
+    line-height: 40px;
+    width: 100%;
+}
+
+
+@media @tablet {
+    .entries__total td,
+    .entries__total-with-percentages td {
+        width: 20%;
+        line-height: 20px;
+        padding: 20px 0;
+    }
+
+    .entries__total td:first-child,
+    .entries__total td:last-child,
+    .entries__total-with-percentages td:first-child,
+    .entries__total-with-percentages td:last-child {
+        width: 10%;
+    }
+}

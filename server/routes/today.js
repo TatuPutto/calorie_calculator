@@ -127,8 +127,9 @@ router.patch('/update-entry', function (req, res) {
 // set meal and all the entries associated with it as inactive
 router.patch('/remove-meal', function (req, res) {
     if(!req.query.mealId) {
-        res.status(400);
-        res.end(err);
+        res.status(422);
+        res.send('Poistettavan ateria ID täytyy olla määritelty.');
+        res.end();
     }
 
     setMealAsInactive(req.query.mealId)
@@ -145,8 +146,9 @@ router.patch('/remove-meal', function (req, res) {
 // set single entry as inactive
 router.patch('/remove-entry', function (req, res) {
     if(!req.query.consumptionId) {
-        res.status(400);
-        res.end(err);
+        res.status(422);
+        res.send('Poistettavan merkinnän ID täytyy olla määritelty.');
+        res.end();
     }
 
     setEntryAsInactive(req.query.consumptionId)
