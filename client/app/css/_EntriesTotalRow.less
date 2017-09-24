@@ -2,10 +2,6 @@
  * EntriesTotalRow / EntriesTotalRowWithPercentages
  * ========================================================================== */
 
-.entries__total {
-    border-bottom: @border;
-}
-
 .entries__total td,
 .entries__total-with-percentages td {
     width: 7%;
@@ -13,6 +9,10 @@
     border-top: 2px solid #ffcb7c;
     border-left: none;
     border-right: none;
+}
+
+.entries__total td {
+    border-bottom: @border;
 }
 
 .entries__total-with-percentages td {

@@ -16,7 +16,7 @@ module.exports = function selectMatchingFoodsAndPrioritize(searchTerm, userId) {
         (CASE WHEN foods.foodName LIKE ""?"%" THEN 1
                 WHEN foods.foodName LIKE "%"?"" THEN 3
                 ELSE 2 END)
-        LIMIT 100
+        LIMIT 50
     `;
 
     return new Promise(function (resolve, reject) {

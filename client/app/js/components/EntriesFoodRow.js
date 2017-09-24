@@ -16,6 +16,7 @@ export default function EntriesFoodRow(props) {
         removeEntry
     } = props;
 
+
     return (
         <tr className='entries__food'>
             <td className='entries__food-name'>
@@ -32,7 +33,7 @@ export default function EntriesFoodRow(props) {
             {!isModifiable &&
                 <td className='entries__food-amount'>{food.amount} g</td>
             }
-            {isModifiable && !isBeingEdited ? (
+            {isModifiable && !isBeingEdited &&
                 <td
                     className='entries__food-amount'
                     onClick={toggleEditing}
@@ -52,7 +53,8 @@ export default function EntriesFoodRow(props) {
                         <i className='fa fa-pencil' />
                     </a>
                 </td>
-            ) : (
+            }
+            {isModifiable && isBeingEdited &&
                 <td className='entries__food-amount'>
                     <input
                         type='text'
@@ -63,7 +65,7 @@ export default function EntriesFoodRow(props) {
                         autoFocus
                     />
                 </td>
-            )}
+            }
             <td className='entries__food-energy'>{food.energy} kcal</td>
             <td className='entries__food-protein'>{food.protein} g</td>
             <td className='entries__food-carbs'>{food.carbs} g</td>

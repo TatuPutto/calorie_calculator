@@ -1,19 +1,19 @@
 .header {
-    //color: white;
-    height: 35px;
-    //background: #0e99fb;
-    //border-bottom: 1px solid #0e74bd;
-    background: #fff;
+    height: 40px;
+    line-height: 40px;
+    background: @secondary-blue;
     box-shadow: 0px 1px 2px #bbbbbb;
 }
 
 .header a {
-    //color: white;
+    color: #fff;
+    transition: color 0.3s ease-out;
 }
 
 .header a:hover {
+    color: @text-color;
     text-decoration: none;
-    font-weight: bold;
+    //font-weight: bold;
 }
 
 .header a:focus {
@@ -35,8 +35,8 @@
 .header button {
     font-size: 13px;
     padding: 2px 8px;
-    margin-top: 5px;
-    background: @secondary-blue;
+    //margin-top: 5px;
+    //background: @secondary-blue;
     //color: #fff;
     /*background: linear-gradient(#0e99fb, #0c87de);
     border: 1px solid #077fd4;
@@ -76,11 +76,12 @@
 }
 
 .toggle-tooltip {
-    margin-left: 5px;
-    color: #fff;
+    position: relative;
     background: #444444;
-    border-radius: 15px;
+    color: #fff;
+    margin-left: 5px;
     text-align: center;
+    border-radius: 15px;
     width: 18px;
     line-height: 18px;
 }
@@ -90,29 +91,29 @@
     vertical-align: middle;
 }
 
-.no-access-tooltip {
-    display: none;
+.toggle-tooltip::after {
+    content: attr(data-tooltip-text);
+    visibility: hidden;
     position: absolute;
-    top: 30px;
+    top: 21px;
+    left: 8px;
+    padding: 8px;
+    padding-left: 0;
     background: #444444;
-    border-radius: 3px;
+    border-top: 8px solid #16bac5;
+    border-left: 8px solid #444444;
     z-index: 1000;
-    transform: translateX(-52%);
-    padding: 5px 10px;
+    white-space: nowrap;
 }
 
 .toggle-tooltip:hover {
-    .no-access-tooltip {
-        display: inline;
+    &::after {
+        visibility: visible;
     }
 }
 
-@media @tablet {
-    .header {
-        line-height: 46px;
-        height: 46px;
-    }
 
+@media @tablet {
     .header-content {
         margin: 0;
         padding-left: 10px !important;
@@ -157,11 +158,15 @@
     }
 */
     .nav-menu a {
-        color: @text-color;
+        //color: @text-color;
         font-size: 14px;
     }
 
     .nav-menu a:hover {
         font-weight: normal;
+    }
+
+    .toggle-tooltip::after {
+        white-space: normal;
     }
 }

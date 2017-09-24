@@ -23,11 +23,11 @@ export default function NavMenu({loggedIn}) {
             ) : (
                 <li>
                     <span className='disabled-route'>Päiväkirja</span>
-                    <span className='toggle-tooltip'>
+                    <span
+                        className='toggle-tooltip'
+                        data-tooltip-text='Päiväkirjaominaisuus on käytettävissä vain kirjautuneille käyttäjille.'
+                    >
                         <i className='fa fa-question' />
-                        <span className='no-access-tooltip'>
-                            Päiväkirjaominaisuus on käytettävissä vain kirjautuneille käyttäjille.
-                        </span>
                     </span>
                 </li>
             )}

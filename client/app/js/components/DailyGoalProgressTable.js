@@ -31,7 +31,7 @@ export default function DailyGoalProgressTable(props) {
 
     return (
         <div style={{background: '#fff', boxShadow: '0px 1px 4px #c1c1c1', borderRadius: '3px'}}>
-            <div style={{padding: '10px 0'}}>
+            <div>
                 <h3>Päiväsaanti</h3>
             </div>
             <table className='daily-goal-progress-table'>

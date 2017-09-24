@@ -1,7 +1,8 @@
 .diary-entry-selection {
     box-shadow: 0px 1px 4px #b9abab;
-    border-bottom: 1px solid #1e9af5;
-    background: @secondary-blue;
+    border-top: 1px solid #33a7af;
+    //border-bottom: 1px solid #1e9af5;
+    background: @accent-color;
     line-height: 40px;
     text-align: center;
     padding: 6px 0;
@@ -18,8 +19,8 @@
 
     i {
         vertical-align: middle;
-        -webkit-text-stroke: 1px @secondary-blue;
-        color: white;
+        -webkit-text-stroke: 1px @accent-color;
+        color: #fff;
         font-size: 22px;
     }
 }
@@ -29,7 +30,7 @@
 
     h2 {
         font-size: 16px;
-        color: white;
+        color: #fff;
     }
 }
 
@@ -74,8 +75,8 @@ input[type="checkbox"] {
     width: 100%;
     height: 100%;
     //background: #005398;
-    background: @secondary-blue;
-    box-shadow: 0 0 9px #003663 inset;
+    background: @accent-color;
+    box-shadow: 0 0 9px #00646b inset;
     border-radius: 50px;
     transition: 0.3s;
 }
@@ -93,7 +94,7 @@ input[type="checkbox"] {
 }
 
 input:checked + .slider {
-    background-color: @secondary-blue;
+    background-color: @accent-color;
 }
 
 input:checked + .slider::before {

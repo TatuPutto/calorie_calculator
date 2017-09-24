@@ -3,7 +3,7 @@ import React from 'react';
 import NavMenu from './NavMenu';
 import UserInfo from './UserInfo';
 
-import {checkStatus, readJson} from '../util/fetch';
+import {checkStatus, readJson, get} from '../util/fetch';
 
 var viewportWidth = Math.max(
     document.documentElement.clientWidth,
@@ -22,7 +22,7 @@ export default class Header extends React.Component {
     }
 
     componentWillMount() {
-        fetch('/user-info', {method: 'GET', credentials: 'same-origin'})
+        get('/user-info')
             .then(checkStatus)
             .then(readJson)
             .then((userInfo) => {
@@ -32,10 +32,7 @@ export default class Header extends React.Component {
                     isFetchingUserInfo: false
                 });
             })
-            .catch((err) => {
-                this.setState({isFetchingUserInfo: false});
-                console.error(err);
-            });
+            .catch(() => this.setState({isFetchingUserInfo: false}));
     }
 
     render() {

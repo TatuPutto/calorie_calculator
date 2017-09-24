@@ -19,11 +19,11 @@ export default class CurrentEntry extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            entries: [],
+            foods: [],
             goal: null,
             total: null,
-            entries: [],
-            activeMeal: {},
-            foods: [],
+            activeMeal: null,
             selectedFoodId: null,
             selectedFood: null,
             selectedFoodAmount: null,
@@ -220,6 +220,21 @@ export default class CurrentEntry extends React.Component {
                 selectedFoodId: foodId,
                 selectedFood: this.state.foods.filter((food) => food.id == foodId)[0],
                 selectedFoodAmount: null
+            }, () => {
+                var foodList = document.querySelector('.food-list');
+                var selectedItem = document.getElementById(foodId);
+                var scrollTo = selectedItem.offsetTop - foodList.offsetTop;
+
+                var currentScrollPos = foodList.scrollTop;
+                var scrollAnimationInterval = setInterval(function () {
+                    if(currentScrollPos < scrollTo) {
+                        foodList.scrollTop = currentScrollPos;
+                        currentScrollPos += 2;
+                    } else {
+                        clearInterval(scrollAnimationInterval);
+                    }
+                }, 1);
+
             });
         }
     }
