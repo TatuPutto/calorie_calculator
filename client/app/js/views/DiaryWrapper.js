@@ -30,7 +30,6 @@ export default function DiaryWrapper(props) {
             if(date.length < 10) {
                 date = padDate(date, '-');
             }
-
         } else {
             date = getCurrentDate();
         }

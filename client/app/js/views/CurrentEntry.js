@@ -208,7 +208,7 @@ export default class CurrentEntry extends React.Component {
         this.setState({shownResultsOffset: this.state.shownResultsOffset + 10});
     }
 
-    selectFood = (foodId) => {
+    selectFood = (foodId) => {console.log('jep');
         if(this.state.selectedFoodId == foodId) {
             this.setState({
                 selectedFoodId: null,
@@ -247,7 +247,7 @@ export default class CurrentEntry extends React.Component {
         }
     }
 
-    addEntry = (foodToAdd, newAmount) => {
+    addEntry = (foodToAdd, newAmount = event.target.value) => {
         event.preventDefault();
         // update consumed foods and total values optimistically on addition
         var updatedValues = updateValuesOnAddition(

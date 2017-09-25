@@ -14,7 +14,7 @@ export default function DiaryEntrySelectors(props) {
                 {isInDayView ? (
                     <h2>{date ? date.replace(/[-]/g, '.') : ''}</h2>
                 ) : (
-                    <h2>{'Viikko ' + week}</h2>
+                    <h2>{week ? 'Viikko ' + week : ''}</h2>
                 )}
             </span>
             <button onClick={()=> changeDate('next')} disabled={!canGoForward}>

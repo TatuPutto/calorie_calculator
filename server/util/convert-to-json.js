@@ -1,7 +1,7 @@
 var fs = require('fs');
 //var round = require('./round-to-one-decimal');
-var createConnection = require('../database/create-connection');
-var foods = fs.readFileSync('./food.csv', 'utf8').split('\n');
+var createConnection = require('../database-util/create-connection');
+var foods = fs.readFileSync('./food.csv', {encoding: 'utf-8'}).split('\n');
 var nutritionValues = fs.readFileSync('./component_value.csv', 'utf8').split('\n');
 //var portionSizes = fs.readFileSync('./foodaddunit.csv', 'utf8').split('\n');
 var foodNames = [];
@@ -13,7 +13,6 @@ for(var i = 1; i < foods.length; i++) {
 }
 
 
-
 function getFoodName(id) {
     for(var i = 1; i < foods.length; i++) {
         if(foods[i].split(';')[0] == id) {
@@ -22,9 +21,14 @@ function getFoodName(id) {
     }
 }
 
-module.exports = function addFoodsAndPortionSizesToDatabase() {
+function addFoodsAndPortionSizesToDatabase() {
+    var webScrapedFoods = fs.readFileSync('./web-scraped-foods.json', 'utf-8');
     var nutritionValues = fs.readFileSync('./foods-with-portion-sizes.json', 'utf8');
-    var parsedNutritionVaues = JSON.parse(nutritionValues);
+    var webScrapedFoods = JSON.parse(webScrapedFoods);
+    var parsedNutritionValues = JSON.parse(nutritionValues);
+    var concattedObj = Object.assign(parsedNutritionValues, webScrapedFoods);
+
+
     var mysql = require('mysql');
     var connection = mysql.createConnection({
       host: 'localhost',
@@ -35,8 +39,8 @@ module.exports = function addFoodsAndPortionSizesToDatabase() {
 
     connection.connect();
 
-    for(var id in parsedNutritionVaues) {
-        var food = parsedNutritionVaues[id];
+    for(var id in concattedObj) {
+        var food = concattedObj[id];
         var name = food.name;
         var energy = food.energy;
         var protein = food.protein;
@@ -57,6 +61,7 @@ module.exports = function addFoodsAndPortionSizesToDatabase() {
     return;
 }
 
+addFoodsAndPortionSizesToDatabase();
 
 function createJSONfoodlist() {
     var json = {};
@@ -86,32 +91,54 @@ function createJSONfoodlist() {
     fs.writeFileSync('foods.json', JSON.stringify(json), 'utf8');
 }
 
-createJSONfoodlist();
+//createJSONfoodlist();
 
 function createJSONfoodlistWithPortionSizes() {
-    var json = {};
+    var latestMealName = '';
+    var foodNamesWithLessDuplicates = [];
+
+    for(var foodName of foodNames) {
+        if(foodName) {
+            var firstWord = foodName.split(' ')[0];
+            if(firstWord != latestMealName && foodNamesWithLessDuplicates.indexOf(firstWord) === -1) {
+                latestMealName = firstWord;
+                foodNamesWithLessDuplicates.push(firstWord);
+            }
+        }
+
+    }
+
+    console.log('original length: ' +  foodNames.length + '\nvs :' + foodNamesWithLessDuplicates.length);
+
+    fs.writeFileSync('food-names.json', JSON.stringify(foodNamesWithLessDuplicates), 'utf8');
+
+}
+//createJSONfoodlistWithPortionSizes();
+
+
+function createJSONfoodlistOnlyNames() {
+    var foodNamesArray = {};
     var breakI = 1;
 
     //34306
     for(var i = 1; i <= 34306; i++) {
     //for(var i = 1; i <= 1000; i++) {
         var nutritionVal = asd(i, breakI);
-        obj = nutritionVal[0];
+        //obj = nutritionVal[0];
 
 
         breakI = nutritionVal[1];
 
         if(Object.keys(nutritionVal[0]).length > 0) {
-            obj['name'] = getFoodName(i);
+            //var  = getFoodName(i);
             console.log(obj);
             json[i] = obj;
         }
     }
 
-    fs.writeFileSync('foods-with-portion-sizes.json', JSON.stringify(json), 'utf8');
-
+    fs.writeFileSync('food-names.json', JSON.stringify(json), 'utf8');
 }
-
+//createJSONfoodlistOnlyNames();
 
 function portion(num, breakP) {
     var portions = {};
@@ -151,7 +178,7 @@ function asd(num, breakI) {
                 prop == 'CHOAVL' || prop == 'FAT' || prop == 'PROT') {
                 var type;
                 var value;
-                
+
                 if(prop == 'ENERC') type = 'energy';
                 if(prop == 'CHOAVL') type = 'carbs';
                 if(prop == 'PROT') type = 'protein';

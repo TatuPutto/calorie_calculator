@@ -13,7 +13,8 @@ export default function AddToConsumedFoods(props) {
         addEntry,
         portionSizes,
         addToFavorites,
-        removeFromFavorites
+        removeFromFavorites,
+        viewportWidth
     } = props;
     var favoriteToggleFunction = food.isInFavorites ?
             removeFromFavorites : addToFavorites;
@@ -25,13 +26,17 @@ export default function AddToConsumedFoods(props) {
                 selectedFoodAmount={selectedFoodAmount}
                 setSelectedFoodAmount={setSelectedFoodAmount}
                 addEntry={addEntry}
+                viewportWidth={viewportWidth}
             />
-            <PortionSizes
-                food={food}
-                portionSizes={food.portionSizes}
-                addEntry={addEntry}
-            />
-            {props.viewportWidth < 768 &&
+            {food.portionSizes &&
+                <PortionSizes
+                    food={food}
+                    portionSizes={food.portionSizes}
+                    addEntry={addEntry}
+                    viewportWidth={viewportWidth}
+                />
+            }
+            {viewportWidth < 768 &&
                 <div className='food-favorite-action-container'>
                     <span className='food-favorite-status'>
                         <button

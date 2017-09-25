@@ -4,10 +4,6 @@
 
     &.selected {
         background-color: #e8f2ff;
-
-        &:hover {
-            background-color: #e8f2ff;
-        }
     }
 
     &:hover {
@@ -17,7 +13,8 @@
 }
 
 .food-selected-indicator-container {
-    width: 20px;
+    //width: 20px;
+    width: 2%;
 }
 
 .food-selected-indicator {
@@ -53,19 +50,21 @@
     }
 }
 
-@media @laptopAndUp {
-    .food-name {
-        color: @text-color;
-        text-align: left;
-        width: ~'calc(66% - 53px)';
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        vertical-align: middle;
-    }
+.food-name {
+    color: @text-color;
+    text-align: left;
+    //width: ~'calc(66% - 53px)';
+    width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
 
+@media @laptopAndUp {
     .food-favorite-status {
-        width: 33px;
+        //width: 33px;
+        width: 4%;
         border-right: @border;
     }
 
@@ -98,7 +97,15 @@
     .food-item {
         text-align: left;
         //line-height: 70px;
-        line-height: 50px;
+        line-height: 40px;
+
+        &.selected {
+            background-color: #fff;
+        }
+
+        &:hover {
+            background: #fff;
+        }
     }
 
     .food-name-wrapper {
@@ -108,7 +115,7 @@
 
     .food-name {
         //display: table-cell;
-        width: 90%;
+        width: 100%;
         padding: 0 8px;
         text-align: left;
         line-height: 20px;
@@ -118,11 +125,12 @@
 
     .food-favorite-action-container {
         line-height: initial;
-        border-top: 1px solid #dedede;
-        margin-top: 15px;
+        border-top: none;
+        //margin-top: 15px;
+        //margin-top: 5px;
         /* padding-top: 6px; */
-        height: 43px;
-        padding-top: 10px;
+        //height: 44px;
+        padding-top: 15px;
     }
 
     .food-favorite-status {
@@ -140,6 +148,10 @@
         width: 100%;
         border-radius: 4px;
         font-size: 14px;
+        line-height: 34px;
+        background: #fff;
+        border: none;
+        vertical-align: super;
     }
 
     .food-energy-amount {

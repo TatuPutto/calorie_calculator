@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import FoodListHeader from './FoodListHeader';
 import FoodItem from './FoodItem';
-import FoodItemCompactLayout from './FoodItemCompactLayout';
+import FoodItemCompact from './FoodItemCompact';
 import ShowMoreResults from './ShowMoreResults';
 import Loading from './Loading';
 
@@ -35,8 +35,8 @@ export default function FoodList(props) {
         var favoritesCategorySeparated = false;
         var latestCategorySeparated = false;
         var regularResultsSeparated = false;
-        var Component = viewportWidth > 768 ? FoodItem : FoodItemCompactLayout;
-        //foods = viewportWidth > 768 ? foods : foods.slice(0, (offset + 10));
+        var Component = viewportWidth > 768 ? FoodItem : FoodItemCompact;
+
 
         foods.forEach((food, i) => {
             if(fetchMethod == 'search') {

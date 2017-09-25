@@ -26,23 +26,25 @@ export default function FoodItem(props) {
             (selectedFoodId == id ? 'open' : 'closed')
 
     return (
-        <li id={id} className={liClass} onClick={() => selectFood(id, name)}>
-            <span className='food-selected-indicator-container'>
-                <i className={selectedIndicatorClass} />
-            </span>
-            <span className='food-name'>{name}</span>
-            <span className='food-favorite-status'>
-                <button
-                    className='food-add-to-favorites'
-                    onClick={() => favoriteToggleFunction(id)}
-                >
-                    <i className={isInFavorites ? 'fa fa-star' : 'fa fa-star-o'} />
-                </button>
-            </span>
-            <span className='food-energy-amount'>{energy} kcal</span>
-            <span className='food-protein-amount'>{protein} g</span>
-            <span className='food-carb-amount'>{carbs} g</span>
-            <span className='food-fat-amount'>{fat} g</span>
+        <li id={id} className={liClass}>
+            <div onClick={() => selectFood(id, name)}>
+                <span className='food-selected-indicator-container'>
+                    <i className={selectedIndicatorClass} />
+                </span>
+                <span className='food-name'>{name}</span>
+                <span className='food-favorite-status'>
+                    <button
+                        className='food-add-to-favorites'
+                        onClick={() => favoriteToggleFunction(id)}
+                    >
+                        <i className={isInFavorites ? 'fa fa-star' : 'fa fa-star-o'} />
+                    </button>
+                </span>
+                <span className='food-energy-amount'>{energy} kcal</span>
+                <span className='food-protein-amount'>{protein} g</span>
+                <span className='food-carb-amount'>{carbs} g</span>
+                <span className='food-fat-amount'>{fat} g</span>
+            </div>
             {selectedFoodId == id &&
                 <AddToConsumedFoods {...props} />
             }

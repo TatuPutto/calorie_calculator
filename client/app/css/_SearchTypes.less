@@ -54,29 +54,39 @@
 
 @media @tablet {
     .search-types {
+        background-color: @secondary-blue;
         line-height: 50px;
+        text-align: center;
+        color: #fff;
 
+        i {
+            color: #fff;
+        }
 
         .active {
             padding: 0;
-            background: #fff;
-            color: @secondary-blue;
+            //background: #fff;
+            //color: @secondary-blue;
             top: 0;
-            height: 28px;
-            //border-bottom: 3px solid #4692d2;
+            height: 40px;
+            border-bottom: 2px solid #fff;
 
             &::before {
                 display: none;
             }
 
-            i {
+            /*i {
                 color: @secondary-blue;
-            }
+            }*/
         }
 
         .close-food-selection {
+            font-size: 18px;
             padding: 0 8px;
             margin-right: 0;
+            position: absolute;
+            -webkit-text-stroke: 1px @secondary-blue;
+            left: 0;
         }
     }
 

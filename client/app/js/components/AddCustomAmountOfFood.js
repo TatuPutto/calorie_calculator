@@ -3,27 +3,24 @@ import PropTypes from 'prop-types';
 
 export default function AddCustomAmountOfFood(props) {
     var {food, selectedFoodAmount, setSelectedFoodAmount, addEntry} = props;
+    var cn = 'add-custom-amount' + (food.portionSizes ? '' : ' no-portion-sizes');
 
     return (
-        <div className='add-custom-amount'>
+        <div className={cn}>
             <form onSubmit={() => addEntry(food, selectedFoodAmount)}>
                 <input
-                    type='text'
+                    type='number'
                     placeholder='Annos'
                     value={selectedFoodAmount || ''}
                     onChange={setSelectedFoodAmount}
-                    autoFocus
+                    autoFocus={props.viewportWidth > 767}
                 />
                 <button
                     type='submit'
                     className='btn btn-info'
-                    style={{
-                        background: '#4692d2',
-                        borderColor: '#4692d2',
-                        boxShadow: '0px 1px 0px #97cfff inset'
-                    }}
+                    style={{bacground: '#3cb1d4'}}
                 >
-                Lisää
+                    Lisää
                 </button>
             </form>
         </div>

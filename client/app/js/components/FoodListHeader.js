@@ -15,19 +15,18 @@ export default function FoodListHeader(props) {
                 <span>R</span>
             </li>
         );
-    } else {
+    } /*else {
         if(props.fetchMethod == 'search') {
             foodListHeader = (
                 <li className={cn}>
-                    {/*}<span>kcal</span>
+                    <span>kcal</span>
                     <span>P</span>
                     <span>HH</span>
-                    <span>R</span>*/}
+                    <span>R</span>
                 </li>
-            );
-        } else {
-            foodListHeader = null;
-        }
+            );*/
+    else {
+        foodListHeader = null;
     }
 
     return foodListHeader;

@@ -9,15 +9,32 @@
     height: 34px;
     vertical-align: middle;
     border: 1px solid #d0d0d0;
+    border: none;
     border-radius: 3px;
     margin-right: 6px;
 }
 
+.no-portion-sizes {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+@media @laptopAndUp {
+    .add-custom-amount input {
+        border: 1px solid #d0d0d0;
+    }
+}
+
 @media @tablet {
     .add-custom-amount {
+        padding-bottom: 0;
+        border-bottom: none;
+
         input {
             width: 64%;
             margin-right: 2%;
+            border: none;
         }
 
         button {
