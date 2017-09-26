@@ -10,7 +10,8 @@ import {checkStatus, readJson, get, post, patch, remove} from '../util/fetch';
 import {getCurrentDate} from '../util/date-functions';
 import {
     updateValuesOnAddition,
-    updateValuesOnRemove
+    updateValuesOnRemove,
+    updateValuesOnMealRemove
 } from '../util/optimistic-updates';
 
 var searchTimeout = null;
@@ -62,7 +63,10 @@ export default class CurrentEntry extends React.Component {
                     document.documentElement.clientWidth,
                     window.innerWidth || 0
                 );
-                this.setState({viewportWidth});
+                this.setState({
+                    viewportWidth,
+                    foodSelectionVisible: viewportWidth > 768 ? true : false
+                });
             }, 200);
         });
     }
@@ -208,7 +212,7 @@ export default class CurrentEntry extends React.Component {
         this.setState({shownResultsOffset: this.state.shownResultsOffset + 10});
     }
 
-    selectFood = (foodId) => {console.log('jep');
+    selectFood = (foodId) => {
         if(this.state.selectedFoodId == foodId) {
             this.setState({
                 selectedFoodId: null,
@@ -335,10 +339,14 @@ export default class CurrentEntry extends React.Component {
 
     removeMeal = (id, name, mealNumber) => {
         if(confirm(`Haluatko varmasti poistaa tämän aterian (${name})?`)) {
-            var tempEntries = JSON.parse(JSON.stringify(this.state.entries));
-            tempEntries.splice(mealNumber, 1);
+            var updatedValues = updateValuesOnMealRemove(
+                mealNumber,
+                JSON.parse(JSON.stringify(this.state.entries)),
+                JSON.parse(JSON.stringify(this.state.total))
+            );
+            var tempEntries = updatedValues.entries;
 
-            this.setState({entries: tempEntries}, () => {
+            this.setState({entries: tempEntries, total: updatedValues.total}, () => {
                 // if removed meal is active, move active status to latest meal if one exists
                 if(this.state.activeMeal.id === id && tempEntries.length > 0) {
                     id = tempEntries[tempEntries.length - 1].id;

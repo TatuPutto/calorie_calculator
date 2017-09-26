@@ -1,4 +1,5 @@
 function updateValuesOnAddition(food, newAmount, activeMealId, entries, total) {
+    var foodToAdd = {};
     var oldAmount = food.amount || 100;
     var energyInAmount = food.energy;
     var proteinInAmount = food.protein;
@@ -12,7 +13,6 @@ function updateValuesOnAddition(food, newAmount, activeMealId, entries, total) {
         fatInAmount = fatInAmount / oldAmount * newAmount;
     }
 
-    var foodToAdd = {};
     foodToAdd['consumptionId'] = new Date().getTime().toString();
     foodToAdd['id'] = food.id;
     foodToAdd['name'] = food.name;
@@ -55,5 +55,26 @@ function updateValuesOnRemove(foodToRemove, entries, total) {
     return {entries, total};
 }
 
+function updateValuesOnMealRemove(mealNumber, entries, total) {
+    var removedMeal = entries.splice(mealNumber, 1)[0];
+    var mealEnergyTotal = 0;
+    var mealProteinTotal = 0;
+    var mealCarbTotal = 0;
+    var mealFatTotal = 0;
 
-export {updateValuesOnAddition, updateValuesOnRemove};
+    removedMeal.foods.forEach((food) => {
+        mealEnergyTotal += food.energy;
+        mealProteinTotal += food.protein;
+        mealCarbTotal += food.carbs;
+        mealFatTotal += food.fat;
+    });
+
+    total.energy = Math.round(total.energy - mealEnergyTotal);
+    total.protein = Math.roundToOneDecimal(total.protein - mealProteinTotal);
+    total.carbs = Math.roundToOneDecimal(total.carbs - mealCarbTotal);
+    total.fat = Math.roundToOneDecimal(total.fat - mealFatTotal);
+
+    return {entries, total};
+}
+
+export {updateValuesOnAddition, updateValuesOnRemove, updateValuesOnMealRemove};

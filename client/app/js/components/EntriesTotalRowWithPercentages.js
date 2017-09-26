@@ -47,7 +47,7 @@ export default function TotalNutritionValuesTable({total, viewportWidth}) {
                 </td>
             </tr>
             <tr className='entries__total-with-percentages'>
-                <td colSpan={viewportWidth > 768 ? 2 : null} />
+                <td />
                 <td className='energy'>{total.energy} kcal</td>
                 <td className='protein'>
                     {Math.round(total.protein)} g
