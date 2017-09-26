@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+
 export default function AddCustomAmountOfFood(props) {
     var {food, selectedFoodAmount, setSelectedFoodAmount, addEntry} = props;
     var cn = 'add-custom-amount' + (food.portionSizes ? '' : ' no-portion-sizes');
@@ -13,7 +14,6 @@ export default function AddCustomAmountOfFood(props) {
                     placeholder='Annos'
                     value={selectedFoodAmount || ''}
                     onChange={setSelectedFoodAmount}
-                    autoFocus={props.viewportWidth > 767}
                 />
                 <button
                     type='submit'

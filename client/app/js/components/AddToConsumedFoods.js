@@ -36,7 +36,7 @@ export default function AddToConsumedFoods(props) {
                     viewportWidth={viewportWidth}
                 />
             }
-            {viewportWidth < 768 &&
+            {viewportWidth <= 768 &&
                 <div className='food-favorite-action-container'>
                     <span className='food-favorite-status'>
                         <button

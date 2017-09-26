@@ -6,6 +6,7 @@ import EntriesFoodRowWrapper from './EntriesFoodRowWrapper';
 import EntriesFoodRow from './EntriesFoodRow';
 import EntriesFoodRowCompact from './EntriesFoodRowCompact';
 import EntriesTotalRow from './EntriesTotalRow';
+import EntriesTotalRowCompact from './EntriesTotalRowCompact';
 import EntriesTotalRowWithPercentages from './EntriesTotalRowWithPercentages';
 
 
@@ -31,6 +32,7 @@ export default function EntriesTable(props) {
                 editMealName={props.editMealName}
                 mealNumber={i}
                 isModifiable={props.isModifiable}
+                viewportWidth={props.viewportWidth}
             />
         );
 
@@ -65,42 +67,26 @@ export default function EntriesTable(props) {
         // show nutrition values in total for meal
         // if there is more than 2 courses on that meal
         if(meal.foods.length > 1) {
-            rows.push(
-                <EntriesTotalRow
-                    key={i.toString()}
-                    total={{energy, protein, carbs, fat}}
-                    viewportWidth={props.viewportWidth}
-                />
-            );
+            if(props.viewportWidth <= 768) {
+                rows.push(
+                    <EntriesTotalRowCompact
+                        key={i.toString()}
+                        total={{energy, protein, carbs, fat}}
+                        shownNutritionValue={props.shownNutritionValue}
+                    />
+                );
+            } else {
+                rows.push(
+                    <EntriesTotalRow
+                        key={i.toString()}
+                        total={{energy, protein, carbs, fat}}
+                    />
+                );
+            }
+
         }
     });
 
-    // render total row for all the entries combined if there are atleast
-    // two meals containing foods
-    if(props.entries.length > 1) {
-        var mealsWithFoods = 0;
-
-        props.entries.forEach((meal) => {
-            if(meal.foods.length > 0) mealsWithFoods++;
-        });
-
-        if(mealsWithFoods >= 2) {
-            rows.push(
-                <tr key='totalSeparator'>
-                    <td className='entries__total-separator' colSpan={7}>
-                        Yhteensä
-                    </td>
-                </tr>
-            );
-            rows.push(
-                <EntriesTotalRowWithPercentages
-                    key='totalConsumption'
-                    total={props.total}
-                    viewportWidth={props.viewportWidth}
-                />
-            );
-        }
-    }
 
     return (
         <table className='entries__table'>

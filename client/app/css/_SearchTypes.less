@@ -6,7 +6,7 @@
 .search-types button {
     background: transparent;
     border: none;
-    margin-right: 8px;
+    //margin-right: 8px;
     margin-left: 8px;
 }
 
@@ -54,10 +54,24 @@
 
 @media @tablet {
     .search-types {
+        top: 0;
         background-color: @secondary-blue;
-        line-height: 50px;
-        text-align: center;
+        line-height: 46px;
+        text-align: left;
         color: #fff;
+
+        button {
+            margin-right: 2px;
+            margin-left: 2px;
+        }
+
+        button:first-child {
+            margin-left: 8px;
+
+            &.active {
+                margin-left: 14px;
+            }
+        }
 
         i {
             color: #fff;
@@ -65,8 +79,8 @@
 
         .active {
             padding: 0;
-            //background: #fff;
-            //color: @secondary-blue;
+            margin-left: 8px;
+            margin-right: 8px;
             top: 0;
             height: 40px;
             border-bottom: 2px solid #fff;
@@ -74,19 +88,15 @@
             &::before {
                 display: none;
             }
-
-            /*i {
-                color: @secondary-blue;
-            }*/
         }
 
         .close-food-selection {
+            position: absolute;
+            right: 0;
             font-size: 18px;
             padding: 0 8px;
-            margin-right: 0;
-            position: absolute;
+            margin: 0;
             -webkit-text-stroke: 1px @secondary-blue;
-            left: 0;
         }
     }
 

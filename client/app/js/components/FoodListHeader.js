@@ -5,7 +5,7 @@ export default function FoodListHeader(props) {
     var cn = 'food-list-header ' +
             (props.fetchMethod == 'search' ? 'extra-height' : '');
 
-    if(props.viewportWidth > 767) {
+    if(props.viewportWidth > 768) {
         foodListHeader = (
             <li className={cn}>
                 <span>Elintarkive</span>

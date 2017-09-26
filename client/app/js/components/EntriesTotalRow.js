@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-export default function EntriesTotalRow({total, viewportWidth}) {
+export default function EntriesTotalRow({total}) {
     return (
         <tr className='entries__total'>
-            <td colSpan={viewportWidth > 768 ? 2 : null} />
+            <td colSpan={2} />
             <td className='energy'>{Math.round(total.energy)} kcal</td>
             <td className='protein'>{Math.round(total.protein)} g</td>
             <td className='carbs'>{Math.round(total.carbs)} g</td>
@@ -15,7 +15,4 @@ export default function EntriesTotalRow({total, viewportWidth}) {
     );
 }
 
-EntriesTotalRow.propTypes = {
-    total: PropTypes.object.isRequired,
-    viewportWidth: PropTypes.number.isRequired
-};
+EntriesTotalRow.propTypes = {total: PropTypes.object.isRequired};

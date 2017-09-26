@@ -33,13 +33,15 @@ export default class EntriesMealRow extends React.Component {
             activeMealId,
             changeActiveMeal,
             removeMeal,
-            isModifiable
+            isModifiable,
+            viewportWidth
         } = this.props;
         var isActiveMeal = activeMealId == id;
+        var colSpan = viewportWidth <= 768 ? 2 : 7;
 
         if(this.state.isBeingEdited && isModifiable) {
             return (
-                <td className='entries__edit-meal-name' colSpan={6}>
+                <td className='entries__edit-meal-name' colSpan={colSpan}>
                     <form onSubmit={this.toggleEditing}>
                         <input
                             type='text'
@@ -53,7 +55,7 @@ export default class EntriesMealRow extends React.Component {
             );
         } else if(isModifiable) {
             return (
-                <td colSpan={6}>
+                <td colSpan={colSpan}>
                     {name}
                     <button className='btn btn--transparent btn--inline-actions'
                             onClick={this.toggleEditing}>
@@ -72,7 +74,7 @@ export default class EntriesMealRow extends React.Component {
                 </td>
             );
         } else {
-            return <td colSpan={7}>{name}</td>;
+            return <td colSpan={colSpan}>{name}</td>;
         }
     }
 

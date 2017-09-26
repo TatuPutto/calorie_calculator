@@ -14,13 +14,13 @@ export default function EntriesHeader(props) {
                 </button>
             }
             <h3 className='entries__title'>Merkinnät</h3>
-            {props.viewportWidth < 768 &&
+            {props.viewportWidth <= 768 &&
                 <select className='entries__select no-outline'
                         onChange={props.changeShownNutritionValue}>
-                    <option defaultValue>kcal</option>
-                    <option>Proteiini</option>
-                    <option>Hiilihydraatti</option>
-                    <option>Rasva</option>
+                    <option value='energy' defaultValue>Energia (kcal)</option>
+                    <option value='protein'>Proteiini (g)</option>
+                    <option value='carbs'>Hiilihydraatti (g)</option>
+                    <option value='fat'>Rasva (g)</option>
                 </select>
             }
         </div>

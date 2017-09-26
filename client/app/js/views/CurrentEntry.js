@@ -401,25 +401,7 @@ export default class CurrentEntry extends React.Component {
     }
 
     changeShownNutritionValue = (e) => {
-        var nutritionValue;
-
-        switch(e.currentTarget.value) {
-            case 'kcal':
-                nutritionValue = 'energy';
-                break;
-            case 'Proteiini':
-                nutritionValue = 'protein';
-                break;
-            case 'Hiilihydraatti':
-                nutritionValue = 'carbs';
-                break;
-            case 'Rasva':
-                nutritionValue = 'fat';
-                break;
-
-        }
-
-        this.setState({shownNutritionValue: nutritionValue});
+        this.setState({shownNutritionValue: e.currentTarget.value});
     }
 
     render() {
@@ -480,7 +462,7 @@ export default class CurrentEntry extends React.Component {
                     isModifiable={true}
                     viewportWidth={this.state.viewportWidth}
                 />
-                {this.state.viewportWidth < 768 && !this.state.foodSelectionVisible &&
+                {this.state.viewportWidth <= 768 && !this.state.foodSelectionVisible &&
                     <button className='btn sticky-action-btn' onClick={this.toggleFoodSelection}>
                     +
                     </button>

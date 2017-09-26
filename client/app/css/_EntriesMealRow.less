@@ -15,7 +15,11 @@
     }
 
     button {
-        opacity: 0;
+        display: none;
+
+        i {
+            color: @text-color;
+        }
     }
 
     button:first-child {
@@ -26,11 +30,7 @@
         background: #d6d6d6;
 
         button {
-            opacity: 1;
-
-            i {
-                color: #525252;
-            }
+            display: initial;
         }
     }
 }

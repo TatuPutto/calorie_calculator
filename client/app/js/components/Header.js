@@ -17,7 +17,7 @@ export default class Header extends React.Component {
             loggedIn: false,
             username: 'Anonyymi',
             isFetchingUserInfo: true,
-            isDropdownOpen: viewportWidth > 767 ? true : false
+            isDropdownOpen: viewportWidth > 768 ? true : false
         };
     }
 

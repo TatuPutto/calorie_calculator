@@ -58,8 +58,8 @@
 .header-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 15px;
-    float: none;
+    padding-right: 30px;
+    padding-left: 30px;
 }
 
 .narrow {
@@ -116,8 +116,8 @@
 @media @tablet {
     .header-content {
         margin: 0;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
     .header button {
@@ -134,19 +134,13 @@
         left: 0;
     }
 
-    .nav-menu:hover {
-        li {
-            display: list-item;
-            z-index: 1000;
-        }
-    }
-
     .nav-menu::before {
         content: "\f0c9";
         font-family: FontAwesome;
         position: absolute;
         top: -40px;
         left: 15px;
+        width: 100px;
         color: #fff;
     }
 
@@ -154,11 +148,23 @@
         display: none;
         color: #4e4d4d !important;
         background: #fff;
-        z-index: 99999;
+        z-index: 1000;
         width: 100px;
         padding: 8px 15px;
         border-bottom: 1px solid #bfbfbf;
         border-right: 1px solid #bfbfbf;
+    }
+
+    .nav-menu:hover {
+        li {
+            display: list-item;
+        }
+
+        /*&:active {
+            li {
+                display: none;
+            }
+        }*/
     }
 
     .nav-menu a {

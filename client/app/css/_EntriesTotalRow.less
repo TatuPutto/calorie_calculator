@@ -4,9 +4,10 @@
 
 .entries__total td,
 .entries__total-with-percentages td {
-    width: 7%;
+    font-size: 13px;
+    width: 8%;
     height: 50px;
-    border-top: 2px solid #ffcb7c;
+    //border-top: 2px solid #ffcb7c;
     border-left: none;
     border-right: none;
 }
@@ -19,9 +20,16 @@
     padding: 14px 0;
 }
 
-.entries__total td:first-child,
+.entries__total td:first-child {
+    width: 10%;
+}
+
 .entries__total-with-percentages td:first-child {
-    width: 9%;
+    width: 66%;
+}
+
+.entries__total-with-percentages td:nth-child(2) {
+    width: 10%;
 }
 
 .entries__total-separator {
@@ -35,11 +43,19 @@
 
 
 @media @tablet {
-    .entries__total td,
+    .entries__total td {
+        width: 15%;
+        line-height: 60px;
+        padding-right: 8px;
+        padding-left: 8px;
+        text-align: center;
+    }
+
     .entries__total-with-percentages td {
         width: 20%;
-        line-height: 20px;
-        padding: 20px 0;
+        padding: 14px 8px;
+        text-align: center;
+        font-size: 13px;
     }
 
     .entries__total td:first-child,

@@ -4,7 +4,7 @@ export default function PortionSizes({food, portionSizes, addEntry, viewportWidt
     var portions = Object.keys(portionSizes).map((portion) => {
         var portionAmount = portionSizes[portion];
 
-        if(viewportWidth < 768) {
+        if(viewportWidth <= 768) {
             return (
                 <option value={portionAmount}>
                     {portion} ({portionAmount} g)
@@ -22,7 +22,7 @@ export default function PortionSizes({food, portionSizes, addEntry, viewportWidt
 
     return (
         <div className='portion-sizes'>
-            {viewportWidth < 768 ? (
+            {viewportWidth <= 768 ? (
                 <select onChange={() => addEntry(food)}>
                     <option disabled selected>Annoskoot</option>
                     {portions}

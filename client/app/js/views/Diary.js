@@ -187,27 +187,8 @@ export default class Diary extends React.Component {
     }
 
     changeShownNutritionValue = (e) => {
-        var nutritionValue;
-
-        switch(e.currentTarget.value) {
-            case 'kcal':
-                nutritionValue = 'energy';
-                break;
-            case 'Proteiini':
-                nutritionValue = 'protein';
-                break;
-            case 'Hiilihydraatti':
-                nutritionValue = 'carbs';
-                break;
-            case 'Rasva':
-                nutritionValue = 'fat';
-                break;
-
-        }
-
-        this.setState({shownNutritionValue: nutritionValue});
+        this.setState({shownNutritionValue: e.currentTarget.value});
     }
-
 
     render() {
         var {

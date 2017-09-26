@@ -10,11 +10,6 @@ export default function SearchTypes(props) {
 
     return (
         <div className='search-types'>
-            {viewportWidth < 767 &&
-                <button className='close-food-selection' onClick={toggleFoodSelection}>
-                    <i className='fa fa-arrow-left' />
-                </button>
-            }
             <button className={fetchMethod == 'search' ? 'active' : ''}
                     onClick={() => changeFetchMethod('search')}>
                 <i className='fa fa-search' />Haku
@@ -27,6 +22,11 @@ export default function SearchTypes(props) {
                     onClick={() => changeFetchMethod('latest')}>
                 <i className='fa fa-history' />Viimeisimmät
             </button>
+            {viewportWidth <= 768 &&
+                <button className='close-food-selection' onClick={toggleFoodSelection}>
+                    <i className='fa fa-close' />
+                </button>
+            }
         </div>
     );
 }

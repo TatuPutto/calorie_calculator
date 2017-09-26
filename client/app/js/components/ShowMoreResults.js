@@ -7,7 +7,7 @@ export default function ShowMoreResults(props) {
     var buttonText = `Näytä lisää tuloksia (${amountOfVisibleResults} / ${props.foodsAmount})`;
     var showMoreResultsButton = null;
 
-    if(foodsAmount > 10 && foodsAmount > amountOfVisibleResults && viewportWidth < 768) {
+    if(foodsAmount > 10 && foodsAmount > amountOfVisibleResults && viewportWidth <= 768) {
         showMoreResultsButton = (
             <button
                 className='show-more-results btn btn-default'

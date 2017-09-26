@@ -3,17 +3,12 @@ import PropTypes from 'prop-types';
 
 import EntriesHeader from './EntriesHeader';
 import EntriesTable from './EntriesTable';
+import EntriesTotalRowWithPercentages from './EntriesTotalRowWithPercentages';
 import Loading from './Loading';
 
 
 export default function Entries(props) {
-    var {
-        isFetchingEntries,
-        entriesFetchError,
-        entries,
-        viewportWidth,
-        isModifiable
-    } = props;
+    var {isFetchingEntries, entriesFetchError, entries, isModifiable} = props;
     var output = null;
     var hasEntries = false;
 
@@ -49,6 +44,10 @@ export default function Entries(props) {
                     viewportWidth={props.viewportWidth}
                 />
                 <EntriesTable {...props} />
+                <EntriesTotalRowWithPercentages
+                    total={props.total}
+                    viewportWidth={props.viewportWidth}
+                />
             </div>
         );
     }

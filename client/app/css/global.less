@@ -1,6 +1,6 @@
 @desktop: ~"screen and (min-width: 992px)";
-@laptop: ~"screen and (min-width: 768px, max-width: 991px)";
-@tablet: ~"screen and (max-width: 767px)";
+@laptop: ~"screen and (min-width: 769px, max-width: 991px)";
+@tablet: ~"screen and (max-width: 768px)";
 @smartphone: ~"screen and (max-width: 500px)";
 @laptopAndUp: ~"screen and (min-width: 768px)";
 @border: 1px solid #e4e4e4;
@@ -23,9 +23,6 @@
 @fat-color: #fa6b6b;
 
 
-
-@table-default-padding-left: 6px;
-
 .round-border(@width: 1px, @style: solid, @color: @border-color, @border-radius: 3px) {
     border: @width @style @color;
     border-radius: @border-radius;
@@ -47,10 +44,6 @@
     border-bottom: @width @style @color;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-}
 /*
 ::-webkit-scrollbar {
  	width: 6px;
@@ -223,6 +216,14 @@ button:disabled {
     color: @fat-color;
 }
 
+
+.truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    vertical-align: middle;
+}
 
 @media @tablet {
     div[class*="col"] {

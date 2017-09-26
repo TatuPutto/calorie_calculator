@@ -19,15 +19,18 @@ export default function EntriesFoodRowCompact(props) {
         removeEntry,
         isModifiable
     } = props;
-    var invalidInputStyle = {borderColor: 'red', boxShadow: '0px 0px 5px red'};
     var rows = [];
 
     if(!isBeingEdited && !actionsVisible) {
         rows.push(
-            <td key='entriesFoodName' className='entries__food-name' colSpan={5}>
-                {food.name} ({food.amount}g)
+            <td key='entriesFoodName' className='entries__food-name'>
+                <div>
+                    <span className='truncate-text'>{food.name}</span>
+                    <span>{food.amount}g</span>
+                </div>
             </td>
         );
+
         rows.push(
             <td
                 key='entriesFoodComponentValue'
@@ -41,7 +44,7 @@ export default function EntriesFoodRowCompact(props) {
     return (
         <tr className='entries__food' onClick={!actionsVisible && isModifiable ? showActions : () => {}}>
             {actionsVisible && !isBeingEdited && isModifiable &&
-                <td className='entries__food-actions' colSpan={6}>
+                <td className='entries__food-actions' colSpan={3}>
                     <button className='btn btn-danger' onClick={() => removeEntry(food)}>
                         <i className='fa fa-trash' />
                     </button>
@@ -60,7 +63,7 @@ export default function EntriesFoodRowCompact(props) {
             }
             {isBeingEdited && isModifiable &&
                 <td className={'entries__edit-amount ' +
-                        (!validInput ? 'invalid-value': '')} colSpan={6}
+                        (!validInput ? 'invalid-value': '')} colSpan={3}
                 >
                     <input
                         type='text'
