@@ -4,13 +4,13 @@ import drawMacroChart from '../util/draw-macro-chart';
 
 export default class EntryDetailsPlain extends React.Component {
     componentDidMount() {
-        window.requestAnimationFrame(() => {
+        //window.requestAnimationFrame(() => {
             drawMacroChart(this.props.canvasId, {
                 protein: this.props.protein,
                 carbs: this.props.carbs,
                 fat: this.props.fat
             });
-        });
+        //});
     }
 
     render() {

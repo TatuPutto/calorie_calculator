@@ -40,10 +40,7 @@ export default class Diary extends React.Component {
                     this.getEntriesFromDateRange(this.props.week);
                 }
 
-                this.setState({
-                    datesWithEntries,
-                    date: this.props.date
-                });
+                this.setState({datesWithEntries, date: this.props.date});
             })
             .catch((err) => this.setState({
                 isFetching: false,
@@ -85,13 +82,13 @@ export default class Diary extends React.Component {
         } = this.state;
 
         if(!isFetching && entries.length > 0 && isInDayView) {
-            window.requestAnimationFrame(() => {
+            //window.requestAnimationFrame(() => {
                 drawMacroChart(
                     'macronutrient-split-chart-container',
                     total,
                     isInDayView
                 );
-            });
+            //});
         }
     }
 
@@ -121,7 +118,8 @@ export default class Diary extends React.Component {
                 fetchError: null
             });
         })
-        .catch((err) => {
+        .catch((err) => {console.log(err);
+            console.log('rejektattaan');
             this.setState({
                 isFetching: false,
                 fetchError: 'Merkintöjä ei onnistuttu hakemaan.'
@@ -205,14 +203,14 @@ export default class Diary extends React.Component {
         var output = null;
         var mealHasFoods = false;
 
-        if(isInDayView) {
+        /*if(isInDayView) {
             for(var meal of entries) {
                 if(meal.foods.length > 0) mealHasFoods = true;
             }
-        }
-
+        }*/
+        console.log(entries);
         // day view output
-        if(!isFetching && entries.length > 0 && mealHasFoods && isInDayView) {
+        if(!isFetching && entries.length > 0 && isInDayView) {
             output = (
                 <EntryDetails
                     entries={entries}

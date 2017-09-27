@@ -7,7 +7,7 @@ export default function EntriesTotalRowCompact({total, shownNutritionValue}) {
 
     return (
         <tr className='entries__total'>
-            <td />
+            <td colSpan={2} />
             <td className={shownNutritionValue}>
                 {total[shownNutritionValue].toFixed(roundTo)}
             </td>

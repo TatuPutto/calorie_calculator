@@ -19,8 +19,8 @@ export default function drawChart(ctx, total, isInDayView) {
     	data: [{
 			type: 'pie',
             startAngle: 0,
-			indexLabelFontFamily: 'Roboto',
-			indexLabelFontSize: isInDayView ? 14 : 12,
+			indexLabelFontFamily: 'arial',
+			indexLabelFontSize: isInDayView ? 13 : 12,
 			indexLabelFontWeight: 'normal',
 			indexLabelFontColor: '#fff',
 			indexLabelPlacement: 'inside',

@@ -63,10 +63,14 @@ export default class CurrentEntry extends React.Component {
                     document.documentElement.clientWidth,
                     window.innerWidth || 0
                 );
-                this.setState({
-                    viewportWidth,
-                    foodSelectionVisible: viewportWidth > 768 ? true : false
-                });
+
+                // trigger state change only on viewport width change
+                if(viewportWidth !== this.state.viewportWidth) {
+                    this.setState({
+                        viewportWidth,
+                        foodSelectionVisible: viewportWidth > 768 ? true : false
+                    });
+                }
             }, 200);
         });
     }

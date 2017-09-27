@@ -1,17 +1,7 @@
 .diary span {
-    line-height: initial;
+    display: inline-block;
     padding-bottom: 2px;
 }
-
-.diary {
-    .failed-to-fetch,
-    .no-entries {
-        margin-top: 60px;
-        text-align: center;
-        font-size: 18px;
-    }
-}
-
 
 .entries-container {
     display: flex;
@@ -64,7 +54,7 @@
 }
 
 .entry-plain-header {
-    //background: @secondary-blue;
+    //background: @accent-color;
     background-color: #fff;
     border-bottom: @border;
     padding: 15px;
@@ -119,7 +109,7 @@
 }
 
 .blank-entry {
-    min-height: 313px;
+    min-height: 302px;
     box-shadow: 0 0 10px #cacaca inset;
     border-radius: 5px;
     background: #ececec;

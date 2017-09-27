@@ -20,29 +20,31 @@ export default function EntriesFoodRowCompact(props) {
         isModifiable
     } = props;
     var rows = [];
+    var onClickFunc = !actionsVisible && isModifiable ? showActions : null;
+
 
     if(!isBeingEdited && !actionsVisible) {
         rows.push(
-            <td key='entriesFoodName' className='entries__food-name'>
-                <div>
-                    <span className='truncate-text'>{food.name}</span>
-                    <span>{food.amount}g</span>
-                </div>
+            <td className='entries__food-name truncate-text'>
+                {food.name}
             </td>
         );
 
         rows.push(
-            <td
-                key='entriesFoodComponentValue'
-                className={'entries__food-component-amount ' + shownNutritionValue}
-            >
+            <td className='entries__food-amount'>
+                <span>{food.amount}g</span>
+            </td>
+        );
+
+        rows.push(
+            <td className={'entries__food-component-amount ' + shownNutritionValue}>
                 {food[shownNutritionValue]}
             </td>
         );
     }
 
     return (
-        <tr className='entries__food' onClick={!actionsVisible && isModifiable ? showActions : () => {}}>
+        <tr className='entries__food' onClick={onClickFunc}>
             {actionsVisible && !isBeingEdited && isModifiable &&
                 <td className='entries__food-actions' colSpan={3}>
                     <button className='btn btn-danger' onClick={() => removeEntry(food)}>
@@ -62,15 +64,12 @@ export default function EntriesFoodRowCompact(props) {
                 </td>
             }
             {isBeingEdited && isModifiable &&
-                <td className={'entries__edit-amount ' +
-                        (!validInput ? 'invalid-value': '')} colSpan={3}
-                >
+                <td className={'entries__edit-amount'} colSpan={3}>
                     <input
                         type='text'
-                        className='edit-input'
+                        className={!validInput ? 'invalid-value': ''}
                         value={foodAmount}
                         onChange={changeFoodAmount}
-                        style={!validInput ? invalidInputStyle : null}
                         autoFocus
                     />
                     <button className='btn btn-primary' onClick={updateAmount}>

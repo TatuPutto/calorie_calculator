@@ -14,9 +14,24 @@
 
 .entries__content-wrapper {
     background: #fff;
-    box-shadow: @module-shadow;
+    -webkit-box-shadow: @module-shadow;
+            box-shadow: @module-shadow;
     border-radius: 3px;
 }
+
+.current-entry .failed-to-fetch,
+.current-entry .no-entries {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.diary .failed-to-fetch,
+.diary .no-entries {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 18px;
+}
+
 
 
 /* ==========================================================================
@@ -46,19 +61,7 @@
     }
 }
 
-.current-entry {
-    .failed-to-fetch,
-    .no-entries {
-        padding: 10px;
-        font-size: 14px;
-    }
-}
-
-@media screen and (min-width: 320px) and (max-width: 768px) {
-    .entries {
-        //margin-top: 40px;
-    }
-
+@media @tablet {
     .entries__header {
         height: 80px;
     }
@@ -80,10 +83,393 @@
         text-align-last: right;
     }
 
-
     .diary {
         .entries__header {
             height: 50px;
         }
+    }
+}
+
+
+
+/* ==========================================================================
+ * EntriesTable
+ * ========================================================================== */
+.entries__table {
+    text-align: center;
+    font-size: 13px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    border-collapse: separate;
+}
+
+@media @tablet {
+    .entries__table {
+        font-size: 13px;
+        border-collapse: collapse;
+    }
+}
+
+
+
+/* ==========================================================================
+ * EntriesMealRow
+ * ========================================================================== */
+.entries__meal {
+    background: #f7f7f7;
+    font-weight: bold;
+    text-align: left;
+
+    td {
+        position: relative;
+        line-height: 40px;
+        padding-right: 6px;
+        padding-left: 6px;
+        border-bottom: @border;
+    }
+
+    button {
+        display: none;
+
+        i {
+            color: @text-color;
+        }
+    }
+
+    button:first-child {
+        margin-left: 6px;
+    }
+
+    .current-entry &:hover {
+        background: #d6d6d6;
+
+        button {
+            display: initial;
+        }
+    }
+}
+
+.entries__edit-meal-name {
+    input {
+        color: #000;
+        height: 26px;
+    }
+}
+
+.entries__select-active-meal {
+    position: absolute;
+    top: 7px;
+    right: 6px;
+    height: 22px;
+
+    span {
+        display: inline-block;
+    }
+
+    .switch {
+        width: 46px;
+        height: 100%;
+        cursor: pointer;
+
+        &::before, &::after {
+            display: inherit;
+            font-family: FontAwesome;
+            color: #fff;
+            font-size: 13px;
+            position: absolute;
+            top: -5px;
+        }
+
+        &::before {
+            content: "\f09c";
+            left: 7px;
+            z-index: 1;
+        }
+
+        &::after {
+            content: "\f023";
+            right: 8px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 100%;
+            background: #adadad;
+            border-radius: 50px;
+            -webkit-transition: 0.3s;
+                    transition: 0.3s;
+        }
+
+        .slider::before {
+            content: "";
+            background: #fff;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            left: 4px;
+            -webkit-transition: 0.3s;
+                    transition: 0.3s;
+        }
+
+        input[type="checkbox"] {
+          display: none;
+        }
+
+        input:checked + .slider {
+            background-color: #00acb7;
+        }
+
+        input:checked + .slider::before {
+            -webkit-transform: translateX(22px);
+                    transform: translateX(22px);
+        }
+    }
+}
+
+
+
+/* ==========================================================================
+ * EntriesFoodRow / EntriesFoodRowCompact
+ * ========================================================================== */
+.entries__food {
+    td {
+        height: 40px;
+        border-right: @border;
+        border-bottom: @border;
+    }
+
+    td:last-child {
+        border-right: none;
+    }
+
+    .current-entry &:hover {
+        background-color: #d6d6d6;
+
+        i {
+            color: #525252;
+        }
+
+        .entries__copy-food {
+            color: @anchor-color;
+        }
+
+        .entries__toggle-editing-mode {
+            opacity: 1;
+        }
+    }
+}
+
+.entries__food-name {
+    width: 56%;
+    text-align: left;
+    max-width: 1px;
+
+    .diary & {
+        padding-left: 6px;
+    }
+}
+
+.entries__food-amount {
+    width: 10%;
+    position: relative;
+    cursor: pointer;
+
+    .entries__copy-food {
+        color: @text-color;
+    }
+
+    .entries__edit-amount {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+}
+
+.entries__food-energy {
+    color: @energy-color;
+    width: 10%;
+}
+
+.entries__food-protein {
+    color: @protein-color;
+    width: 8%;
+}
+
+.entries__food-carbs {
+    color: @carb-color;
+    width: 8%;
+}
+
+.entries__food-fat {
+    color: @fat-color;
+    width: 8%;
+}
+
+.entries__toggle-editing-mode {
+    position: absolute;
+    margin-left: 8px;
+    opacity: 0;
+}
+
+
+@media @tablet {
+    .entries__food {
+        border-bottom: @border;
+        line-height: 60px;
+
+        td {
+            height: initial;
+            border: none;
+        }
+
+        .current-entry &:hover {
+            background-color: #fff;
+
+            i {
+                color: #fff;
+            }
+        }
+    }
+
+    .entries__food-name {
+        width: 70%;
+        height: initial;
+        line-height: 20px;
+        padding-right: 8px;
+        padding-left: 8px;
+        color: @text-color;
+        text-align: left;
+        max-width: 1px;
+    }
+
+    .entries__food-amount {
+        width: 18%;
+    }
+
+    .entries__food-component-amount {
+        width: 12%;
+        padding-right: 8px;
+        padding-left: 8px;
+        text-align: center;
+    }
+
+    .entries__food-actions {
+        padding-right: 4px;
+        padding-left: 4px;
+        text-align: left;
+
+        button {
+            margin-right: 4px;
+            margin-left: 4px;
+            vertical-align: initial;
+        }
+
+        span:last-child {
+            line-height: 60px;
+            float: right;
+        }
+
+        i {
+            color: #fff;
+        }
+
+        &:hover {
+            i {
+                color: #fff;
+            }
+        }
+    }
+
+    .entries__edit-amount {
+        text-align: left;
+        padding-left: 8px;
+        padding-right: 8px;
+
+        input {
+            width: 60px;
+            height: 34px;
+            background: #f9f9f9;
+            vertical-align: middle;
+        }
+
+        button {
+            margin-left: 2%;
+        }
+    }
+}
+
+
+
+/* ==========================================================================
+ * EntriesTotalRow / EntriesTotalRowWithPercentages
+ * ========================================================================== */
+.entries__total td,
+.entries__total-with-percentages td {
+    font-size: 13px;
+    width: 8%;
+    height: 50px;
+    //border-top: 2px solid #ffcb7c;
+    border-left: none;
+    border-right: none;
+}
+
+.entries__total td {
+    border-bottom: @border;
+}
+
+.entries__total-with-percentages td {
+    padding: 14px 0;
+}
+
+.entries__total td:first-child {
+    width: 10%;
+}
+
+.entries__total-with-percentages td:first-child {
+    width: 66%;
+}
+
+.entries__total-with-percentages .energy {
+    width: 10%;
+}
+
+.entries__total-separator {
+    background: #ffcb7c;
+    font-weight: bold;
+    text-align: left;
+    padding: 0 10px !important;
+    line-height: 40px;
+    width: 100%;
+}
+
+
+@media @tablet {
+    .entries__total td {
+        width: 15%;
+        line-height: 60px;
+        padding-right: 8px;
+        padding-left: 8px;
+        text-align: center;
+    }
+
+    .entries__total-with-percentages td {
+        width: 20%;
+        padding: 14px 8px;
+        text-align: center;
+        font-size: 13px;
+    }
+
+    .entries__total-with-percentages .energy {
+        width: 20%;
+    }
+
+    .entries__total td:first-child,
+    .entries__total td:last-child,
+    .entries__total-with-percentages td:first-child,
+    .entries__total-with-percentages td:last-child {
+        width: 10%;
     }
 }

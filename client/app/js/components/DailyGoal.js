@@ -15,25 +15,20 @@ export default class DailyGoal extends React.Component {
 
     componentDidMount() {
         if(this.props.goal) {
-            window.requestAnimationFrame(() => {
+            //window.requestAnimationFrame(() => {
                 createCharts(this.props.total, this.props.goal)
-            });
+            //});
         }
     }
 
     componentDidUpdate() {
-        window.requestAnimationFrame(() => {
+        //window.requestAnimationFrame(() => {
             createCharts(this.props.total, this.props.goal);
-        });
+        //});
     }
 
     render() {
-        var {
-            total,
-            goal,
-            isFetchingDailyGoal,
-            dailyGoalFetchError
-        } = this.props;
+        var {total, goal, isFetchingDailyGoal, dailyGoalFetchError} = this.props;
         var dailyGoalOutput;
 
         if(goal && !dailyGoalFetchError) {
@@ -41,7 +36,8 @@ export default class DailyGoal extends React.Component {
                 <div className='daily-goal-wrapper'>
                     <div className='daily-goal-header'>
                         <h3>Päivätavoite</h3>
-                        <button className='configure-daily-goals'
+                        <button
+                            className='configure-daily-goals'
                             data-toggle='modal'
                             data-target='#set-daily-goal'
                             data-tooltip-text='Muokkaa päivätavoitetta'

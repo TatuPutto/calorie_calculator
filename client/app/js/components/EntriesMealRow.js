@@ -37,7 +37,7 @@ export default class EntriesMealRow extends React.Component {
             viewportWidth
         } = this.props;
         var isActiveMeal = activeMealId == id;
-        var colSpan = viewportWidth <= 768 ? 2 : 7;
+        var colSpan = viewportWidth <= 768 ? 3 : 7;
 
         if(this.state.isBeingEdited && isModifiable) {
             return (

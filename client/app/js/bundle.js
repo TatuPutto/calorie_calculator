@@ -10,6 +10,9 @@ import DiaryWrapper from './views/DiaryWrapper';
 
 require('../css/styles.less');
 
+// add symbol polyfill
+require('es6-symbol/implement');
+
 // add promise polyfill
 if(!window.Promise) {
   window.Promise = Promise;
