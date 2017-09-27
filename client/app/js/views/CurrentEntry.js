@@ -98,6 +98,10 @@ export default class CurrentEntry extends React.Component {
             });
     }
 
+    setDailyGoal = (goal) => {
+        this.setState({goal});
+    }
+
     getEntries = () => {
         this.setState({
             selectedFoodId: null,
@@ -428,6 +432,7 @@ export default class CurrentEntry extends React.Component {
                             total={this.state.total}
                             isFetchingDailyGoal={isFetchingDailyGoal}
                             dailyGoalFetchError={this.state.dailyGoalFetchError}
+                            setDailyGoal={this.setDailyGoal}
                         />
                     ) : (
                         <div className='col-md-2'>

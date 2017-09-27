@@ -6,7 +6,7 @@ import DailyGoalProgress from './DailyGoalProgress';
 export default class DailyGoal extends React.Component {
     // only redraw charts if total consumption has actually changed
     shouldComponentUpdate(nextProps) {
-        if(this.props.total !== nextProps.total) {
+        if(this.props.total != nextProps.total || this.props.goal != nextProps.goal) {
             return true;
         }
 
@@ -38,9 +38,9 @@ export default class DailyGoal extends React.Component {
                         <h3>Päivätavoite</h3>
                         <button
                             className='configure-daily-goals'
+                            title='Muokkaa päivätavoitetta'
                             data-toggle='modal'
                             data-target='#set-daily-goal'
-                            data-tooltip-text='Muokkaa päivätavoitetta'
                         >
                             <i className='fa fa-cog' />
                         </button>
@@ -64,7 +64,7 @@ export default class DailyGoal extends React.Component {
 
         return (
             <div className='daily-goal col-md-2'>
-                <SetDailyGoal />
+                <SetDailyGoal setDailyGoal={this.props.setDailyGoal}/>
                 {dailyGoalOutput}
             </div>
         );

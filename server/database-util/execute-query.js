@@ -16,7 +16,7 @@ module.exports = function executeQuery(query, data) {
         }
     })
     .catch(function (err) {
-        console.log('palautetaan täältä');
+        console.log(err);
         throw err;
     });
 }

@@ -18,7 +18,7 @@ router.get('/:date', function (req, res) {
         });
 });
 
-router.use(bodyParser.urlencoded({extended: false}));
+router.use(bodyParser.json());
 
 // set goal for today
 router.post('/', function (req, res) {
@@ -29,7 +29,7 @@ router.post('/', function (req, res) {
 
     if(!energy || !protein || !carbs || !fat) {
         res.status(400);
-        res.end('Täytä kaikki pakolliset kentät.');
+        return res.end('Täytä kaikki pakolliset kentät.');
     }
 
     insertGoalForToday(req.session.user.id, energy, protein, carbs, fat)

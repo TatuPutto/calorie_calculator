@@ -26,6 +26,7 @@ export function get(url) {
 }
 
 export function post(url, content) {
+    console.log(content);
     return fetch(url, {
         ...defaultParams,
         method: 'POST',
