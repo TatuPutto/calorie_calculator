@@ -1,6 +1,8 @@
 var validUsername = false;
 var validPassword = false;
 var timeout = null;
+console.log('täällä');
+
 
 function showLabel(textInput) {
     var label = textInput.previousElementSibling;
@@ -16,7 +18,7 @@ function hideLabel(inputNum) {
     setTimeout(function () {
         var placeholderText = inputNum === 0 ? 'Käyttäjätunnus' : 'Salasana';
         textInput.placeholder = placeholderText;
-    }, 200)
+    }, 200);
 }
 
 function checkUsernameAvailability(e) {
@@ -34,17 +36,14 @@ function checkUsernameAvailability(e) {
         clearTimeout(timeout);
     }
 
-    timeout = setTimeout(() => {
-        fetch(`/username-available/${usernameToCheck}`, {credentials: 'same-origin'})
-            .then((res) => {
-                if(res.status === 200) {
-                    return Promise.resolve();
-                } else {
-                    return Promise.reject();
-                }
-            })
-            .then(() => createValidUsernameNotification(e, userNameValidityindicator))
-            .catch(() => createInvalidUsernameNotification(e, userNameValidityindicator));
+    timeout = setTimeout(function() {
+        $.get('/username-available/' + usernameToCheck)
+        .done(function() {
+            createValidUsernameNotification(e, userNameValidityindicator)
+        })
+        .fail(function() {
+            createInvalidUsernameNotification(e, userNameValidityindicator)
+        })
     }, 500);
 }
 
@@ -127,7 +126,9 @@ function areCookiesAccepted() {
 
         cookieDisclaimerP.appendChild(cookieDisclaimerText);
         acceptCookiePolicyButton.appendChild(acceptCookiePolicyText);
-        acceptCookiePolicyButton.addEventListener('click', () => acceptCookiePolicy());
+        acceptCookiePolicyButton.addEventListener('click', function() {
+            acceptCookiePolicy()
+        });
         cookieDisclaimer.appendChild(cookieDisclaimerP);
         cookieDisclaimer.appendChild(acceptCookiePolicyButton);
         cookieDisclaimer.className = 'cookie-disclaimer';
@@ -171,5 +172,5 @@ function acceptCookiePolicy() {
     anchors[1].href = '/current-entry';
     anchors[1].className = '';
 
-    fetch('/accept-cookies', {credentials: 'same-origin'});
+    $.get('/accept-cookies');
 }
